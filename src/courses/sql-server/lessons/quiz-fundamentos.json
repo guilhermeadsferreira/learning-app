@@ -1,0 +1,172 @@
+{
+  "id": "quiz-fundamentos",
+  "courseId": "sql-server",
+  "moduleId": "fundamentos",
+  "title": "Quiz — Fundamentos SQL",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar os fundamentos de SQL Server e T-SQL antes de avançar para funções."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Em T-SQL, qual cláusula substitui o LIMIT do MySQL para limitar o número de linhas retornadas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "LIMIT n",
+          "isCorrect": false,
+          "explanation": "LIMIT não existe em T-SQL. Essa é a sintaxe do MySQL e PostgreSQL."
+        },
+        {
+          "id": "b",
+          "text": "TOP n",
+          "isCorrect": true,
+          "explanation": "Correto! Em T-SQL, usa-se SELECT TOP n para limitar resultados. Ex: SELECT TOP 10 * FROM Clientes ORDER BY Id."
+        },
+        {
+          "id": "c",
+          "text": "ROWNUM <= n",
+          "isCorrect": false,
+          "explanation": "ROWNUM é sintaxe do Oracle, não do SQL Server."
+        },
+        {
+          "id": "d",
+          "text": "FETCH FIRST n ROWS",
+          "isCorrect": false,
+          "explanation": "FETCH FIRST existe no SQL padrão e no SQL Server moderno com OFFSET, mas TOP é a forma T-SQL clássica e mais comum."
+        }
+      ]
+    },
+    {
+      "question": "Qual operador T-SQL é usado para verificar se um valor está dentro de um intervalo inclusivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IN",
+          "isCorrect": false,
+          "explanation": "IN verifica se um valor está em uma lista de valores específicos, não em um intervalo."
+        },
+        {
+          "id": "b",
+          "text": "RANGE",
+          "isCorrect": false,
+          "explanation": "RANGE não é um operador de filtro no SQL Server."
+        },
+        {
+          "id": "c",
+          "text": "BETWEEN",
+          "isCorrect": true,
+          "explanation": "Correto! BETWEEN valor1 AND valor2 verifica se o valor está no intervalo, incluindo os extremos."
+        },
+        {
+          "id": "d",
+          "text": "WITHIN",
+          "isCorrect": false,
+          "explanation": "WITHIN não existe como operador de filtro em T-SQL."
+        }
+      ]
+    },
+    {
+      "question": "O que faz a cláusula DISTINCT em uma query SELECT?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ordena os resultados em ordem alfabética",
+          "isCorrect": false,
+          "explanation": "Ordenação é responsabilidade do ORDER BY, não do DISTINCT."
+        },
+        {
+          "id": "b",
+          "text": "Remove linhas duplicadas do resultado",
+          "isCorrect": true,
+          "explanation": "Correto! DISTINCT elimina linhas repetidas no conjunto de resultados, garantindo que cada combinação de valores apareça apenas uma vez."
+        },
+        {
+          "id": "c",
+          "text": "Filtra linhas com base em uma condição",
+          "isCorrect": false,
+          "explanation": "Filtragem é feita com WHERE, não com DISTINCT."
+        },
+        {
+          "id": "d",
+          "text": "Limita o número de linhas retornadas",
+          "isCorrect": false,
+          "explanation": "Limitação de linhas é feita com TOP em T-SQL."
+        }
+      ]
+    },
+    {
+      "question": "Em T-SQL, qual é o formato correto para strings de texto em uma cláusula WHERE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "WHERE Nome = \"João\"",
+          "isCorrect": false,
+          "explanation": "Aspas duplas são reservadas para identificadores em T-SQL. Use aspas simples para valores de texto."
+        },
+        {
+          "id": "b",
+          "text": "WHERE Nome = 'João'",
+          "isCorrect": true,
+          "explanation": "Correto! Em T-SQL, strings de texto sempre usam aspas simples."
+        },
+        {
+          "id": "c",
+          "text": "WHERE Nome = `João`",
+          "isCorrect": false,
+          "explanation": "Backticks são usados no MySQL. T-SQL usa colchetes [Nome] para identificadores e aspas simples para valores."
+        },
+        {
+          "id": "d",
+          "text": "WHERE Nome EQ 'João'",
+          "isCorrect": false,
+          "explanation": "EQ não é um operador válido em T-SQL. Use = para igualdade."
+        }
+      ]
+    },
+    {
+      "question": "Qual curingas o operador LIKE usa para representar 'qualquer sequência de caracteres'?",
+      "options": [
+        {
+          "id": "a",
+          "text": "* (asterisco)",
+          "isCorrect": false,
+          "explanation": "Asterisco é usado no SELECT * para todas as colunas, não no LIKE."
+        },
+        {
+          "id": "b",
+          "text": "? (interrogação)",
+          "isCorrect": false,
+          "explanation": "Interrogação não é um curinga do LIKE no SQL Server. Em T-SQL, _ representa um único caractere."
+        },
+        {
+          "id": "c",
+          "text": "% (porcentagem)",
+          "isCorrect": true,
+          "explanation": "Correto! % representa qualquer sequência de zero ou mais caracteres. Ex: LIKE 'Ana%' casa com 'Ana', 'Anabel', 'Ananda'."
+        },
+        {
+          "id": "d",
+          "text": "# (cerquilha)",
+          "isCorrect": false,
+          "explanation": "# não é um curinga padrão do LIKE em T-SQL."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "TOP n é a forma T-SQL de limitar resultados (não LIMIT)",
+    "BETWEEN valor1 AND valor2 é inclusivo nos dois extremos",
+    "DISTINCT remove duplicatas; ORDER BY ordena resultados",
+    "Strings em T-SQL sempre usam aspas simples; % é curinga no LIKE"
+  ],
+  "encouragement": "Fundamentos sólidos! Agora vamos explorar as funções nativas do T-SQL — ferramentas poderosas para transformar e calcular dados."
+}

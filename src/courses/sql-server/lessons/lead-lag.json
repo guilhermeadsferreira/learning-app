@@ -1,0 +1,57 @@
+{
+  "id": "lead-lag",
+  "courseId": "sql-server",
+  "moduleId": "avancado",
+  "title": "LAG e LEAD",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "advanced",
+  "analogy": "LAG e LEAD são como olhar para o passado e o futuro numa série temporal. Para cada mês de vendas, você quer saber: 'quanto vendemos no mês anterior?' (LAG) e 'quanto venderemos no próximo?' (LEAD). Sem precisar de JOINs ou subqueries complexas.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "LAG — acessar linha anterior" },
+      {
+        "type": "code",
+        "content": "-- LAG(coluna, offset, default) OVER (ORDER BY)\n-- offset: quantas linhas para trás (default 1)\n-- default: valor quando não há linha anterior (default NULL)\n\nSELECT\n    Mes,\n    Faturamento,\n    LAG(Faturamento) OVER (ORDER BY Mes)                    AS FaturamentoMesAnterior,\n    LAG(Faturamento, 1, 0) OVER (ORDER BY Mes)              AS FatAnterior_0seNull,\n    Faturamento - LAG(Faturamento, 1, 0) OVER (ORDER BY Mes) AS Variacao\nFROM Vendas\nORDER BY Mes;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "LEAD — acessar linha seguinte" },
+      {
+        "type": "code",
+        "content": "-- LEAD(coluna, offset, default) OVER (ORDER BY)\nSELECT\n    Mes,\n    Faturamento,\n    LEAD(Faturamento) OVER (ORDER BY Mes)  AS ProximoMes,\n    LEAD(Faturamento, 2) OVER (ORDER BY Mes) AS DoisMesesAFrente\nFROM Vendas\nORDER BY Mes;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "LAG com PARTITION BY — por grupo" },
+      {
+        "type": "code",
+        "content": "-- Comparar com o mês anterior dentro de cada região\nSELECT\n    Regiao,\n    Mes,\n    Faturamento,\n    LAG(Faturamento) OVER (PARTITION BY Regiao ORDER BY Mes) AS MesAnteriorRegiao,\n    CAST(\n        (Faturamento - LAG(Faturamento) OVER (PARTITION BY Regiao ORDER BY Mes))\n        * 100.0\n        / NULLIF(LAG(Faturamento) OVER (PARTITION BY Regiao ORDER BY Mes), 0)\n    AS DECIMAL(5,2)) AS VariacaoPercentual\nFROM VendasMensais\nORDER BY Regiao, Mes;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Use NULLIF(valor, 0) para evitar divisão por zero ao calcular variação percentual. NULLIF retorna NULL quando o primeiro argumento é igual ao segundo — e NULL / qualquer coisa = NULL (sem erro).",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela VendasMensais abaixo para escrever as queries:\n\n1. Para cada mês, mostre o faturamento atual, do mês anterior (LAG) e a variação absoluta\n2. Calcule a variação percentual mês a mês (use NULLIF para evitar divisão por zero)\n3. Para cada Regiao, compare com o mês anterior dentro da mesma região",
+    "starterCode": "-- Tabela: VendasMensais\n-- | Mes       | Regiao  | Faturamento |\n-- |-----------|---------|-------------|\n-- | 2024-01   | Sul     | 45000.00    |\n-- | 2024-02   | Sul     | 38000.00    |\n-- | 2024-03   | Sul     | 52000.00    |\n-- | 2024-01   | Sudeste | 72000.00    |\n-- | 2024-02   | Sudeste | 68000.00    |\n-- | 2024-03   | Sudeste | 81000.00    |\n\n-- Query 1: Faturamento atual, anterior e variação absoluta (geral)\n\n\n-- Query 2: Variação percentual mês a mês (geral, com NULLIF)\n\n\n-- Query 3: Comparação com mês anterior POR Regiao",
+    "solution": "-- Query 1: Faturamento atual, anterior e variação absoluta (geral)\nSELECT\n    Mes,\n    Faturamento,\n    LAG(Faturamento, 1, 0) OVER (ORDER BY Mes) AS FatAnterior,\n    Faturamento - LAG(Faturamento, 1, 0) OVER (ORDER BY Mes) AS Variacao\nFROM VendasMensais\nORDER BY Mes;\n\n-- Query 2: Variação percentual mês a mês (geral, com NULLIF)\nSELECT\n    Mes,\n    Faturamento,\n    LAG(Faturamento) OVER (ORDER BY Mes) AS FatAnterior,\n    CAST(\n        (Faturamento - LAG(Faturamento) OVER (ORDER BY Mes))\n        * 100.0\n        / NULLIF(LAG(Faturamento) OVER (ORDER BY Mes), 0)\n    AS DECIMAL(5,2)) AS VariacaoPerc\nFROM VendasMensais\nORDER BY Mes;\n\n-- Query 3: Comparação com mês anterior POR Regiao\nSELECT\n    Regiao,\n    Mes,\n    Faturamento,\n    LAG(Faturamento) OVER (PARTITION BY Regiao ORDER BY Mes) AS FatAnteriorRegiao,\n    Faturamento - LAG(Faturamento, 1, 0) OVER (PARTITION BY Regiao ORDER BY Mes) AS VarRegiao\nFROM VendasMensais\nORDER BY Regiao, Mes;",
+    "tests": [],
+    "hint": "LAG(col, 1, 0) retorna o valor anterior ou 0 se for a primeira linha. Para percentual: (atual - anterior) * 100.0 / NULLIF(anterior, 0). PARTITION BY Regiao faz o LAG reiniciar para cada região.",
+    "solutionExplanation": "Query 1: LAG(Faturamento, 1, 0) pega o valor da linha anterior; o default 0 evita NULL na primeira linha para o cálculo de Variacao. Query 2: NULLIF(LAG(...), 0) retorna NULL se o mês anterior foi 0, evitando divisão por zero. O resultado NULL é mais honesto que um erro. Query 3: PARTITION BY Regiao garante que LAG do primeiro mês de cada região retorne NULL (não o último mês de outra região)."
+  },
+  "keyTakeaways": [
+    "LAG(col, n, default) acessa n linhas anteriores; LEAD(col, n, default) acessa n linhas seguintes",
+    "Sem PARTITION BY, LAG/LEAD acessam a linha anterior/seguinte de toda a janela",
+    "Com PARTITION BY, o offset reinicia em cada grupo — não 'vaza' entre partições",
+    "NULLIF(valor, 0) evita divisão por zero em cálculos de variação percentual"
+  ],
+  "commonMistakes": [
+    "Esquecer ORDER BY no OVER() com LAG/LEAD — é obrigatório para definir a sequência",
+    "LAG sem PARTITION BY em dados multi-grupo pode 'vazar' entre grupos"
+  ],
+  "realWorldExample": "Um dashboard financeiro usa LAG para calcular crescimento mês a mês, variação de estoque e comparação com mesmo período do ano anterior — tudo com uma única window function por coluna.",
+  "encouragement": "LAG e LEAD são as ferramentas definitivas para análise de séries temporais em SQL. Com elas você cria dashboards financeiros profissionais sem uma linha de código de aplicação."
+}

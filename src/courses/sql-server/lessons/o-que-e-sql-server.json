@@ -1,0 +1,47 @@
+{
+  "id": "o-que-e-sql-server",
+  "courseId": "sql-server",
+  "moduleId": "fundamentos",
+  "title": "O que é SQL Server?",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "SQL Server é como um arquivo de gavetas altamente organizado dentro de uma empresa. Cada gaveta (tabela) guarda um tipo específico de informação — clientes, pedidos, produtos. T-SQL é o idioma que você usa para pedir ao arquivista que busque, organize e entregue exatamente o que você precisa.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é SQL Server?" },
+      {
+        "type": "paragraph",
+        "content": "SQL Server é o sistema de gerenciamento de banco de dados relacional (SGBD) da Microsoft. Lançado em 1989, é amplamente usado em empresas para armazenar, consultar e gerenciar dados estruturados. Ele usa T-SQL (Transact-SQL) como sua linguagem de consulta."
+      },
+      { "type": "heading", "content": "O que é T-SQL?" },
+      {
+        "type": "paragraph",
+        "content": "T-SQL é a extensão da linguagem SQL padrão criada pela Microsoft. Além das operações SQL tradicionais (SELECT, INSERT, UPDATE, DELETE), T-SQL adiciona recursos como variáveis, controle de fluxo (IF/WHILE), tratamento de erros (TRY/CATCH), funções nativas e muito mais."
+      },
+      { "type": "heading", "content": "Onde o SQL Server é usado?" },
+      {
+        "type": "list",
+        "content": "Sistemas ERP e CRM corporativos\nAplicações web e APIs .NET com dados relacionais\nRelatorios e Business Intelligence (BI)\nSistemas financeiros e bancários\nE-commerce e gestão de estoque"
+      },
+      { "type": "heading", "content": "Conceitos fundamentais" },
+      {
+        "type": "list",
+        "content": "Banco de dados (Database) — container principal que agrupa as tabelas\nTabela (Table) — estrutura com linhas e colunas para armazenar dados\nColuna (Column) — campo tipado com um tipo de dado específico\nLinha / Registro (Row) — uma entrada de dados na tabela\nChave Primária (PK) — identificador único de cada linha\nChave Estrangeira (FK) — referência à PK de outra tabela"
+      },
+      {
+        "type": "callout",
+        "content": "Neste curso, usaremos T-SQL nativo: funções como TOP, ISNULL(), GETDATE(), DATEDIFF(), STRING_AGG() e mais. Sem DBA, sem Azure — foco em consultas práticas do dia a dia.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "SQL Server é o SGBD relacional da Microsoft, usando T-SQL como linguagem",
+    "T-SQL estende o SQL padrão com variáveis, controle de fluxo e funções nativas",
+    "Dados são organizados em bancos de dados → tabelas → colunas → linhas",
+    "Chaves primárias e estrangeiras mantêm a integridade referencial entre tabelas"
+  ],
+  "realWorldExample": "Um sistema de RH usa SQL Server para armazenar funcionários, departamentos e salários. Com T-SQL, o analista consulta quantos funcionários foram contratados por trimestre, calcula médias salariais por departamento e gera relatórios de turnover.",
+  "encouragement": "SQL Server é uma das tecnologias mais demandadas no mercado corporativo. Você está no caminho certo!"
+}

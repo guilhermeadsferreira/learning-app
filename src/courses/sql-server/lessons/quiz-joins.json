@@ -1,0 +1,143 @@
+{
+  "id": "quiz-joins",
+  "courseId": "sql-server",
+  "moduleId": "joins",
+  "title": "Quiz — Joins e Relacionamentos",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos consolidar o entendimento sobre JOINs antes de avançar para agregações."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual JOIN retorna apenas as linhas que têm correspondência em AMBAS as tabelas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "LEFT JOIN",
+          "isCorrect": false,
+          "explanation": "LEFT JOIN retorna todas as linhas da tabela esquerda, mesmo sem correspondência na direita."
+        },
+        {
+          "id": "b",
+          "text": "FULL OUTER JOIN",
+          "isCorrect": false,
+          "explanation": "FULL OUTER JOIN retorna todas as linhas de ambas as tabelas, com NULLs onde não há correspondência."
+        },
+        {
+          "id": "c",
+          "text": "INNER JOIN",
+          "isCorrect": true,
+          "explanation": "Correto! INNER JOIN é o JOIN de interseção — retorna apenas linhas com match em ambas as tabelas."
+        },
+        {
+          "id": "d",
+          "text": "CROSS JOIN",
+          "isCorrect": false,
+          "explanation": "CROSS JOIN retorna o produto cartesiano — todas as combinações possíveis entre as linhas das duas tabelas."
+        }
+      ]
+    },
+    {
+      "question": "Você quer listar todos os clientes, mesmo os que nunca fizeram pedido. Qual JOIN usar?",
+      "options": [
+        {
+          "id": "a",
+          "text": "INNER JOIN Pedidos ON c.Id = p.ClienteId",
+          "isCorrect": false,
+          "explanation": "INNER JOIN excluiria clientes sem pedidos — exatamente o que você não quer."
+        },
+        {
+          "id": "b",
+          "text": "LEFT JOIN Pedidos ON c.Id = p.ClienteId (com Clientes à esquerda)",
+          "isCorrect": true,
+          "explanation": "Correto! LEFT JOIN preserva todas as linhas da tabela esquerda (Clientes). Clientes sem pedidos aparecem com NULLs nos campos de Pedidos."
+        },
+        {
+          "id": "c",
+          "text": "RIGHT JOIN Clientes ON c.Id = p.ClienteId (com Pedidos à esquerda)",
+          "isCorrect": false,
+          "explanation": "Isso funcionaria tecnicamente, mas vai contra a convenção — prefira LEFT JOIN com a tabela principal à esquerda."
+        },
+        {
+          "id": "d",
+          "text": "FULL OUTER JOIN Pedidos ON c.Id = p.ClienteId",
+          "isCorrect": false,
+          "explanation": "FULL OUTER JOIN funcionaria, mas retornaria também pedidos sem cliente — mais do que o necessário."
+        }
+      ]
+    },
+    {
+      "question": "Para que serve a técnica LEFT JOIN + WHERE coluna_direita IS NULL?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Filtrar linhas onde a coluna direita tem valor NULL no banco",
+          "isCorrect": false,
+          "explanation": "Não exatamente. Esse padrão é usado para encontrar registros da tabela esquerda que NÃO têm correspondência na tabela direita."
+        },
+        {
+          "id": "b",
+          "text": "Encontrar registros da tabela esquerda sem correspondência na tabela direita",
+          "isCorrect": true,
+          "explanation": "Correto! É o padrão anti-join: clientes sem pedidos, produtos sem vendas, funcionários sem projetos, etc."
+        },
+        {
+          "id": "c",
+          "text": "Converter um LEFT JOIN em INNER JOIN",
+          "isCorrect": false,
+          "explanation": "Na verdade, é o oposto — esse padrão retorna apenas os registros SEM correspondência, não os que têm."
+        },
+        {
+          "id": "d",
+          "text": "Verificar integridade de dados na tabela esquerda",
+          "isCorrect": false,
+          "explanation": "Verifica integridade na relação entre tabelas, não internamente na tabela esquerda."
+        }
+      ]
+    },
+    {
+      "question": "Por que SELF JOIN precisa obrigatoriamente de aliases distintos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "É uma restrição de performance do SQL Server",
+          "isCorrect": false,
+          "explanation": "Não é questão de performance. Aliases distintos são necessários por semântica."
+        },
+        {
+          "id": "b",
+          "text": "Para que o SQL Server saiba diferenciar as duas instâncias da mesma tabela na query",
+          "isCorrect": true,
+          "explanation": "Correto! Como a tabela aparece duas vezes, você precisa de aliases diferentes (ex: f e g) para o SQL Server saber a qual instância cada coluna pertence."
+        },
+        {
+          "id": "c",
+          "text": "Aliases são opcionais em SELF JOIN — servem apenas para legibilidade",
+          "isCorrect": false,
+          "explanation": "Aliases são obrigatórios em SELF JOIN — sem eles, a query é inválida pois há ambiguidade de referência."
+        },
+        {
+          "id": "d",
+          "text": "Para evitar que o SQL Server busque a tabela duas vezes no disco",
+          "isCorrect": false,
+          "explanation": "O otimizador cuida disso internamente. Aliases são para semântica, não para otimização."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "INNER JOIN: só matches; LEFT JOIN: tudo da esquerda; FULL OUTER: tudo de ambos",
+    "LEFT JOIN + WHERE direita IS NULL = registros sem correspondência (anti-join)",
+    "SELF JOIN exige dois aliases distintos para a mesma tabela",
+    "Prefira LEFT JOIN sobre RIGHT JOIN por convenção e legibilidade"
+  ],
+  "encouragement": "Você dominou todos os tipos de JOIN! Agora vamos aprender a agregar e resumir dados com GROUP BY e funções de agregação."
+}

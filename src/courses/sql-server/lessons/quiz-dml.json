@@ -1,0 +1,143 @@
+{
+  "id": "quiz-dml",
+  "courseId": "sql-server",
+  "moduleId": "dml",
+  "title": "Quiz — Manipulação de Dados",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar INSERT, UPDATE, DELETE, transações e MERGE antes de avançar para T-SQL Avançado."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que acontece se você executar UPDATE sem cláusula WHERE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "O SQL Server retorna um erro",
+          "isCorrect": false,
+          "explanation": "O SQL Server executa o UPDATE sem erro — afetando todas as linhas da tabela."
+        },
+        {
+          "id": "b",
+          "text": "Apenas a primeira linha é atualizada",
+          "isCorrect": false,
+          "explanation": "Sem WHERE, todas as linhas são atualizadas — não apenas a primeira."
+        },
+        {
+          "id": "c",
+          "text": "Todas as linhas da tabela são atualizadas",
+          "isCorrect": true,
+          "explanation": "Correto! UPDATE sem WHERE aplica a modificação em TODAS as linhas. Por isso, sempre teste com SELECT equivalente antes."
+        },
+        {
+          "id": "d",
+          "text": "O SQL Server pede confirmação antes de executar",
+          "isCorrect": false,
+          "explanation": "O SQL Server executa imediatamente sem pedir confirmação. A proteção deve ser feita com transações e revisão antes da execução."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença entre DELETE FROM tabela e TRUNCATE TABLE tabela?",
+      "options": [
+        {
+          "id": "a",
+          "text": "São idênticos em comportamento e performance",
+          "isCorrect": false,
+          "explanation": "Há diferenças importantes: TRUNCATE é mais rápido, não registra linha por linha no log e não dispara triggers."
+        },
+        {
+          "id": "b",
+          "text": "TRUNCATE é mais rápido, não dispara triggers e não pode ser filtrado com WHERE",
+          "isCorrect": true,
+          "explanation": "Correto! TRUNCATE remove todas as linhas de forma mais eficiente (operação de metadados), não dispara triggers row-level e não aceita WHERE — é para limpar a tabela inteira."
+        },
+        {
+          "id": "c",
+          "text": "DELETE preserva a estrutura da tabela; TRUNCATE apaga a tabela",
+          "isCorrect": false,
+          "explanation": "Ambos preservam a estrutura da tabela. Apenas DROP TABLE apaga a tabela."
+        },
+        {
+          "id": "d",
+          "text": "TRUNCATE pode ser desfeito com ROLLBACK; DELETE não pode",
+          "isCorrect": false,
+          "explanation": "É o oposto: DELETE dentro de uma transação pode ser revertido com ROLLBACK. TRUNCATE também pode, mas é menos comum e tem restrições."
+        }
+      ]
+    },
+    {
+      "question": "Qual é o propósito do ROLLBACK em uma transação?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Confirmar e persistir todas as alterações feitas na transação",
+          "isCorrect": false,
+          "explanation": "Confirmar alterações é o papel do COMMIT, não do ROLLBACK."
+        },
+        {
+          "id": "b",
+          "text": "Desfazer todas as alterações feitas desde o BEGIN TRANSACTION",
+          "isCorrect": true,
+          "explanation": "Correto! ROLLBACK cancela e reverte todas as operações DML realizadas desde o BEGIN TRANSACTION, devolvendo o banco ao estado anterior."
+        },
+        {
+          "id": "c",
+          "text": "Pausar a transação para revisão manual",
+          "isCorrect": false,
+          "explanation": "ROLLBACK não pausa — ele desfaz imediatamente e encerra a transação."
+        },
+        {
+          "id": "d",
+          "text": "Criar um ponto de salvamento para uso futuro",
+          "isCorrect": false,
+          "explanation": "Criar ponto de salvamento é o papel do SAVE TRANSACTION, não do ROLLBACK."
+        }
+      ]
+    },
+    {
+      "question": "No MERGE, o que WHEN NOT MATCHED BY SOURCE THEN DELETE faz?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deleta registros da tabela de origem que não existem no destino",
+          "isCorrect": false,
+          "explanation": "É o contrário: BY SOURCE refere-se ao que está faltando NA ORIGEM — ou seja, registros no destino sem correspondência na origem."
+        },
+        {
+          "id": "b",
+          "text": "Deleta registros do destino que não existem na origem",
+          "isCorrect": true,
+          "explanation": "Correto! NOT MATCHED BY SOURCE = existe no destino mas não na origem. Isso serve para sincronizar o destino com a origem, removendo o que foi deletado da origem."
+        },
+        {
+          "id": "c",
+          "text": "Insere registros do destino na tabela de origem",
+          "isCorrect": false,
+          "explanation": "MERGE sempre opera da origem para o destino, nunca o contrário."
+        },
+        {
+          "id": "d",
+          "text": "Deleta todos os registros de ambas as tabelas",
+          "isCorrect": false,
+          "explanation": "Apenas deleta do destino os registros que não têm correspondência na origem."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "UPDATE/DELETE sem WHERE afeta TODAS as linhas — sempre use WHERE",
+    "BEGIN TRANSACTION + COMMIT/ROLLBACK garante atomicidade",
+    "TRUNCATE é mais rápido que DELETE mas não aceita WHERE nem dispara triggers",
+    "MERGE sincroniza tabelas: MATCHED → UPDATE, NOT MATCHED BY TARGET → INSERT, NOT MATCHED BY SOURCE → DELETE"
+  ],
+  "encouragement": "Você dominou DML! Agora vamos para o nível mais avançado: Window Functions, índices e stored procedures — os recursos que distinguem um desenvolvedor SQL sênior."
+}

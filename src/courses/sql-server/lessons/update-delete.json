@@ -1,0 +1,51 @@
+{
+  "id": "update-delete",
+  "courseId": "sql-server",
+  "moduleId": "dml",
+  "title": "UPDATE e DELETE",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "UPDATE é como editar um formulário já enviado — você encontra o registro pelo ID (WHERE) e muda os campos desejados. DELETE é como rasgar esse formulário — o registro some para sempre. Ambos precisam de WHERE para não afetar tudo de uma vez.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "UPDATE — atualizando registros" },
+      {
+        "type": "code",
+        "content": "-- UPDATE simples com WHERE\nUPDATE Clientes\nSET Email = 'novo@email.com',\n    Cidade = 'Curitiba'\nWHERE Id = 5;\n\n-- UPDATE com expressão\nUPDATE Produtos\nSET Preco = Preco * 1.10  -- reajuste de 10%\nWHERE Categoria = 'Eletrônicos';\n\n-- UPDATE com JOIN (atualizar baseado em outra tabela)\nUPDATE p\nSET p.Status = 'VIP'\nFROM Clientes p\nINNER JOIN (\n    SELECT ClienteId\n    FROM Pedidos\n    GROUP BY ClienteId\n    HAVING SUM(Valor) > 10000\n) AS Compras ON p.Id = Compras.ClienteId;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "DELETE — removendo registros" },
+      {
+        "type": "code",
+        "content": "-- DELETE simples com WHERE\nDELETE FROM Clientes\nWHERE DataCadastro < '2020-01-01' AND Ativo = 0;\n\n-- DELETE com subquery\nDELETE FROM ItensPedido\nWHERE PedidoId IN (\n    SELECT Id FROM Pedidos\n    WHERE Status = 'Cancelado'\n    AND DataPedido < '2023-01-01'\n);\n\n-- TRUNCATE — deletar TODAS as linhas (muito mais rápido que DELETE sem WHERE)\nTRUNCATE TABLE LogAcessos;  -- não pode ser revertido facilmente",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "SEMPRE teste seu UPDATE/DELETE com um SELECT antes! Troque DELETE FROM por SELECT * FROM e UPDATE... SET por SELECT... — verifique quantas e quais linhas serão afetadas antes de executar.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Funcionarios abaixo para escrever os comandos:\n\n1. Aumente o salário em 15% de todos os funcionários do departamento 'TI' com salário menor que R$8.000\n2. Marque como inativo (Ativo = 0) todos os funcionários que não pertencem aos departamentos 'TI' ou 'RH'\n3. Delete os registros de funcionários inativos (Ativo = 0) que foram demitidos há mais de 2 anos (DataDemissao < 2022-01-01)\n\nAntes de cada DML, escreva o SELECT equivalente como comentário.",
+    "starterCode": "-- Tabela: Funcionarios\n-- | Id | Nome           | Departamento | Salario  | Ativo | DataDemissao |\n-- |----|----------------|--------------|----------|-------|--------------|\n-- | 1  | Ana Lima       | TI           | 7000.00  | 1     | NULL         |\n-- | 2  | Bruno Souza    | RH           | 4200.00  | 1     | NULL         |\n-- | 3  | Carla Melo     | TI           | 9500.00  | 1     | NULL         |\n-- | 4  | Diego Rocha    | Financeiro   | 3800.00  | 1     | NULL         |\n-- | 5  | Elena Vieira   | Marketing    | 5000.00  | 0     | 2021-06-30   |\n-- | 6  | Felipe Santos  | Financeiro   | 6200.00  | 0     | 2021-03-15   |\n\n-- Verificação 1: quem será afetado pelo UPDATE de salário TI < 8000?\n-- SELECT * FROM Funcionarios WHERE Departamento = 'TI' AND Salario < 8000;\n\n-- UPDATE 1: Reajuste TI\n\n\n-- Verificação 2: quem ficará inativo?\n-- SELECT * FROM Funcionarios WHERE Departamento NOT IN ('TI', 'RH');\n\n-- UPDATE 2: Marcar inativos\n\n\n-- Verificação 3: quem será deletado?\n-- SELECT * FROM Funcionarios WHERE Ativo = 0 AND DataDemissao < '2022-01-01';\n\n-- DELETE 3: Remover inativos antigos",
+    "solution": "-- Verificação 1: quem será afetado pelo UPDATE de salário TI < 8000?\n-- SELECT * FROM Funcionarios WHERE Departamento = 'TI' AND Salario < 8000;\n\n-- UPDATE 1: Reajuste TI\nUPDATE Funcionarios\nSET Salario = Salario * 1.15\nWHERE Departamento = 'TI' AND Salario < 8000;\n\n-- Verificação 2: quem ficará inativo?\n-- SELECT * FROM Funcionarios WHERE Departamento NOT IN ('TI', 'RH');\n\n-- UPDATE 2: Marcar inativos\nUPDATE Funcionarios\nSET Ativo = 0\nWHERE Departamento NOT IN ('TI', 'RH');\n\n-- Verificação 3: quem será deletado?\n-- SELECT * FROM Funcionarios WHERE Ativo = 0 AND DataDemissao < '2022-01-01';\n\n-- DELETE 3: Remover inativos antigos\nDELETE FROM Funcionarios\nWHERE Ativo = 0 AND DataDemissao < '2022-01-01';",
+    "tests": [],
+    "hint": "Para UPDATE 1: WHERE Departamento = 'TI' AND Salario < 8000. Para UPDATE 2: NOT IN ('TI', 'RH'). Para DELETE: combine Ativo = 0 AND DataDemissao < '2022-01-01'. Sempre teste com SELECT antes!",
+    "solutionExplanation": "UPDATE 1: Salario * 1.15 aplica 15% de aumento. WHERE garante que só TI e só quem ganha < 8000 é afetado — Ana (7000) recebe, Carla (9500) não. UPDATE 2: NOT IN ('TI', 'RH') seleciona Financeiro e Marketing — Diego, Elena e Felipe ficam Ativo=0. DELETE: Filtra inativos com DataDemissao antes de 2022 — Elena (2021-06-30) e Felipe (2021-03-15) são removidos."
+  },
+  "keyTakeaways": [
+    "UPDATE sem WHERE afeta todas as linhas — sempre use WHERE",
+    "DELETE sem WHERE remove todas as linhas (TRUNCATE é mais eficiente para isso)",
+    "Teste UPDATE/DELETE com SELECT equivalente antes de executar",
+    "UPDATE com JOIN permite atualizar baseado em dados de outra tabela"
+  ],
+  "commonMistakes": [
+    "UPDATE/DELETE sem WHERE — operação em toda a tabela, potencialmente catastrófico",
+    "DELETE não pode ser facilmente desfeito sem backup ou transação — use com cautela"
+  ],
+  "realWorldExample": "Um processo mensal de manutenção de banco de dados usa UPDATE para atualizar status de clientes inativos, e DELETE para remover logs antigos — sempre dentro de uma transação para poder reverter em caso de erro.",
+  "encouragement": "Com UPDATE e DELETE você tem poder total sobre os dados. Com poder vem responsabilidade — sempre verifique com SELECT antes de executar operações de escrita."
+}

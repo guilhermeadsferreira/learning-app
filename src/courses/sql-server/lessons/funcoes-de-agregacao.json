@@ -1,0 +1,44 @@
+{
+  "id": "funcoes-de-agregacao",
+  "courseId": "sql-server",
+  "moduleId": "agregacao",
+  "title": "Funções de Agregação",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Funções de agregação são como as funções estatísticas de uma planilha Excel — SUM, AVERAGE, COUNT, MAX, MIN. A diferença é que no SQL você aplica essas funções diretamente nas colunas de um banco de dados com milhões de linhas, com muito mais poder e flexibilidade.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "As 5 funções de agregação principais" },
+      {
+        "type": "code",
+        "content": "SELECT\n    COUNT(*)         AS TotalRegistros,    -- conta todas as linhas\n    COUNT(Email)     AS TotalComEmail,     -- conta não-NULLs\n    COUNT(DISTINCT Cidade) AS CidadesUnicas, -- conta valores únicos\n    SUM(Valor)       AS TotalVendas,\n    AVG(Valor)       AS MediaVendas,\n    MIN(Valor)       AS MenorVenda,\n    MAX(Valor)       AS MaiorVenda\nFROM Pedidos;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "COUNT(*) vs COUNT(coluna)" },
+      {
+        "type": "list",
+        "content": "COUNT(*) — conta todas as linhas, incluindo NULLs\nCOUNT(coluna) — conta apenas valores não-NULL naquela coluna\nCOUNT(DISTINCT coluna) — conta valores únicos e não-NULL"
+      },
+      { "type": "heading", "content": "Agregações com filtro (WHERE)" },
+      {
+        "type": "code",
+        "content": "-- Agregação com WHERE filtra antes de agregar\nSELECT\n    COUNT(*) AS TotalPedidosCancelados,\n    SUM(Valor) AS TotalPerdido\nFROM Pedidos\nWHERE Status = 'Cancelado';\n\n-- Agregações em múltiplas colunas\nSELECT\n    MAX(DataPedido) AS UltimoPedido,\n    MIN(DataPedido) AS PrimeiroPedido,\n    DATEDIFF(DAY, MIN(DataPedido), MAX(DataPedido)) AS DiasAtividade\nFROM Pedidos;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "AVG() ignora NULLs automaticamente — só calcula a média dos valores presentes. Isso pode distorcer a média se muitos registros têm NULL. Use ISNULL(coluna, 0) se quiser tratar NULL como zero.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "COUNT(*) conta linhas; COUNT(col) conta não-NULLs; COUNT(DISTINCT col) conta únicos",
+    "SUM, AVG, MIN, MAX ignoram NULLs automaticamente",
+    "WHERE filtra antes da agregação — reduz o conjunto antes do cálculo",
+    "Funções de agregação sem GROUP BY retornam uma única linha com o total geral"
+  ],
+  "realWorldExample": "Um relatório financeiro usa SUM(Valor) para o faturamento total, AVG(Valor) para o ticket médio, COUNT(*) para o total de pedidos e MAX(DataPedido) para a data do pedido mais recente — tudo em uma única query.",
+  "encouragement": "Funções de agregação transformam milhares de linhas em um único número significativo. Combinadas com GROUP BY, elas ficam ainda mais poderosas."
+}

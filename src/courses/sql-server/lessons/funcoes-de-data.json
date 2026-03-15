@@ -1,0 +1,45 @@
+{
+  "id": "funcoes-de-data",
+  "courseId": "sql-server",
+  "moduleId": "funcoes-tsql",
+  "title": "Funções de Data",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Datas no SQL Server são como um calendário inteligente. Você pode pedir 'quantos dias entre essas duas datas?', 'qual é o mês desse pedido?', 'mostre só as vendas de 2024' — tudo com funções nativas que entendem calendário.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Data atual e partes de data" },
+      {
+        "type": "code",
+        "content": "-- Data e hora atual\nSELECT GETDATE();       -- datetime atual: 2024-03-15 10:30:45.123\nSELECT SYSDATETIME();   -- mais preciso (datetime2)\nSELECT CAST(GETDATE() AS DATE); -- só data: 2024-03-15\n\n-- YEAR, MONTH, DAY\nSELECT\n    YEAR(GETDATE()),    -- 2024\n    MONTH(GETDATE()),   -- 3\n    DAY(GETDATE());     -- 15\n\n-- DATEPART — extrai qualquer parte\nSELECT\n    DATEPART(WEEKDAY, GETDATE()),  -- dia da semana (1=domingo)\n    DATEPART(QUARTER, GETDATE()),  -- trimestre (1-4)\n    DATEPART(HOUR, GETDATE());     -- hora",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Diferença e adição de datas" },
+      {
+        "type": "code",
+        "content": "-- DATEDIFF(parte, início, fim)\nSELECT DATEDIFF(DAY,  '2024-01-01', '2024-03-15'); -- 74 dias\nSELECT DATEDIFF(MONTH,'2024-01-01', '2024-03-15'); -- 2 meses\nSELECT DATEDIFF(YEAR, '2000-05-20', GETDATE());    -- idade em anos\n\n-- DATEADD(parte, valor, data)\nSELECT DATEADD(DAY,   30, GETDATE());  -- daqui a 30 dias\nSELECT DATEADD(MONTH, -3, GETDATE());  -- 3 meses atrás\nSELECT DATEADD(YEAR,   1, '2024-01-01'); -- '2025-01-01'",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Formatando datas" },
+      {
+        "type": "code",
+        "content": "-- FORMAT (T-SQL 2012+)\nSELECT FORMAT(GETDATE(), 'dd/MM/yyyy');        -- '15/03/2024'\nSELECT FORMAT(GETDATE(), 'yyyy-MM-dd HH:mm');  -- '2024-03-15 10:30'\nSELECT FORMAT(GETDATE(), 'MMMM yyyy', 'pt-BR'); -- 'março 2024'\n\n-- CONVERT para formatos comuns\nSELECT CONVERT(VARCHAR, GETDATE(), 103); -- '15/03/2024' (estilo 103)",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Prefira comparar datas sem FORMAT() no WHERE — aplicar funções em colunas indexadas desabilita o uso do índice. Compare direto: WHERE DataPedido >= '2024-01-01'.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "GETDATE() retorna data/hora atual; CAST(GETDATE() AS DATE) retorna só a data",
+    "YEAR(), MONTH(), DAY() e DATEPART() extraem partes de uma data",
+    "DATEDIFF(parte, início, fim) calcula a diferença entre duas datas",
+    "DATEADD(parte, valor, data) soma ou subtrai um intervalo de uma data"
+  ],
+  "realWorldExample": "Um sistema de e-commerce usa DATEDIFF(DAY, DataPedido, DataEntrega) para calcular o prazo de entrega, DATEADD(DAY, 30, DataCompra) para a data de vencimento da garantia, e YEAR/MONTH para agrupar vendas por período.",
+  "encouragement": "Manipulação de datas é uma das habilidades mais valorizadas em SQL. Com T-SQL você tem um arsenal completo para qualquer análise temporal."
+}

@@ -1,0 +1,143 @@
+{
+  "id": "quiz-funcoes",
+  "courseId": "sql-server",
+  "moduleId": "funcoes-tsql",
+  "title": "Quiz — Funções T-SQL",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar as funções nativas do T-SQL antes de avançar para Joins."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual função T-SQL retorna a data e hora atual do servidor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "NOW()",
+          "isCorrect": false,
+          "explanation": "NOW() é a função do MySQL. Em T-SQL, a função equivalente é GETDATE()."
+        },
+        {
+          "id": "b",
+          "text": "CURRENT_DATE()",
+          "isCorrect": false,
+          "explanation": "CURRENT_DATE não existe como função em T-SQL. Use GETDATE() para data e hora ou CAST(GETDATE() AS DATE) para só a data."
+        },
+        {
+          "id": "c",
+          "text": "GETDATE()",
+          "isCorrect": true,
+          "explanation": "Correto! GETDATE() retorna a data e hora atual do servidor SQL Server como datetime."
+        },
+        {
+          "id": "d",
+          "text": "SYSDATE()",
+          "isCorrect": false,
+          "explanation": "SYSDATE() é a função do Oracle. Em T-SQL use GETDATE() ou SYSDATETIME() para maior precisão."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença entre ISNULL() e COALESCE()?",
+      "options": [
+        {
+          "id": "a",
+          "text": "São idênticas — apenas nomes diferentes para a mesma função",
+          "isCorrect": false,
+          "explanation": "Não são idênticas. COALESCE aceita múltiplos argumentos; ISNULL aceita apenas 2. COALESCE é SQL padrão; ISNULL é T-SQL específico."
+        },
+        {
+          "id": "b",
+          "text": "ISNULL aceita 2 argumentos (T-SQL); COALESCE aceita múltiplos e é SQL padrão",
+          "isCorrect": true,
+          "explanation": "Correto! ISNULL(valor, substituto) tem exatamente 2 argumentos. COALESCE(v1, v2, v3, ...) aceita N argumentos e retorna o primeiro não-NULL."
+        },
+        {
+          "id": "c",
+          "text": "ISNULL verifica se o valor é NULL; COALESCE substitui NULL por outro valor",
+          "isCorrect": false,
+          "explanation": "Ambas substituem NULL por um valor alternativo. Para apenas verificar NULL, use IS NULL no WHERE."
+        },
+        {
+          "id": "d",
+          "text": "COALESCE é mais lento e deve ser evitado",
+          "isCorrect": false,
+          "explanation": "COALESCE é o padrão SQL recomendado. ISNULL pode ser marginalmente mais rápido com 2 argumentos, mas a diferença é insignificante na prática."
+        }
+      ]
+    },
+    {
+      "question": "Qual função extrai a quantidade de dias entre duas datas em T-SQL?",
+      "options": [
+        {
+          "id": "a",
+          "text": "DATEDIFF(DAY, data1, data2)",
+          "isCorrect": true,
+          "explanation": "Correto! DATEDIFF(parte, início, fim) calcula a diferença entre datas. O primeiro argumento especifica a unidade: DAY, MONTH, YEAR, HOUR, etc."
+        },
+        {
+          "id": "b",
+          "text": "DATESUBTRACT(data1, data2)",
+          "isCorrect": false,
+          "explanation": "DATESUBTRACT não existe em T-SQL. Use DATEDIFF()."
+        },
+        {
+          "id": "c",
+          "text": "data2 - data1",
+          "isCorrect": false,
+          "explanation": "Subtração direta de datas não funciona em SQL Server como em alguns outros bancos. Use DATEDIFF()."
+        },
+        {
+          "id": "d",
+          "text": "DATEPART(DAY, data2 - data1)",
+          "isCorrect": false,
+          "explanation": "DATEPART extrai uma parte de uma única data — não calcula diferenças. Use DATEDIFF()."
+        }
+      ]
+    },
+    {
+      "question": "No CASE WHEN, o que acontece se nenhuma condição for verdadeira e não há ELSE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A query retorna um erro",
+          "isCorrect": false,
+          "explanation": "A query não falha. Sem ELSE, o CASE retorna NULL silenciosamente."
+        },
+        {
+          "id": "b",
+          "text": "Retorna uma string vazia",
+          "isCorrect": false,
+          "explanation": "Não retorna string vazia — retorna NULL, que é ausência de valor."
+        },
+        {
+          "id": "c",
+          "text": "Retorna NULL",
+          "isCorrect": true,
+          "explanation": "Correto! Sem ELSE explícito, o CASE retorna NULL quando nenhuma condição WHEN é satisfeita."
+        },
+        {
+          "id": "d",
+          "text": "Retorna o valor original da coluna",
+          "isCorrect": false,
+          "explanation": "O CASE não tem acesso ao valor original por padrão. Sem ELSE, retorna NULL."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "GETDATE() é a função T-SQL para data/hora atual (não NOW())",
+    "DATEDIFF(parte, início, fim) calcula diferenças entre datas",
+    "ISNULL tem 2 args (T-SQL); COALESCE tem N args (SQL padrão)",
+    "CASE WHEN sem ELSE retorna NULL quando nenhuma condição é verdadeira"
+  ],
+  "encouragement": "Funções T-SQL dominadas! Agora vamos aprender a combinar tabelas com JOINs — o conceito que separa quem conhece SQL de quem realmente domina SQL."
+}

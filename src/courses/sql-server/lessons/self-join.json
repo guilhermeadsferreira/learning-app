@@ -1,0 +1,55 @@
+{
+  "id": "self-join",
+  "courseId": "sql-server",
+  "moduleId": "joins",
+  "title": "SELF JOIN",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "SELF JOIN é como uma empresa com organograma hierárquico numa única tabela. Cada funcionário tem um campo 'GerenteId' que aponta para outro funcionário da mesma tabela. Para exibir 'Funcionário X, gerenciado por Y', você junta a tabela com ela mesma.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é SELF JOIN?" },
+      {
+        "type": "paragraph",
+        "content": "SELF JOIN é quando você faz JOIN de uma tabela com ela mesma. É necessário usar aliases distintos para diferenciar as duas 'instâncias' da mesma tabela. Muito usado em hierarquias (funcionários e gerentes, categorias e subcategorias)."
+      },
+      {
+        "type": "code",
+        "content": "-- Estrutura de tabela hierárquica\n-- Funcionarios: Id, Nome, GerenteId (FK → Id da mesma tabela)\n\n-- SELF JOIN para exibir funcionário e seu gerente\nSELECT\n    f.Nome  AS Funcionario,\n    g.Nome  AS Gerente\nFROM Funcionarios f\nLEFT JOIN Funcionarios g ON f.GerenteId = g.Id;\n-- LEFT JOIN para incluir o CEO que não tem gerente (GerenteId = NULL)",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Outros casos de uso" },
+      {
+        "type": "code",
+        "content": "-- Comparar linhas da mesma tabela\n-- Ex: encontrar funcionários com mesmo salário\nSELECT\n    f1.Nome AS Funcionario1,\n    f2.Nome AS Funcionario2,\n    f1.Salario\nFROM Funcionarios f1\nINNER JOIN Funcionarios f2\n    ON f1.Salario = f2.Salario\n    AND f1.Id < f2.Id; -- evitar duplicatas (A+B e B+A)\n\n-- Categorias e subcategorias\nSELECT\n    sub.Nome AS Subcategoria,\n    pai.Nome AS CategoriaPai\nFROM Categorias sub\nLEFT JOIN Categorias pai ON sub.PaiId = pai.Id;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Em SELF JOINs hierárquicos, prefira LEFT JOIN para que os itens no topo da hierarquia (sem pai) também apareçam no resultado.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Funcionarios abaixo para escrever as queries:\n\n1. Liste cada funcionário com o nome do seu gerente (NULL se não tiver gerente)\n2. Liste apenas os funcionários que têm gerente (excluir o CEO)\n3. Liste todos os pares de colegas de departamento (mesmo DeptId, IDs diferentes, sem duplicatas)",
+    "starterCode": "-- Tabela: Funcionarios\n-- | Id | Nome           | GerenteId | DeptId | Salario  |\n-- |----|----------------|-----------|--------|----------|\n-- | 1  | Roberto CEO    | NULL      | 1      | 25000.00 |\n-- | 2  | Ana Lima       | 1         | 1      | 8500.00  |\n-- | 3  | Bruno Souza    | 1         | 2      | 4200.00  |\n-- | 4  | Carla Melo     | 2         | 1      | 6000.00  |\n-- | 5  | Diego Rocha    | 3         | 2      | 3800.00  |\n\n-- Query 1: Funcionário com nome do gerente\n\n\n-- Query 2: Apenas funcionários com gerente\n\n\n-- Query 3: Pares de colegas de departamento",
+    "solution": "-- Query 1: Funcionário com nome do gerente\nSELECT\n    f.Nome AS Funcionario,\n    g.Nome AS Gerente\nFROM Funcionarios f\nLEFT JOIN Funcionarios g ON f.GerenteId = g.Id;\n\n-- Query 2: Apenas funcionários com gerente\nSELECT\n    f.Nome AS Funcionario,\n    g.Nome AS Gerente\nFROM Funcionarios f\nINNER JOIN Funcionarios g ON f.GerenteId = g.Id;\n\n-- Query 3: Pares de colegas de departamento\nSELECT\n    f1.Nome AS Funcionario1,\n    f2.Nome AS Funcionario2,\n    f1.DeptId\nFROM Funcionarios f1\nINNER JOIN Funcionarios f2\n    ON f1.DeptId = f2.DeptId\n    AND f1.Id < f2.Id;",
+    "tests": [],
+    "hint": "Use dois aliases diferentes (f e g) para a mesma tabela. LEFT JOIN inclui quem não tem gerente (NULL); INNER JOIN exclui. Para evitar par duplicado (A-B e B-A), use f1.Id < f2.Id.",
+    "solutionExplanation": "Query 1: f é o funcionário, g é o gerente — mesma tabela, dois aliases. LEFT JOIN preserva o CEO (GerenteId = NULL). Query 2: INNER JOIN exige match — sem GerenteId, Roberto CEO não aparece. Query 3: f1.DeptId = f2.DeptId encontra colegas; f1.Id < f2.Id garante que (Ana, Carla) apareça uma vez, não também como (Carla, Ana)."
+  },
+  "keyTakeaways": [
+    "SELF JOIN faz JOIN de uma tabela com ela mesma — obrigatório usar dois aliases distintos",
+    "Use LEFT JOIN para hierarquias onde o topo (sem pai/gerente) deve aparecer",
+    "Para pares sem duplicatas em SELF JOIN, use f1.Id < f2.Id na condição ON",
+    "SELF JOIN é essencial para estruturas hierárquicas armazenadas em uma única tabela"
+  ],
+  "commonMistakes": [
+    "Esquecer aliases distintos — o SQL Server fica confuso sobre qual instância usar",
+    "Usar INNER JOIN em hierarquias e perder o elemento raiz (sem pai)"
+  ],
+  "realWorldExample": "Um organograma corporativo usa SELF JOIN para navegar pela hierarquia de gerentes e subordinados. Um sistema de categorias de e-commerce usa SELF JOIN para exibir 'Eletrônicos > Computadores > Notebooks'.",
+  "encouragement": "SELF JOIN parece confuso no início, mas faz sentido quando você pensa em dois papéis diferentes para a mesma tabela. Você dominou todos os tipos de JOIN!"
+}

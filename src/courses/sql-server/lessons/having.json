@@ -1,0 +1,45 @@
+{
+  "id": "having",
+  "courseId": "sql-server",
+  "moduleId": "agregacao",
+  "title": "HAVING",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "WHERE filtra linhas individuais antes de agrupar. HAVING filtra grupos depois de agrupar. É como filtrar primeiro os registros individuais (WHERE) e depois filtrar os resumos resultantes (HAVING): 'de todos os vendedores, mostre só os que venderam mais de R$10.000'.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "WHERE vs HAVING" },
+      {
+        "type": "code",
+        "content": "-- WHERE filtra ANTES do agrupamento (linhas individuais)\nSELECT Departamento, AVG(Salario) AS Media\nFROM Funcionarios\nWHERE Ativo = 1          -- filtra funcionários inativos ANTES de agrupar\nGROUP BY Departamento;\n\n-- HAVING filtra DEPOIS do agrupamento (grupos)\nSELECT Departamento, AVG(Salario) AS Media\nFROM Funcionarios\nGROUP BY Departamento\nHAVING AVG(Salario) > 5000; -- só departamentos com média > 5000\n\n-- WHERE + HAVING juntos (padrão mais comum)\nSELECT Departamento, COUNT(*) AS Total, SUM(Salario) AS Folha\nFROM Funcionarios\nWHERE Ativo = 1\nGROUP BY Departamento\nHAVING COUNT(*) >= 3;  -- departamentos com 3 ou mais funcionários ativos",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Você não pode usar aliases do SELECT no HAVING — a expressão deve ser repetida. Ex: HAVING AVG(Salario) > 5000 (não HAVING Media > 5000). Isso ocorre porque HAVING é avaliado antes do SELECT.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Pedidos abaixo para escrever as queries:\n\n1. Liste os clientes com mais de 1 pedido, mostrando Nome e quantidade de pedidos\n2. Mostre a média de valor por status de pedido — apenas para status com média acima de R$800\n3. Liste vendedores que faturaram mais de R$5.000 nos pedidos com Status = 'Entregue'",
+    "starterCode": "-- Tabela: Pedidos\n-- | Id | Cliente       | Vendedor     | Status    | Valor   |\n-- |----|---------------|--------------|-----------|----------|\n-- | 1  | Ana Souza     | Carlos Lima  | Entregue  | 350.00  |\n-- | 2  | Bruno Melo    | Ana Costa    | Entregue  | 2800.00 |\n-- | 3  | Ana Souza     | Carlos Lima  | Cancelado | 900.00  |\n-- | 4  | Carla Dias    | Ana Costa    | Entregue  | 4500.00 |\n-- | 5  | Bruno Melo    | Pedro Alves  | Pendente  | 650.00  |\n-- | 6  | Ana Souza     | Pedro Alves  | Entregue  | 1200.00 |\n-- | 7  | Diego Rocha   | Carlos Lima  | Pendente  | 380.00  |\n\n-- Query 1: Clientes com mais de 1 pedido\n\n\n-- Query 2: Média por status (só média > 800)\n\n\n-- Query 3: Vendedores com faturamento > 5000 em pedidos Entregues",
+    "solution": "-- Query 1: Clientes com mais de 1 pedido\nSELECT\n    Cliente,\n    COUNT(*) AS TotalPedidos\nFROM Pedidos\nGROUP BY Cliente\nHAVING COUNT(*) > 1\nORDER BY TotalPedidos DESC;\n\n-- Query 2: Média por status (só média > 800)\nSELECT\n    Status,\n    AVG(Valor) AS MediaValor\nFROM Pedidos\nGROUP BY Status\nHAVING AVG(Valor) > 800;\n\n-- Query 3: Vendedores com faturamento > 5000 em pedidos Entregues\nSELECT\n    Vendedor,\n    SUM(Valor) AS TotalFaturado\nFROM Pedidos\nWHERE Status = 'Entregue'\nGROUP BY Vendedor\nHAVING SUM(Valor) > 5000;",
+    "tests": [],
+    "hint": "HAVING usa funções de agregação como condição — HAVING COUNT(*) > 1. Para query 3, use WHERE antes do GROUP BY para filtrar só os 'Entregue', depois HAVING para filtrar o total.",
+    "solutionExplanation": "Query 1: GROUP BY Cliente agrupa pedidos por cliente; HAVING COUNT(*) > 1 filtra apenas clientes com mais de um pedido. Query 2: Sem WHERE — agrupamos todos os pedidos por Status e filtramos grupos pela média. Query 3: WHERE Status = 'Entregue' filtra antes do GROUP BY (não conta cancelados/pendentes); HAVING SUM(Valor) > 5000 filtra os vendedores pelo total de entregues."
+  },
+  "keyTakeaways": [
+    "HAVING filtra grupos após o GROUP BY — WHERE filtra linhas antes do GROUP BY",
+    "Use WHERE para condições em colunas individuais; HAVING para condições em agregações",
+    "Não repita o alias no HAVING — use a expressão de agregação completa",
+    "WHERE + GROUP BY + HAVING juntos é o padrão mais poderoso para análises"
+  ],
+  "commonMistakes": [
+    "Tentar usar WHERE com funções de agregação: WHERE COUNT(*) > 5 — erro! Use HAVING",
+    "Usar alias do SELECT no HAVING — o alias ainda não existe nessa etapa de execução"
+  ],
+  "realWorldExample": "Um relatório de clientes VIP usa HAVING SUM(Valor) > 50000 para identificar clientes que acumularam mais de R$50.000 em compras, combinado com WHERE no período desejado.",
+  "encouragement": "WHERE + HAVING é uma combinação muito poderosa. Você agora consegue filtrar em dois níveis diferentes — linha por linha e grupo por grupo."
+}

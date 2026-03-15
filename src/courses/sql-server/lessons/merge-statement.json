@@ -1,0 +1,55 @@
+{
+  "id": "merge-statement",
+  "courseId": "sql-server",
+  "moduleId": "dml",
+  "title": "MERGE Statement",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "advanced",
+  "analogy": "MERGE é como sincronizar uma planilha local com o Google Sheets: para cada linha, você verifica — se já existe, atualiza; se não existe, insere; se existe localmente mas não no servidor, deleta. Tudo em uma única operação inteligente.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é MERGE?" },
+      {
+        "type": "paragraph",
+        "content": "MERGE (T-SQL 2008+) combina INSERT, UPDATE e DELETE em uma única instrução. Você compara uma tabela de origem com uma tabela de destino e define o que fazer em cada caso: quando há match, quando não há match na origem, quando não há match no destino."
+      },
+      {
+        "type": "code",
+        "content": "-- Sintaxe do MERGE\nMERGE INTO TabelaDestino AS destino\nUSING TabelaOrigem AS origem\n    ON destino.Id = origem.Id\nWHEN MATCHED THEN\n    -- Registro existe em ambas as tabelas\n    UPDATE SET\n        destino.Nome  = origem.Nome,\n        destino.Preco = origem.Preco\nWHEN NOT MATCHED BY TARGET THEN\n    -- Existe na origem, não no destino → INSERT\n    INSERT (Id, Nome, Preco)\n    VALUES (origem.Id, origem.Nome, origem.Preco)\nWHEN NOT MATCHED BY SOURCE THEN\n    -- Existe no destino, não na origem → DELETE\n    DELETE;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "MERGE com condições adicionais" },
+      {
+        "type": "code",
+        "content": "-- MERGE com condições no WHEN MATCHED\nMERGE INTO Produtos AS dest\nUSING NovosPrecos AS src\n    ON dest.SKU = src.SKU\nWHEN MATCHED AND dest.Preco <> src.Preco THEN\n    UPDATE SET dest.Preco = src.Preco, dest.UltimaAtualizacao = GETDATE()\nWHEN NOT MATCHED BY TARGET THEN\n    INSERT (SKU, Nome, Preco, UltimaAtualizacao)\n    VALUES (src.SKU, src.Nome, src.Preco, GETDATE());\n-- Sem WHEN NOT MATCHED BY SOURCE → registros removidos da origem são mantidos",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre termine o MERGE com ponto e vírgula (;) — é obrigatório em T-SQL. Evite MERGE em tabelas com múltiplos matches para a mesma chave — pode causar comportamento inesperado.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use as tabelas abaixo para escrever o MERGE:\n\n1. Escreva um MERGE que sincronize a tabela Produtos com a tabela ProdutosNovos:\n   - Se o produto já existe (mesmo Id): atualize Nome e Preco\n   - Se o produto existe em ProdutosNovos mas não em Produtos: insira\n   - Se o produto existe em Produtos mas não em ProdutosNovos: delete\n\n2. Escreva um MERGE mais simples (sem DELETE) que atualiza ou insere clientes da tabela ClientesImportados para Clientes, usando Email como chave de match",
+    "starterCode": "-- Tabela: Produtos (destino)\n-- | Id | Nome       | Preco   |\n-- |----|------------|---------|\n-- | 1  | Notebook   | 4500.00 |\n-- | 2  | Monitor    | 1200.00 |\n-- | 3  | Teclado    | 350.00  |\n\n-- Tabela: ProdutosNovos (origem)\n-- | Id | Nome         | Preco   |\n-- |----|--------------|--------|\n-- | 1  | Notebook Pro | 5200.00 |  (atualizar)\n-- | 2  | Monitor      | 1100.00 |  (atualizar)\n-- | 4  | Webcam       | 420.00  |  (inserir)\n-- (Teclado Id=3 não está → será deletado)\n\n-- Tabela: Clientes (destino)\n-- | Id | Nome        | Email              | Cidade    |\n-- |----|-------------|--------------------|-----------|\n-- | 1  | Ana Lima    | ana@email.com      | São Paulo |\n-- | 2  | Bruno Melo  | bruno@email.com    | Campinas  |\n\n-- Tabela: ClientesImportados (origem)\n-- | Nome        | Email              | Cidade        |\n-- |-------------|--------------------|--------------|\n-- | Ana Souza   | ana@email.com      | Rio de Janeiro| (atualizar nome e cidade)\n-- | Carlos Dias | carlos@email.com   | Belo Horizonte| (inserir)\n\n-- MERGE 1: Sincronizar Produtos\n\n\n-- MERGE 2: Upsert Clientes por Email",
+    "solution": "-- MERGE 1: Sincronizar Produtos\nMERGE INTO Produtos AS dest\nUSING ProdutosNovos AS src\n    ON dest.Id = src.Id\nWHEN MATCHED THEN\n    UPDATE SET\n        dest.Nome  = src.Nome,\n        dest.Preco = src.Preco\nWHEN NOT MATCHED BY TARGET THEN\n    INSERT (Id, Nome, Preco)\n    VALUES (src.Id, src.Nome, src.Preco)\nWHEN NOT MATCHED BY SOURCE THEN\n    DELETE;\n\n-- MERGE 2: Upsert Clientes por Email\nMERGE INTO Clientes AS dest\nUSING ClientesImportados AS src\n    ON dest.Email = src.Email\nWHEN MATCHED THEN\n    UPDATE SET\n        dest.Nome   = src.Nome,\n        dest.Cidade = src.Cidade\nWHEN NOT MATCHED BY TARGET THEN\n    INSERT (Nome, Email, Cidade)\n    VALUES (src.Nome, src.Email, src.Cidade);",
+    "tests": [],
+    "hint": "MERGE usa ON para a condição de match, WHEN MATCHED para atualizar, WHEN NOT MATCHED BY TARGET para inserir, WHEN NOT MATCHED BY SOURCE para deletar. Termine sempre com ponto e vírgula.",
+    "solutionExplanation": "MERGE 1: ON dest.Id = src.Id compara chaves. MATCHED: Notebook (1) e Monitor (2) são atualizados. NOT MATCHED BY TARGET: Webcam (4) não existe no destino — INSERT. NOT MATCHED BY SOURCE: Teclado (3) não existe na origem — DELETE. MERGE 2: ON dest.Email = src.Email usa email como chave única. Ana existe (email igual) → UPDATE de nome e cidade. Carlos não existe → INSERT. Sem WHEN NOT MATCHED BY SOURCE — Bruno não é deletado."
+  },
+  "keyTakeaways": [
+    "MERGE combina INSERT + UPDATE + DELETE baseado na comparação origem/destino",
+    "WHEN MATCHED: match encontrado → UPDATE; NOT MATCHED BY TARGET: novo → INSERT",
+    "WHEN NOT MATCHED BY SOURCE: removido da origem → DELETE",
+    "Sempre termine MERGE com ponto e vírgula (;) — é obrigatório"
+  ],
+  "commonMistakes": [
+    "Esquecer o ponto e vírgula no final do MERGE — erro de sintaxe",
+    "Chave ambígua na condição ON causando múltiplos matches — pode gerar comportamento inesperado"
+  ],
+  "realWorldExample": "Um processo ETL usa MERGE diariamente para sincronizar a tabela de produtos com um catálogo externo: novos produtos são inseridos, alterados são atualizados, removidos do catálogo são deletados — tudo em uma única operação atômica.",
+  "encouragement": "MERGE é uma das operações mais poderosas do T-SQL para ETL e sincronização de dados. Você está dominando recursos que poucos desenvolvedores conhecem em profundidade!"
+}

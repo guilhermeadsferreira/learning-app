@@ -1,0 +1,53 @@
+{
+  "id": "joins-introducao",
+  "courseId": "sql-server",
+  "moduleId": "joins",
+  "title": "Introdução aos JOINs",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Imagine duas planilhas: uma com clientes e seus IDs, outra com pedidos ligados ao ID do cliente. JOIN é a operação de combinar essas duas planilhas em uma única visão, usando o ID como elo de ligação. Em vez de consultar duas fontes separadas, você enxerga tudo junto.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Por que usar JOINs?" },
+      {
+        "type": "paragraph",
+        "content": "Bancos de dados relacionais armazenam dados em tabelas separadas para evitar redundância — técnica chamada de normalização. JOINs permitem reunir dados de múltiplas tabelas em uma única query, usando a relação entre chaves primárias e estrangeiras."
+      },
+      { "type": "heading", "content": "Tipos de JOIN" },
+      {
+        "type": "list",
+        "content": "INNER JOIN — retorna apenas as linhas com correspondência em ambas as tabelas\nLEFT JOIN — retorna todas as linhas da tabela esquerda + correspondências da direita\nRIGHT JOIN — retorna todas as linhas da tabela direita + correspondências da esquerda\nFULL OUTER JOIN — retorna todas as linhas de ambas as tabelas\nSELF JOIN — uma tabela juntada com ela mesma\nCROSS JOIN — produto cartesiano (todas as combinações possíveis)"
+      },
+      { "type": "heading", "content": "Sintaxe básica" },
+      {
+        "type": "code",
+        "content": "-- Estrutura geral\nSELECT\n    t1.coluna1,\n    t2.coluna2\nFROM Tabela1 AS t1\nINNER JOIN Tabela2 AS t2\n    ON t1.ChaveEstrangeira = t2.ChavePrimaria;\n\n-- Exemplo com Clientes e Pedidos\nSELECT\n    c.Nome,\n    p.DataPedido,\n    p.Valor\nFROM Clientes AS c\nINNER JOIN Pedidos AS p\n    ON c.Id = p.ClienteId;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Aliases são essenciais em JOINs" },
+      {
+        "type": "paragraph",
+        "content": "Quando duas tabelas têm colunas com o mesmo nome (como Id), você precisa especificar a tabela. Aliases curtos (c, p, o) tornam a query mais legível e são uma convenção amplamente adotada."
+      },
+      {
+        "type": "code",
+        "content": "-- Sem alias — ambíguo e verboso\nSELECT Clientes.Nome, Pedidos.Valor\nFROM Clientes\nINNER JOIN Pedidos ON Clientes.Id = Pedidos.ClienteId;\n\n-- Com alias — limpo e claro\nSELECT c.Nome, p.Valor\nFROM Clientes c\nINNER JOIN Pedidos p ON c.Id = p.ClienteId;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre use aliases ao fazer JOINs e sempre prefixe as colunas com o alias da tabela. Isso evita ambiguidade e facilita a leitura — especialmente com 3 ou mais tabelas.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "JOINs combinam linhas de tabelas diferentes usando a relação PK/FK",
+    "INNER JOIN retorna só os matches; LEFT/RIGHT JOIN preserva a tabela do lado especificado",
+    "Sempre use aliases (AS c, AS p) ao fazer JOINs",
+    "A condição ON define como as tabelas se relacionam"
+  ],
+  "realWorldExample": "Um sistema de e-commerce precisa de JOINs para mostrar 'pedidos com nome do cliente' (Clientes + Pedidos), 'produtos de cada pedido' (Pedidos + ItensPedido + Produtos) e 'avaliações com nome do revisor' (Reviews + Usuarios).",
+  "encouragement": "JOINs são o coração do SQL relacional. Dominar isso vai multiplicar o poder das suas queries — você vai de uma tabela para o banco inteiro."
+}

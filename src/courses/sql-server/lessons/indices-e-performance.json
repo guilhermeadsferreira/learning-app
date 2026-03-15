@@ -1,0 +1,50 @@
+{
+  "id": "indices-e-performance",
+  "courseId": "sql-server",
+  "moduleId": "avancado",
+  "title": "Índices e Performance",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Um índice em um banco de dados é como o índice remissivo de um livro. Sem ele, para encontrar 'função CASE WHEN', você leria o livro inteiro (full table scan). Com ele, você vai direto à página certa. Índices trocam espaço em disco por velocidade de leitura.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Tipos de índice no SQL Server" },
+      {
+        "type": "list",
+        "content": "Clustered Index — define a ordem física das linhas na tabela (uma por tabela, geralmente a PK)\nNon-Clustered Index — estrutura separada que aponta para as linhas (vários por tabela)\nCovering Index — inclui as colunas do SELECT para evitar lookup na tabela\nFiltered Index — índice parcial com condição WHERE (ótimo para dados com NULLs)"
+      },
+      { "type": "heading", "content": "Criando índices" },
+      {
+        "type": "code",
+        "content": "-- Non-clustered simples\nCREATE INDEX IX_Clientes_Email\nON Clientes (Email);\n\n-- Non-clustered composto (ordem importa!)\nCREATE INDEX IX_Pedidos_ClienteData\nON Pedidos (ClienteId, DataPedido DESC);\n\n-- Covering index (INCLUDE adiciona colunas sem compor a chave)\nCREATE INDEX IX_Pedidos_Covering\nON Pedidos (ClienteId)\nINCLUDE (Valor, Status, DataPedido);\n-- Query: SELECT Valor, Status FROM Pedidos WHERE ClienteId = 5\n-- Resolve com o índice sem ir à tabela\n\n-- Verificar índices existentes\nSELECT * FROM sys.indexes WHERE object_id = OBJECT_ID('Pedidos');",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Quando um índice é usado?" },
+      {
+        "type": "code",
+        "content": "-- O índice em Email SERÁ usado\nSELECT * FROM Clientes WHERE Email = 'ana@email.com';\n\n-- O índice em Email NÃO será usado (função na coluna)\nSELECT * FROM Clientes WHERE UPPER(Email) = 'ANA@EMAIL.COM';\n-- Solução: normalizar ao inserir ou usar índice calculado\n\n-- O índice em DataPedido NÃO será usado (LIKE com % à esquerda)\nSELECT * FROM Pedidos WHERE CONVERT(VARCHAR, DataPedido, 103) LIKE '%2024%';\n-- Solução: usar BETWEEN com datas\nSELECT * FROM Pedidos WHERE DataPedido BETWEEN '2024-01-01' AND '2024-12-31';",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Analisando o plano de execução" },
+      {
+        "type": "code",
+        "content": "-- Verificar se a query usa índices\nSET STATISTICS IO ON;\nSELECT * FROM Clientes WHERE Email = 'ana@email.com';\n-- Logical reads baixo = índice usado\n\n-- Ver plano de execução (Ctrl+M no SSMS)\n-- Table Scan / Clustered Index Scan = sem índice (ruim para grandes tabelas)\n-- Index Seek = índice usado (bom!)",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Não crie índices em excesso — cada índice aumenta o custo de INSERT/UPDATE/DELETE. Crie índices para colunas frequentemente usadas em WHERE, JOIN e ORDER BY de queries lentas identificadas no plano de execução.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Clustered Index define a ordem física; Non-Clustered é uma estrutura separada",
+    "INCLUDE no índice adiciona colunas cobertas sem compor a chave — evita lookups",
+    "Funções em colunas indexadas (UPPER, CONVERT) impedem o uso do índice",
+    "Analise o plano de execução: Index Seek é bom, Table Scan é ruim em tabelas grandes"
+  ],
+  "realWorldExample": "Uma query de relatório lenta faz Table Scan em uma tabela com 10 milhões de pedidos. Criar um índice composto em (ClienteId, DataPedido) com INCLUDE (Valor, Status) reduz o tempo de 30 segundos para 100ms.",
+  "encouragement": "Entender índices é o que transforma um desenvolvedor SQL em um especialista de performance. Com esse conhecimento você pode resolver problemas que impactam diretamente a experiência do usuário."
+}

@@ -1,0 +1,46 @@
+{
+  "id": "filtragem-where",
+  "courseId": "sql-server",
+  "moduleId": "fundamentos",
+  "title": "Filtragem com WHERE",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "O WHERE é como o filtro de uma pesquisa online. De milhares de produtos, você filtra por 'preço menor que R$100' e 'categoria: eletrônicos'. O banco de dados aplica a condição e devolve apenas o que você precisa.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Filtrando com WHERE" },
+      {
+        "type": "code",
+        "content": "-- Comparações básicas\nSELECT * FROM Produtos WHERE Preco > 100;\nSELECT * FROM Clientes WHERE Cidade = 'São Paulo';\nSELECT * FROM Pedidos WHERE Status <> 'Cancelado';\n\n-- Operadores lógicos\nSELECT * FROM Produtos\nWHERE Preco > 50 AND Estoque > 0;\n\nSELECT * FROM Clientes\nWHERE Cidade = 'São Paulo' OR Cidade = 'Campinas';\n\n-- BETWEEN — intervalo inclusivo\nSELECT * FROM Pedidos\nWHERE DataPedido BETWEEN '2024-01-01' AND '2024-12-31';\n\n-- IN — lista de valores\nSELECT * FROM Clientes\nWHERE Cidade IN ('São Paulo', 'Rio de Janeiro', 'Curitiba');\n\n-- LIKE — padrão de texto\nSELECT * FROM Clientes WHERE Nome LIKE 'Ana%';  -- começa com Ana\nSELECT * FROM Emails WHERE Endereco LIKE '%@gmail.com'; -- termina com",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Em T-SQL, strings usam aspas simples: 'São Paulo'. Aspas duplas são reservadas para identificadores. Nunca use aspas duplas para valores de texto.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Funcionarios abaixo para escrever as queries:\n\n1. Busque todos os funcionários do departamento 'TI'\n2. Busque funcionários com salário entre R$5.000 e R$10.000\n3. Busque funcionários cujo nome começa com 'M' e que estão ativos (Ativo = 1)\n\nEscreva as 3 queries separadas por ponto e vírgula.",
+    "starterCode": "-- Tabela: Funcionarios\n-- | Id | Nome            | Departamento | Salario  | Ativo |\n-- |----|-----------------|--------------|----------|-------|\n-- | 1  | Maria Santos    | TI           | 8500.00  | 1     |\n-- | 2  | João Oliveira   | RH           | 4200.00  | 1     |\n-- | 3  | Marcos Lima     | TI           | 12000.00 | 0     |\n-- | 4  | Carla Mendes    | Financeiro   | 6800.00  | 1     |\n-- | 5  | Miguel Costa    | TI           | 7300.00  | 1     |\n-- | 6  | Paula Rocha     | RH           | 3900.00  | 0     |\n\n-- Query 1: Funcionários do departamento TI\n\n\n-- Query 2: Funcionários com salário entre 5000 e 10000\n\n\n-- Query 3: Nome começa com 'M' e está ativo",
+    "solution": "-- Query 1: Funcionários do departamento TI\nSELECT * FROM Funcionarios\nWHERE Departamento = 'TI';\n\n-- Query 2: Funcionários com salário entre 5000 e 10000\nSELECT * FROM Funcionarios\nWHERE Salario BETWEEN 5000 AND 10000;\n\n-- Query 3: Nome começa com 'M' e está ativo\nSELECT * FROM Funcionarios\nWHERE Nome LIKE 'M%' AND Ativo = 1;",
+    "tests": [],
+    "hint": "Use WHERE com = para igualdade, BETWEEN para intervalos e LIKE 'M%' para 'começa com M'. Combine condições com AND.",
+    "solutionExplanation": "Query 1: = 'TI' filtra exatamente o departamento informado. Query 2: BETWEEN 5000 AND 10000 é inclusivo nos dois extremos — equivale a >= 5000 AND <= 10000. Query 3: LIKE 'M%' usa % como curinga (qualquer sequência de caracteres), combinado com AND Ativo = 1 para ambas as condições serem verdadeiras."
+  },
+  "keyTakeaways": [
+    "WHERE filtra linhas — só passa o que satisfaz a condição",
+    "Operadores: =, <>, >, <, >=, <=, BETWEEN, IN, LIKE",
+    "AND exige ambas as condições; OR aceita qualquer uma das condições",
+    "LIKE usa % (qualquer sequência) e _ (um único caractere) como curingas"
+  ],
+  "commonMistakes": [
+    "Usar aspas duplas para strings — em T-SQL use sempre aspas simples",
+    "BETWEEN inclui os extremos — BETWEEN 5000 AND 10000 inclui 5000 e 10000",
+    "= 'texto' diferencia maiúsculas/minúsculas dependendo do collation do banco"
+  ],
+  "realWorldExample": "Um analista filtra pedidos do último trimestre (BETWEEN), de clientes específicos (IN) e com status diferente de 'Cancelado' (<>) para calcular o faturamento real.",
+  "encouragement": "WHERE é o filtro mais poderoso do SQL. Com ele você extrai exatamente os dados que precisa de milhões de registros."
+}

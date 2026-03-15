@@ -1,0 +1,57 @@
+{
+  "id": "exists-not-exists",
+  "courseId": "sql-server",
+  "moduleId": "subqueries-ctes",
+  "title": "EXISTS e NOT EXISTS",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "EXISTS é como perguntar 'existe pelo menos um?' em vez de listar todos os itens. Você não precisa da lista completa — só precisa saber se algo existe. É mais rápido porque para assim que encontra o primeiro resultado.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "EXISTS vs IN" },
+      {
+        "type": "code",
+        "content": "-- IN — busca toda a lista antes de comparar\nSELECT Nome FROM Clientes\nWHERE Id IN (SELECT ClienteId FROM Pedidos);\n\n-- EXISTS — para quando encontra o primeiro match (mais eficiente)\nSELECT Nome FROM Clientes c\nWHERE EXISTS (\n    SELECT 1 FROM Pedidos p\n    WHERE p.ClienteId = c.Id\n);\n-- Nota: SELECT 1 é convencional — EXISTS só verifica existência, não o valor",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "NOT EXISTS — anti-join seguro" },
+      {
+        "type": "code",
+        "content": "-- NOT IN com NULLs é perigoso — NOT EXISTS é sempre seguro\nSELECT Nome FROM Clientes c\nWHERE NOT EXISTS (\n    SELECT 1 FROM Pedidos p\n    WHERE p.ClienteId = c.Id\n    AND YEAR(p.DataPedido) = 2024\n);\n-- Retorna clientes SEM pedidos em 2024 — funciona mesmo com NULLs",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Subquery correlacionada" },
+      {
+        "type": "code",
+        "content": "-- EXISTS usa subquery CORRELACIONADA — referencia a query externa (c.Id)\n-- A subquery é executada uma vez por linha da query externa\nSELECT\n    c.Nome,\n    c.Cidade\nFROM Clientes c\nWHERE EXISTS (\n    SELECT 1 FROM Pedidos p\n    WHERE p.ClienteId = c.Id\n    AND p.Valor > 1000\n);",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Prefira EXISTS/NOT EXISTS sobre IN/NOT IN quando a subquery pode retornar NULLs ou um grande volume de dados. EXISTS para ao encontrar o primeiro resultado — IN precisa carregar toda a lista.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use as tabelas abaixo para escrever as queries:\n\n1. Liste os fornecedores que têm PELO MENOS UM produto com estoque abaixo de 10\n2. Liste os clientes que NUNCA fizeram um pedido cancelado\n3. Liste os produtos que foram vendidos em TODAS as regiões (Sul, Sudeste, Norte) — dica: use NOT EXISTS com EXCEPT ou compare COUNT",
+    "starterCode": "-- Tabela: Fornecedores\n-- | Id | Nome             |\n-- |----|------------------|\n-- | 1  | TechSupply       |\n-- | 2  | OfficePro        |\n-- | 3  | GlobalParts      |\n\n-- Tabela: Produtos\n-- | Id | Nome       | FornecedorId | Estoque |\n-- |----|------------|--------------|--------|\n-- | 1  | Notebook   | 1            | 5      |\n-- | 2  | Monitor    | 1            | 30     |\n-- | 3  | Teclado    | 2            | 3      |\n-- | 4  | Mouse      | 2            | 50     |\n-- | 5  | Webcam     | 3            | 20     |\n\n-- Tabela: Clientes\n-- | Id | Nome          |\n-- |----|---------------|\n-- | 1  | Alice Mendes  |\n-- | 2  | Bob Ferreira  |\n-- | 3  | Carol Lima    |\n\n-- Tabela: Pedidos\n-- | Id | ClienteId | Status    | ProdutoId | Regiao  |\n-- |----|-----------|-----------|-----------|--------|\n-- | 1  | 1         | Entregue  | 1         | Sul    |\n-- | 2  | 1         | Cancelado | 2         | Sudeste|\n-- | 3  | 2         | Entregue  | 1         | Sudeste|\n-- | 4  | 3         | Entregue  | 2         | Norte  |\n-- | 5  | 2         | Entregue  | 1         | Norte  |\n\n-- Query 1: Fornecedores com produto com estoque < 10\n\n\n-- Query 2: Clientes sem nenhum pedido cancelado\n\n\n-- Query 3: Produtos vendidos em todas as 3 regiões",
+    "solution": "-- Query 1: Fornecedores com produto com estoque < 10\nSELECT f.Nome AS Fornecedor\nFROM Fornecedores f\nWHERE EXISTS (\n    SELECT 1 FROM Produtos p\n    WHERE p.FornecedorId = f.Id\n    AND p.Estoque < 10\n);\n\n-- Query 2: Clientes sem nenhum pedido cancelado\nSELECT c.Nome\nFROM Clientes c\nWHERE NOT EXISTS (\n    SELECT 1 FROM Pedidos p\n    WHERE p.ClienteId = c.Id\n    AND p.Status = 'Cancelado'\n);\n\n-- Query 3: Produtos vendidos em todas as 3 regiões\nSELECT DISTINCT pr.Nome AS Produto\nFROM Produtos pr\nWHERE NOT EXISTS (\n    SELECT Regiao FROM (VALUES ('Sul'), ('Sudeste'), ('Norte')) AS Regioes(Regiao)\n    EXCEPT\n    SELECT DISTINCT p.Regiao FROM Pedidos p WHERE p.ProdutoId = pr.Id\n);",
+    "tests": [],
+    "hint": "Query 1: EXISTS verifica se existe ao menos um produto do fornecedor com estoque < 10. Query 2: NOT EXISTS verifica se NÃO existe nenhum pedido cancelado do cliente. Query 3 (avançada): use EXCEPT para encontrar regiões não cobertas e NOT EXISTS para excluir produtos que 'faltam' alguma região.",
+    "solutionExplanation": "Query 1: Para cada fornecedor f, verifica se existe algum produto p com FornecedorId = f.Id E Estoque < 10. TechSupply (Notebook, estoque 5) e OfficePro (Teclado, estoque 3) passam. Query 2: Para cada cliente, NOT EXISTS verifica que não há pedido com Status='Cancelado'. Alice tem cancelado (Id 2), então não aparece. Query 3: Para cada produto, o EXCEPT remove das 3 regiões fixas as regiões onde o produto foi vendido. Se sobrar algo, o produto não foi vendido naquela região — NOT EXISTS exclui esses produtos."
+  },
+  "keyTakeaways": [
+    "EXISTS retorna verdadeiro se a subquery retornar pelo menos uma linha",
+    "NOT EXISTS é mais seguro que NOT IN — não tem o problema com NULLs",
+    "EXISTS usa subquery correlacionada — referencia colunas da query externa",
+    "SELECT 1 dentro do EXISTS é convencional — apenas a existência importa, não o valor"
+  ],
+  "commonMistakes": [
+    "NOT IN com NULLs na subquery retorna zero linhas — use NOT EXISTS",
+    "Esquecer a condição de correlação (WHERE p.ClienteId = c.Id) torna o EXISTS sempre verdadeiro ou falso"
+  ],
+  "realWorldExample": "Um sistema de estoque usa EXISTS para alertar fornecedores com produtos críticos (estoque mínimo). Um sistema de fidelidade usa NOT EXISTS para identificar clientes sem problemas no histórico.",
+  "encouragement": "EXISTS e NOT EXISTS são ferramentas poderosas e seguras. Prefira-os ao IN/NOT IN em queries de produção com grandes volumes de dados."
+}

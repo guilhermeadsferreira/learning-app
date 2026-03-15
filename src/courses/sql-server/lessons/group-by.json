@@ -1,0 +1,55 @@
+{
+  "id": "group-by",
+  "courseId": "sql-server",
+  "moduleId": "agregacao",
+  "title": "GROUP BY",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "GROUP BY é como dividir uma planilha em abas por categoria. Em vez de ver todas as vendas misturadas, você vê subtotais por região, por mês, por produto. Cada grupo vira uma linha no resultado com os seus totais.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Agrupando com GROUP BY" },
+      {
+        "type": "code",
+        "content": "-- Total de vendas por departamento\nSELECT\n    Departamento,\n    COUNT(*) AS TotalFuncionarios,\n    AVG(Salario) AS MediaSalarial,\n    SUM(Salario) AS TotalFolha\nFROM Funcionarios\nGROUP BY Departamento;\n\n-- Grouping por múltiplas colunas\nSELECT\n    YEAR(DataPedido) AS Ano,\n    MONTH(DataPedido) AS Mes,\n    COUNT(*) AS TotalPedidos,\n    SUM(Valor) AS Faturamento\nFROM Pedidos\nGROUP BY YEAR(DataPedido), MONTH(DataPedido)\nORDER BY Ano, Mes;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Regra de ouro do GROUP BY" },
+      {
+        "type": "paragraph",
+        "content": "Toda coluna no SELECT que não está dentro de uma função de agregação DEVE estar no GROUP BY. Caso contrário, o SQL Server retorna erro — pois não sabe qual valor exibir para aquela coluna dentro de cada grupo."
+      },
+      {
+        "type": "code",
+        "content": "-- ERRADO: Nome não está no GROUP BY nem em agregação\nSELECT Departamento, Nome, COUNT(*)\nFROM Funcionarios\nGROUP BY Departamento; -- Erro!\n\n-- CORRETO\nSELECT Departamento, COUNT(*) AS Total\nFROM Funcionarios\nGROUP BY Departamento;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "A ordem de execução é: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY. GROUP BY acontece antes do SELECT — por isso você não pode usar aliases do SELECT no GROUP BY.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Vendas abaixo para escrever as queries:\n\n1. Conte o total de vendas e some o valor total por Vendedor\n2. Mostre o faturamento por Regiao e Mes (coluna Mes = MONTH(DataVenda))\n3. Encontre o produto mais vendido por quantidade (Qtd) em cada categoria",
+    "starterCode": "-- Tabela: Vendas\n-- | Id | Produto    | Categoria    | Vendedor      | Regiao  | Valor  | Qtd | DataVenda  |\n-- |----|------------|--------------|---------------|---------|--------|-----|------------|\n-- | 1  | Notebook   | Informática  | Carlos Souza  | Sul     | 4500.0 | 2   | 2024-01-15 |\n-- | 2  | Monitor    | Informática  | Ana Lima      | Sudeste | 1200.0 | 5   | 2024-01-22 |\n-- | 3  | Cadeira    | Escritório   | Carlos Souza  | Sul     | 800.0  | 3   | 2024-02-10 |\n-- | 4  | Mesa       | Escritório   | Pedro Alves   | Norte   | 1500.0 | 1   | 2024-02-20 |\n-- | 5  | Teclado    | Informática  | Ana Lima      | Sudeste | 350.0  | 10  | 2024-03-05 |\n-- | 6  | Mouse      | Informática  | Pedro Alves   | Norte   | 180.0  | 15  | 2024-03-12 |\n\n-- Query 1: Total de vendas e faturamento por Vendedor\n\n\n-- Query 2: Faturamento por Regiao e Mes\n\n\n-- Query 3: Produto mais vendido por Categoria (use MAX(Qtd))",
+    "solution": "-- Query 1: Total de vendas e faturamento por Vendedor\nSELECT\n    Vendedor,\n    COUNT(*) AS TotalVendas,\n    SUM(Valor) AS Faturamento\nFROM Vendas\nGROUP BY Vendedor\nORDER BY Faturamento DESC;\n\n-- Query 2: Faturamento por Regiao e Mes\nSELECT\n    Regiao,\n    MONTH(DataVenda) AS Mes,\n    SUM(Valor) AS Faturamento\nFROM Vendas\nGROUP BY Regiao, MONTH(DataVenda)\nORDER BY Regiao, Mes;\n\n-- Query 3: Produto mais vendido por Categoria (use MAX(Qtd))\nSELECT\n    Categoria,\n    MAX(Qtd) AS MaiorQuantidade\nFROM Vendas\nGROUP BY Categoria;",
+    "tests": [],
+    "hint": "Lembre: toda coluna no SELECT sem função de agregação deve estar no GROUP BY. Para agrupar por mês use MONTH(DataVenda) tanto no SELECT quanto no GROUP BY.",
+    "solutionExplanation": "Query 1: Vendedor está no GROUP BY e no SELECT; COUNT(*) e SUM(Valor) são agregações. Query 2: Agrupamos por dois campos — Regiao e MONTH(DataVenda). Ambos devem estar no GROUP BY exatamente como aparecem no SELECT. Query 3: MAX(Qtd) por Categoria retorna a maior quantidade vendida em um único produto por categoria."
+  },
+  "keyTakeaways": [
+    "GROUP BY agrupa linhas com mesmo valor e aplica funções de agregação em cada grupo",
+    "Toda coluna no SELECT sem função de agregação DEVE estar no GROUP BY",
+    "Funções podem ser usadas no GROUP BY: GROUP BY YEAR(data), MONTH(data)",
+    "ORDER BY pode usar colunas do SELECT (incluindo aliases) — GROUP BY não pode"
+  ],
+  "commonMistakes": [
+    "Incluir colunas no SELECT que não estão no GROUP BY nem em funções de agregação",
+    "Tentar usar aliases do SELECT no GROUP BY — o alias ainda não existe nesse momento"
+  ],
+  "realWorldExample": "Um dashboard de vendas usa GROUP BY para mostrar faturamento por região e mês, quantidade vendida por categoria de produto e número de pedidos por vendedor — tudo em queries separadas e eficientes.",
+  "encouragement": "GROUP BY é onde o SQL começa a se transformar em análise de dados real. Com ele você resume milhões de linhas em insights acionáveis."
+}

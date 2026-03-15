@@ -1,0 +1,51 @@
+{
+  "id": "ordenacao-e-distinct",
+  "courseId": "sql-server",
+  "moduleId": "fundamentos",
+  "title": "ORDER BY e DISTINCT",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "ORDER BY é como organizar uma pilha de fichas em ordem alfabética ou por data. DISTINCT é como remover duplicatas de uma lista — se aparecer 'São Paulo' três vezes, você quer ver só uma vez.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Ordenando resultados com ORDER BY" },
+      {
+        "type": "code",
+        "content": "-- Ordem crescente (padrão)\nSELECT Nome, Salario FROM Funcionarios\nORDER BY Salario;\n\n-- Ordem decrescente\nSELECT Nome, Salario FROM Funcionarios\nORDER BY Salario DESC;\n\n-- Ordenar por múltiplas colunas\nSELECT Nome, Departamento, Salario FROM Funcionarios\nORDER BY Departamento ASC, Salario DESC;\n\n-- ORDER BY com TOP (padrão T-SQL)\nSELECT TOP 5 Nome, Salario\nFROM Funcionarios\nORDER BY Salario DESC; -- os 5 maiores salários",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Eliminando duplicatas com DISTINCT" },
+      {
+        "type": "code",
+        "content": "-- Listar cidades únicas\nSELECT DISTINCT Cidade FROM Clientes;\n\n-- DISTINCT com múltiplas colunas\n-- (combinação única de Cidade + Estado)\nSELECT DISTINCT Cidade, Estado FROM Clientes;\n\n-- DISTINCT com ORDER BY\nSELECT DISTINCT Departamento\nFROM Funcionarios\nORDER BY Departamento;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "ORDER BY é processado após WHERE, GROUP BY e HAVING — sempre no final da query. Em T-SQL, TOP sem ORDER BY retorna linhas em ordem indeterminada.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Vendas abaixo para escrever as queries:\n\n1. Busque todos os vendedores únicos (coluna Vendedor) em ordem alfabética\n2. Liste as 3 maiores vendas (Valor) com Nome do produto e Vendedor\n3. Busque todas as vendas ordenadas por Regiao (ASC) e depois por Valor (DESC)",
+    "starterCode": "-- Tabela: Vendas\n-- | Id | Produto       | Vendedor       | Regiao    | Valor    |\n-- |----|---------------|----------------|-----------|----------|\n-- | 1  | Notebook      | Carlos Souza   | Sul       | 4500.00  |\n-- | 2  | Monitor       | Ana Lima       | Sudeste   | 1200.00  |\n-- | 3  | Teclado       | Carlos Souza   | Sul       | 350.00   |\n-- | 4  | Mouse         | Pedro Alves    | Norte     | 180.00   |\n-- | 5  | Headset       | Ana Lima       | Sudeste   | 280.00   |\n-- | 6  | Webcam        | Pedro Alves    | Norte     | 420.00   |\n\n-- Query 1: Vendedores únicos em ordem alfabética\n\n\n-- Query 2: Top 3 maiores vendas\n\n\n-- Query 3: Vendas ordenadas por Regiao ASC e Valor DESC",
+    "solution": "-- Query 1: Vendedores únicos em ordem alfabética\nSELECT DISTINCT Vendedor\nFROM Vendas\nORDER BY Vendedor;\n\n-- Query 2: Top 3 maiores vendas\nSELECT TOP 3 Produto, Vendedor, Valor\nFROM Vendas\nORDER BY Valor DESC;\n\n-- Query 3: Vendas ordenadas por Regiao ASC e Valor DESC\nSELECT * FROM Vendas\nORDER BY Regiao ASC, Valor DESC;",
+    "tests": [],
+    "hint": "Use DISTINCT antes da coluna para valores únicos. Use TOP 3 com ORDER BY DESC para os maiores. Para ordenação múltipla, separe as colunas por vírgula no ORDER BY.",
+    "solutionExplanation": "DISTINCT Vendedor elimina nomes repetidos, retornando cada vendedor uma única vez. TOP 3 com ORDER BY Valor DESC pega as 3 primeiras linhas após ordenação decrescente — que são os 3 maiores valores. ORDER BY Regiao ASC, Valor DESC ordena primeiro por região alfabeticamente, e para registros com mesma região, ordena por valor do maior para o menor."
+  },
+  "keyTakeaways": [
+    "ORDER BY ASC (padrão) ordena crescente; DESC ordena decrescente",
+    "ORDER BY aceita múltiplas colunas separadas por vírgula",
+    "DISTINCT elimina linhas duplicadas no resultado — age sobre toda a linha selecionada",
+    "TOP n deve sempre vir acompanhado de ORDER BY para resultados determinísticos"
+  ],
+  "commonMistakes": [
+    "TOP sem ORDER BY retorna linhas aleatórias — sempre use ORDER BY junto",
+    "DISTINCT com múltiplas colunas age na combinação — não em cada coluna separadamente"
+  ],
+  "realWorldExample": "Um relatório de vendas usa ORDER BY valor DESC para ver os maiores negócios primeiro, e DISTINCT para listar as regiões disponíveis no filtro da tela.",
+  "encouragement": "Ordenação e deduplicação são fundamentos que aparecem em praticamente toda query de relatório. Você está construindo uma base sólida!"
+}

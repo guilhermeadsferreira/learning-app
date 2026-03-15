@@ -1,0 +1,49 @@
+{
+  "id": "ctes-with",
+  "courseId": "sql-server",
+  "moduleId": "subqueries-ctes",
+  "title": "CTEs com WITH",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Uma CTE é como criar um nome temporário para uma query complexa. Em vez de aninhar subqueries dentro de subqueries (difícil de ler), você diz 'chamemos isso de MediasPorDepto' e depois usa esse nome na query principal — como se fosse uma tabela real.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é uma CTE?" },
+      {
+        "type": "paragraph",
+        "content": "CTE (Common Table Expression) é uma consulta nomeada definida com WITH antes da query principal. A CTE existe apenas durante a execução da query e pode ser referenciada múltiplas vezes na query principal. São mais legíveis que subqueries aninhadas e mais práticas que views temporárias."
+      },
+      {
+        "type": "code",
+        "content": "-- Sintaxe básica\nWITH NomeDaCTE AS (\n    SELECT ... FROM ... WHERE ...\n)\nSELECT * FROM NomeDaCTE;\n\n-- CTE com filtro na query principal\nWITH VendasAltas AS (\n    SELECT ClienteId, SUM(Valor) AS TotalGasto\n    FROM Pedidos\n    WHERE Status = 'Entregue'\n    GROUP BY ClienteId\n)\nSELECT\n    c.Nome,\n    va.TotalGasto\nFROM Clientes c\nINNER JOIN VendasAltas va ON c.Id = va.ClienteId\nWHERE va.TotalGasto > 5000\nORDER BY va.TotalGasto DESC;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Múltiplas CTEs" },
+      {
+        "type": "code",
+        "content": "-- Definir múltiplas CTEs separadas por vírgula\nWITH\nMediaGeral AS (\n    SELECT AVG(Salario) AS Media FROM Funcionarios\n),\nDeptosAcimaDaMedia AS (\n    SELECT f.Departamento, AVG(f.Salario) AS MediaDepto\n    FROM Funcionarios f\n    GROUP BY f.Departamento\n    HAVING AVG(f.Salario) > (SELECT Media FROM MediaGeral)\n)\nSELECT\n    d.Departamento,\n    d.MediaDepto,\n    m.Media AS MediaGeral\nFROM DeptosAcimaDaMedia d\nCROSS JOIN MediaGeral m;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "CTEs recursivas" },
+      {
+        "type": "code",
+        "content": "-- CTE recursiva para navegar hierarquia (gerentes e subordinados)\nWITH Hierarquia AS (\n    -- Âncora: ponto inicial (CEO)\n    SELECT Id, Nome, GerenteId, 0 AS Nivel\n    FROM Funcionarios\n    WHERE GerenteId IS NULL\n\n    UNION ALL\n\n    -- Parte recursiva: subordinados\n    SELECT f.Id, f.Nome, f.GerenteId, h.Nivel + 1\n    FROM Funcionarios f\n    INNER JOIN Hierarquia h ON f.GerenteId = h.Id\n)\nSELECT * FROM Hierarquia\nORDER BY Nivel, Nome;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "CTEs não são materializadas por padrão no SQL Server — o otimizador pode expandir a CTE inline. Para materializar (calcular uma vez e reutilizar), use uma tabela temporária (#temp) ou OPTION(MAXRECURSION 0) para recursivas.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "WITH NomeCTE AS (...) define uma consulta nomeada válida apenas na query atual",
+    "CTEs tornam queries complexas mais legíveis que subqueries aninhadas",
+    "Múltiplas CTEs são separadas por vírgula após o WITH",
+    "CTEs recursivas (UNION ALL) navegam hierarquias como organogramas"
+  ],
+  "realWorldExample": "Um relatório de RH usa CTEs para calcular a média salarial de cada departamento, depois filtra funcionários acima da média — em duas etapas legíveis em vez de uma subquery aninhada confusa.",
+  "encouragement": "CTEs são a evolução natural das subqueries — mais elegantes, mais legíveis e tão poderosas quanto. Na próxima lição, você vai praticá-las em cenários reais."
+}

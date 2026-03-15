@@ -1,0 +1,143 @@
+{
+  "id": "quiz-agregacao",
+  "courseId": "sql-server",
+  "moduleId": "agregacao",
+  "title": "Quiz — Agregação e Agrupamento",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos consolidar o entendimento sobre GROUP BY, HAVING e funções de agregação."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a diferença entre WHERE e HAVING?",
+      "options": [
+        {
+          "id": "a",
+          "text": "WHERE é mais rápido; HAVING é mais lento",
+          "isCorrect": false,
+          "explanation": "A diferença não é de performance mas de quando cada cláusula é aplicada no ciclo de execução."
+        },
+        {
+          "id": "b",
+          "text": "WHERE filtra linhas antes do GROUP BY; HAVING filtra grupos depois do GROUP BY",
+          "isCorrect": true,
+          "explanation": "Correto! WHERE age sobre linhas individuais antes do agrupamento. HAVING age sobre o resultado dos grupos após o agrupamento."
+        },
+        {
+          "id": "c",
+          "text": "WHERE filtra colunas; HAVING filtra linhas",
+          "isCorrect": false,
+          "explanation": "Nem WHERE nem HAVING filtram colunas — isso é feito no SELECT. Ambos filtram linhas/grupos."
+        },
+        {
+          "id": "d",
+          "text": "São equivalentes — apenas sintaxes alternativas",
+          "isCorrect": false,
+          "explanation": "São bem diferentes. WHERE não pode usar funções de agregação; HAVING é exclusivo para condições em grupos agregados."
+        }
+      ]
+    },
+    {
+      "question": "O que COUNT(*) conta diferente de COUNT(coluna)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "COUNT(*) é mais lento; COUNT(coluna) usa índice",
+          "isCorrect": false,
+          "explanation": "Performance não é a principal diferença conceitual aqui."
+        },
+        {
+          "id": "b",
+          "text": "COUNT(*) conta todas as linhas (incluindo NULLs); COUNT(coluna) conta apenas não-NULLs",
+          "isCorrect": true,
+          "explanation": "Correto! COUNT(*) conta linhas — não importa o conteúdo. COUNT(coluna) ignora NULLs naquela coluna específica."
+        },
+        {
+          "id": "c",
+          "text": "São idênticas em comportamento",
+          "isCorrect": false,
+          "explanation": "Não são idênticas quando a coluna tem valores NULL. COUNT(*) conta a linha mesmo que a coluna tenha NULL."
+        },
+        {
+          "id": "d",
+          "text": "COUNT(*) retorna NULL quando não há linhas; COUNT(coluna) retorna 0",
+          "isCorrect": false,
+          "explanation": "É o oposto: ambas retornam 0 quando não há linhas/valores, nunca NULL."
+        }
+      ]
+    },
+    {
+      "question": "Qual a regra sobre colunas no SELECT quando se usa GROUP BY?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Qualquer coluna pode estar no SELECT independente do GROUP BY",
+          "isCorrect": false,
+          "explanation": "Errado. O SQL Server retorna erro se uma coluna estiver no SELECT mas não no GROUP BY nem em função de agregação."
+        },
+        {
+          "id": "b",
+          "text": "Toda coluna no SELECT deve estar no GROUP BY ou dentro de uma função de agregação",
+          "isCorrect": true,
+          "explanation": "Correto! Essa é a regra de ouro do GROUP BY. O SQL Server não sabe qual valor exibir para uma coluna não agrupada e não agregada."
+        },
+        {
+          "id": "c",
+          "text": "Apenas a primeira coluna precisa estar no GROUP BY",
+          "isCorrect": false,
+          "explanation": "Todas as colunas não-agregadas precisam estar no GROUP BY, não apenas a primeira."
+        },
+        {
+          "id": "d",
+          "text": "No SQL Server, GROUP BY é opcional mesmo com funções de agregação",
+          "isCorrect": false,
+          "explanation": "GROUP BY é necessário quando você quer resultados por grupo. Sem GROUP BY, a agregação retorna uma única linha com o total geral."
+        }
+      ]
+    },
+    {
+      "question": "O que a query 'SELECT Vendedor, SUM(Valor) FROM Pedidos GROUP BY Vendedor HAVING SUM(Valor) > 10000' retorna?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Todos os pedidos com valor maior que 10000",
+          "isCorrect": false,
+          "explanation": "HAVING filtra grupos, não pedidos individuais. Um vendedor com um único pedido de R$9.000 e outro de R$3.000 somaria R$12.000 e apareceria — mesmo que nenhum pedido individual seja > 10000."
+        },
+        {
+          "id": "b",
+          "text": "Apenas os vendedores cujo total de vendas supera R$10.000",
+          "isCorrect": true,
+          "explanation": "Correto! O GROUP BY agrupa por vendedor, SUM soma as vendas de cada um, e HAVING filtra apenas os grupos (vendedores) com soma acima de R$10.000."
+        },
+        {
+          "id": "c",
+          "text": "Erro de sintaxe — HAVING não pode usar SUM()",
+          "isCorrect": false,
+          "explanation": "HAVING pode e deve usar funções de agregação — é exatamente para isso que existe."
+        },
+        {
+          "id": "d",
+          "text": "O mesmo que usar WHERE Valor > 10000",
+          "isCorrect": false,
+          "explanation": "WHERE Valor > 10000 filtraria pedidos individuais antes do agrupamento — um comportamento completamente diferente."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "WHERE filtra linhas; HAVING filtra grupos — nunca troque um pelo outro",
+    "COUNT(*) conta todas as linhas; COUNT(col) ignora NULLs",
+    "Toda coluna no SELECT sem agregação deve estar no GROUP BY",
+    "ROLLUP gera subtotais automáticos; STRING_AGG concatena valores por grupo"
+  ],
+  "encouragement": "Agregação dominada! Agora vamos aprender subqueries e CTEs — técnicas para criar queries compostas e muito mais expressivas."
+}

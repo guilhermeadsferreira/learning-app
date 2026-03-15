@@ -1,0 +1,59 @@
+{
+  "id": "select-basico",
+  "courseId": "sql-server",
+  "moduleId": "fundamentos",
+  "title": "SELECT Básico",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "O SELECT é como fazer um pedido num restaurante. Você especifica o que quer (colunas), de onde vem (tabela) e, opcionalmente, com que condições (WHERE). O garçom (SQL Server) traz exatamente o que você pediu.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "A estrutura do SELECT" },
+      {
+        "type": "code",
+        "content": "-- Sintaxe básica\nSELECT coluna1, coluna2\nFROM tabela;\n\n-- Selecionar todas as colunas\nSELECT *\nFROM Clientes;\n\n-- Selecionar colunas específicas\nSELECT Nome, Email, Cidade\nFROM Clientes;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Alias de colunas e tabelas" },
+      {
+        "type": "paragraph",
+        "content": "Use AS para renomear colunas no resultado, tornando a saída mais legível para relatórios ou APIs."
+      },
+      {
+        "type": "code",
+        "content": "SELECT\n    Nome          AS NomeCompleto,\n    Email         AS EnderecoEmail,\n    DataCadastro  AS [Data de Cadastro]  -- colchetes para nomes com espaço\nFROM Clientes;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "TOP — limitar resultados" },
+      {
+        "type": "paragraph",
+        "content": "Em T-SQL, use TOP para limitar a quantidade de linhas retornadas — diferente do LIMIT do MySQL/PostgreSQL."
+      },
+      {
+        "type": "code",
+        "content": "-- Retornar apenas os 10 primeiros registros\nSELECT TOP 10 *\nFROM Produtos\nORDER BY Preco DESC;\n\n-- TOP com porcentagem\nSELECT TOP 5 PERCENT *\nFROM Vendas;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Expressões e cálculos no SELECT" },
+      {
+        "type": "code",
+        "content": "SELECT\n    Nome,\n    Preco,\n    Preco * 1.1  AS PrecoComImposto,\n    GETDATE()    AS DataConsulta\nFROM Produtos;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Use SELECT * apenas para exploração rápida. Em produção, sempre liste as colunas explicitamente — evita problemas quando a tabela muda e melhora a legibilidade.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "SELECT especifica as colunas; FROM especifica a tabela",
+    "Use AS para criar aliases de colunas e tornar os resultados mais legíveis",
+    "TOP n (não LIMIT) é a forma T-SQL de limitar linhas — use com ORDER BY",
+    "Expressões e funções podem ser usadas diretamente no SELECT"
+  ],
+  "realWorldExample": "Um analista usa SELECT com TOP 100 para verificar amostras de dados, usa aliases para renomear colunas de acordo com o relatório do negócio, e faz cálculos como desconto ou imposto direto na query.",
+  "encouragement": "O SELECT é o comando que você mais vai usar em toda sua carreira com SQL. Domine-o e tudo fica mais fácil."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "subqueries-introducao",
+  "courseId": "sql-server",
+  "moduleId": "subqueries-ctes",
+  "title": "Introdução às Subqueries",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Uma subquery é como uma pergunta dentro de uma pergunta. 'Liste os funcionários que ganham mais do que a média da empresa' — para responder, você primeiro precisa saber qual é a média (pergunta interna), para depois filtrar os funcionários (pergunta externa).",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é uma subquery?" },
+      {
+        "type": "paragraph",
+        "content": "Uma subquery (subconsulta) é uma query aninhada dentro de outra query. A query interna é executada primeiro e seu resultado é usado pela query externa. Subqueries podem aparecer no SELECT, WHERE, FROM ou HAVING."
+      },
+      { "type": "heading", "content": "Subquery no WHERE" },
+      {
+        "type": "code",
+        "content": "-- Funcionários que ganham acima da média geral\nSELECT Nome, Salario\nFROM Funcionarios\nWHERE Salario > (SELECT AVG(Salario) FROM Funcionarios);\n\n-- Clientes que fizeram algum pedido em 2024\nSELECT Nome\nFROM Clientes\nWHERE Id IN (\n    SELECT DISTINCT ClienteId\n    FROM Pedidos\n    WHERE YEAR(DataPedido) = 2024\n);",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Subquery no FROM (tabela derivada)" },
+      {
+        "type": "code",
+        "content": "-- A subquery no FROM cria uma tabela temporária\nSELECT\n    Departamento,\n    MediaSalarial\nFROM (\n    SELECT\n        Departamento,\n        AVG(Salario) AS MediaSalarial\n    FROM Funcionarios\n    GROUP BY Departamento\n) AS MediasPorDepto\nWHERE MediaSalarial > 5000;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Subquery no SELECT (escalar)" },
+      {
+        "type": "code",
+        "content": "-- Subquery escalar — retorna um único valor por linha\nSELECT\n    Nome,\n    Salario,\n    (SELECT AVG(Salario) FROM Funcionarios) AS MediaGeral,\n    Salario - (SELECT AVG(Salario) FROM Funcionarios) AS DiferencaDaMedia\nFROM Funcionarios;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Subqueries no WHERE com IN podem ser lentas para grandes volumes — prefira EXISTS ou JOINs quando possível. Subqueries escalares no SELECT são executadas uma vez por linha, o que pode ser custoso.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Subquery é uma query dentro de outra — a interna é executada primeiro",
+    "No WHERE: = (escalar), IN (lista), EXISTS (verificação de existência)",
+    "No FROM: cria uma tabela derivada que pode ser filtrada/agrupada",
+    "No SELECT: subquery escalar retorna um valor por linha — cuidado com performance"
+  ],
+  "realWorldExample": "Um relatório de performance usa subquery no WHERE para listar vendedores acima da média, e no SELECT para mostrar a diferença percentual de cada vendedor em relação ao total da equipe.",
+  "encouragement": "Subqueries abrem um mundo de possibilidades — você pode resolver problemas complexos aninhando lógicas simples. Logo você vai aprender CTEs, que tornam isso ainda mais elegante."
+}

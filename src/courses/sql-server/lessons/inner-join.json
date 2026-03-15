@@ -1,0 +1,46 @@
+{
+  "id": "inner-join",
+  "courseId": "sql-server",
+  "moduleId": "joins",
+  "title": "INNER JOIN",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "INNER JOIN é como a interseção de dois círculos num diagrama de Venn. Só aparecem os elementos que existem nos dois lados. Se um cliente não tem pedidos, ele não aparece. Se um pedido não tem cliente cadastrado, também não aparece.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "INNER JOIN na prática" },
+      {
+        "type": "code",
+        "content": "-- INNER JOIN básico\nSELECT\n    c.Nome AS Cliente,\n    p.Id AS PedidoId,\n    p.DataPedido,\n    p.Valor\nFROM Clientes c\nINNER JOIN Pedidos p ON c.Id = p.ClienteId;\n\n-- INNER JOIN com filtro\nSELECT\n    c.Nome,\n    p.Valor\nFROM Clientes c\nINNER JOIN Pedidos p ON c.Id = p.ClienteId\nWHERE p.Valor > 1000\nORDER BY p.Valor DESC;\n\n-- INNER JOIN com múltiplas tabelas\nSELECT\n    c.Nome AS Cliente,\n    pr.Nome AS Produto,\n    ip.Quantidade,\n    ip.PrecoUnitario\nFROM Clientes c\nINNER JOIN Pedidos p    ON c.Id = p.ClienteId\nINNER JOIN ItensPedido ip ON p.Id = ip.PedidoId\nINNER JOIN Produtos pr    ON ip.ProdutoId = pr.Id;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "INNER JOIN é o JOIN padrão — você pode escrever apenas JOIN. Mas é boa prática escrever INNER JOIN explicitamente para deixar a intenção clara.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use as tabelas abaixo para escrever as queries:\n\n1. Liste o Nome do funcionário e o Nome do departamento onde ele trabalha\n2. Liste os funcionários do departamento 'TI' com Nome e Salario\n3. Mostre o Nome do funcionário, Nome do departamento e Nome do cargo (3 tabelas)",
+    "starterCode": "-- Tabela: Funcionarios\n-- | Id | Nome           | DeptId | CargoId | Salario  |\n-- |----|----------------|--------|---------|----------|\n-- | 1  | Ana Lima       | 1      | 2       | 8500.00  |\n-- | 2  | Bruno Souza    | 2      | 1       | 4200.00  |\n-- | 3  | Carla Melo     | 1      | 3       | 12000.00 |\n-- | 4  | Diego Rocha    | 3      | 1       | 3800.00  |\n\n-- Tabela: Departamentos\n-- | Id | Nome       |\n-- |----|------------|\n-- | 1  | TI         |\n-- | 2  | RH         |\n-- | 3  | Financeiro |\n\n-- Tabela: Cargos\n-- | Id | Nome      |\n-- |----|----------|\n-- | 1  | Analista  |\n-- | 2  | Pleno     |\n-- | 3  | Sênior    |\n\n-- Query 1: Funcionário + Departamento\n\n\n-- Query 2: Funcionários do TI com salário\n\n\n-- Query 3: Funcionário + Departamento + Cargo",
+    "solution": "-- Query 1: Funcionário + Departamento\nSELECT\n    f.Nome AS Funcionario,\n    d.Nome AS Departamento\nFROM Funcionarios f\nINNER JOIN Departamentos d ON f.DeptId = d.Id;\n\n-- Query 2: Funcionários do TI com salário\nSELECT\n    f.Nome,\n    f.Salario\nFROM Funcionarios f\nINNER JOIN Departamentos d ON f.DeptId = d.Id\nWHERE d.Nome = 'TI';\n\n-- Query 3: Funcionário + Departamento + Cargo\nSELECT\n    f.Nome AS Funcionario,\n    d.Nome AS Departamento,\n    c.Nome AS Cargo\nFROM Funcionarios f\nINNER JOIN Departamentos d ON f.DeptId = d.Id\nINNER JOIN Cargos c ON f.CargoId = c.Id;",
+    "tests": [],
+    "hint": "No INNER JOIN, ON define a relação: f.DeptId = d.Id liga a chave estrangeira à chave primária. Para 3 tabelas, encadeie dois INNER JOINs.",
+    "solutionExplanation": "Query 1: f.DeptId = d.Id é a condição ON que une as tabelas pela relação FK → PK. Apenas funcionários com DeptId existente em Departamentos aparecem. Query 2: O WHERE d.Nome = 'TI' filtra após o JOIN — você tem acesso a colunas de ambas as tabelas. Query 3: Dois JOINs encadeados — primeiro une Funcionarios com Departamentos, depois o resultado com Cargos."
+  },
+  "keyTakeaways": [
+    "INNER JOIN retorna somente linhas com correspondência em ambas as tabelas",
+    "A condição ON usa FK = PK para definir a relação entre tabelas",
+    "Múltiplos JOINs são encadeados — cada JOIN adiciona uma nova tabela",
+    "WHERE é aplicado após o JOIN — filtrando o resultado combinado"
+  ],
+  "commonMistakes": [
+    "Esquecer o ON — o SQL Server retorna erro sem a condição de JOIN",
+    "Não usar aliases — colunas com mesmo nome (como Id) ficam ambíguas",
+    "Confundir a direção da relação: f.DeptId = d.Id (não d.Id = f.Id — ambos funcionam, mas a convenção é FK = PK)"
+  ],
+  "realWorldExample": "Um relatório de vendas usa INNER JOIN para listar pedidos com nome do cliente, produto comprado e nome do vendedor — cruzando 4 tabelas em uma única query.",
+  "encouragement": "INNER JOIN é o mais usado de todos os JOINs. Agora que você entende a lógica, os outros tipos serão muito fáceis de aprender."
+}

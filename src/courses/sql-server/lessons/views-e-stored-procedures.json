@@ -1,0 +1,45 @@
+{
+  "id": "views-e-stored-procedures",
+  "courseId": "sql-server",
+  "moduleId": "avancado",
+  "title": "Views e Stored Procedures",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Uma View é como um atalho salvo no banco — você escreve a query complexa uma vez e salva como 'VendasPorRegiao'. Depois, qualquer um pode fazer SELECT * FROM VendasPorRegiao sem saber os detalhes. Uma Stored Procedure é como uma função no banco — recebe parâmetros, executa lógica e retorna resultados.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Views — queries salvas" },
+      {
+        "type": "code",
+        "content": "-- Criar uma view\nCREATE VIEW vw_VendasPorVendedor AS\nSELECT\n    v.Nome AS Vendedor,\n    COUNT(p.Id) AS TotalPedidos,\n    SUM(p.Valor) AS TotalFaturado,\n    AVG(p.Valor) AS TicketMedio\nFROM Vendedores v\nINNER JOIN Pedidos p ON v.Id = p.VendedorId\nGROUP BY v.Id, v.Nome;\n\n-- Usar a view como tabela\nSELECT * FROM vw_VendasPorVendedor\nWHERE TotalFaturado > 10000\nORDER BY TotalFaturado DESC;\n\n-- Atualizar a view\nALTER VIEW vw_VendasPorVendedor AS ...\n\n-- Remover a view\nDROP VIEW vw_VendasPorVendedor;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Stored Procedures — lógica encapsulada" },
+      {
+        "type": "code",
+        "content": "-- Criar stored procedure\nCREATE PROCEDURE sp_BuscarClientesPorCidade\n    @Cidade VARCHAR(100),\n    @ApenasAtivos BIT = 1  -- parâmetro com valor padrão\nAS\nBEGIN\n    SET NOCOUNT ON;  -- evita mensagem '(n rows affected)'\n\n    SELECT\n        Id,\n        Nome,\n        Email\n    FROM Clientes\n    WHERE Cidade = @Cidade\n        AND (@ApenasAtivos = 0 OR Ativo = 1);\nEND;\n\n-- Executar\nEXEC sp_BuscarClientesPorCidade @Cidade = 'São Paulo';\nEXEC sp_BuscarClientesPorCidade @Cidade = 'Rio de Janeiro', @ApenasAtivos = 0;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Stored Procedure com OUTPUT e lógica" },
+      {
+        "type": "code",
+        "content": "CREATE PROCEDURE sp_InserirPedido\n    @ClienteId INT,\n    @Valor DECIMAL(10,2),\n    @PedidoId INT OUTPUT  -- parâmetro de saída\nAS\nBEGIN\n    SET NOCOUNT ON;\n\n    BEGIN TRY\n        INSERT INTO Pedidos (ClienteId, Valor, DataPedido, Status)\n        VALUES (@ClienteId, @Valor, GETDATE(), 'Pendente');\n\n        SET @PedidoId = SCOPE_IDENTITY();  -- Id gerado\n    END TRY\n    BEGIN CATCH\n        SET @PedidoId = -1;\n        THROW;  -- re-lança o erro\n    END CATCH;\nEND;\n\n-- Usar com OUTPUT\nDECLARE @NovoId INT;\nEXEC sp_InserirPedido\n    @ClienteId = 5,\n    @Valor = 1500.00,\n    @PedidoId = @NovoId OUTPUT;\nSELECT @NovoId AS PedidoGerado;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Prefixe views com vw_ e stored procedures com sp_ por convenção. SET NOCOUNT ON é boa prática em procedures — evita mensagens de contagem que podem confundir ORMs e drivers.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Views encapsulam queries complexas como objetos reutilizáveis no banco",
+    "Stored Procedures aceitam parâmetros, executam lógica T-SQL e podem retornar OUTPUT",
+    "SET NOCOUNT ON em procedures evita ruído de mensagens de contagem",
+    "SCOPE_IDENTITY() captura o último ID gerado na sessão atual — mais seguro que @@IDENTITY"
+  ],
+  "realWorldExample": "Um sistema de e-commerce usa views para expor dados seguros para o BI (sem colunas sensíveis), e stored procedures para operações transacionais — inserir pedido, processar pagamento, atualizar estoque — tudo encapsulado e reutilizável.",
+  "encouragement": "Views e Stored Procedures são a fundação da programação orientada a banco de dados. Com elas você cria APIs de dados reutilizáveis e seguras diretamente no SQL Server."
+}

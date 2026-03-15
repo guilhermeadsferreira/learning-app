@@ -1,0 +1,45 @@
+{
+  "id": "subquery-where",
+  "courseId": "sql-server",
+  "moduleId": "subqueries-ctes",
+  "title": "Subquery no WHERE",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Subquery no WHERE é como perguntar ao assistente: 'traga-me o processo dos clientes que compraram mais de uma vez'. O assistente primeiro anota quais clientes compraram mais de uma vez (subquery) e depois busca os processos desses clientes (query externa).",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Tipos de subquery no WHERE" },
+      {
+        "type": "code",
+        "content": "-- = escalar (retorna um único valor)\nSELECT Nome, Salario\nFROM Funcionarios\nWHERE Salario = (SELECT MAX(Salario) FROM Funcionarios);\n\n-- IN (retorna lista de valores)\nSELECT Nome\nFROM Clientes\nWHERE Id IN (\n    SELECT ClienteId FROM Pedidos\n    WHERE Valor > 5000\n);\n\n-- NOT IN (excluir valores da lista)\nSELECT Nome\nFROM Produtos\nWHERE Id NOT IN (\n    SELECT ProdutoId FROM ItensPedido\n    WHERE YEAR(DataPedido) = 2024\n);\n-- ATENÇÃO: NOT IN com NULL na subquery retorna zero linhas!",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Cuidado com NOT IN quando a subquery pode retornar NULLs! Se houver qualquer NULL no resultado da subquery, NOT IN nunca retorna linhas. Prefira NOT EXISTS nesses casos.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use as tabelas abaixo para escrever as queries:\n\n1. Liste os funcionários com salário acima da média do departamento 'TI'\n2. Liste os clientes que NÃO realizaram nenhum pedido em 2024\n3. Encontre o produto com o maior valor unitário e mostre seu nome e valor",
+    "starterCode": "-- Tabela: Funcionarios\n-- | Id | Nome           | Departamento | Salario  |\n-- |----|----------------|--------------|----------|\n-- | 1  | Ana Lima       | TI           | 8500.00  |\n-- | 2  | Bruno Souza    | TI           | 6200.00  |\n-- | 3  | Carla Melo     | RH           | 4200.00  |\n-- | 4  | Diego Rocha    | TI           | 12000.00 |\n-- | 5  | Elena Vieira   | RH           | 3800.00  |\n\n-- Tabela: Clientes\n-- | Id | Nome          |\n-- |----|---------------|\n-- | 1  | Gustavo Ferreira |\n-- | 2  | Helena Costa   |\n-- | 3  | Igor Martins   |\n\n-- Tabela: Pedidos\n-- | Id | ClienteId | Valor   | DataPedido |\n-- |----|-----------|---------|------------|\n-- | 1  | 1         | 1500.00 | 2024-03-10 |\n-- | 2  | 1         | 800.00  | 2023-11-05 |\n-- | 3  | 3         | 2200.00 | 2024-06-20 |\n\n-- Tabela: Produtos\n-- | Id | Nome       | Valor   |\n-- |----|------------|---------|\n-- | 1  | Notebook   | 4500.00 |\n-- | 2  | Monitor    | 1200.00 |\n-- | 3  | Workstation| 8900.00 |\n\n-- Query 1: Funcionários acima da média do departamento TI\n\n\n-- Query 2: Clientes sem pedido em 2024\n\n\n-- Query 3: Produto com maior valor",
+    "solution": "-- Query 1: Funcionários acima da média do departamento TI\nSELECT Nome, Salario, Departamento\nFROM Funcionarios\nWHERE Salario > (\n    SELECT AVG(Salario)\n    FROM Funcionarios\n    WHERE Departamento = 'TI'\n);\n\n-- Query 2: Clientes sem pedido em 2024\nSELECT Nome\nFROM Clientes\nWHERE Id NOT IN (\n    SELECT DISTINCT ClienteId\n    FROM Pedidos\n    WHERE YEAR(DataPedido) = 2024\n);\n\n-- Query 3: Produto com maior valor\nSELECT Nome, Valor\nFROM Produtos\nWHERE Valor = (SELECT MAX(Valor) FROM Produtos);",
+    "tests": [],
+    "hint": "Query 1: a subquery calcula AVG apenas do TI. Query 2: NOT IN com a lista de ClienteIds com pedido em 2024. Query 3: subquery escalar com MAX() — retorna um único valor.",
+    "solutionExplanation": "Query 1: A subquery AVG(Salario) WHERE Departamento = 'TI' retorna 8900 (média: 8500+6200+12000/3). A query externa filtra quem ganha mais que isso — apenas Diego. Query 2: A subquery retorna IDs 1 e 3 (com pedidos em 2024); NOT IN exclui esses, restando Helena Costa (Id=2). Query 3: MAX(Valor) retorna 8900; a query externa busca o produto cujo Valor é exatamente esse."
+  },
+  "keyTakeaways": [
+    "= (escalar) quando a subquery retorna exatamente um valor",
+    "IN / NOT IN quando a subquery retorna uma lista de valores",
+    "NOT IN com NULLs na subquery retorna zero linhas — use NOT EXISTS como alternativa segura",
+    "Subqueries no WHERE são correlacionadas ou independentes — independentes são mais simples"
+  ],
+  "commonMistakes": [
+    "Usar = com subquery que pode retornar mais de um valor — erro em runtime",
+    "NOT IN com NULLs na subquery — silenciosamente retorna zero resultados"
+  ],
+  "realWorldExample": "Um sistema de fidelidade usa subquery para listar clientes com mais pontos que a média, e NOT IN para identificar clientes que não usaram o programa no último ano.",
+  "encouragement": "Subqueries no WHERE são extremamente expressivas. Na próxima lição você vai aprender EXISTS — uma alternativa ainda mais poderosa e eficiente."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "insert-basico",
+  "courseId": "sql-server",
+  "moduleId": "dml",
+  "title": "INSERT — Inserindo Dados",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "INSERT é como preencher um formulário e submetê-lo. Você especifica os campos (colunas) e os valores correspondentes. A tabela ganha uma nova linha com esses dados — permanentemente, até que alguém execute um DELETE.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "INSERT básico" },
+      {
+        "type": "code",
+        "content": "-- INSERT com lista de colunas (recomendado)\nINSERT INTO Clientes (Nome, Email, Cidade, DataCadastro)\nVALUES ('Ana Lima', 'ana@email.com', 'São Paulo', GETDATE());\n\n-- INSERT sem lista de colunas (frágil — depende da ordem da tabela)\nINSERT INTO Clientes\nVALUES ('Bruno Melo', 'bruno@email.com', 'Rio de Janeiro', GETDATE());\n\n-- INSERT múltiplas linhas (T-SQL 2008+)\nINSERT INTO Produtos (Nome, Preco, Estoque)\nVALUES\n    ('Notebook', 4500.00, 10),\n    ('Monitor',  1200.00, 25),\n    ('Teclado',   350.00, 50);",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "INSERT com SELECT" },
+      {
+        "type": "code",
+        "content": "-- Copiar dados de outra tabela\nINSERT INTO ClientesArquivados (Nome, Email, DataArquivamento)\nSELECT Nome, Email, GETDATE()\nFROM Clientes\nWHERE DataCadastro < '2020-01-01';\n\n-- INSERT com IDENTITY — o Id é gerado automaticamente\n-- Não inclua a coluna Id no INSERT\nINSERT INTO Pedidos (ClienteId, Valor, DataPedido)\nVALUES (1, 1500.00, GETDATE());\n\n-- Recuperar o ID gerado\nINSERT INTO Pedidos (ClienteId, Valor, DataPedido)\nOUTPUT INSERTED.Id  -- retorna o Id gerado\nVALUES (2, 800.00, GETDATE());",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "SELECT INTO — criar tabela a partir de query" },
+      {
+        "type": "code",
+        "content": "-- Cria nova tabela com os dados do SELECT\nSELECT Nome, Email, Cidade\nINTO ClientesSP\nFROM Clientes\nWHERE Cidade = 'São Paulo';\n-- ClientesSP é criada com a estrutura do SELECT",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre liste as colunas explicitamente no INSERT. Se a tabela ganhar novas colunas, INSERT sem lista de colunas vai quebrar — com lista, só as colunas especificadas são afetadas.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Sempre liste as colunas no INSERT — não dependa da ordem da tabela",
+    "INSERT com múltiplas linhas (VALUES com vírgula) é mais eficiente que múltiplos INSERTs",
+    "INSERT ... SELECT copia dados de outra tabela em uma única operação",
+    "OUTPUT INSERTED.Id captura o ID gerado automaticamente após o INSERT"
+  ],
+  "realWorldExample": "Um sistema de cadastro usa INSERT para novos usuários, INSERT...SELECT para arquivar registros antigos, e OUTPUT INSERTED.Id para obter o ID do novo registro e usá-lo em outra tabela (ex: Enderecos).",
+  "encouragement": "INSERT é a base de qualquer sistema transacional. Junto com UPDATE e DELETE, você tem controle total sobre os dados do banco."
+}

@@ -1,0 +1,56 @@
+{
+  "id": "null-isnull-coalesce",
+  "courseId": "sql-server",
+  "moduleId": "funcoes-tsql",
+  "title": "NULL, ISNULL e COALESCE",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "NULL é como um campo em branco num formulário — não é zero, não é vazio, é 'sem informação'. ISNULL e COALESCE são como um plano B: 'se esse campo estiver em branco, use este outro valor em vez disso'.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é NULL em SQL?" },
+      {
+        "type": "paragraph",
+        "content": "NULL representa ausência de valor — diferente de 0 (zero) ou '' (string vazia). Qualquer operação com NULL resulta em NULL. Para verificar se um valor é NULL, use IS NULL ou IS NOT NULL — nunca use = NULL."
+      },
+      {
+        "type": "code",
+        "content": "-- Filtrar linhas com NULL\nSELECT * FROM Clientes WHERE Email IS NULL;\nSELECT * FROM Pedidos WHERE DataEntrega IS NOT NULL;\n\n-- ERRADO: = NULL sempre retorna FALSE\nSELECT * FROM Clientes WHERE Email = NULL; -- não retorna nada!",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "ISNULL e COALESCE" },
+      {
+        "type": "code",
+        "content": "-- ISNULL(valor, substituto) — T-SQL específico, 2 argumentos\nSELECT\n    Nome,\n    ISNULL(Telefone, 'Não informado') AS Telefone\nFROM Clientes;\n\n-- COALESCE(val1, val2, ...) — SQL padrão, múltiplos argumentos\n-- Retorna o primeiro valor não-NULL da lista\nSELECT\n    Nome,\n    COALESCE(Celular, Telefone, Email, 'Sem contato') AS Contato\nFROM Clientes;\n\n-- Operações com NULL\nSELECT\n    ISNULL(Desconto, 0) + Preco AS PrecoFinal  -- evita NULL no cálculo\nFROM Produtos;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Prefira COALESCE quando precisar de mais de um fallback — é SQL padrão e funciona em qualquer banco. ISNULL é T-SQL específico, mas ligeiramente mais rápido para 2 argumentos.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Contatos abaixo para escrever as queries:\n\n1. Liste todos os contatos onde Email é NULL\n2. Mostre Nome e o campo Contato: use Celular se disponível, senão Telefone, senão 'Indisponível'\n3. Calcule o SaldoFinal: Saldo + ISNULL(Bonus, 0) — garantindo que NULL no Bonus não zere o resultado",
+    "starterCode": "-- Tabela: Contatos\n-- | Id | Nome           | Celular       | Telefone      | Email                | Saldo   | Bonus  |\n-- |----|----------------|---------------|---------------|----------------------|---------|--------|\n-- | 1  | Ana Souza      | 11-99999-0001 | NULL          | ana@email.com        | 1000.00 | 200.00 |\n-- | 2  | Bruno Lima     | NULL          | 11-3333-0002  | NULL                 | 800.00  | NULL   |\n-- | 3  | Carla Dias     | NULL          | NULL          | carla@email.com      | 1500.00 | 100.00 |\n-- | 4  | Diego Melo     | 11-99999-0004 | 11-3333-0004  | NULL                 | 600.00  | NULL   |\n\n-- Query 1: Contatos onde Email é NULL\n\n\n-- Query 2: Nome e melhor contato disponível\n\n\n-- Query 3: SaldoFinal = Saldo + Bonus (tratar NULL no Bonus)",
+    "solution": "-- Query 1: Contatos onde Email é NULL\nSELECT * FROM Contatos\nWHERE Email IS NULL;\n\n-- Query 2: Nome e melhor contato disponível\nSELECT\n    Nome,\n    COALESCE(Celular, Telefone, 'Indisponível') AS Contato\nFROM Contatos;\n\n-- Query 3: SaldoFinal = Saldo + Bonus (tratar NULL no Bonus)\nSELECT\n    Nome,\n    Saldo,\n    ISNULL(Bonus, 0) AS Bonus,\n    Saldo + ISNULL(Bonus, 0) AS SaldoFinal\nFROM Contatos;",
+    "tests": [],
+    "hint": "Use IS NULL (não = NULL) para filtrar. COALESCE retorna o primeiro não-NULL da lista. ISNULL(Bonus, 0) converte NULL em 0 antes da soma.",
+    "solutionExplanation": "IS NULL é a única forma correta de verificar NULL — = NULL nunca é verdadeiro em SQL. COALESCE(Celular, Telefone, 'Indisponível') avalia da esquerda para a direita e retorna o primeiro valor não-NULL; se todos forem NULL, retorna o string literal. ISNULL(Bonus, 0) garante que a soma Saldo + Bonus não vire NULL quando Bonus é NULL."
+  },
+  "keyTakeaways": [
+    "NULL é ausência de valor — nem 0, nem string vazia",
+    "Sempre use IS NULL ou IS NOT NULL para comparar NULLs — nunca = NULL",
+    "ISNULL(col, substituto) substitui NULL por um valor padrão (2 args, T-SQL)",
+    "COALESCE(v1, v2, ...) retorna o primeiro não-NULL da lista (SQL padrão)"
+  ],
+  "commonMistakes": [
+    "WHERE coluna = NULL — sempre retorna zero linhas; use IS NULL",
+    "Somar coluna com NULL resulta em NULL — use ISNULL(coluna, 0) primeiro",
+    "NULL em concatenação com + também vira NULL — prefira CONCAT()"
+  ],
+  "realWorldExample": "Um relatório de RH usa COALESCE(CelularCorporativo, CelularPessoal, 'Sem contato') para exibir o melhor número disponível, e ISNULL(Bonus, 0) para calcular remuneração total mesmo quando o bônus não foi definido.",
+  "encouragement": "Entender NULL é um divisor de águas no SQL. Muitos bugs em relatórios vêm de NULL não tratado — agora você sabe como evitá-los."
+}

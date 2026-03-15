@@ -1,0 +1,57 @@
+{
+  "id": "agregacao-avancada",
+  "courseId": "sql-server",
+  "moduleId": "agregacao",
+  "title": "Agregação Avançada: ROLLUP e GROUPING SETS",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "ROLLUP é como um relatório de vendas com subtotais e total geral automáticos. Em vez de rodar várias queries para 'vendas por região', 'total por país' e 'total geral', o ROLLUP faz tudo em uma única query — adicionando linhas de subtotal automaticamente.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "ROLLUP — subtotais automáticos" },
+      {
+        "type": "code",
+        "content": "-- GROUP BY com ROLLUP gera subtotais hierárquicos\nSELECT\n    Regiao,\n    Departamento,\n    SUM(Salario) AS TotalSalarios\nFROM Funcionarios\nGROUP BY ROLLUP(Regiao, Departamento);\n-- Retorna:\n-- Sul | TI | 20000      (grupo)\n-- Sul | RH | 15000      (grupo)\n-- Sul | NULL | 35000    (subtotal Sul)\n-- Norte | TI | 18000   (grupo)\n-- Norte | NULL | 18000  (subtotal Norte)\n-- NULL | NULL | 53000   (total geral)",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "GROUPING() — identificar linhas de subtotal" },
+      {
+        "type": "code",
+        "content": "-- GROUPING(coluna) = 1 quando a coluna é NULL por ser subtotal\nSELECT\n    CASE GROUPING(Regiao)\n        WHEN 1 THEN 'TOTAL GERAL'\n        ELSE Regiao\n    END AS Regiao,\n    CASE GROUPING(Departamento)\n        WHEN 1 THEN 'SUBTOTAL'\n        ELSE Departamento\n    END AS Departamento,\n    SUM(Salario) AS Total\nFROM Funcionarios\nGROUP BY ROLLUP(Regiao, Departamento);",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "STRING_AGG — concatenar valores de um grupo" },
+      {
+        "type": "code",
+        "content": "-- STRING_AGG junta valores de várias linhas em uma string (T-SQL 2017+)\nSELECT\n    Departamento,\n    STRING_AGG(Nome, ', ') AS Funcionarios,\n    STRING_AGG(Nome, ', ') WITHIN GROUP (ORDER BY Nome) AS FuncionariosOrdenados\nFROM Funcionarios\nGROUP BY Departamento;\n-- Resultado:\n-- TI | 'Ana Lima, Carla Melo, Roberto Silva'",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "STRING_AGG é o substituto moderno do antigo FOR XML PATH trick do SQL Server. Use STRING_AGG para T-SQL 2017+.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Vendas abaixo para escrever as queries:\n\n1. Use ROLLUP para mostrar faturamento por Regiao e Produto, incluindo subtotais\n2. Liste o total de vendas por Regiao usando STRING_AGG para mostrar os produtos vendidos em cada região (separados por ' | ')\n3. Calcule a média, mínimo e máximo de Valor por Categoria, mostrando APENAS categorias onde o valor máximo ultrapassa R$3.000",
+    "starterCode": "-- Tabela: Vendas\n-- | Id | Produto    | Categoria   | Regiao  | Valor   |\n-- |----|------------|-------------|---------|----------|\n-- | 1  | Notebook   | Informática | Sul     | 4500.00 |\n-- | 2  | Monitor    | Informática | Sudeste | 1200.00 |\n-- | 3  | Teclado    | Informática | Sul     | 350.00  |\n-- | 4  | Cadeira    | Escritório  | Norte   | 800.00  |\n-- | 5  | Mesa       | Escritório  | Sudeste | 1500.00 |\n-- | 6  | Notebook   | Informática | Norte   | 4200.00 |\n\n-- Query 1: ROLLUP por Regiao e Produto\n\n\n-- Query 2: STRING_AGG de produtos por Regiao\n\n\n-- Query 3: Estatísticas por Categoria, só MAX > 3000",
+    "solution": "-- Query 1: ROLLUP por Regiao e Produto\nSELECT\n    ISNULL(Regiao, 'TOTAL') AS Regiao,\n    ISNULL(Produto, 'SUBTOTAL') AS Produto,\n    SUM(Valor) AS TotalVendas\nFROM Vendas\nGROUP BY ROLLUP(Regiao, Produto)\nORDER BY Regiao, Produto;\n\n-- Query 2: STRING_AGG de produtos por Regiao\nSELECT\n    Regiao,\n    SUM(Valor) AS TotalFaturamento,\n    STRING_AGG(Produto, ' | ') WITHIN GROUP (ORDER BY Produto) AS Produtos\nFROM Vendas\nGROUP BY Regiao;\n\n-- Query 3: Estatísticas por Categoria, só MAX > 3000\nSELECT\n    Categoria,\n    AVG(Valor) AS MediaValor,\n    MIN(Valor) AS MinValor,\n    MAX(Valor) AS MaxValor\nFROM Vendas\nGROUP BY Categoria\nHAVING MAX(Valor) > 3000;",
+    "tests": [],
+    "hint": "ROLLUP(Regiao, Produto) gera automaticamente subtotais e total geral. Use ISNULL para substituir NULL com rótulos. STRING_AGG tem WITHIN GROUP (ORDER BY col) para ordenar os valores concatenados.",
+    "solutionExplanation": "Query 1: ROLLUP cria hierarquia — primeiro agrupa por Regiao+Produto, depois subtotais por Regiao (Produto=NULL), depois total geral (ambos NULL). ISNULL transforma os NULLs em rótulos. Query 2: STRING_AGG concatena todos os valores da coluna Produto no grupo, WITHIN GROUP controla a ordem. Query 3: HAVING MAX(Valor) > 3000 filtra após agregar — apenas Informática passa, pois tem Notebook a 4500."
+  },
+  "keyTakeaways": [
+    "ROLLUP gera subtotais hierárquicos automaticamente — mais eficiente que múltiplas queries",
+    "GROUPING(col) = 1 identifica linhas de subtotal onde a coluna é NULL por agregação",
+    "STRING_AGG(col, sep) concatena valores de múltiplas linhas em uma string por grupo",
+    "WITHIN GROUP (ORDER BY col) controla a ordem dentro do STRING_AGG"
+  ],
+  "commonMistakes": [
+    "Confundir NULL de dados com NULL de ROLLUP — use GROUPING() para diferenciar",
+    "STRING_AGG não existe antes do SQL Server 2017 — use FOR XML PATH em versões antigas"
+  ],
+  "realWorldExample": "Um relatório executivo usa ROLLUP para mostrar faturamento por país → região → cidade com subtotais automáticos. STRING_AGG gera listas de tags de produtos em relatórios de catálogo.",
+  "encouragement": "Parabéns! Você agora conhece agregação avançada em T-SQL. Esses recursos fazem a diferença entre um relatório simples e um relatório profissional."
+}

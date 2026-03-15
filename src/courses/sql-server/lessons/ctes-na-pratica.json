@@ -1,0 +1,40 @@
+{
+  "id": "ctes-na-pratica",
+  "courseId": "sql-server",
+  "moduleId": "subqueries-ctes",
+  "title": "CTEs na Prática",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "CTEs na prática são como um rascunho antes da resposta final. Você primeiro define os dados intermediários ('clientes com mais de 3 pedidos'), depois usa esse rascunho para construir o relatório final — sem precisar repetir a lógica no meio da query.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "CTEs como substituto de subqueries aninhadas" },
+      {
+        "type": "code",
+        "content": "-- Sem CTE — difícil de ler\nSELECT c.Nome, sub.TotalPedidos\nFROM Clientes c\nINNER JOIN (\n    SELECT ClienteId, COUNT(*) AS TotalPedidos\n    FROM Pedidos\n    WHERE Status = 'Entregue'\n    GROUP BY ClienteId\n    HAVING COUNT(*) > 2\n) sub ON c.Id = sub.ClienteId;\n\n-- Com CTE — muito mais legível\nWITH ClientesFrequentes AS (\n    SELECT ClienteId, COUNT(*) AS TotalPedidos\n    FROM Pedidos\n    WHERE Status = 'Entregue'\n    GROUP BY ClienteId\n    HAVING COUNT(*) > 2\n)\nSELECT c.Nome, cf.TotalPedidos\nFROM Clientes c\nINNER JOIN ClientesFrequentes cf ON c.Id = cf.ClienteId;",
+        "language": "sql"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use as tabelas abaixo para resolver os problemas com CTEs:\n\n1. Crie uma CTE chamada 'TopVendedores' que lista vendedores com faturamento total acima de R$5.000. Use a CTE para mostrar Nome, TotalVendas e a diferença percentual em relação ao maior vendedor\n2. Crie duas CTEs: 'MediaPorCategoria' com a média de valor por categoria, e 'ProdutosAbaixoDaMedia' com produtos cujo valor está abaixo da média da sua categoria. Mostre o produto, seu valor e a média da categoria\n3. Crie uma CTE que ranqueia os 3 clientes com maior valor total de pedidos por região",
+    "starterCode": "-- Tabela: Vendas\n-- | Id | Vendedor      | Categoria    | Valor   | Regiao  |\n-- |----|---------------|--------------|---------|--------|\n-- | 1  | Carlos Lima   | Informática  | 4500.00 | Sul    |\n-- | 2  | Ana Costa     | Escritório   | 1200.00 | Sudeste|\n-- | 3  | Carlos Lima   | Informática  | 3200.00 | Sul    |\n-- | 4  | Ana Costa     | Informática  | 800.00  | Sudeste|\n-- | 5  | Pedro Alves   | Escritório   | 2100.00 | Norte  |\n-- | 6  | Pedro Alves   | Informática  | 950.00  | Norte  |\n\n-- Tabela: Produtos\n-- | Id | Nome       | Categoria   | Valor   |\n-- |----|------------|-------------|--------|\n-- | 1  | Notebook   | Informática | 4500.00 |\n-- | 2  | Teclado    | Informática | 350.00  |\n-- | 3  | Mouse      | Informática | 180.00  |\n-- | 4  | Mesa       | Escritório  | 1500.00 |\n-- | 5  | Cadeira    | Escritório  | 800.00  |\n\n-- Tabela: Pedidos\n-- | Id | Cliente     | Regiao  | Valor   |\n-- |----|-------------|---------|--------|\n-- | 1  | Alice Lima  | Sul     | 3500.00 |\n-- | 2  | Bob Melo    | Sul     | 1200.00 |\n-- | 3  | Alice Lima  | Sul     | 2100.00 |\n-- | 4  | Carol Dias  | Sudeste | 4800.00 |\n-- | 5  | Diego Rocha | Sudeste | 900.00  |\n-- | 6  | Elena Vieira| Norte   | 3300.00 |\n\n-- Query 1: CTE TopVendedores com diferença percentual\n\n\n-- Query 2: Duas CTEs — MediaPorCategoria e ProdutosAbaixoDaMedia\n\n\n-- Query 3: CTE com top 3 clientes por região",
+    "solution": "-- Query 1: CTE TopVendedores com diferença percentual\nWITH TopVendedores AS (\n    SELECT\n        Vendedor,\n        SUM(Valor) AS TotalVendas\n    FROM Vendas\n    GROUP BY Vendedor\n    HAVING SUM(Valor) > 5000\n)\nSELECT\n    Vendedor,\n    TotalVendas,\n    MAX(TotalVendas) OVER () AS MaiorVenda,\n    CAST(TotalVendas * 100.0 / MAX(TotalVendas) OVER () AS DECIMAL(5,2)) AS PercentualDoMaior\nFROM TopVendedores\nORDER BY TotalVendas DESC;\n\n-- Query 2: Duas CTEs\nWITH\nMediaPorCategoria AS (\n    SELECT Categoria, AVG(Valor) AS MediaCategoria\n    FROM Produtos\n    GROUP BY Categoria\n),\nProdutosAbaixoDaMedia AS (\n    SELECT p.Nome, p.Categoria, p.Valor\n    FROM Produtos p\n    INNER JOIN MediaPorCategoria m ON p.Categoria = m.Categoria\n    WHERE p.Valor < m.MediaCategoria\n)\nSELECT\n    pab.Nome AS Produto,\n    pab.Valor,\n    mc.MediaCategoria\nFROM ProdutosAbaixoDaMedia pab\nINNER JOIN MediaPorCategoria mc ON pab.Categoria = mc.Categoria;\n\n-- Query 3: Top 3 clientes por região\nWITH TotaisPorCliente AS (\n    SELECT\n        Cliente,\n        Regiao,\n        SUM(Valor) AS TotalPedidos\n    FROM Pedidos\n    GROUP BY Cliente, Regiao\n)\nSELECT Cliente, Regiao, TotalPedidos\nFROM TotaisPorCliente\nORDER BY Regiao, TotalPedidos DESC;",
+    "tests": [],
+    "hint": "Query 1: Use MAX(...) OVER () como window function para pegar o maior valor de toda a CTE. Query 2: A segunda CTE pode referenciar a primeira. Query 3: A CTE calcula totais; ORDER BY na query final apresenta por região.",
+    "solutionExplanation": "Query 1: HAVING filtra vendedores acima de 5000. MAX(TotalVendas) OVER() é window function que retorna o máximo de toda a CTE — permitindo calcular o percentual. Query 2: A segunda CTE (ProdutosAbaixoDaMedia) usa JOIN com a primeira CTE (MediaPorCategoria) para filtrar produtos abaixo da média da sua categoria. Query 3: A CTE agrega por Cliente e Regiao; a query principal apresenta em ordem decrescente por região."
+  },
+  "keyTakeaways": [
+    "CTEs tornam queries complexas mais legíveis separando a lógica em etapas nomeadas",
+    "Uma CTE pode referenciar CTEs anteriores definidas no mesmo WITH",
+    "Combine CTEs com JOINs, window functions e filtragem na query principal",
+    "CTEs são lidas de cima para baixo — defina-as na ordem em que são usadas"
+  ],
+  "commonMistakes": [
+    "Tentar definir a CTE depois do SELECT — WITH sempre vem antes do SELECT principal",
+    "Separar múltiplas CTEs com ponto e vírgula — use vírgula entre elas, ponto e vírgula só no final"
+  ],
+  "realWorldExample": "Um relatório de análise de vendas usa CTEs para: calcular totais por vendedor, calcular a média geral, e na query final mostrar cada vendedor com seu percentual acima ou abaixo da média — tudo legível e sem subqueries aninhadas.",
+  "encouragement": "Você dominou CTEs! Com subqueries e CTEs, você consegue resolver praticamente qualquer problema analítico em SQL. Próximo nível: manipulação de dados com INSERT, UPDATE e DELETE."
+}

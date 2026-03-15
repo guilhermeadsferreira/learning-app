@@ -1,0 +1,44 @@
+{
+  "id": "window-functions-introducao",
+  "courseId": "sql-server",
+  "moduleId": "avancado",
+  "title": "Window Functions: Introdução",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Window Functions são como calcular a média de notas da turma mantendo as notas individuais visíveis. Com GROUP BY, você perde as linhas individuais — vê só o resumo. Com Window Functions, você vê a nota de cada aluno E a média da turma na mesma linha, sem perder o detalhe.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Window Functions vs GROUP BY" },
+      {
+        "type": "code",
+        "content": "-- GROUP BY colapsa as linhas em grupos — você perde o detalhe\nSELECT Departamento, AVG(Salario) AS MediaDepto\nFROM Funcionarios\nGROUP BY Departamento;\n-- Resultado: 3 linhas (uma por departamento)\n\n-- Window Function mantém todas as linhas + adiciona o cálculo\nSELECT\n    Nome,\n    Departamento,\n    Salario,\n    AVG(Salario) OVER (PARTITION BY Departamento) AS MediaDepto\nFROM Funcionarios;\n-- Resultado: 10 linhas (todos os funcionários) + coluna MediaDepto",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Sintaxe: OVER() e PARTITION BY" },
+      {
+        "type": "code",
+        "content": "-- Estrutura: função OVER (janela)\nfuncao() OVER (\n    PARTITION BY coluna  -- opcional: define os grupos (partições)\n    ORDER BY coluna      -- obrigatório para algumas funções (ROW_NUMBER, RANK, LAG/LEAD)\n    ROWS/RANGE ...       -- opcional: frame da janela\n)\n\n-- Exemplos com PARTITION BY\nSELECT\n    Nome,\n    Departamento,\n    Salario,\n    -- Sem PARTITION BY: calcula sobre TODAS as linhas\n    AVG(Salario) OVER ()                         AS MediaGeral,\n    -- Com PARTITION BY: calcula por grupo (departamento)\n    AVG(Salario) OVER (PARTITION BY Departamento) AS MediaDepto,\n    -- Ranking dentro de cada departamento\n    RANK()        OVER (PARTITION BY Departamento ORDER BY Salario DESC) AS RankDepto\nFROM Funcionarios;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Categorias de Window Functions" },
+      {
+        "type": "list",
+        "content": "Ranking: ROW_NUMBER(), RANK(), DENSE_RANK(), NTILE()\nAgregação: SUM(), AVG(), COUNT(), MIN(), MAX() com OVER()\nNavegação: LAG(), LEAD(), FIRST_VALUE(), LAST_VALUE()\nEstatística: PERCENT_RANK(), CUME_DIST(), PERCENTILE_CONT()"
+      },
+      {
+        "type": "callout",
+        "content": "Window Functions são executadas após WHERE e GROUP BY — você não pode usar Window Functions diretamente no WHERE ou HAVING. Para filtrar por resultado de window function, use CTE ou subquery.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Window Functions calculam sobre um 'janela' de linhas sem colapsar o resultado",
+    "OVER() define a janela; PARTITION BY divide em grupos; ORDER BY ordena dentro do grupo",
+    "Sem PARTITION BY, a função calcula sobre todas as linhas como um único grupo",
+    "Para filtrar por window function, envolva em CTE ou subquery — não é possível no WHERE diretamente"
+  ],
+  "realWorldExample": "Um relatório de RH usa Window Functions para mostrar o salário de cada funcionário, a média do departamento e o ranking salarial dentro do departamento — tudo na mesma linha, sem necessidade de JOINs ou subqueries.",
+  "encouragement": "Window Functions são o recurso mais poderoso do SQL moderno. Dominar OVER() e PARTITION BY vai elevar muito o nível das suas queries analíticas."
+}

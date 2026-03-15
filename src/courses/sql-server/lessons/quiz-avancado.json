@@ -1,0 +1,172 @@
+{
+  "id": "quiz-avancado",
+  "courseId": "sql-server",
+  "moduleId": "avancado",
+  "title": "Quiz — T-SQL Avançado",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Quiz Final — T-SQL Avançado" },
+      {
+        "type": "paragraph",
+        "content": "Parabéns por chegar até aqui! Vamos testar seus conhecimentos sobre Window Functions, índices e objetos de banco de dados."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal diferença entre Window Functions e GROUP BY?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Window Functions são mais lentas que GROUP BY",
+          "isCorrect": false,
+          "explanation": "Performance depende do contexto. A diferença fundamental é comportamental, não de velocidade."
+        },
+        {
+          "id": "b",
+          "text": "GROUP BY colapsa linhas em grupos; Window Functions calculam sobre grupos mas mantêm todas as linhas",
+          "isCorrect": true,
+          "explanation": "Correto! GROUP BY reduz o número de linhas para uma por grupo. Window Functions adicionam colunas calculadas sem reduzir o número de linhas — cada linha individual é preservada."
+        },
+        {
+          "id": "c",
+          "text": "Window Functions só funcionam com ORDER BY; GROUP BY não precisa",
+          "isCorrect": false,
+          "explanation": "Algumas window functions (AVG, SUM com OVER) não precisam de ORDER BY. Funções de ranking e navegação sim, mas não é uma regra geral."
+        },
+        {
+          "id": "d",
+          "text": "São equivalentes — apenas sintaxes diferentes para o mesmo resultado",
+          "isCorrect": false,
+          "explanation": "Não são equivalentes. Produzem resultados muito diferentes — GROUP BY resume; Window Functions enriquecem cada linha."
+        }
+      ]
+    },
+    {
+      "question": "Se dois funcionários têm o mesmo salário e você usa RANK(), quais posições eles recebem?",
+      "options": [
+        {
+          "id": "a",
+          "text": "1 e 2 — RANK sempre gera posições únicas",
+          "isCorrect": false,
+          "explanation": "ROW_NUMBER sempre gera posições únicas. RANK atribui o mesmo número para empates."
+        },
+        {
+          "id": "b",
+          "text": "Ambos recebem a mesma posição, e a próxima posição pula um número",
+          "isCorrect": true,
+          "explanation": "Correto! Por exemplo, se dois funcionários empatam em 2°, ambos ficam com RANK = 2. O próximo funcionário recebe RANK = 4 (posição 3 é pulada)."
+        },
+        {
+          "id": "c",
+          "text": "Ambos recebem a mesma posição, e a próxima posição continua sequencialmente",
+          "isCorrect": false,
+          "explanation": "Isso descreve o comportamento do DENSE_RANK, não do RANK. RANK pula posições após empates."
+        },
+        {
+          "id": "d",
+          "text": "O SQL Server retorna erro com valores duplicados em RANK()",
+          "isCorrect": false,
+          "explanation": "RANK() trata empates perfeitamente — é exatamente para isso que existe."
+        }
+      ]
+    },
+    {
+      "question": "Por que aplicar funções em colunas indexadas (ex: WHERE UPPER(email) = ...) impede o uso do índice?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Funções são proibidas em cláusulas WHERE",
+          "isCorrect": false,
+          "explanation": "Funções são permitidas no WHERE. O problema é o impacto no índice."
+        },
+        {
+          "id": "b",
+          "text": "O índice armazena o valor original; a função transforma o valor antes da comparação, tornando o índice inutilizável para busca direta",
+          "isCorrect": true,
+          "explanation": "Correto! O índice está ordenado pelo valor original (email). Ao aplicar UPPER(), o SQL Server precisa calcular UPPER() para cada linha e comparar — anulando a vantagem do índice."
+        },
+        {
+          "id": "c",
+          "text": "UPPER() não está disponível em cláusulas WHERE",
+          "isCorrect": false,
+          "explanation": "UPPER() funciona em WHERE. O problema é que desabilita o uso do índice."
+        },
+        {
+          "id": "d",
+          "text": "Índices só funcionam com operadores de igualdade (=)",
+          "isCorrect": false,
+          "explanation": "Índices funcionam com =, >, <, BETWEEN, LIKE 'prefix%'. O problema é transformar a coluna indexada com função."
+        }
+      ]
+    },
+    {
+      "question": "O que faz LAG(coluna, 2, 0) OVER (PARTITION BY Regiao ORDER BY Mes)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retorna o valor da próxima linha, 2 posições à frente, por região",
+          "isCorrect": false,
+          "explanation": "LAG olha para trás (linhas anteriores). LEAD olha para frente (linhas seguintes)."
+        },
+        {
+          "id": "b",
+          "text": "Retorna o valor da coluna de 2 linhas atrás, dentro da mesma região, ou 0 se não existir",
+          "isCorrect": true,
+          "explanation": "Correto! LAG(col, 2, 0): col = coluna, 2 = offset (2 linhas atrás), 0 = valor padrão quando não há linha suficiente. PARTITION BY Regiao garante que não 'vaza' para outra região."
+        },
+        {
+          "id": "c",
+          "text": "Retorna a soma das últimas 2 linhas dentro da região",
+          "isCorrect": false,
+          "explanation": "LAG não soma — acessa o valor de uma linha específica (n linhas atrás)."
+        },
+        {
+          "id": "d",
+          "text": "Divide os dados em 2 grupos por região",
+          "isCorrect": false,
+          "explanation": "Divisão em grupos é feita por NTILE(). LAG acessa linhas anteriores."
+        }
+      ]
+    },
+    {
+      "question": "Qual é o objetivo do INCLUDE em um CREATE INDEX?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Filtrar quais linhas farão parte do índice",
+          "isCorrect": false,
+          "explanation": "Filtrar linhas do índice é feito com WHERE (filtered index). INCLUDE adiciona colunas cobertas."
+        },
+        {
+          "id": "b",
+          "text": "Adicionar colunas cobertas ao índice sem compor a chave, evitando lookups na tabela",
+          "isCorrect": true,
+          "explanation": "Correto! INCLUDE adiciona colunas nos 'nós folha' do índice. Quando uma query busca por uma coluna indexada e precisa das colunas incluídas, ela resolve tudo pelo índice sem precisar acessar a tabela principal."
+        },
+        {
+          "id": "c",
+          "text": "Incluir o índice em múltiplas tabelas simultaneamente",
+          "isCorrect": false,
+          "explanation": "Um índice pertence a uma única tabela. INCLUDE não tem relação com múltiplas tabelas."
+        },
+        {
+          "id": "d",
+          "text": "Definir colunas que compõem a chave primária do índice",
+          "isCorrect": false,
+          "explanation": "As colunas da chave são definidas antes do INCLUDE, entre parênteses após o nome da tabela. INCLUDE adiciona colunas extras que não fazem parte da chave."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Window Functions preservam todas as linhas; GROUP BY colapsa em grupos",
+    "RANK pula posições após empates; DENSE_RANK não pula; ROW_NUMBER sempre é único",
+    "Funções em colunas indexadas (UPPER, CONVERT, YEAR) impedem o uso do índice",
+    "INCLUDE em índices cria 'covering indexes' que evitam lookups na tabela"
+  ],
+  "encouragement": "🎉 Parabéns! Você completou o curso SQL Server: T-SQL do Básico ao Avançado! Você agora domina desde SELECT básico até Window Functions, CTEs, transações e otimização de performance. Continue praticando — o SQL é uma das habilidades mais valiosas do mercado de tecnologia!"
+}

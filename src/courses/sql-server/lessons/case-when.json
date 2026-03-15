@@ -1,0 +1,51 @@
+{
+  "id": "case-when",
+  "courseId": "sql-server",
+  "moduleId": "funcoes-tsql",
+  "title": "CASE WHEN",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "CASE WHEN é o 'se/senão' do SQL. É como uma tabela de decisão: 'Se o salário for menor que 3000, chame de Júnior; se entre 3000 e 8000, Pleno; acima disso, Sênior'. Você cria categorias e rótulos diretamente na query.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Sintaxe do CASE WHEN" },
+      {
+        "type": "code",
+        "content": "-- Forma pesquisada (mais flexível)\nSELECT\n    Nome,\n    Salario,\n    CASE\n        WHEN Salario < 3000  THEN 'Júnior'\n        WHEN Salario < 8000  THEN 'Pleno'\n        WHEN Salario < 15000 THEN 'Sênior'\n        ELSE 'Especialista'\n    END AS NivelSalarial\nFROM Funcionarios;\n\n-- Forma simples (compara com valor fixo)\nSELECT\n    Produto,\n    CASE Status\n        WHEN 'A' THEN 'Ativo'\n        WHEN 'I' THEN 'Inativo'\n        WHEN 'P' THEN 'Pendente'\n        ELSE 'Desconhecido'\n    END AS StatusDescricao\nFROM Produtos;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "CASE WHEN em aggregações" },
+      {
+        "type": "code",
+        "content": "-- Contar condicionalmente (padrão comum)\nSELECT\n    COUNT(*) AS TotalFuncionarios,\n    SUM(CASE WHEN Departamento = 'TI' THEN 1 ELSE 0 END) AS FuncionariosTI,\n    AVG(CASE WHEN Genero = 'F' THEN Salario END)          AS MediaSalarioFeminino\nFROM Funcionarios;\n\n-- Pivô manual com CASE WHEN\nSELECT\n    Ano,\n    SUM(CASE WHEN Trimestre = 1 THEN Valor ELSE 0 END) AS Q1,\n    SUM(CASE WHEN Trimestre = 2 THEN Valor ELSE 0 END) AS Q2,\n    SUM(CASE WHEN Trimestre = 3 THEN Valor ELSE 0 END) AS Q3,\n    SUM(CASE WHEN Trimestre = 4 THEN Valor ELSE 0 END) AS Q4\nFROM Vendas\nGROUP BY Ano;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "O CASE WHEN avalia as condições em ordem. Assim que encontra a primeira THEN verdadeira, retorna o valor e para. Coloque as condições mais específicas primeiro.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Pedidos abaixo para escrever as queries:\n\n1. Liste todos os pedidos com uma coluna Classificacao: 'Pequeno' (Valor < 500), 'Médio' (Valor < 2000), 'Grande' (Valor >= 2000)\n2. Adicione uma coluna Urgente: 'Sim' se Status = 'Pendente' e DiasAtraso > 5, caso contrário 'Não'\n3. Conte quantos pedidos são Pequeno, Médio e Grande (em uma única query)",
+    "starterCode": "-- Tabela: Pedidos\n-- | Id | Cliente       | Valor   | Status    | DiasAtraso |\n-- |----|---------------|---------|-----------|------------|\n-- | 1  | Ana Souza     | 350.00  | Entregue  | 0          |\n-- | 2  | Bruno Lima    | 1200.00 | Pendente  | 8          |\n-- | 3  | Carla Dias    | 3500.00 | Entregue  | 0          |\n-- | 4  | Diego Melo    | 750.00  | Pendente  | 2          |\n-- | 5  | Elena Vieira  | 4800.00 | Pendente  | 12         |\n\n-- Query 1: Classificação por valor\n\n\n-- Query 2: Flag Urgente\n\n\n-- Query 3: Contagem por classificação (em uma query)",
+    "solution": "-- Query 1: Classificação por valor\nSELECT\n    Id, Cliente, Valor,\n    CASE\n        WHEN Valor < 500  THEN 'Pequeno'\n        WHEN Valor < 2000 THEN 'Médio'\n        ELSE 'Grande'\n    END AS Classificacao\nFROM Pedidos;\n\n-- Query 2: Flag Urgente\nSELECT\n    Id, Cliente, Status, DiasAtraso,\n    CASE\n        WHEN Status = 'Pendente' AND DiasAtraso > 5 THEN 'Sim'\n        ELSE 'Não'\n    END AS Urgente\nFROM Pedidos;\n\n-- Query 3: Contagem por classificação\nSELECT\n    SUM(CASE WHEN Valor < 500  THEN 1 ELSE 0 END) AS Pequenos,\n    SUM(CASE WHEN Valor >= 500 AND Valor < 2000 THEN 1 ELSE 0 END) AS Medios,\n    SUM(CASE WHEN Valor >= 2000 THEN 1 ELSE 0 END) AS Grandes\nFROM Pedidos;",
+    "tests": [],
+    "hint": "No CASE WHEN, as condições são avaliadas em ordem — coloque a mais restrita primeiro. Para contar condicionalmente, use SUM(CASE WHEN condição THEN 1 ELSE 0 END).",
+    "solutionExplanation": "Query 1: As condições são avaliadas em ordem — Valor < 500 primeiro, depois < 2000. Se chegou no ELSE, é >= 2000. Query 2: AND combina duas condições no mesmo WHEN — ambas precisam ser verdadeiras. Query 3: O padrão SUM(CASE WHEN ... THEN 1 ELSE 0 END) é equivalente a COUNT com filtro, mas permite múltiplos counts em uma única passagem pela tabela."
+  },
+  "keyTakeaways": [
+    "CASE WHEN avalia condições em ordem e retorna o primeiro THEN verdadeiro",
+    "ELSE é opcional — sem ELSE, retorna NULL quando nenhuma condição é atendida",
+    "CASE WHEN dentro de SUM() permite contar ou somar condicionalmente",
+    "Coloque condições mais específicas primeiro no CASE WHEN"
+  ],
+  "commonMistakes": [
+    "Esquecer o END no final do CASE WHEN — causa erro de sintaxe",
+    "Ordem errada nas condições — WHEN Valor < 2000 antes de WHEN Valor < 500 captura o que deveria ser 'Pequeno'"
+  ],
+  "realWorldExample": "Um dashboard de vendas usa CASE WHEN para categorizar clientes (Bronze/Prata/Ouro), colorir pedidos atrasados e criar pivôs de vendas por trimestre — tudo sem precisar processar no código da aplicação.",
+  "encouragement": "CASE WHEN é uma das ferramentas mais versáteis do T-SQL. Com ele você transforma dados numéricos em categorias e cria relatórios poderosos diretamente na query."
+}

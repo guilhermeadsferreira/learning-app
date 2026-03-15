@@ -1,0 +1,51 @@
+{
+  "id": "left-right-join",
+  "courseId": "sql-server",
+  "moduleId": "joins",
+  "title": "LEFT JOIN e RIGHT JOIN",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "LEFT JOIN é como uma lista de todos os funcionários de uma empresa — mesmo os que ainda não foram alocados em projeto. À direita aparecem os dados do projeto (ou NULL se não tiver projeto). Você nunca perde um funcionário da lista, mesmo sem projeto.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "LEFT JOIN — preserva a tabela esquerda" },
+      {
+        "type": "code",
+        "content": "-- LEFT JOIN: todas as linhas da esquerda + matches da direita\n-- Clientes SEM pedidos também aparecem (com NULLs nos campos de Pedidos)\nSELECT\n    c.Nome,\n    p.Id AS PedidoId,\n    p.Valor\nFROM Clientes c\nLEFT JOIN Pedidos p ON c.Id = p.ClienteId;\n\n-- Encontrar clientes SEM pedidos\n-- (padrão: LEFT JOIN + WHERE coluna_direita IS NULL)\nSELECT c.Nome\nFROM Clientes c\nLEFT JOIN Pedidos p ON c.Id = p.ClienteId\nWHERE p.Id IS NULL;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "RIGHT JOIN — preserva a tabela direita" },
+      {
+        "type": "code",
+        "content": "-- RIGHT JOIN: todas as linhas da direita + matches da esquerda\nSELECT\n    c.Nome,\n    p.Id AS PedidoId,\n    p.Valor\nFROM Clientes c\nRIGHT JOIN Pedidos p ON c.Id = p.ClienteId;\n-- Pedidos sem cliente cadastrado aparecem com NULL em c.Nome",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Na prática, RIGHT JOIN é raro — quase sempre dá para reescrever como LEFT JOIN trocando a ordem das tabelas. Prefira LEFT JOIN por convenção, pois é mais legível e intuitivo.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use as tabelas abaixo para escrever as queries:\n\n1. Liste TODOS os projetos e o nome do funcionário alocado (NULL se nenhum)\n2. Encontre os funcionários que NÃO estão alocados em nenhum projeto\n3. Mostre todos os projetos com o total de funcionários alocados (0 se nenhum)",
+    "starterCode": "-- Tabela: Funcionarios\n-- | Id | Nome           | Salario  |\n-- |----|----------------|----------|\n-- | 1  | Ana Lima       | 8500.00  |\n-- | 2  | Bruno Souza    | 4200.00  |\n-- | 3  | Carla Melo     | 12000.00 |\n-- | 4  | Diego Rocha    | 3800.00  |\n\n-- Tabela: Projetos\n-- | Id | Nome             | FuncId |\n-- |----|------------------|--------|\n-- | 1  | Migração Cloud   | 1      |\n-- | 2  | App Mobile       | 3      |\n-- | 3  | Portal RH        | NULL   |\n-- | 4  | Dashboard BI     | NULL   |\n\n-- Query 1: Todos os projetos com funcionário alocado (ou NULL)\n\n\n-- Query 2: Funcionários sem projeto\n\n\n-- Query 3: Projetos com total de funcionários alocados",
+    "solution": "-- Query 1: Todos os projetos com funcionário alocado (ou NULL)\nSELECT\n    p.Nome AS Projeto,\n    f.Nome AS Funcionario\nFROM Projetos p\nLEFT JOIN Funcionarios f ON p.FuncId = f.Id;\n\n-- Query 2: Funcionários sem projeto\nSELECT f.Nome\nFROM Funcionarios f\nLEFT JOIN Projetos p ON f.Id = p.FuncId\nWHERE p.Id IS NULL;\n\n-- Query 3: Projetos com total de funcionários alocados\nSELECT\n    p.Nome AS Projeto,\n    COUNT(f.Id) AS TotalFuncionarios\nFROM Projetos p\nLEFT JOIN Funcionarios f ON p.FuncId = f.Id\nGROUP BY p.Id, p.Nome;",
+    "tests": [],
+    "hint": "Para query 1, Projetos é a tabela esquerda no LEFT JOIN — todos os projetos aparecem. Para query 2, Funcionarios é a esquerda — use WHERE p.Id IS NULL para achar os sem projeto. COUNT(f.Id) conta apenas não-NULLs.",
+    "solutionExplanation": "Query 1: LEFT JOIN com Projetos à esquerda garante que todos os projetos aparecem — mesmo Portal RH e Dashboard BI que têm FuncId NULL. Query 2: Com Funcionarios à esquerda, WHERE p.Id IS NULL filtra apenas os funcionários que não tiveram match na tabela Projetos. Query 3: COUNT(f.Id) conta apenas valores não-NULL — projetos sem funcionário ficam com 0."
+  },
+  "keyTakeaways": [
+    "LEFT JOIN preserva todas as linhas da tabela esquerda; NULLs preenchem as colunas sem match",
+    "RIGHT JOIN preserva todas as linhas da direita — raro, prefira LEFT JOIN com tabelas invertidas",
+    "LEFT JOIN + WHERE coluna_direita IS NULL = registros sem correspondência (anti-join)",
+    "COUNT(coluna) ignora NULLs — útil para contar matches em LEFT JOINs"
+  ],
+  "commonMistakes": [
+    "Usar WHERE p.Valor = algo em vez de AND no ON — transforma LEFT JOIN em INNER JOIN",
+    "Filtrar na coluna da tabela direita no WHERE converte LEFT JOIN em INNER JOIN implicitamente"
+  ],
+  "realWorldExample": "Um relatório de RH usa LEFT JOIN para listar todos os funcionários — incluindo os sem avaliação de desempenho (NULL) — identificando quem precisa ser avaliado.",
+  "encouragement": "LEFT JOIN é o segundo JOIN mais usado depois do INNER. O padrão LEFT JOIN + WHERE IS NULL é especialmente poderoso para encontrar 'órfãos' nos dados."
+}

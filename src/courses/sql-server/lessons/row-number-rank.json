@@ -1,0 +1,57 @@
+{
+  "id": "row-number-rank",
+  "courseId": "sql-server",
+  "moduleId": "avancado",
+  "title": "ROW_NUMBER, RANK e DENSE_RANK",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "advanced",
+  "analogy": "Imagine um campeonato: ROW_NUMBER numera cada competidor sequencialmente (1, 2, 3, 4...). RANK dá o mesmo número para empates mas pula posições (1, 2, 2, 4 — sem 3°). DENSE_RANK também não pula (1, 2, 2, 3). Qual usar depende das regras do campeonato.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "ROW_NUMBER — número de linha único" },
+      {
+        "type": "code",
+        "content": "-- ROW_NUMBER: sempre único, sem empates\nSELECT\n    ROW_NUMBER() OVER (ORDER BY Salario DESC) AS Posicao,\n    Nome,\n    Salario\nFROM Funcionarios;\n-- 1, 2, 3, 4... (nunca repete)\n\n-- ROW_NUMBER por partição — reinicia em cada grupo\nSELECT\n    Departamento,\n    ROW_NUMBER() OVER (PARTITION BY Departamento ORDER BY Salario DESC) AS RankDepto,\n    Nome,\n    Salario\nFROM Funcionarios;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "RANK vs DENSE_RANK — tratamento de empates" },
+      {
+        "type": "code",
+        "content": "SELECT\n    Nome,\n    Salario,\n    ROW_NUMBER()  OVER (ORDER BY Salario DESC) AS RowNum,    -- 1,2,3,4\n    RANK()        OVER (ORDER BY Salario DESC) AS Rank,      -- 1,2,2,4 (pula)\n    DENSE_RANK()  OVER (ORDER BY Salario DESC) AS DenseRank  -- 1,2,2,3 (não pula)\nFROM Funcionarios;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Padrão: pegar o N melhor por grupo" },
+      {
+        "type": "code",
+        "content": "-- Top 2 salários por departamento\nWITH RankedFuncionarios AS (\n    SELECT\n        Nome,\n        Departamento,\n        Salario,\n        ROW_NUMBER() OVER (PARTITION BY Departamento ORDER BY Salario DESC) AS Rank\n    FROM Funcionarios\n)\nSELECT Nome, Departamento, Salario\nFROM RankedFuncionarios\nWHERE Rank <= 2;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "O padrão CTE + ROW_NUMBER + WHERE Rank <= N é o mais usado para pegar os 'top N por grupo' — mais eficiente que subqueries correlacionadas.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use a tabela Vendas abaixo para escrever as queries:\n\n1. Numere cada venda dentro de cada Regiao ordenado por Valor DESC (ROW_NUMBER)\n2. Encontre o TOP 1 produto mais vendido (por Valor) em cada Categoria usando o padrão CTE + ROW_NUMBER\n3. Mostre RANK e DENSE_RANK dos vendedores pelo total de vendas — identifique a diferença quando houver empate",
+    "starterCode": "-- Tabela: Vendas\n-- | Id | Produto    | Categoria    | Vendedor      | Regiao  | Valor   |\n-- |----|------------|--------------|---------------|---------|--------|\n-- | 1  | Notebook   | Informática  | Carlos Lima   | Sul     | 4500.00 |\n-- | 2  | Monitor    | Informática  | Ana Costa     | Sudeste | 1200.00 |\n-- | 3  | Teclado    | Informática  | Carlos Lima   | Sul     | 350.00  |\n-- | 4  | Cadeira    | Escritório   | Pedro Alves   | Norte   | 800.00  |\n-- | 5  | Mesa       | Escritório   | Ana Costa     | Sudeste | 1500.00 |\n-- | 6  | Notebook   | Informática  | Pedro Alves   | Norte   | 4200.00 |\n-- | 7  | Teclado    | Informática  | Ana Costa     | Sudeste | 350.00  |\n\n-- Query 1: ROW_NUMBER por Regiao ordenado por Valor DESC\n\n\n-- Query 2: Produto com maior valor por Categoria (CTE + ROW_NUMBER)\n\n\n-- Query 3: RANK e DENSE_RANK dos vendedores pelo total de vendas",
+    "solution": "-- Query 1: ROW_NUMBER por Regiao ordenado por Valor DESC\nSELECT\n    Regiao,\n    Produto,\n    Valor,\n    ROW_NUMBER() OVER (PARTITION BY Regiao ORDER BY Valor DESC) AS NumeroNaRegiao\nFROM Vendas;\n\n-- Query 2: Produto com maior valor por Categoria\nWITH ProdutosRanked AS (\n    SELECT\n        Produto,\n        Categoria,\n        Valor,\n        ROW_NUMBER() OVER (PARTITION BY Categoria ORDER BY Valor DESC) AS Rank\n    FROM Vendas\n)\nSELECT Produto, Categoria, Valor\nFROM ProdutosRanked\nWHERE Rank = 1;\n\n-- Query 3: RANK e DENSE_RANK por total de vendas\nSELECT\n    Vendedor,\n    SUM(Valor) AS TotalVendas,\n    RANK()       OVER (ORDER BY SUM(Valor) DESC) AS Rank,\n    DENSE_RANK() OVER (ORDER BY SUM(Valor) DESC) AS DenseRank\nFROM Vendas\nGROUP BY Vendedor;",
+    "tests": [],
+    "hint": "Query 1: PARTITION BY Regiao reinicia o ROW_NUMBER para cada região. Query 2: Use CTE para calcular o rank, depois filtre WHERE Rank = 1 na query principal. Query 3: Agrupe por Vendedor com SUM antes de aplicar RANK na mesma query.",
+    "solutionExplanation": "Query 1: PARTITION BY Regiao cria uma janela por região. ORDER BY Valor DESC ordena do maior para o menor dentro de cada região. Cada região reinicia do 1. Query 2: A CTE ranqueia produtos dentro de cada categoria; WHERE Rank = 1 pega apenas o topo de cada categoria. Query 3: GROUP BY agrega as vendas por vendedor. Ana Costa e Pedro Alves têm totais diferentes, mas se houvesse empate, RANK pularia uma posição enquanto DENSE_RANK não pularia."
+  },
+  "keyTakeaways": [
+    "ROW_NUMBER: sempre único (1,2,3...), mesmo com valores iguais",
+    "RANK: empates recebem o mesmo número, próxima posição pula (1,2,2,4)",
+    "DENSE_RANK: empates recebem o mesmo número, não pula (1,2,2,3)",
+    "CTE + ROW_NUMBER + WHERE Rank <= N é o padrão para top N por grupo"
+  ],
+  "commonMistakes": [
+    "Usar ROW_NUMBER quando quer tratar empates — use RANK ou DENSE_RANK",
+    "Tentar filtrar window function no WHERE diretamente — use CTE ou subquery"
+  ],
+  "realWorldExample": "Um e-commerce usa ROW_NUMBER para paginar resultados, DENSE_RANK para exibir ranking de produtos sem lacunas e CTE + ROW_NUMBER para mostrar o produto mais vendido de cada categoria na home.",
+  "encouragement": "Funções de ranking são usadas em praticamente todo dashboard analítico. Você agora sabe escolher entre ROW_NUMBER, RANK e DENSE_RANK com precisão."
+}

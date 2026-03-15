@@ -1,0 +1,50 @@
+{
+  "id": "transacoes-begin-commit",
+  "courseId": "sql-server",
+  "moduleId": "dml",
+  "title": "Transações: BEGIN, COMMIT e ROLLBACK",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Uma transação é como uma operação bancária de transferência. Você debita de uma conta E credita em outra — as duas coisas precisam acontecer juntas ou nenhuma acontece. Se algo falhar no meio, o banco desfaz tudo e nenhuma conta fica errada.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Propriedades ACID" },
+      {
+        "type": "list",
+        "content": "Atomicidade — tudo ou nada: ou todos os comandos são executados, ou nenhum\nConsistência — o banco sempre fica em estado válido\nIsolamento — transações concorrentes não se interferem\nDurabilidade — dados confirmados (COMMIT) persistem mesmo após falhas"
+      },
+      { "type": "heading", "content": "Sintaxe de transações em T-SQL" },
+      {
+        "type": "code",
+        "content": "-- Estrutura básica\nBEGIN TRANSACTION;\n    -- Comandos DML aqui\n    UPDATE Contas SET Saldo = Saldo - 1000 WHERE Id = 1;\n    UPDATE Contas SET Saldo = Saldo + 1000 WHERE Id = 2;\nCOMMIT TRANSACTION; -- confirma todas as alterações\n\n-- Com ROLLBACK em caso de erro\nBEGIN TRANSACTION;\n    DELETE FROM Pedidos WHERE Status = 'Cancelado';\n    -- ... outros comandos\nROLLBACK TRANSACTION; -- desfaz tudo desde o BEGIN",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Transações com TRY/CATCH" },
+      {
+        "type": "code",
+        "content": "BEGIN TRANSACTION;\nBEGIN TRY\n    -- Transferência entre contas\n    UPDATE Contas\n    SET Saldo = Saldo - 500\n    WHERE Id = 1;\n\n    UPDATE Contas\n    SET Saldo = Saldo + 500\n    WHERE Id = 2;\n\n    COMMIT TRANSACTION;\n    PRINT 'Transferência realizada com sucesso.';\nEND TRY\nBEGIN CATCH\n    ROLLBACK TRANSACTION;\n    PRINT 'Erro: ' + ERROR_MESSAGE();\nEND CATCH;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Savepoints — pontos intermediários" },
+      {
+        "type": "code",
+        "content": "BEGIN TRANSACTION;\n    INSERT INTO Log (Msg) VALUES ('Início');\n\n    SAVE TRANSACTION PontoA;  -- savepoint\n\n    UPDATE Produtos SET Preco = Preco * 0.9;  -- desconto 10%\n\n    -- Só reverter até o savepoint, não a transação toda\n    ROLLBACK TRANSACTION PontoA;\n\n    -- O INSERT do Log ainda está ativo\nCOMMIT TRANSACTION;",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Em T-SQL, transações são abertas implicitamente a cada comando DML (AUTOCOMMIT). Para agrupar múltiplos comandos, use BEGIN TRANSACTION explicitamente. Transações longas bloqueiam recursos — mantenha-as curtas.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "BEGIN TRANSACTION inicia; COMMIT confirma; ROLLBACK desfaz tudo",
+    "TRY/CATCH + ROLLBACK é o padrão para transações seguras em T-SQL",
+    "Transações garantem ACID — especialmente atomicidade e consistência",
+    "Mantenha transações curtas — transações longas causam bloqueios (locks)"
+  ],
+  "realWorldExample": "Um sistema financeiro usa transações para transferências: debita uma conta e credita outra dentro do mesmo BEGIN/COMMIT. Se qualquer etapa falhar, ROLLBACK garante que nenhuma conta seja alterada parcialmente.",
+  "encouragement": "Transações são o que torna sistemas financeiros confiáveis. Você agora sabe como garantir que operações críticas sejam atômicas e seguras."
+}

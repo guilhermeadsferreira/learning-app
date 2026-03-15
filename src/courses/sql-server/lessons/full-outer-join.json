@@ -1,0 +1,48 @@
+{
+  "id": "full-outer-join",
+  "courseId": "sql-server",
+  "moduleId": "joins",
+  "title": "FULL OUTER JOIN",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "FULL OUTER JOIN é como juntar duas listas de convidados de festas diferentes: você quer todo mundo, de qualquer festa. Quem foi às duas aparece numa linha só. Quem foi só a uma aparece com NULL nos campos da outra.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é FULL OUTER JOIN?" },
+      {
+        "type": "paragraph",
+        "content": "FULL OUTER JOIN retorna todas as linhas de ambas as tabelas. Onde há correspondência, os dados são combinados. Onde não há, os campos da tabela sem correspondência ficam NULL. É a união completa de LEFT JOIN + RIGHT JOIN."
+      },
+      {
+        "type": "code",
+        "content": "-- FULL OUTER JOIN\nSELECT\n    c.Nome AS Cliente,\n    p.Id   AS PedidoId,\n    p.Valor\nFROM Clientes c\nFULL OUTER JOIN Pedidos p ON c.Id = p.ClienteId;\n-- Resultado:\n-- Clientes sem pedido → PedidoId e Valor = NULL\n-- Pedidos sem cliente → Cliente = NULL",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Identificando registros órfãos em ambos os lados" },
+      {
+        "type": "code",
+        "content": "-- Encontrar registros sem par em qualquer uma das tabelas\nSELECT\n    c.Nome    AS Cliente,\n    p.Id      AS PedidoId,\n    CASE\n        WHEN c.Id IS NULL THEN 'Pedido sem cliente'\n        WHEN p.Id IS NULL THEN 'Cliente sem pedido'\n    END AS Situacao\nFROM Clientes c\nFULL OUTER JOIN Pedidos p ON c.Id = p.ClienteId\nWHERE c.Id IS NULL OR p.Id IS NULL;",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Quando usar FULL OUTER JOIN?" },
+      {
+        "type": "list",
+        "content": "Conciliação de dados entre dois sistemas diferentes\nAuditoria de integridade referencial (encontrar FKs quebradas)\nComparação de listas (ex: funcionários × usuários do sistema)\nETL — identificar o que existe em uma fonte mas não na outra"
+      },
+      {
+        "type": "callout",
+        "content": "FULL OUTER JOIN é menos comum no dia a dia. Para a maioria dos relatórios, INNER JOIN ou LEFT JOIN são suficientes. Use FULL OUTER JOIN em cenários de conciliação e auditoria.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "FULL OUTER JOIN retorna todas as linhas de ambas as tabelas, com NULLs onde não há match",
+    "É útil para conciliação de dados entre sistemas distintos",
+    "WHERE c.Id IS NULL OR p.Id IS NULL filtra apenas os 'órfãos' de ambos os lados",
+    "Na prática, INNER e LEFT JOIN cobrem a maioria dos casos — FULL OUTER é especializado"
+  ],
+  "realWorldExample": "Uma empresa migrou dados de um sistema legado para um novo ERP. O analista usa FULL OUTER JOIN entre as duas tabelas de clientes para identificar: clientes que existem só no legado (a migrar), só no novo sistema (cadastros duplicados?) ou em ambos.",
+  "encouragement": "Agora você conhece todos os tipos de JOIN externos. Com esse arsenal, você consegue combinar dados de qualquer forma que o negócio precisar."
+}

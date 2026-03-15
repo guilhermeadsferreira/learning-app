@@ -1,0 +1,94 @@
+{
+  "id": "sql-server",
+  "title": "SQL Server: T-SQL do Básico ao Avançado",
+  "description": "Domine o SQL Server com T-SQL nativo: do SELECT básico até Window Functions avançadas, CTEs, transações e procedures. Curso focado em desenvolvedores e analistas que querem escrever queries poderosas e eficientes.",
+  "icon": "🗄️",
+  "tags": ["Programação", "Backend", "SQL"],
+  "aiReviewContext": {
+    "subject": "SQL Server",
+    "expertise": "T-SQL, SELECT, JOINs, subqueries, CTEs, window functions, agregações, transações, stored procedures, índices",
+    "codeLanguage": "sql",
+    "challengeStyle": "query"
+  },
+  "modules": [
+    {
+      "id": "fundamentos",
+      "title": "Fundamentos SQL",
+      "lessons": [
+        "o-que-e-sql-server",
+        "select-basico",
+        "filtragem-where",
+        "ordenacao-e-distinct",
+        "quiz-fundamentos"
+      ]
+    },
+    {
+      "id": "funcoes-tsql",
+      "title": "Funções T-SQL",
+      "lessons": [
+        "funcoes-de-string",
+        "funcoes-de-data",
+        "null-isnull-coalesce",
+        "case-when",
+        "quiz-funcoes"
+      ]
+    },
+    {
+      "id": "joins",
+      "title": "Joins e Relacionamentos",
+      "lessons": [
+        "joins-introducao",
+        "inner-join",
+        "left-right-join",
+        "full-outer-join",
+        "self-join",
+        "quiz-joins"
+      ]
+    },
+    {
+      "id": "agregacao",
+      "title": "Agregação e Agrupamento",
+      "lessons": [
+        "funcoes-de-agregacao",
+        "group-by",
+        "having",
+        "agregacao-avancada",
+        "quiz-agregacao"
+      ]
+    },
+    {
+      "id": "subqueries-ctes",
+      "title": "Subqueries e CTEs",
+      "lessons": [
+        "subqueries-introducao",
+        "subquery-where",
+        "exists-not-exists",
+        "ctes-with",
+        "ctes-na-pratica"
+      ]
+    },
+    {
+      "id": "dml",
+      "title": "Manipulação de Dados",
+      "lessons": [
+        "insert-basico",
+        "update-delete",
+        "transacoes-begin-commit",
+        "merge-statement",
+        "quiz-dml"
+      ]
+    },
+    {
+      "id": "avancado",
+      "title": "T-SQL Avançado",
+      "lessons": [
+        "window-functions-introducao",
+        "row-number-rank",
+        "lead-lag",
+        "indices-e-performance",
+        "views-e-stored-procedures",
+        "quiz-avancado"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "funcoes-de-string",
+  "courseId": "sql-server",
+  "moduleId": "funcoes-tsql",
+  "title": "Funções de String",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Funções de string são como ferramentas de formatação de texto no Word: você pode deixar tudo maiúsculo, extrair um pedaço de uma frase, contar caracteres ou juntar dois textos. No SQL Server, você aplica isso diretamente nas colunas da sua query.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Funções de string mais usadas" },
+      {
+        "type": "code",
+        "content": "-- Comprimento e maiúsculas/minúsculas\nSELECT\n    LEN('Hello World'),        -- 11 (sem espaços finais)\n    UPPER('sql server'),       -- 'SQL SERVER'\n    LOWER('SQL SERVER'),       -- 'sql server'\n    LTRIM('  texto  '),        -- 'texto  ' (remove espaços à esquerda)\n    RTRIM('  texto  '),        -- '  texto' (remove espaços à direita)\n    TRIM('  texto  ');         -- 'texto' (T-SQL 2017+)",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Extraindo e substituindo texto" },
+      {
+        "type": "code",
+        "content": "-- SUBSTRING(string, início, tamanho)\nSELECT SUBSTRING('SQL Server 2022', 1, 10);  -- 'SQL Server'\n\n-- LEFT e RIGHT\nSELECT LEFT('Guilherme', 5);   -- 'Guilh'\nSELECT RIGHT('Guilherme', 3);  -- 'rme'\n\n-- REPLACE(string, de, para)\nSELECT REPLACE('Bom dia!', 'dia', 'noite');  -- 'Bom noite!'\n\n-- CHARINDEX — posição de uma substring\nSELECT CHARINDEX('@', 'user@email.com');  -- 5",
+        "language": "sql"
+      },
+      { "type": "heading", "content": "Concatenação e formatação" },
+      {
+        "type": "code",
+        "content": "-- Concatenar strings com +\nSELECT Nome + ' ' + Sobrenome AS NomeCompleto\nFROM Clientes;\n\n-- CONCAT — mais seguro (trata NULLs)\nSELECT CONCAT(Nome, ' ', Sobrenome) AS NomeCompleto\nFROM Clientes;\n\n-- STRING_AGG — juntar linhas em uma string (T-SQL 2017+)\nSELECT STRING_AGG(Cidade, ', ') AS Cidades\nFROM (SELECT DISTINCT Cidade FROM Clientes) AS sub;\n-- Resultado: 'São Paulo, Rio de Janeiro, Curitiba'",
+        "language": "sql"
+      },
+      {
+        "type": "callout",
+        "content": "Em T-SQL, concatenar NULL com qualquer string resulta em NULL. Use CONCAT() ou ISNULL() para garantir que o resultado seja sempre uma string válida.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "LEN(), UPPER(), LOWER(), TRIM() são as funções de string mais básicas",
+    "SUBSTRING(str, início, tamanho), LEFT(str, n) e RIGHT(str, n) extraem partes",
+    "REPLACE() substitui texto; CHARINDEX() encontra a posição de uma substring",
+    "Use CONCAT() em vez de + para concatenação segura com NULLs"
+  ],
+  "realWorldExample": "Um ETL usa UPPER() para normalizar nomes antes de gravar, REPLACE() para limpar caracteres especiais importados de CSV, e STRING_AGG() para gerar listas de tags separadas por vírgula em relatórios.",
+  "encouragement": "Funções de string transformam dados brutos em informação apresentável. Você vai usá-las em quase todo relatório."
+}
