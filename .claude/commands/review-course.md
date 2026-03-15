@@ -47,16 +47,16 @@ Verifique por lição:
 
 ### 2.2 Campos pedagógicos ausentes
 
-| Campo | Esperado em |
-|-------|-------------|
-| `analogy` | Todas as lições (especialmente `explanation`) |
-| `keyTakeaways` | Todas as lições |
-| `commonMistakes` | Lições `challenge` (e conceitos propensos a erro) |
-| `realWorldExample` | Todas as lições |
-| `encouragement` | Todas as lições |
-| `hint` | Lições `challenge` |
-| `solutionExplanation` | Lições `challenge` |
-| `difficulty` | Todas as lições |
+| Campo                 | Esperado em                                       |
+| --------------------- | ------------------------------------------------- |
+| `analogy`             | Todas as lições (especialmente `explanation`)     |
+| `keyTakeaways`        | Todas as lições                                   |
+| `commonMistakes`      | Lições `challenge` (e conceitos propensos a erro) |
+| `realWorldExample`    | Todas as lições                                   |
+| `encouragement`       | Todas as lições                                   |
+| `hint`                | Lições `challenge`                                |
+| `solutionExplanation` | Lições `challenge`                                |
+| `difficulty`          | Todas as lições                                   |
 
 ### 2.3 Qualidade do conteúdo
 

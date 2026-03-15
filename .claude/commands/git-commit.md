@@ -10,15 +10,15 @@ Execute `git status` e `git diff` para entender o que mudou. Liste os arquivos a
 
 Verifique nos arquivos editados:
 
-| Verificação | Ação se falhar |
-|-------------|----------------|
-| Erros de lint/TypeScript | **Crítico** — pausar e alertar o usuário |
-| Imports quebrados ou não resolvidos | **Crítico** — pausar e alertar o usuário |
+| Verificação                                                                                                   | Ação se falhar                           |
+| ------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| Erros de lint/TypeScript                                                                                      | **Crítico** — pausar e alertar o usuário |
+| Imports quebrados ou não resolvidos                                                                           | **Crítico** — pausar e alertar o usuário |
 | JSON de lições: campos obrigatórios ausentes (`id`, `courseId`, `moduleId`, `title`, `type`, `xp`, `content`) | **Crítico** — pausar e alertar o usuário |
-| Lição `challenge` sem `instructions`, `starterCode`, `solution`, `tests` | **Crítico** — pausar e alertar o usuário |
-| Lição `quiz` sem `quiz` array com `question` e `options` | **Crítico** — pausar e alertar o usuário |
-| Formatação inconsistente (ex: trailing commas) | **Menor** — corrigir automaticamente |
-| Console.log esquecido em produção | **Menor** — corrigir ou alertar |
+| Lição `challenge` sem `instructions`, `starterCode`, `solution`, `tests`                                      | **Crítico** — pausar e alertar o usuário |
+| Lição `quiz` sem `quiz` array com `question` e `options`                                                      | **Crítico** — pausar e alertar o usuário |
+| Formatação inconsistente (ex: trailing commas)                                                                | **Menor** — corrigir automaticamente     |
+| Console.log esquecido em produção                                                                             | **Menor** — corrigir ou alertar          |
 
 **Se algum ponto crítico for detectado**: pare, liste os problemas e pergunte ao usuário se deseja que você corrija ou se ele prefere resolver manualmente.
 
@@ -28,19 +28,20 @@ Verifique nos arquivos editados:
 
 Use Conventional Commits:
 
-| Tipo | Uso |
-|------|-----|
-| feat | Nova funcionalidade |
-| fix | Correção de bug |
-| refactor | Refatoração sem mudar comportamento |
-| docs | Apenas documentação |
-| style | Formatação, espaços (não altera lógica) |
-| chore | Tarefas de manutenção, deps |
-| test | Testes |
+| Tipo     | Uso                                     |
+| -------- | --------------------------------------- |
+| feat     | Nova funcionalidade                     |
+| fix      | Correção de bug                         |
+| refactor | Refatoração sem mudar comportamento     |
+| docs     | Apenas documentação                     |
+| style    | Formatação, espaços (não altera lógica) |
+| chore    | Tarefas de manutenção, deps             |
+| test     | Testes                                  |
 
 **Formato**: `tipo(escopo): descrição curta em PT-BR`
 
 Exemplos:
+
 - `feat(lessons): adiciona lição sobre useReducer`
 - `fix(editor): corrige preview que não atualizava`
 - `docs(content-generation): generaliza para gestão e ferramentas`

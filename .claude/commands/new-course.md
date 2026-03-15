@@ -19,12 +19,12 @@ Com base nos princípios da plataforma, planeje o curso completo:
 
 ### 1.1 Metadados do curso
 
-| Campo | Descrição |
-|-------|-----------|
-| courseId | kebab-case (ex: `claude-code`, `gestao-agil`) |
-| title | Título descritivo em português |
-| description | Descrição completa do que o curso cobre |
-| icon | Emoji representativo |
+| Campo           | Descrição                                                |
+| --------------- | -------------------------------------------------------- |
+| courseId        | kebab-case (ex: `claude-code`, `gestao-agil`)            |
+| title           | Título descritivo em português                           |
+| description     | Descrição completa do que o curso cobre                  |
+| icon            | Emoji representativo                                     |
 | aiReviewContext | `subject`, `expertise`, `codeLanguage`, `challengeStyle` |
 
 ### 1.2 Estrutura de módulos e lições
@@ -89,14 +89,17 @@ Para **cada lição**, siga rigorosamente:
 ### Por tipo de lição
 
 **explanation** (xp: 10):
+
 - Foco em conteúdo estruturado claro e conciso
 
 **challenge** (xp: 25):
+
 - `instructions`, `starterCode`, `solution`, `tests` (pode ser `[]`), `hint`, `solutionExplanation`
 - `starterCode` deve incluir imports e estrutura parcial
 - `solution` deve ser código completo e funcional
 
 **quiz** (xp: 10):
+
 - Array `quiz` com 2 a 4 perguntas
 - Cada pergunta com `question` e `options` (id, text, isCorrect, explanation)
 - Apenas **uma opção correta** por pergunta

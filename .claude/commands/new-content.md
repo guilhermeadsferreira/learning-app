@@ -16,16 +16,17 @@ Consulte como fonte de verdade:
 
 Infira do contexto fornecido em `$ARGUMENTS` ou pergunte ao usuário o que faltar:
 
-| Campo | Opções/Formato | Exemplo |
-|-------|---------------|---------|
-| **Área** | programação \| gestão \| ferramenta \| outro | programação |
-| **courseId** | ID do curso existente | react, gestao-agil |
-| **moduleId** | ID do módulo existente ou novo | state, scrum |
-| **Tópico/título** | Tema da lição | useState, Priorização do Backlog |
-| **Tipo** | explanation \| challenge \| quiz | challenge |
-| **Dificuldade** | beginner \| intermediate \| advanced | beginner |
+| Campo             | Opções/Formato                               | Exemplo                          |
+| ----------------- | -------------------------------------------- | -------------------------------- |
+| **Área**          | programação \| gestão \| ferramenta \| outro | programação                      |
+| **courseId**      | ID do curso existente                        | react, gestao-agil               |
+| **moduleId**      | ID do módulo existente ou novo               | state, scrum                     |
+| **Tópico/título** | Tema da lição                                | useState, Priorização do Backlog |
+| **Tipo**          | explanation \| challenge \| quiz             | challenge                        |
+| **Dificuldade**   | beginner \| intermediate \| advanced         | beginner                         |
 
 **Regras de adaptação**:
+
 - **Programação/ferramentas CLI**: pode usar `challenge` (com starterCode, solution)
 - **Gestão/ferramentas visuais/outro**: usar `explanation` ou `quiz` — não usar `challenge`
 
