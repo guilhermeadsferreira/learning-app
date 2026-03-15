@@ -1,0 +1,25 @@
+{
+  "id": "context-best-practices",
+  "courseId": "react",
+  "moduleId": "state-management",
+  "title": "Boas práticas do Context",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Context mal usado é como um alto-falante para toda a cidade: qualquer mudança faz todo mundo ouvir. Divida em canais menores.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Práticas recomendadas"
+      },
+      {
+        "type": "list",
+        "content": "Contextos separados — ThemeContext, AuthContext, não AppContext com tudo\nMemoize value — useMemo para o objeto passado ao Provider\nCustom hooks — useTheme() em vez de useContext(ThemeContext) direto\nEvite default value — esconder Provider faltando pode mascarar bugs"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para estado que muda frequentemente (lista de itens, filtros), considere Zustand ou Redux. Context causa re-render em todos os consumidores quando o value muda."
+      }
+    ]
+  }
+}

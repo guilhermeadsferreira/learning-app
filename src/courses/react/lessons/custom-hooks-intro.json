@@ -1,0 +1,25 @@
+{
+  "id": "custom-hooks-intro",
+  "courseId": "react",
+  "moduleId": "custom-hooks",
+  "title": "O que são custom hooks",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Custom hooks são como módulos de comportamento: extraem lógica reutilizável e mantêm os componentes finos e focados.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Definição"
+      },
+      {
+        "type": "paragraph",
+        "content": "Custom hooks são funções JavaScript que começam com 'use' e podem chamar outros hooks. Encapsulam lógica compartilhada entre componentes."
+      },
+      {
+        "type": "list",
+        "content": "Nome deve começar com use\nPodem usar useState, useEffect, outros hooks\nExtraia quando copiar lógica pela segunda vez\nTrate como módulos de comportamento, não mini-componentes"
+      }
+    ]
+  }
+}

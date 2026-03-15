@@ -1,0 +1,26 @@
+{
+  "id": "fetch-api",
+  "courseId": "react",
+  "moduleId": "data-fetching",
+  "title": "Fetch API e useEffect",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Buscar dados em React é como fazer um pedido: você dispara o fetch, espera a resposta, e atualiza o estado com o resultado.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Padrão básico"
+      },
+      {
+        "type": "code",
+        "content": "useEffect(() => {\n  let cancelled = false;\n  fetch('/api/users')\n    .then(res => res.json())\n    .then(data => { if (!cancelled) setUsers(data); });\n  return () => { cancelled = true; };\n}, []);",
+        "language": "javascript"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use um flag cancelled no cleanup para evitar setState em componente desmontado. Para produção, prefira TanStack Query que já trata isso."
+      }
+    ]
+  }
+}

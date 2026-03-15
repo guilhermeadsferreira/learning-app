@@ -1,0 +1,25 @@
+{
+  "id": "component-composition",
+  "courseId": "react",
+  "moduleId": "components",
+  "title": "Composição de componentes",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Composição é como montar LEGO: você combina peças pequenas para criar estruturas maiores, sem herança rígida.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Composição vs Herança"
+      },
+      {
+        "type": "paragraph",
+        "content": "React recomenda composição em vez de herança. Em vez de estender componentes, combine-os passando children ou props que são componentes."
+      },
+      {
+        "type": "list",
+        "content": "Containment — componentes que recebem children\nSpecialization — componentes específicos que usam genéricos\nComposição mantém o código flexível e reutilizável"
+      }
+    ]
+  }
+}

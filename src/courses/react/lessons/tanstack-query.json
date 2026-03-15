@@ -1,0 +1,30 @@
+{
+  "id": "tanstack-query",
+  "courseId": "react",
+  "moduleId": "data-fetching",
+  "title": "TanStack Query",
+  "type": "explanation",
+  "xp": 20,
+  "analogy": "TanStack Query é como um gerenciador de cache para dados do servidor: cache, refetch, retry, loading e error — tudo automático.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Por que TanStack Query?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Evite useEffect para fetch. useQuery gerencia loading, error, cache, refetch e retry. A documentação oficial recomenda: não use useEffect para buscar dados."
+      },
+      {
+        "type": "code",
+        "content": "const { data, isLoading, error } = useQuery({\n  queryKey: ['users'],\n  queryFn: () => fetch('/api/users').then(r => r.json())\n});",
+        "language": "javascript"
+      },
+      {
+        "type": "list",
+        "content": "queryKey — identifica o cache\nqueryFn — função que retorna Promise\nMutations — useMutation para POST/PUT/DELETE\nInvalidation — refetch quando dados mudam"
+      }
+    ]
+  }
+}

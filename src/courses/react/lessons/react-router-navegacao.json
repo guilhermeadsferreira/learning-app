@@ -1,0 +1,88 @@
+{
+  "id": "react-router-navegacao",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Hooks de navegação avançados",
+  "type": "explanation",
+  "xp": 20,
+  "difficulty": "intermediate",
+  "analogy": "Os hooks do React Router são como as ferramentas de GPS do Waze. useLocation te diz ONDE você está (pathname, query params). useSearchParams são os filtros do mapa (ordenação, categoria). useNavigate é o 'recalculando rota' — muda o destino programaticamente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "useLocation — onde estou?"
+      },
+      {
+        "type": "paragraph",
+        "content": "useLocation retorna um objeto com informações da URL atual: pathname (o caminho), search (query string), hash, state (dados passados via navigate/Link), e key."
+      },
+      {
+        "type": "code",
+        "content": "import { useLocation } from 'react-router-dom';\n\nfunction BreadCrumb() {\n  const location = useLocation();\n  // URL: /dashboard/settings?tab=security#password\n  // location.pathname → '/dashboard/settings'\n  // location.search   → '?tab=security'\n  // location.hash     → '#password'\n  // location.state    → dados passados via navigate/Link\n\n  return <p>Você está em: {location.pathname}</p>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "useSearchParams — query params reativas"
+      },
+      {
+        "type": "paragraph",
+        "content": "useSearchParams é como useState, mas para a query string da URL. Perfeito para filtros, paginação e busca — o estado fica na URL, permitindo compartilhar links com filtros aplicados."
+      },
+      {
+        "type": "code",
+        "content": "import { useSearchParams } from 'react-router-dom';\n\nfunction ProductList() {\n  const [searchParams, setSearchParams] = useSearchParams();\n\n  const category = searchParams.get('category') || 'all';\n  const sort = searchParams.get('sort') || 'name';\n  const page = Number(searchParams.get('page') || '1');\n\n  // URL: /products?category=electronics&sort=price&page=2\n\n  return (\n    <div>\n      {/* Filtro de categoria */}\n      <select\n        value={category}\n        onChange={(e) => {\n          searchParams.set('category', e.target.value);\n          searchParams.set('page', '1');  // resetar paginação\n          setSearchParams(searchParams);\n        }}\n      >\n        <option value=\"all\">Todas</option>\n        <option value=\"electronics\">Eletrônicos</option>\n        <option value=\"clothing\">Roupas</option>\n      </select>\n\n      {/* Paginação */}\n      <button\n        onClick={() => {\n          searchParams.set('page', String(page + 1));\n          setSearchParams(searchParams);\n        }}\n      >\n        Próxima página\n      </button>\n\n      <p>Categoria: {category} | Ordenação: {sort} | Página: {page}</p>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Vantagem de useSearchParams: o filtro fica na URL. Se o usuário copia /products?category=electronics&page=2 e envia para alguém, essa pessoa vê exatamente o mesmo estado. Isso não acontece com useState.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "useNavigate — navegação via código"
+      },
+      {
+        "type": "code",
+        "content": "import { useNavigate } from 'react-router-dom';\n\nfunction CreateProductForm() {\n  const navigate = useNavigate();\n\n  const handleSubmit = async (data) => {\n    const product = await createProduct(data);\n\n    // Navegação para o produto criado\n    navigate(`/products/${product.id}`);\n\n    // Com replace (sem empilhar histórico)\n    navigate('/products', { replace: true });\n\n    // Com state (passar dados)\n    navigate('/success', { state: { productName: product.name } });\n\n    // Voltar\n    navigate(-1);  // equivale ao botão 'voltar' do browser\n  };\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Link com state"
+      },
+      {
+        "type": "paragraph",
+        "content": "Além de useNavigate, o Link também aceita state — útil para passar dados entre páginas sem colocar na URL."
+      },
+      {
+        "type": "code",
+        "content": "// Passando state\n<Link to=\"/checkout\" state={{ cartItems: items, total: 299.90 }}>\n  Ir para checkout\n</Link>\n\n// Lendo state na página destino\nfunction Checkout() {\n  const location = useLocation();\n  const { cartItems, total } = location.state || {};\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Resumo dos hooks"
+      },
+      {
+        "type": "list",
+        "content": "useParams() — parâmetros da rota (:id, :slug)\nuseSearchParams() — query params (?page=1&sort=name)\nuseLocation() — pathname, search, hash, state\nuseNavigate() — navegação programática\nuseMatch() — verifica se uma rota específica está ativa"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "useSearchParams é como useState para query params — estado na URL, compartilhável",
+    "useLocation dá acesso ao pathname, search, hash e state da URL atual",
+    "useNavigate navega via código — essencial para redirect pós-submit",
+    "Link/navigate com state passa dados entre páginas sem poluir a URL"
+  ],
+  "commonMistakes": [
+    "Usar useState para filtros/paginação em vez de useSearchParams — o estado se perde no reload e não é compartilhável",
+    "Esquecer de converter searchParams para string/number — .get() sempre retorna string ou null",
+    "Navegar sem replace após ações destrutivas (delete, logout) — o usuário volta para estado inválido"
+  ],
+  "realWorldExample": "A busca do Google usa query params: google.com/search?q=react&page=2. Amazon usa para filtros: /s?category=electronics&sort=price. Toda listagem com filtros profissionais usa useSearchParams ou equivalente.",
+  "encouragement": "Esses hooks são as ferramentas que transformam roteamento básico em experiência de navegação profissional. Filtros na URL, redirect inteligente, breadcrumbs — tudo começa aqui."
+}

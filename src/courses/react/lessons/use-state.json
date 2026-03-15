@@ -1,0 +1,83 @@
+{
+  "id": "use-state",
+  "courseId": "react",
+  "moduleId": "state",
+  "title": "useState",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Imagine uma lousa mágica. Você escreve um número nela (o estado). Quando apaga e escreve outro número, todo mundo que está olhando para a lousa vê a mudança instantaneamente. useState é essa lousa: guarda um valor, e quando você o altera com a função setter, React 're-desenha' a tela automaticamente com o valor novo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é useState?"
+      },
+      {
+        "type": "paragraph",
+        "content": "useState é o Hook mais básico e mais usado do React. Ele adiciona 'memória' a um componente funcional — um valor que persiste entre renderizações e que, quando muda, faz o React atualizar a tela."
+      },
+      {
+        "type": "paragraph",
+        "content": "Sem estado, um componente é como uma função pura: mesma entrada, mesma saída, sempre estático. Com estado, o componente pode reagir a interações do usuário, mudando o que exibe."
+      },
+      {
+        "type": "heading",
+        "content": "Sintaxe"
+      },
+      {
+        "type": "code",
+        "content": "import { useState } from 'react';\n\nfunction Contador() {\n  // useState retorna um array com 2 elementos:\n  // [1] o valor atual do estado\n  // [2] a função para atualizar o estado\n  const [contador, setContador] = useState(0);\n  //     ^^^^^^^^  ^^^^^^^^^^^          ^\n  //     valor     setter          valor inicial\n\n  return (\n    <div>\n      <p>Contagem: {contador}</p>\n      <button onClick={() => setContador(contador + 1)}>\n        +1\n      </button>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Por que não usar uma variável normal?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Se você fizer let contador = 0 e incrementar no click, a variável muda, mas o React não sabe disso e não atualiza a tela. useState é o 'contrato' com o React: 'quando eu chamar o setter, por favor re-renderize'."
+      },
+      {
+        "type": "heading",
+        "content": "Atualização com base no valor anterior"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando o novo estado depende do anterior, use a forma funcional do setter. Isso evita bugs com batching (quando React agrupa várias atualizações)."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Pode dar problema com batching:\nsetContador(contador + 1);\n\n// ✅ Seguro — sempre pega o valor mais recente:\nsetContador(prev => prev + 1);",
+        "language": "javascript"
+      },
+      {
+        "type": "callout",
+        "content": "O valor inicial do useState é usado APENAS na primeira renderização. Depois, React ignora o argumento e usa o valor mais recente do estado.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente com um contador que mostra o valor atual. Adicione dois botões: '+1' para incrementar e 'Resetar' para voltar a zero. Use a forma funcional do setter para incrementar.",
+    "starterCode": "import { useState } from 'react';\n\nexport default function App() {\n  // Crie o estado aqui\n\n  return (\n    <div>\n      <p>Contador: {/* valor aqui */}</p>\n      <button>{/* incrementar */}+1</button>\n      <button>{/* resetar */}Resetar</button>\n    </div>\n  );\n}",
+    "solution": "import { useState } from 'react';\n\nexport default function App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <div>\n      <p>Contador: {contador}</p>\n      <button onClick={() => setContador(prev => prev + 1)}>+1</button>\n      <button onClick={() => setContador(0)}>Resetar</button>\n    </div>\n  );\n}",
+    "hint": "Use useState(0) para criar o estado. Para incrementar, use setContador(prev => prev + 1). Para resetar, use setContador(0).",
+    "solutionExplanation": "Usamos useState(0) para inicializar o contador em zero. O botão +1 usa a forma funcional (prev => prev + 1) para garantir que sempre incrementa do valor mais recente. O botão Resetar simplesmente define o valor como 0.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "useState retorna [valor, setter] — sempre desestruture assim",
+    "Chamar o setter dispara uma re-renderização do componente",
+    "Use a forma funcional (prev => prev + 1) quando o novo estado depende do anterior",
+    "O valor inicial só é usado na primeira renderização"
+  ],
+  "commonMistakes": [
+    "Usar variável normal em vez de useState — a tela não atualiza",
+    "Modificar o estado diretamente (contador++ em vez de setContador) — React não detecta a mudança",
+    "Esquecer de importar: import { useState } from 'react'",
+    "Chamar o setter dentro do render sem condição — causa loop infinito de renderização"
+  ],
+  "realWorldExample": "Em um e-commerce, o estado controla quantos itens estão no carrinho. Cada vez que o usuário clica 'Adicionar', o setter atualiza o contador e o badge do carrinho no header reflete a mudança instantaneamente.",
+  "encouragement": "useState é o hook que você mais vai usar na vida. Dominar ele é dominar a alma do React — tudo que é interativo começa aqui."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "react-memo",
+  "courseId": "react",
+  "moduleId": "performance",
+  "title": "React.memo",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "React.memo é como um guarda de trânsito: só deixa o componente re-renderizar se as props mudaram (comparação superficial).",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Quando usar"
+      },
+      {
+        "type": "list",
+        "content": "Componente com render caro\nProps que mudam pouco\nListas com muitos itens similares\nComponentes profundos na árvore"
+      },
+      {
+        "type": "paragraph",
+        "content": "Cuidado: passar funções inline como props quebra o memo (nova referência a cada render). Use useCallback no pai ou mova a função para dentro do filho."
+      }
+    ]
+  }
+}

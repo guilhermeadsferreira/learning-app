@@ -1,0 +1,26 @@
+{
+  "id": "validacao-zod",
+  "courseId": "react",
+  "moduleId": "forms",
+  "title": "Validação com Zod",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Zod é como um fiscal de dados: define o formato esperado e valida em runtime. Integra perfeitamente com React Hook Form.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "React Hook Form + Zod"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use @hookform/resolvers/zod para conectar Zod ao React Hook Form. O schema Zod valida os dados e fornece mensagens de erro tipadas."
+      },
+      {
+        "type": "code",
+        "content": "const schema = z.object({\n  email: z.string().email('Email inválido'),\n  senha: z.string().min(6, 'Mínimo 6 caracteres')\n});\n\nuseForm({ resolver: zodResolver(schema) });",
+        "language": "javascript"
+      }
+    ]
+  }
+}

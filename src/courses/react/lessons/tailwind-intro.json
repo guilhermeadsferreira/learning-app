@@ -1,0 +1,110 @@
+{
+  "id": "tailwind-intro",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "Tailwind CSS: fundamentos",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Imagine um buffet de self-service de estilos. Em vez de pedir um prato completo (uma classe .card com 15 propriedades), você monta o prato: pega um pouco de padding (p-4), um pouco de borda (border), arredonda (rounded-lg), coloca cor (bg-white). Cada classe = um ingrediente. Você compõe o visual que quiser.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Tailwind CSS?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Tailwind é um framework CSS utility-first. Em vez de criar classes semânticas (.card, .sidebar, .btn-primary), você usa classes utilitárias que mapeiam 1:1 para propriedades CSS: flex = display: flex, p-4 = padding: 1rem, text-blue-500 = color: #3b82f6."
+      },
+      {
+        "type": "paragraph",
+        "content": "Parece verboso no início, mas a produtividade é absurda: você nunca sai do JSX, nunca inventa nomes de classes, nunca lida com conflitos de CSS, e o resultado é consistente porque usa um design system embutido (espaçamentos, cores, tipografia)."
+      },
+      {
+        "type": "heading",
+        "content": "Setup com Vite"
+      },
+      {
+        "type": "code",
+        "content": "# Instalar\nnpm install -D tailwindcss @tailwindcss/vite\n\n# vite.config.ts — adicionar o plugin\nimport tailwindcss from '@tailwindcss/vite';\nexport default defineConfig({\n  plugins: [react(), tailwindcss()],\n});\n\n# No seu CSS principal (ex: index.css)\n@import \"tailwindcss\";",
+        "language": "bash"
+      },
+      {
+        "type": "heading",
+        "content": "Classes essenciais"
+      },
+      {
+        "type": "heading",
+        "content": "Espaçamento (padding e margin)"
+      },
+      {
+        "type": "code",
+        "content": "p-4     → padding: 1rem (16px)\npx-4    → padding-left + padding-right: 1rem\npy-2    → padding-top + padding-bottom: 0.5rem\nm-4     → margin: 1rem\nmt-8    → margin-top: 2rem\nmb-2    → margin-bottom: 0.5rem\nspace-y-4 → gap vertical entre filhos: 1rem\ngap-4   → gap em flex/grid: 1rem",
+        "language": "text"
+      },
+      {
+        "type": "callout",
+        "content": "A escala de espaçamento usa múltiplos de 4px: 1=4px, 2=8px, 3=12px, 4=16px, 6=24px, 8=32px. Decore: p-4 = 16px, p-8 = 32px.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Layout (Flexbox e Grid)"
+      },
+      {
+        "type": "code",
+        "content": "flex              → display: flex\nflex-col          → flex-direction: column\nitems-center      → align-items: center\njustify-between   → justify-content: space-between\nflex-1            → flex: 1 1 0%\ngrid              → display: grid\ngrid-cols-3       → grid-template-columns: repeat(3, 1fr)\ncol-span-2        → grid-column: span 2",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Tipografia e Cores"
+      },
+      {
+        "type": "code",
+        "content": "text-sm / text-lg / text-xl / text-2xl  → tamanhos de fonte\nfont-medium / font-bold / font-semibold → peso\ntext-gray-500      → cor do texto (cinza médio)\ntext-blue-600      → cor do texto (azul)\nbg-white           → fundo branco\nbg-slate-900       → fundo escuro\nborder-gray-200    → cor da borda",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Bordas e Sombras"
+      },
+      {
+        "type": "code",
+        "content": "rounded       → border-radius: 4px\nrounded-lg    → border-radius: 8px\nrounded-full  → border-radius: 9999px (círculo)\nborder        → border: 1px solid\nshadow-sm     → box-shadow sutil\nshadow-md     → box-shadow médio",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo completo"
+      },
+      {
+        "type": "code",
+        "content": "function UserCard({ nome, cargo, avatar }) {\n  return (\n    <div className=\"flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm\">\n      <img\n        src={avatar}\n        alt={nome}\n        className=\"size-12 rounded-full object-cover\"\n      />\n      <div>\n        <h3 className=\"text-lg font-semibold text-gray-900\">{nome}</h3>\n        <p className=\"text-sm text-gray-500\">{cargo}</p>\n      </div>\n    </div>\n  );\n}",
+        "language": "jsx"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente AlertBanner que exibe uma mensagem de alerta. Use Tailwind para: fundo amarelo claro (bg-yellow-50), borda esquerda grossa amarela (border-l-4 border-yellow-400), padding (p-4), e texto amarelo escuro (text-yellow-800). Inclua um título em negrito e uma descrição.",
+    "starterCode": "export default function App() {\n  return (\n    <div className=\"p-8\">\n      {/* Crie o AlertBanner usando classes Tailwind */}\n      <div>\n        <h3>Atenção</h3>\n        <p>Sua sessão expira em 5 minutos.</p>\n      </div>\n    </div>\n  );\n}",
+    "solution": "export default function App() {\n  return (\n    <div className=\"p-8\">\n      <div className=\"border-l-4 border-yellow-400 bg-yellow-50 p-4 rounded-r-lg\">\n        <h3 className=\"text-sm font-bold text-yellow-800\">Atenção</h3>\n        <p className=\"mt-1 text-sm text-yellow-700\">Sua sessão expira em 5 minutos.</p>\n      </div>\n    </div>\n  );\n}",
+    "hint": "Adicione className na div do alerta com: border-l-4 border-yellow-400 bg-yellow-50 p-4. Use text-yellow-800 e font-bold no título.",
+    "solutionExplanation": "Cada classe Tailwind faz uma coisa: border-l-4 cria borda esquerda grossa, border-yellow-400 colore a borda, bg-yellow-50 dá fundo amarelo suave, p-4 adiciona padding. É como montar um LEGO de estilos.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Tailwind = classes utilitárias 1:1 com propriedades CSS",
+    "Escala de espaçamento: 1=4px, 2=8px, 4=16px, 8=32px",
+    "Layout: flex, items-center, justify-between, gap-4",
+    "Cores: text-{cor}-{intensidade}, bg-{cor}-{intensidade} (50=claro, 900=escuro)"
+  ],
+  "commonMistakes": [
+    "Inventar classes — Tailwind tem nomes fixos: é p-4, não padding-4",
+    "Misturar CSS custom com Tailwind sem necessidade — tente resolver com utilitários primeiro",
+    "Não instalar o plugin do editor — a extensão 'Tailwind CSS IntelliSense' no VS Code é essencial"
+  ],
+  "realWorldExample": "O dashboard desta plataforma que você está usando agora é feito com Tailwind + React. Cada card, botão e layout usa as mesmas classes que você está aprendendo.",
+  "encouragement": "Tailwind parece estranho no primeiro dia ('className enorme!') e se torna indispensável no segundo. A velocidade de desenvolvimento é viciante."
+}

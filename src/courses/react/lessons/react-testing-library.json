@@ -1,0 +1,25 @@
+{
+  "id": "react-testing-library",
+  "courseId": "react",
+  "moduleId": "testing",
+  "title": "React Testing Library",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "RTL é como um usuário cego: encontra elementos por texto, label e roles — o que importa para acessibilidade.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Filosofia"
+      },
+      {
+        "type": "paragraph",
+        "content": "\"The more your tests resemble the way your software is used, the more confidence they can give you.\" — Kent C. Dodds"
+      },
+      {
+        "type": "list",
+        "content": "Prioridade de queries: getByRole > getByLabelText > getByPlaceholderText > getByText > getByTestId\nuserEvent sobre fireEvent — simula interações reais\nARRANGE-ACT-ASSERT — estrutura dos testes"
+      }
+    ]
+  }
+}

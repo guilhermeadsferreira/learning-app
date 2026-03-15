@@ -1,0 +1,25 @@
+{
+  "id": "formularios-complexos",
+  "courseId": "react",
+  "moduleId": "forms",
+  "title": "Formulários dinâmicos",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Formulários com arrays são como listas de compras: você adiciona e remove itens. useFieldArray do React Hook Form resolve isso.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "useFieldArray"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para campos repetidos (lista de endereços, itens de pedido), use useFieldArray. Retorna fields, append, remove, e você mapeia para inputs."
+      },
+      {
+        "type": "list",
+        "content": "useController — para componentes controlados customizados\nuseFormContext — acessar form em componentes aninhados\nuseWatch — observar campos sem re-renderizar o root"
+      }
+    ]
+  }
+}

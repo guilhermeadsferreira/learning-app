@@ -1,0 +1,73 @@
+{
+  "id": "react-router-intro",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "React Router: conceitos",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "No PHP, cada URL carrega um arquivo diferente: /sobre.php carrega sobre.php, /contato.php carrega contato.php. O servidor decide. No React (SPA), existe apenas UM arquivo HTML. O React Router é o 'roteador virtual' que olha para a URL e decide qual componente mostrar — tudo no navegador, sem pedir nada ao servidor. É como um GPS: a URL é o endereço, o Router é o mapa, e os componentes são os destinos.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é uma SPA?"
+      },
+      {
+        "type": "paragraph",
+        "content": "SPA (Single Page Application) é uma aplicação web que carrega UMA página HTML e, a partir daí, todas as 'mudanças de página' acontecem via JavaScript no navegador. A URL muda, o conteúdo muda, mas a página nunca recarrega. Gmail, Twitter, Spotify Web — tudo SPA."
+      },
+      {
+        "type": "heading",
+        "content": "O problema sem React Router"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sem roteamento, sua SPA tem uma URL só: / (a raiz). Não dá para compartilhar links (manda /dashboard mas a pessoa cai na home), não tem botão voltar funcional, e tudo fica num único componente gigante. React Router resolve tudo isso."
+      },
+      {
+        "type": "heading",
+        "content": "React Router v6/v7 — a versão moderna"
+      },
+      {
+        "type": "paragraph",
+        "content": "React Router é a biblioteca padrão de roteamento para React. A versão 6+ trouxe uma API simplificada com hooks (useParams, useNavigate, useLocation) e o sistema de rotas aninhadas que veremos nas próximas lições."
+      },
+      {
+        "type": "heading",
+        "content": "Instalação e setup básico"
+      },
+      {
+        "type": "code",
+        "content": "# Instalar\nnpm install react-router-dom\n\n# Setup no main.tsx ou App.tsx\nimport { createBrowserRouter, RouterProvider } from 'react-router-dom';\n\nconst router = createBrowserRouter([\n  { path: '/', element: <Home /> },\n  { path: '/sobre', element: <Sobre /> },\n  { path: '/contato', element: <Contato /> },\n]);\n\nfunction App() {\n  return <RouterProvider router={router} />;\n}",
+        "language": "tsx"
+      },
+      {
+        "type": "heading",
+        "content": "Conceitos fundamentais"
+      },
+      {
+        "type": "list",
+        "content": "Route — mapeamento: 'quando a URL for X, renderize o componente Y'\nLink — navegação sem recarregar (substitui a tag <a>)\nOutlet — placeholder para rotas filhas (layouts compartilhados)\nuseParams — acessar parâmetros da URL (/user/:id → id)\nuseNavigate — navegação programática (redirect após ação)\nuseLocation — acessar dados da URL atual (pathname, search, state)"
+      },
+      {
+        "type": "callout",
+        "content": "createBrowserRouter é a API recomendada no React Router v6.4+. O antigo <BrowserRouter> + <Routes> ainda funciona, mas a nova API suporta loaders, actions e error boundaries.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "SPA = uma página HTML, múltiplas 'telas' via JavaScript",
+    "React Router mapeia URLs para componentes",
+    "createBrowserRouter é a API moderna recomendada",
+    "Link substitui <a> — navega sem recarregar a página"
+  ],
+  "commonMistakes": [
+    "Usar <a href> em vez de <Link to> — <a> recarrega a página inteira, perdendo o estado",
+    "Esquecer de envolver o app com RouterProvider — os hooks de rota não funcionam fora dele",
+    "Instalar react-router em vez de react-router-dom — o pacote correto para web é react-router-dom"
+  ],
+  "realWorldExample": "O Twitter/X é uma SPA com React Router. Quando você clica num tweet, a URL muda para /status/123456, o conteúdo muda, mas a página não recarrega — o feed continua em background. O botão voltar funciona perfeitamente.",
+  "encouragement": "Roteamento é o que transforma seu 'componente React' em uma 'aplicação web real' com múltiplas páginas, URLs compartilháveis e navegação profissional."
+}

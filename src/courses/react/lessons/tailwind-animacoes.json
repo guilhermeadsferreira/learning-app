@@ -1,0 +1,93 @@
+{
+  "id": "tailwind-animacoes",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "Hover, transições e animações",
+  "type": "challenge",
+  "xp": 20,
+  "difficulty": "intermediate",
+  "analogy": "Prefixos de estado no Tailwind são como sensores em um prédio inteligente. hover: é o sensor de movimento (alguém passou), focus: é o sensor de toque (alguém interagiu), active: é o sensor de pressão (está pressionando). Cada sensor dispara um conjunto de estilos automaticamente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Prefixos de estado"
+      },
+      {
+        "type": "paragraph",
+        "content": "Além de responsividade e dark mode, o Tailwind tem prefixos para estados interativos. Eles substituem pseudo-classes CSS (:hover, :focus, :active) com a mesma sintaxe de prefixo."
+      },
+      {
+        "type": "code",
+        "content": "hover:    → :hover (mouse em cima)\nfocus:    → :focus (elemento focado)\nactive:   → :active (clicando/pressionando)\nfocus-visible: → :focus-visible (foco via teclado, não mouse)\ndisabled: → :disabled (elemento desabilitado)\ngroup-hover: → :hover no elemento pai com class 'group'\nfirst:    → :first-child\nlast:     → :last-child",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Transições suaves"
+      },
+      {
+        "type": "paragraph",
+        "content": "transition-colors faz mudanças de cor animarem suavemente em vez de piscar. Combine com duration- para controlar a velocidade."
+      },
+      {
+        "type": "code",
+        "content": "// Botão com hover suave\n<button className=\"\n  bg-blue-600 text-white px-4 py-2 rounded-lg\n  hover:bg-blue-700\n  active:bg-blue-800\n  transition-colors duration-200\n\">\n  Salvar\n</button>\n\n// Card com elevação no hover\n<div className=\"\n  rounded-lg border bg-white p-4 shadow-sm\n  hover:shadow-lg hover:-translate-y-1\n  transition-all duration-300\n\">\n  Card que 'sobe' no hover\n</div>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Classes de transição"
+      },
+      {
+        "type": "code",
+        "content": "transition-all      → transiciona todas as propriedades\ntransition-colors   → só cores (background, text, border)\ntransition-opacity  → só opacidade\ntransition-transform → só transforms (scale, translate, rotate)\n\nduration-150  → 150ms (rápido)\nduration-200  → 200ms (padrão)\nduration-300  → 300ms (suave)\nduration-500  → 500ms (lento)\n\nease-in-out   → aceleração suave\nease-in       → começa devagar\nease-out      → termina devagar",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Group hover — hover no pai afeta o filho"
+      },
+      {
+        "type": "code",
+        "content": "// Quando o card é hoverado, o ícone muda de cor\n<div className=\"group rounded-lg border p-4 hover:border-blue-500 transition-colors\">\n  <div className=\"flex items-center gap-2\">\n    <span className=\"text-gray-400 group-hover:text-blue-500 transition-colors\">\n      →\n    </span>\n    <span>Ver detalhes</span>\n  </div>\n</div>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Animações prontas"
+      },
+      {
+        "type": "code",
+        "content": "animate-spin     → rotação infinita (loading spinners)\nanimate-ping     → pulso que expande (notificação)\nanimate-pulse    → opacidade pulsando (skeleton loading)\nanimate-bounce   → quicando (atenção)\n\n// Loading spinner\n<div className=\"animate-spin size-6 border-2 border-blue-500 border-t-transparent rounded-full\" />\n\n// Skeleton loading\n<div className=\"animate-pulse space-y-3\">\n  <div className=\"h-4 bg-gray-200 rounded w-3/4\" />\n  <div className=\"h-4 bg-gray-200 rounded w-1/2\" />\n</div>",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Animações devem ser sutis e com propósito. Hover com transição de 200ms é suficiente. Evite animações longas (>500ms) em interações frequentes — irritam o usuário.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie uma lista de 3 cards clicáveis. Cada card deve: ter borda que muda de cor no hover (border-gray-200 → hover:border-blue-500), 'subir' levemente no hover (hover:-translate-y-1), ter sombra que cresce (shadow-sm → hover:shadow-md), e usar transition-all duration-200. Dentro do card, use group/group-hover para mudar a cor de um ícone '→' quando o card é hoverado.",
+    "starterCode": "export default function App() {\n  const items = [\n    { title: 'Componentes', desc: 'Aprenda a criar componentes reutilizáveis' },\n    { title: 'Hooks', desc: 'Domine useState, useEffect e mais' },\n    { title: 'Rotas', desc: 'Navegação com React Router' },\n  ];\n\n  return (\n    <div className=\"space-y-3 p-8\">\n      {items.map((item) => (\n        <div key={item.title}>\n          <div>\n            <h3>{item.title}</h3>\n            <p>{item.desc}</p>\n          </div>\n          <span>→</span>\n        </div>\n      ))}\n    </div>\n  );\n}",
+    "solution": "export default function App() {\n  const items = [\n    { title: 'Componentes', desc: 'Aprenda a criar componentes reutilizáveis' },\n    { title: 'Hooks', desc: 'Domine useState, useEffect e mais' },\n    { title: 'Rotas', desc: 'Navegação com React Router' },\n  ];\n\n  return (\n    <div className=\"space-y-3 p-8\">\n      {items.map((item) => (\n        <div\n          key={item.title}\n          className=\"group flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-500 hover:shadow-md\"\n        >\n          <div>\n            <h3 className=\"font-semibold text-gray-900\">{item.title}</h3>\n            <p className=\"text-sm text-gray-500\">{item.desc}</p>\n          </div>\n          <span className=\"text-gray-400 transition-colors group-hover:text-blue-500\">\n            →\n          </span>\n        </div>\n      ))}\n    </div>\n  );\n}",
+    "hint": "No card div: adicione group, border border-gray-200, hover:border-blue-500, hover:-translate-y-1, shadow-sm hover:shadow-md, transition-all duration-200. No ícone: text-gray-400 group-hover:text-blue-500 transition-colors.",
+    "solutionExplanation": "O combo transition-all + hover: cria microinterações profissionais sem uma linha de CSS custom. O group/group-hover permite que o hover no card inteiro afete o ícone filho — um padrão muito usado em listas navegáveis.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "hover:, focus:, active: substituem pseudo-classes CSS",
+    "transition-colors/all + duration-200 torna mudanças suaves",
+    "group + group-hover: permite que hover no pai afete estilos do filho",
+    "Animações prontas: animate-spin, animate-pulse, animate-bounce"
+  ],
+  "commonMistakes": [
+    "Esquecer transition-* — sem ele, mudanças de hover são instantâneas (piscam)",
+    "Usar durations muito longas (>500ms) em interações frequentes — fica lento",
+    "Não usar cursor-pointer em elementos clicáveis estilizados com div"
+  ],
+  "realWorldExample": "O Notion usa microinterações sutis em toda a interface: cards que 'sobem' no hover, ícones que mudam de cor, botões com transição de fundo. Tudo com menos de 300ms de duração — rápido o suficiente para não atrapalhar.",
+  "encouragement": "Microinterações são o que separa uma interface amadora de uma profissional. Com 3 classes Tailwind (transition, duration, hover), você já eleva o nível do seu app."
+}

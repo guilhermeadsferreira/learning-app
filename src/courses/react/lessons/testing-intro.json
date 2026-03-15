@@ -1,0 +1,25 @@
+{
+  "id": "testing-intro",
+  "courseId": "react",
+  "moduleId": "testing",
+  "title": "Por que testar",
+  "type": "explanation",
+  "xp": 10,
+  "analogy": "Testes são como um co-piloto: não impedem acidentes, mas dão confiança para refatorar e evoluir o código.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Benefícios"
+      },
+      {
+        "type": "list",
+        "content": "Confiança ao refatorar\nDocumentação viva do comportamento\nDetecção precoce de bugs\nMenos regressões em deploys"
+      },
+      {
+        "type": "paragraph",
+        "content": "Teste como o usuário usa: interações, não implementação. React Testing Library segue esse princípio. Evite testar detalhes internos."
+      }
+    ]
+  }
+}

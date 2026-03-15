@@ -1,0 +1,22 @@
+{
+  "id": "testando-componentes",
+  "courseId": "react",
+  "moduleId": "testing",
+  "title": "Testando componentes",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Testar componente é como fazer uma entrevista: renderize, interaja, verifique o resultado.",
+  "content": {
+    "sections": [
+      {
+        "type": "code",
+        "content": "import { render, screen, userEvent } from '@testing-library/react';\n\ntest('incrementa ao clicar', async () => {\n  render(<Counter />);\n  await userEvent.click(screen.getByRole('button', { name: /incrementar/i }));\n  expect(screen.getByText(/1/)).toBeInTheDocument();\n});",
+        "language": "javascript"
+      },
+      {
+        "type": "list",
+        "content": "render — monta o componente\nscreen — queries para encontrar elementos\nuserEvent — cliques, digitação\nfindBy — para elementos assíncronos"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "clean-code-react",
+  "courseId": "react",
+  "moduleId": "patterns",
+  "title": "Código limpo em React",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Código limpo é como uma casa organizada: cada coisa no lugar, nomes que explicam o propósito, sem bagunça desnecessária.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Princípios (baseado na doc oficial React)"
+      },
+      {
+        "type": "list",
+        "content": "Nomes descritivos — variáveis, funções e componentes\nEvite magic numbers — use constantes\nCódigo autoexplicativo — minimize comentários\nEventos em handlers — não em useEffect\nOtimize só quando necessário — profile antes de useMemo"
+      },
+      {
+        "type": "paragraph",
+        "content": "A documentação React recomenda: não use useMemo/useCallback por padrão. Só quando houver problema de performance identificado."
+      }
+    ]
+  }
+}

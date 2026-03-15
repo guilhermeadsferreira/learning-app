@@ -1,0 +1,22 @@
+{
+  "id": "lazy-suspense",
+  "courseId": "react",
+  "moduleId": "performance",
+  "title": "Lazy loading e Suspense",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "React.lazy carrega componentes sob demanda, como streaming de vídeo. Suspense mostra fallback enquanto carrega.",
+  "content": {
+    "sections": [
+      {
+        "type": "code",
+        "content": "const Dashboard = React.lazy(() => import('./Dashboard'));\n\n<Suspense fallback={<Loading />}>\n  <Dashboard />\n</Suspense>",
+        "language": "jsx"
+      },
+      {
+        "type": "paragraph",
+        "content": "React.lazy + import() geram chunks separados. O usuário baixa só o que precisa. Suspense exibe fallback até o componente carregar. Ideal para rotas."
+      }
+    ]
+  }
+}

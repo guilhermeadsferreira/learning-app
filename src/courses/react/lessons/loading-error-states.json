@@ -1,0 +1,25 @@
+{
+  "id": "loading-error-states",
+  "courseId": "react",
+  "moduleId": "data-fetching",
+  "title": "Estados de loading e erro",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Uma requisição tem três estados: carregando (esperando), sucesso (dados) ou erro (algo falhou). A UI deve refletir cada um.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Padrão com useState"
+      },
+      {
+        "type": "list",
+        "content": "loading — true enquanto fetch em andamento\nerror — mensagem ou null\ndata — resultado ou null"
+      },
+      {
+        "type": "paragraph",
+        "content": "Renderize condicionalmente: se loading, mostre skeleton/spinner; se error, mostre mensagem; se data, mostre o conteúdo. TanStack Query encapsula isso automaticamente."
+      }
+    ]
+  }
+}

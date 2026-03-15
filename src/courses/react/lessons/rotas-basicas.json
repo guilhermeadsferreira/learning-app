@@ -1,0 +1,88 @@
+{
+  "id": "rotas-basicas",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Rotas básicas, Link e NavLink",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Criar rotas é como montar um cardápio de restaurante. Cada item do cardápio (rota) tem um nome (path) e um prato (componente). O garçom (Link) leva o cliente até o prato certo. O NavLink é um garçom especial que destaca o prato que o cliente está comendo no momento.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Definindo rotas"
+      },
+      {
+        "type": "paragraph",
+        "content": "Cada rota mapeia um path (URL) para um element (componente React). O React Router compara a URL atual com os paths definidos e renderiza o componente correspondente."
+      },
+      {
+        "type": "code",
+        "content": "import {\n  createBrowserRouter,\n  RouterProvider,\n} from 'react-router-dom';\n\nfunction Home() {\n  return <h1>Página inicial</h1>;\n}\n\nfunction Sobre() {\n  return <h1>Sobre nós</h1>;\n}\n\nfunction NotFound() {\n  return <h1>404 — Página não encontrada</h1>;\n}\n\nconst router = createBrowserRouter([\n  { path: '/', element: <Home /> },\n  { path: '/sobre', element: <Sobre /> },\n  { path: '*', element: <NotFound /> },  // rota curinga para 404\n]);\n\nfunction App() {\n  return <RouterProvider router={router} />;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Link — navegação sem reload"
+      },
+      {
+        "type": "paragraph",
+        "content": "O componente Link substitui a tag <a>. Ele muda a URL e renderiza o novo componente SEM recarregar a página. Todo o estado da aplicação é preservado."
+      },
+      {
+        "type": "code",
+        "content": "import { Link } from 'react-router-dom';\n\nfunction Navbar() {\n  return (\n    <nav className=\"flex gap-4 p-4 bg-slate-800\">\n      <Link to=\"/\" className=\"text-white hover:text-blue-400\">\n        Home\n      </Link>\n      <Link to=\"/sobre\" className=\"text-white hover:text-blue-400\">\n        Sobre\n      </Link>\n      <Link to=\"/contato\" className=\"text-white hover:text-blue-400\">\n        Contato\n      </Link>\n    </nav>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "NavLink — Link com estado ativo"
+      },
+      {
+        "type": "paragraph",
+        "content": "NavLink é igual ao Link, mas sabe quando está na rota ativa. Ele recebe uma função em className/style que recebe { isActive } — perfeito para destacar o item de menu atual."
+      },
+      {
+        "type": "code",
+        "content": "import { NavLink } from 'react-router-dom';\n\nfunction Navbar() {\n  return (\n    <nav className=\"flex gap-4 p-4\">\n      <NavLink\n        to=\"/\"\n        className={({ isActive }) =>\n          isActive\n            ? 'text-blue-500 font-bold border-b-2 border-blue-500'\n            : 'text-gray-400 hover:text-gray-200'\n        }\n      >\n        Home\n      </NavLink>\n      <NavLink\n        to=\"/sobre\"\n        className={({ isActive }) =>\n          isActive\n            ? 'text-blue-500 font-bold border-b-2 border-blue-500'\n            : 'text-gray-400 hover:text-gray-200'\n        }\n      >\n        Sobre\n      </NavLink>\n    </nav>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Use NavLink para menus de navegação (sidebar, header) onde você precisa indicar 'onde o usuário está'. Para links comuns no conteúdo, Link simples basta.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Rota 404 (curinga)"
+      },
+      {
+        "type": "paragraph",
+        "content": "A rota com path='*' é um curinga — ela captura qualquer URL que não corresponda a nenhuma outra rota. Use para exibir uma página de 'Não encontrado'."
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie uma mini aplicação com 3 rotas (Home, Produtos, Contato) usando createBrowserRouter. Adicione um componente Navbar com NavLink para cada rota, onde o link ativo fica em azul (text-blue-500 font-bold) e os inativos em cinza. Adicione uma rota curinga para 404.",
+    "starterCode": "import {\n  createBrowserRouter,\n  RouterProvider,\n  NavLink,\n  Outlet,\n} from 'react-router-dom';\n\nfunction Navbar() {\n  // Crie a navbar com NavLink\n  return <nav className=\"flex gap-4 p-4 border-b\"></nav>;\n}\n\nfunction Home() {\n  return <h1>Home</h1>;\n}\nfunction Produtos() {\n  return <h1>Produtos</h1>;\n}\nfunction Contato() {\n  return <h1>Contato</h1>;\n}\nfunction NotFound() {\n  return <h1>404</h1>;\n}\n\nfunction Layout() {\n  return (\n    <div>\n      <Navbar />\n      <main className=\"p-4\">\n        <Outlet />\n      </main>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  {\n    element: <Layout />,\n    children: [\n      { path: '/', element: <Home /> },\n      // Adicione as outras rotas: /produtos, /contato, e * (404)\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "solution": "import {\n  createBrowserRouter,\n  RouterProvider,\n  NavLink,\n  Outlet,\n} from 'react-router-dom';\n\nfunction Navbar() {\n  const linkClass = ({ isActive }) =>\n    isActive\n      ? 'text-blue-500 font-bold'\n      : 'text-gray-400 hover:text-gray-200';\n\n  return (\n    <nav className=\"flex gap-4 border-b border-gray-700 p-4\">\n      <NavLink to=\"/\" className={linkClass} end>Home</NavLink>\n      <NavLink to=\"/produtos\" className={linkClass}>Produtos</NavLink>\n      <NavLink to=\"/contato\" className={linkClass}>Contato</NavLink>\n    </nav>\n  );\n}\n\nfunction Home() {\n  return <h1>Home</h1>;\n}\nfunction Produtos() {\n  return <h1>Produtos</h1>;\n}\nfunction Contato() {\n  return <h1>Contato</h1>;\n}\nfunction NotFound() {\n  return <h1>404 — Página não encontrada</h1>;\n}\n\nfunction Layout() {\n  return (\n    <div>\n      <Navbar />\n      <main className=\"p-4\">\n        <Outlet />\n      </main>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  {\n    element: <Layout />,\n    children: [\n      { path: '/', element: <Home /> },\n      { path: '/produtos', element: <Produtos /> },\n      { path: '/contato', element: <Contato /> },\n      { path: '*', element: <NotFound /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "sandpackDependencies": { "react-router-dom": "^7.0.1" },
+    "hint": "Use createBrowserRouter com um array de rotas. Para Layout compartilhado, faça a rota raiz ter element: <Layout /> e children com as rotas filhas. NavLink recebe className como função: ({ isActive }) => ...",
+    "solutionExplanation": "O Layout envolve todas as rotas como pai, mantendo a Navbar fixa. Cada rota filha renderiza dentro do <Outlet />. NavLink recebe className como função para estilizar o link ativo. A rota '*' captura URLs inexistentes.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "createBrowserRouter + RouterProvider é a API moderna de roteamento",
+    "Link navega sem reload; NavLink indica o link ativo",
+    "path='*' captura URLs não encontradas (404)",
+    "NavLink className recebe função: ({ isActive }) => classes"
+  ],
+  "commonMistakes": [
+    "Esquecer 'end' na NavLink de / — sem ele, / fica ativo em todas as rotas (/ é prefixo de tudo)",
+    "Usar <a href> em vez de <Link to> — recarrega a página e perde o estado",
+    "Não definir rota 404 — o usuário vê página em branco em URLs inválidas"
+  ],
+  "realWorldExample": "Todo app com sidebar (como o dashboard que você está usando agora) usa NavLink para destacar qual seção está ativa. O YouTube, Slack e Notion usam o mesmo padrão.",
+  "encouragement": "Com rotas básicas + NavLink, você já consegue criar apps com navegação profissional. Nas próximas lições, vamos adicionar rotas dinâmicas, aninhadas e proteção."
+}

@@ -1,0 +1,70 @@
+{
+  "id": "react-router-pratica",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Projeto: mini app multi-página",
+  "type": "challenge",
+  "xp": 30,
+  "difficulty": "intermediate",
+  "analogy": "Este é o momento de juntar tudo do React Router em um mini projeto real. Assim como um arquiteto não projeta só um cômodo, mas a casa inteira com fluxo entre os espaços — você vai criar um app com múltiplas 'páginas', navegação, rotas dinâmicas e layout compartilhado.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que você vai construir"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um mini blog com: página de listagem de posts, página de detalhe de um post (rota dinâmica), página 'Sobre', layout compartilhado com navbar e footer, e rota 404. É um app completo que demonstra todos os conceitos de roteamento."
+      },
+      {
+        "type": "heading",
+        "content": "Estrutura de rotas"
+      },
+      {
+        "type": "code",
+        "content": "/              → Home (lista de posts)\n/post/:id      → PostDetalhe (rota dinâmica)\n/sobre         → Sobre (página estática)\n/*             → 404 (rota curinga)\n\nTodas dentro de um Layout com:\n- Header com NavLinks\n- Main com <Outlet />\n- Footer fixo",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Dados mock"
+      },
+      {
+        "type": "code",
+        "content": "const posts = [\n  { id: 1, title: 'Introdução ao React', excerpt: 'Aprenda os fundamentos...', content: 'React é uma biblioteca...' },\n  { id: 2, title: 'Hooks em profundidade', excerpt: 'useState, useEffect e mais...', content: 'Hooks são funções...' },\n  { id: 3, title: 'React Router na prática', excerpt: 'Navegação como profissional...', content: 'React Router permite...' },\n];",
+        "language": "javascript"
+      },
+      {
+        "type": "heading",
+        "content": "Checklist de funcionalidades"
+      },
+      {
+        "type": "list",
+        "content": "Layout com Header (NavLinks: Home, Sobre), Outlet, Footer\nHome: lista de posts com Link para cada um\nPostDetalhe: useParams para pegar id, exibir post, link 'voltar'\nSobre: página estática simples\n404: mensagem amigável com Link para voltar à home\nNavLink com estilo ativo (text-blue-500 quando ativo)"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie o mini blog descrito acima. Use createBrowserRouter com Layout (Header + Outlet + Footer). Implemente Home (lista posts com Links), PostDetalhe (useParams + busca no array), Sobre, e 404. A Navbar deve usar NavLink com estilização ativa.",
+    "starterCode": "import {\n  createBrowserRouter,\n  RouterProvider,\n  Outlet,\n  Link,\n  NavLink,\n  useParams,\n} from 'react-router-dom';\n\nconst posts = [\n  { id: 1, title: 'Introdução ao React', excerpt: 'Aprenda os fundamentos...', content: 'React é uma biblioteca JavaScript para construir interfaces de usuário.' },\n  { id: 2, title: 'Hooks em profundidade', excerpt: 'useState, useEffect e mais...', content: 'Hooks são funções especiais que permitem usar estado em componentes funcionais.' },\n  { id: 3, title: 'React Router na prática', excerpt: 'Navegação como profissional...', content: 'React Router é a biblioteca padrão para roteamento em React.' },\n];\n\nfunction Layout() {\n  // Melhore: adicione Header com NavLinks e Footer\n  return (\n    <div>\n      <header className=\"p-4 border-b\">\n        <Link to=\"/\">MeuBlog</Link>\n      </header>\n      <main className=\"p-6\"><Outlet /></main>\n    </div>\n  );\n}\n\nfunction Home() {\n  // Melhore: liste os posts com Links para /post/:id\n  return <div><h1>Blog</h1><p>Implemente a lista de posts aqui</p></div>;\n}\n\nfunction PostDetail() {\n  // Implemente: useParams + buscar post no array + exibir\n  const { id } = useParams();\n  return <div><p>Detalhe do post {id} — implemente aqui</p></div>;\n}\n\nfunction About() {\n  return <div><h1>Sobre</h1><p>Um mini blog com React Router.</p></div>;\n}\n\nfunction NotFound() {\n  return <div><h1>404</h1><p>Página não encontrada.</p></div>;\n}\n\nconst router = createBrowserRouter([\n  {\n    element: <Layout />,\n    children: [\n      { path: '/', element: <Home /> },\n      { path: '/post/:id', element: <PostDetail /> },\n      { path: '/sobre', element: <About /> },\n      { path: '*', element: <NotFound /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "solution": "import {\n  createBrowserRouter,\n  RouterProvider,\n  Outlet,\n  Link,\n  NavLink,\n  useParams,\n} from 'react-router-dom';\n\nconst posts = [\n  { id: 1, title: 'Introdução ao React', excerpt: 'Aprenda os fundamentos...', content: 'React é uma biblioteca JavaScript para construir interfaces de usuário.' },\n  { id: 2, title: 'Hooks em profundidade', excerpt: 'useState, useEffect e mais...', content: 'Hooks são funções especiais que permitem usar estado em componentes funcionais.' },\n  { id: 3, title: 'React Router na prática', excerpt: 'Navegação como profissional...', content: 'React Router é a biblioteca padrão para roteamento em React.' },\n];\n\nconst navLinkClass = ({ isActive }) =>\n  isActive ? 'text-blue-500 font-bold' : 'text-gray-400 hover:text-gray-200';\n\nfunction Layout() {\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n      <header className=\"flex items-center justify-between border-b border-gray-700 p-4\">\n        <Link to=\"/\" className=\"text-xl font-bold text-white\">MeuBlog</Link>\n        <nav className=\"flex gap-4\">\n          <NavLink to=\"/\" end className={navLinkClass}>Home</NavLink>\n          <NavLink to=\"/sobre\" className={navLinkClass}>Sobre</NavLink>\n        </nav>\n      </header>\n      <main className=\"flex-1 p-6\">\n        <Outlet />\n      </main>\n      <footer className=\"border-t border-gray-700 p-4 text-center text-sm text-gray-500\">\n        MeuBlog © 2024\n      </footer>\n    </div>\n  );\n}\n\nfunction Home() {\n  return (\n    <div>\n      <h1 className=\"text-2xl font-bold mb-4\">Posts recentes</h1>\n      <div className=\"space-y-4\">\n        {posts.map(post => (\n          <article key={post.id} className=\"rounded-lg border border-gray-700 p-4\">\n            <h2 className=\"text-lg font-semibold\">\n              <Link to={`/post/${post.id}`} className=\"text-blue-400 hover:underline\">\n                {post.title}\n              </Link>\n            </h2>\n            <p className=\"mt-1 text-gray-400\">{post.excerpt}</p>\n          </article>\n        ))}\n      </div>\n    </div>\n  );\n}\n\nfunction PostDetail() {\n  const { id } = useParams();\n  const post = posts.find(p => p.id === Number(id));\n\n  if (!post) {\n    return (\n      <div>\n        <h1 className=\"text-xl font-bold\">Post não encontrado</h1>\n        <Link to=\"/\" className=\"text-blue-400\">← Voltar</Link>\n      </div>\n    );\n  }\n\n  return (\n    <article>\n      <Link to=\"/\" className=\"text-blue-400 text-sm\">← Voltar aos posts</Link>\n      <h1 className=\"text-2xl font-bold mt-2\">{post.title}</h1>\n      <p className=\"mt-4 text-gray-300\">{post.content}</p>\n    </article>\n  );\n}\n\nfunction About() {\n  return (\n    <div>\n      <h1 className=\"text-2xl font-bold\">Sobre</h1>\n      <p className=\"mt-2 text-gray-400\">Um mini blog construído com React Router.</p>\n    </div>\n  );\n}\n\nfunction NotFound() {\n  return (\n    <div className=\"text-center\">\n      <h1 className=\"text-4xl font-bold\">404</h1>\n      <p className=\"mt-2 text-gray-400\">Página não encontrada.</p>\n      <Link to=\"/\" className=\"mt-4 inline-block text-blue-400\">← Voltar à home</Link>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  {\n    element: <Layout />,\n    children: [\n      { path: '/', element: <Home /> },\n      { path: '/post/:id', element: <PostDetail /> },\n      { path: '/sobre', element: <About /> },\n      { path: '*', element: <NotFound /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "sandpackDependencies": { "react-router-dom": "^7.0.1" },
+    "hint": "Layout: Header com NavLinks + <Outlet /> + Footer. Home: .map() nos posts com Link to={`/post/${post.id}`}. PostDetail: useParams() + posts.find(). Rotas: Layout como pai, todas as páginas como children.",
+    "solutionExplanation": "O app combina tudo: Layout route sem path para header/footer persistente, NavLink com estilo ativo na navbar, Link para navegação de lista→detalhe, useParams para capturar o id do post, e rota curinga para 404. É a estrutura de qualquer app React real.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Layout route agrupa header + outlet + footer que persistem entre navegações",
+    "Lista com Link + detalhe com useParams é o padrão mais comum",
+    "NavLink com className função destaca o item ativo na navegação",
+    "Rota curinga (*) com página 404 melhora a experiência do usuário"
+  ],
+  "commonMistakes": [
+    "Colocar header/footer em cada página em vez de usar Layout route — duplicação desnecessária",
+    "Não tratar post inexistente no PostDetail — sempre valide se o dado existe",
+    "Esquecer 'end' no NavLink de / — Home fica marcado como ativo em todas as rotas"
+  ],
+  "realWorldExample": "Blogs como dev.to, Medium e o próprio React docs seguem exatamente essa estrutura: layout persistente, listagem de artigos, página de detalhe com rota dinâmica, e 404 personalizado.",
+  "encouragement": "Parabéns! Você construiu um app multi-página completo com React Router. Essa é a base de QUALQUER app React profissional — de blogs a dashboards enterprise."
+}

@@ -1,0 +1,84 @@
+{
+  "id": "rotas-aninhadas",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Rotas aninhadas e Outlet",
+  "type": "explanation",
+  "xp": 20,
+  "difficulty": "intermediate",
+  "analogy": "Pense num prédio com andares. O térreo (layout raiz) tem a recepção e os elevadores — eles estão sempre lá. O Outlet é o elevador: dependendo do andar (rota filha), o conteúdo muda, mas o térreo continua o mesmo. Dashboard com sidebar? A sidebar é o 'térreo', e o conteúdo que muda é o que o Outlet renderiza.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que são rotas aninhadas?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Rotas aninhadas permitem que uma rota pai defina um layout compartilhado (header, sidebar, footer) e as rotas filhas renderizem DENTRO desse layout, no local marcado pelo <Outlet />. O layout persiste — só o conteúdo do Outlet muda."
+      },
+      {
+        "type": "heading",
+        "content": "Outlet — o placeholder de conteúdo"
+      },
+      {
+        "type": "code",
+        "content": "import { Outlet, NavLink } from 'react-router-dom';\n\nfunction DashboardLayout() {\n  return (\n    <div className=\"flex h-screen\">\n      {/* Sidebar — fixa, nunca muda */}\n      <aside className=\"w-64 border-r bg-slate-800 p-4\">\n        <h2 className=\"text-lg font-bold text-white\">Dashboard</h2>\n        <nav className=\"mt-4 space-y-2\">\n          <NavLink to=\"/dashboard\" end\n            className={({ isActive }) =>\n              isActive ? 'text-blue-400' : 'text-gray-400'\n            }\n          >\n            Visão geral\n          </NavLink>\n          <NavLink to=\"/dashboard/analytics\"\n            className={({ isActive }) =>\n              isActive ? 'text-blue-400' : 'text-gray-400'\n            }\n          >\n            Analytics\n          </NavLink>\n          <NavLink to=\"/dashboard/settings\"\n            className={({ isActive }) =>\n              isActive ? 'text-blue-400' : 'text-gray-400'\n            }\n          >\n            Configurações\n          </NavLink>\n        </nav>\n      </aside>\n\n      {/* Conteúdo — muda conforme a rota filha */}\n      <main className=\"flex-1 overflow-auto p-6\">\n        <Outlet />  {/* ← aqui renderiza a rota filha ativa */}\n      </main>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Definindo rotas aninhadas"
+      },
+      {
+        "type": "code",
+        "content": "const router = createBrowserRouter([\n  {\n    path: '/dashboard',\n    element: <DashboardLayout />,  // layout pai\n    children: [\n      { index: true, element: <Overview /> },       // /dashboard\n      { path: 'analytics', element: <Analytics /> }, // /dashboard/analytics\n      { path: 'settings', element: <Settings /> },   // /dashboard/settings\n    ],\n  },\n]);",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "index: true define a rota padrão — o que renderiza quando a URL é exatamente /dashboard (sem nada depois). Sem ela, o Outlet fica vazio.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Múltiplos níveis de aninhamento"
+      },
+      {
+        "type": "paragraph",
+        "content": "Rotas podem aninhar em vários níveis. O Settings pode ter suas próprias rotas filhas (perfil, segurança, notificações), cada uma com seu Outlet. Na prática, isso cria layouts compostos: o app tem layout geral → o dashboard tem sidebar → settings tem tabs."
+      },
+      {
+        "type": "code",
+        "content": "{\n  path: 'settings',\n  element: <SettingsLayout />,  // layout com tabs\n  children: [\n    { index: true, element: <SettingsProfile /> },\n    { path: 'security', element: <SettingsSecurity /> },\n    { path: 'notifications', element: <SettingsNotifications /> },\n  ],\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Layout routes sem path"
+      },
+      {
+        "type": "paragraph",
+        "content": "Uma rota pode ter element sem path — ela funciona apenas como wrapper/layout para agrupar rotas filhas. Útil para aplicar um layout compartilhado (ex: header + footer) a várias rotas sem afetar a URL."
+      },
+      {
+        "type": "code",
+        "content": "const router = createBrowserRouter([\n  {\n    element: <AppLayout />,  // sem path → layout puro\n    children: [\n      { path: '/', element: <Home /> },\n      { path: '/about', element: <About /> },\n      { path: '/pricing', element: <Pricing /> },\n    ],\n  },\n]);",
+        "language": "jsx"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Outlet é um placeholder — renderiza a rota filha ativa no local definido",
+    "children: [...] define rotas aninhadas dentro de um layout pai",
+    "index: true é a rota padrão quando o path do pai é exato",
+    "Rotas sem path servem como layout routes — agrupam rotas visualmente"
+  ],
+  "commonMistakes": [
+    "Esquecer o <Outlet /> no layout pai — as rotas filhas não aparecem",
+    "Não definir index route — o Outlet fica vazio na rota exata do pai",
+    "Usar paths absolutos nas children (/dashboard/analytics) em vez de relativos (analytics)"
+  ],
+  "realWorldExample": "Todo dashboard profissional (Vercel, Stripe, GitHub) usa rotas aninhadas: sidebar fixa + conteúdo que muda. O Gmail faz isso: barra lateral fixa, inbox/sent/drafts mudam no conteúdo principal.",
+  "encouragement": "Rotas aninhadas são o padrão arquitetural #1 de apps React grandes. Dominando isso, você consegue criar qualquer layout de dashboard ou admin panel."
+}

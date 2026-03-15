@@ -1,0 +1,25 @@
+{
+  "id": "custom-hooks-boas-praticas",
+  "courseId": "react",
+  "moduleId": "custom-hooks",
+  "title": "Boas práticas de custom hooks",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Um bom custom hook é focado, testável e com API clara — como uma função bem desenhada.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Boas práticas (2024)"
+      },
+      {
+        "type": "list",
+        "content": "Prefira objetos explícitos em vez de arrays — { count, increment } é mais claro que [count, increment]\nEvite hooks gigantes — compor hooks pequenos\nExtraia quando copiar pela segunda vez\nSiga as regras dos hooks — só no topo, só em React"
+      },
+      {
+        "type": "paragraph",
+        "content": "Objetos como retorno facilitam desestruturação seletiva e evolução da API sem quebrar quem usa apenas parte do retorno."
+      }
+    ]
+  }
+}

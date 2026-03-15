@@ -1,0 +1,34 @@
+{
+  "id": "package-json",
+  "courseId": "react",
+  "moduleId": "ecosystem",
+  "title": "package.json",
+  "type": "explanation",
+  "xp": 10,
+  "analogy": "package.json é a identidade do seu projeto: nome, versão, dependências e comandos disponíveis.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é package.json?"
+      },
+      {
+        "type": "paragraph",
+        "content": "O package.json descreve seu projeto: nome, versão, dependências e scripts. É o coração de qualquer projeto Node.js."
+      },
+      {
+        "type": "heading",
+        "content": "Scripts importantes"
+      },
+      {
+        "type": "list",
+        "content": "dev — inicia servidor de desenvolvimento\nbuild — gera build de produção\npreview — visualiza build localmente"
+      },
+      {
+        "type": "code",
+        "content": "{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  }\n}",
+        "language": "json"
+      }
+    ]
+  }
+}

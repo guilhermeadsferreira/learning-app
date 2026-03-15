@@ -1,0 +1,93 @@
+{
+  "id": "layout-routes",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Rotas protegidas e redirect",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Rotas protegidas são como o segurança na porta de um evento VIP. Antes de deixar a pessoa entrar (renderizar o componente), ele verifica o ingresso (autenticação). Se não tem ingresso, manda de volta para a bilheteria (redirect para /login). É um 'middleware' de roteamento.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O padrão de rota protegida"
+      },
+      {
+        "type": "paragraph",
+        "content": "Muitas rotas devem ser acessíveis apenas para usuários autenticados (dashboard, perfil, configurações). O padrão é criar um componente wrapper que verifica autenticação e redireciona se necessário."
+      },
+      {
+        "type": "code",
+        "content": "import { Navigate, Outlet } from 'react-router-dom';\n\nfunction ProtectedRoute() {\n  const { user } = useAuth();  // seu hook/context de auth\n\n  if (!user) {\n    return <Navigate to=\"/login\" replace />;\n  }\n\n  return <Outlet />;  // renderiza as rotas filhas normalmente\n}\n\n// Uso nas rotas:\nconst router = createBrowserRouter([\n  // Rotas públicas\n  { path: '/login', element: <Login /> },\n  { path: '/register', element: <Register /> },\n\n  // Rotas protegidas\n  {\n    element: <ProtectedRoute />,\n    children: [\n      { path: '/dashboard', element: <Dashboard /> },\n      { path: '/profile', element: <Profile /> },\n      { path: '/settings', element: <Settings /> },\n    ],\n  },\n]);",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Navigate — redirect como componente"
+      },
+      {
+        "type": "paragraph",
+        "content": "Navigate é um componente que redireciona quando renderizado. O prop replace evita empilhar no histórico (o usuário não fica preso num loop de 'voltar')."
+      },
+      {
+        "type": "code",
+        "content": "// Redirect simples\n<Navigate to=\"/login\" />\n\n// Com replace (não empilha no histórico)\n<Navigate to=\"/login\" replace />\n\n// Passando state (ex: 'de onde veio' para redirect pós-login)\n<Navigate to=\"/login\" state={{ from: location.pathname }} replace />",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "useNavigate — navegação programática"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para navegar via código (depois de um submit, logout, etc.), use o hook useNavigate. Ele retorna uma função que você chama com o path destino."
+      },
+      {
+        "type": "code",
+        "content": "import { useNavigate } from 'react-router-dom';\n\nfunction LoginForm() {\n  const navigate = useNavigate();\n\n  const handleLogin = async (data) => {\n    await login(data);\n    navigate('/dashboard');          // vai para /dashboard\n    // navigate('/dashboard', { replace: true });  // sem voltar\n    // navigate(-1);                  // volta uma página\n    // navigate(-2);                  // volta duas páginas\n  };\n\n  return <form onSubmit={handleLogin}>...</form>;\n}\n\nfunction LogoutButton() {\n  const navigate = useNavigate();\n\n  const handleLogout = () => {\n    logout();\n    navigate('/login', { replace: true });\n  };\n\n  return <button onClick={handleLogout}>Sair</button>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Redirect pós-login inteligente"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um padrão comum: o usuário tenta acessar /settings sem estar logado → vai para /login → faz login → volta para /settings (não para a home). Isso é feito passando state no Navigate e lendo no login."
+      },
+      {
+        "type": "code",
+        "content": "// No ProtectedRoute: salva de onde veio\n<Navigate to=\"/login\" state={{ from: location.pathname }} replace />\n\n// No Login: redireciona de volta\nfunction Login() {\n  const navigate = useNavigate();\n  const location = useLocation();\n  const from = location.state?.from || '/dashboard';\n\n  const handleLogin = async () => {\n    await doLogin();\n    navigate(from, { replace: true });\n  };\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre use replace: true em redirects de autenticação. Sem ele, o usuário clica 'voltar' e cai na página de login de novo (ou na rota protegida que vai redirecionar de novo — loop infinito).",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um sistema simples de autenticação com React Router. Use um estado isLoggedIn (useState). Crie: (1) rota pública /login com botão 'Entrar' que seta isLoggedIn=true e navega para /dashboard via useNavigate, (2) componente ProtectedRoute que redireciona para /login se não logado, (3) rotas protegidas /dashboard e /profile. Adicione botão 'Sair' no dashboard.",
+    "starterCode": "import { useState } from 'react';\nimport {\n  createBrowserRouter,\n  RouterProvider,\n  Navigate,\n  Outlet,\n  Link,\n  useNavigate,\n} from 'react-router-dom';\n\nlet _isLoggedIn = false;\nfunction useAuth() {\n  const [loggedIn, setLoggedIn] = useState(_isLoggedIn);\n  return {\n    isLoggedIn: loggedIn,\n    login: () => { _isLoggedIn = true; setLoggedIn(true); },\n    logout: () => { _isLoggedIn = false; setLoggedIn(false); },\n  };\n}\n\nfunction ProtectedRoute() {\n  // Verifique auth e retorne Outlet ou Navigate\n  return <Outlet />;\n}\n\nfunction Login() {\n  // Implemente: botão que faz login e navega para /dashboard\n  return <div className=\"p-4\"><h1>Login</h1><p>Adicione o botão Entrar aqui</p></div>;\n}\n\nfunction Dashboard() {\n  // Implemente: botão Sair + link para /profile\n  return <div className=\"p-4\"><h1>Dashboard</h1><p>Adicione o botão Sair aqui</p></div>;\n}\n\nfunction Profile() {\n  return <div className=\"p-4\"><h1>Perfil</h1></div>;\n}\n\nconst router = createBrowserRouter([\n  { path: '/login', element: <Login /> },\n  {\n    element: <ProtectedRoute />,\n    children: [\n      { path: '/', element: <Dashboard /> },\n      { path: '/dashboard', element: <Dashboard /> },\n      { path: '/profile', element: <Profile /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "solution": "import { useState } from 'react';\nimport {\n  createBrowserRouter,\n  RouterProvider,\n  Navigate,\n  Outlet,\n  Link,\n  useNavigate,\n} from 'react-router-dom';\n\nlet _isLoggedIn = false;\nfunction useAuth() {\n  const [loggedIn, setLoggedIn] = useState(_isLoggedIn);\n  return {\n    isLoggedIn: loggedIn,\n    login: () => { _isLoggedIn = true; setLoggedIn(true); },\n    logout: () => { _isLoggedIn = false; setLoggedIn(false); },\n  };\n}\n\nfunction ProtectedRoute() {\n  const { isLoggedIn } = useAuth();\n  if (!isLoggedIn) return <Navigate to=\"/login\" replace />;\n  return <Outlet />;\n}\n\nfunction Login() {\n  const { login } = useAuth();\n  const navigate = useNavigate();\n  return (\n    <div className=\"p-4\">\n      <h1 className=\"text-xl font-bold\">Login</h1>\n      <button\n        onClick={() => { login(); navigate('/dashboard'); }}\n        className=\"mt-4 rounded bg-blue-600 px-4 py-2 text-white\"\n      >\n        Entrar\n      </button>\n    </div>\n  );\n}\n\nfunction Dashboard() {\n  const { logout } = useAuth();\n  const navigate = useNavigate();\n  return (\n    <div className=\"p-4\">\n      <h1 className=\"text-xl font-bold\">Dashboard</h1>\n      <Link to=\"/profile\" className=\"text-blue-500\">Ver perfil</Link>\n      <button\n        onClick={() => { logout(); navigate('/login', { replace: true }); }}\n        className=\"ml-4 rounded bg-red-600 px-4 py-2 text-white\"\n      >\n        Sair\n      </button>\n    </div>\n  );\n}\n\nfunction Profile() {\n  return (\n    <div className=\"p-4\">\n      <h1 className=\"text-xl font-bold\">Perfil</h1>\n      <Link to=\"/dashboard\" className=\"text-blue-500\">Voltar ao Dashboard</Link>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  { path: '/login', element: <Login /> },\n  {\n    element: <ProtectedRoute />,\n    children: [\n      { path: '/dashboard', element: <Dashboard /> },\n      { path: '/profile', element: <Profile /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "sandpackDependencies": { "react-router-dom": "^7.0.1" },
+    "hint": "ProtectedRoute: use useAuth(), se não logado retorne <Navigate to='/login' replace />, senão <Outlet />. Login: use useNavigate() e chame navigate('/dashboard') após login(). Nas rotas: coloque Login fora do ProtectedRoute, e dashboard/profile dentro.",
+    "solutionExplanation": "ProtectedRoute é um layout route que funciona como 'guard': verifica auth antes de renderizar as children via Outlet. Login usa useNavigate para redirect programático. O logout usa replace: true para não empilhar no histórico.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "ProtectedRoute verifica auth e renderiza Outlet ou Navigate",
+    "Navigate redireciona como componente; useNavigate redireciona via código",
+    "Sempre use replace: true em redirects de auth para evitar loops no histórico",
+    "Passe state no Navigate para redirect inteligente pós-login"
+  ],
+  "commonMistakes": [
+    "Esquecer replace no Navigate — o usuário fica preso no loop de voltar",
+    "Proteger rotas no componente em vez de no roteador — menos seguro e mais verboso",
+    "Não tratar o estado de loading de auth — mostra flash de conteúdo antes de redirecionar"
+  ],
+  "realWorldExample": "Todo SaaS (Notion, Slack, Figma) tem rotas protegidas. Se você tenta acessar app.notion.so/dashboard sem estar logado, é redirecionado para o login. Após logar, volta exatamente para onde tentou ir.",
+  "encouragement": "Proteção de rotas é um requisito de QUALQUER app real. Com esse padrão simples (ProtectedRoute + Navigate), você resolve a autenticação de roteamento de forma limpa e profissional."
+}

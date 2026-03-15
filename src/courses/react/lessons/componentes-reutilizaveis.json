@@ -1,0 +1,25 @@
+{
+  "id": "componentes-reutilizaveis",
+  "courseId": "react",
+  "moduleId": "patterns",
+  "title": "Componentes reutilizáveis",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Um componente reutilizável é como uma peça LEGO: funciona em vários contextos, aceita configuração via props, e tem API clara.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Como criar componentes reutilizáveis"
+      },
+      {
+        "type": "list",
+        "content": "Props para variantes — size, variant, disabled\nchildren para conteúdo flexível\nComposição sobre configuração — preferir <Card><Card.Header />\nDocumente com JSDoc ou Storybook"
+      },
+      {
+        "type": "paragraph",
+        "content": "Evite prop explosion: se um componente tem 20+ props, considere compound components ou slots (children como função)."
+      }
+    ]
+  }
+}

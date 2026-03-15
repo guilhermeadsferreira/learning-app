@@ -1,0 +1,25 @@
+{
+  "id": "code-splitting",
+  "courseId": "react",
+  "moduleId": "performance",
+  "title": "Code splitting",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Code splitting é como dividir um livro em capítulos: o leitor baixa só o capítulo que está lendo, não o livro inteiro.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Estratégias"
+      },
+      {
+        "type": "list",
+        "content": "Por rota — cada página em um chunk\nPor componente — modais, drawers sob demanda\nPor feature — carregar módulos quando necessário"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vite e webpack fazem split automático com import(). Combinar com React.lazy nas rotas pode reduzir bundle inicial em 37-58%."
+      }
+    ]
+  }
+}

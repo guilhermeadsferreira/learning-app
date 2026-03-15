@@ -1,0 +1,30 @@
+{
+  "id": "compound-components",
+  "courseId": "react",
+  "moduleId": "patterns",
+  "title": "Compound Components",
+  "type": "explanation",
+  "xp": 20,
+  "analogy": "Compound components são como <select> e <option>: componentes separados que trabalham juntos, compartilhando estado via Context.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O padrão"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vários componentes trabalham em conjunto. O pai gerencia estado via Context; os filhos acessam e interagem. API declarativa e flexível."
+      },
+      {
+        "type": "code",
+        "content": "<Tabs>\n  <Tabs.List>\n    <Tabs.Trigger value=\"a\">Tab A</Tabs.Trigger>\n    <Tabs.Trigger value=\"b\">Tab B</Tabs.Trigger>\n  </Tabs.List>\n  <Tabs.Content value=\"a\">Conteúdo A</Tabs.Content>\n  <Tabs.Content value=\"b\">Conteúdo B</Tabs.Content>\n</Tabs>",
+        "language": "jsx"
+      },
+      {
+        "type": "paragraph",
+        "content": "Radix UI e shadcn/ui usam esse padrão. Evita prop explosion e dá máxima flexibilidade ao usuário do componente."
+      }
+    ]
+  }
+}

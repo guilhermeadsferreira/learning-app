@@ -1,0 +1,69 @@
+{
+  "id": "node-npm-intro",
+  "courseId": "react",
+  "moduleId": "ecosystem",
+  "title": "Node.js e npm",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Se o JavaScript é uma língua, o navegador e o Node.js são dois países onde ela é falada. No navegador, JS manipula HTML e responde a cliques. No Node, JS roda no seu computador — pode ler arquivos, criar servidores, executar scripts. E o npm é como uma loja de apps: você busca um pacote (React, Vite, Tailwind) e instala com um comando.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Node.js?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Node.js é um runtime JavaScript — ele permite executar JavaScript fora do navegador, direto no seu computador. Foi criado em 2009 e revolucionou o desenvolvimento web: com ele, JavaScript passou a ser usado tanto no frontend quanto no backend."
+      },
+      {
+        "type": "paragraph",
+        "content": "Para desenvolvimento React, você não vai criar um servidor com Node (para isso existe Next.js, Express). Mas vai usá-lo como ferramenta: rodar o Vite, compilar código, executar testes, instalar pacotes."
+      },
+      {
+        "type": "heading",
+        "content": "O que é npm?"
+      },
+      {
+        "type": "paragraph",
+        "content": "npm (Node Package Manager) é o gerenciador de pacotes do Node.js. Pense no Composer do PHP — mesmo conceito. Você declara as dependências do projeto, e o npm baixa, instala e gerencia tudo automaticamente."
+      },
+      {
+        "type": "heading",
+        "content": "Comandos essenciais"
+      },
+      {
+        "type": "code",
+        "content": "# Verificar versões instaladas\nnode --version    # v20.x ou superior recomendado\nnpm --version\n\n# Criar um novo projeto\nnpm init -y\n\n# Instalar um pacote (salva no package.json)\nnpm install react react-dom\nnpm install -D tailwindcss   # -D = dev dependency\n\n# Executar scripts definidos no package.json\nnpm run dev      # inicia o servidor de desenvolvimento\nnpm run build    # gera os arquivos para produção\nnpm test         # roda os testes",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Vindo do PHP? npm install é como composer install, package.json é como composer.json, e node_modules é como a pasta vendor. A lógica é a mesma!",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "node_modules e .gitignore"
+      },
+      {
+        "type": "paragraph",
+        "content": "Ao rodar npm install, os pacotes são baixados para a pasta node_modules. Essa pasta é ENORME (milhares de arquivos) e NUNCA deve ir para o Git. O package.json registra as dependências, e qualquer dev pode recriar a node_modules com npm install."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Node.js = JavaScript fora do navegador (essencial para tooling React)",
+    "npm = gerenciador de pacotes (como Composer no PHP)",
+    "npm install baixa dependências; npm run dev inicia o servidor local",
+    "node_modules nunca vai pro Git — sempre no .gitignore"
+  ],
+  "commonMistakes": [
+    "Versão do Node desatualizada — use v18+ para projetos React modernos",
+    "Commitar node_modules no Git — adicione ao .gitignore",
+    "Confundir npm install (instala tudo) com npm install pacote (instala um pacote específico)"
+  ],
+  "realWorldExample": "Quando você roda npm create vite@latest meu-app -- --template react-ts, o npm baixa o Vite, que usa o Node para criar a estrutura do projeto, compilar JSX/TypeScript, e servir a aplicação localmente com hot reload.",
+  "encouragement": "Você não precisa ser expert em Node para usar React. Pense nele como a 'infraestrutura' que roda suas ferramentas. Os comandos do dia a dia são poucos: npm install, npm run dev, npm run build."
+}

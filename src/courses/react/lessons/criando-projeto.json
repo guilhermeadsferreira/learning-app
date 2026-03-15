@@ -1,0 +1,34 @@
+{
+  "id": "criando-projeto",
+  "courseId": "react",
+  "moduleId": "ecosystem",
+  "title": "Criando projeto com Vite",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Criar um projeto React com Vite é como pedir uma pizza pronta: um comando e você tem tudo configurado.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Comando para criar projeto"
+      },
+      {
+        "type": "code",
+        "content": "npm create vite@latest meu-app -- --template react-ts",
+        "language": "bash"
+      },
+      {
+        "type": "paragraph",
+        "content": "O template react-ts inclui React + TypeScript. Para JavaScript puro, use --template react."
+      },
+      {
+        "type": "heading",
+        "content": "Próximos passos"
+      },
+      {
+        "type": "list",
+        "content": "cd meu-app — entra na pasta\nnpm install — instala dependências\nnpm run dev — inicia o servidor"
+      }
+    ]
+  }
+}

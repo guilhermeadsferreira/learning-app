@@ -1,0 +1,79 @@
+{
+  "id": "use-effect-intro",
+  "courseId": "react",
+  "moduleId": "effects",
+  "title": "O que é useEffect",
+  "type": "explanation",
+  "xp": 15,
+  "difficulty": "intermediate",
+  "analogy": "Imagine que seu componente é um ator em uma peça de teatro. O 'render' é o momento em que ele atua no palco. O useEffect é o que acontece nos bastidores DEPOIS da cena: trocar o figurino (atualizar o título da página), chamar o próximo ator (buscar dados), ou limpar o cenário (cancelar um timer). São os efeitos colaterais — coisas que acontecem fora do palco principal.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Para que serve useEffect?"
+      },
+      {
+        "type": "paragraph",
+        "content": "useEffect permite executar código que interage com o 'mundo externo' — tudo que não é renderizar JSX. Chamamos isso de 'efeitos colaterais' (side effects)."
+      },
+      {
+        "type": "heading",
+        "content": "Exemplos de efeitos colaterais"
+      },
+      {
+        "type": "list",
+        "content": "Buscar dados de uma API (fetch)\nAtualizar o título da aba do navegador\nIniciar/parar um timer (setInterval, setTimeout)\nEscutar eventos do window (resize, scroll)\nSincronizar com localStorage\nFocar um input automaticamente"
+      },
+      {
+        "type": "heading",
+        "content": "Sintaxe básica"
+      },
+      {
+        "type": "code",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction Contador() {\n  const [count, setCount] = useState(0);\n\n  // Roda DEPOIS de cada renderização em que 'count' mudou\n  useEffect(() => {\n    document.title = `Contador: ${count}`;\n  }, [count]);\n  //  ^^^^^^^ array de dependências\n\n  return (\n    <div>\n      <p>{count}</p>\n      <button onClick={() => setCount(c => c + 1)}>+1</button>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "O array de dependências"
+      },
+      {
+        "type": "paragraph",
+        "content": "O segundo argumento do useEffect controla QUANDO o efeito roda. É a parte mais importante (e mais confusa) de entender:"
+      },
+      {
+        "type": "code",
+        "content": "// Roda em TODA renderização (quase nunca é o que você quer)\nuseEffect(() => { ... });\n\n// Roda só UMA VEZ (no mount) — equivale a componentDidMount\nuseEffect(() => { ... }, []);\n\n// Roda quando 'a' ou 'b' mudam\nuseEffect(() => { ... }, [a, b]);",
+        "language": "javascript"
+      },
+      {
+        "type": "callout",
+        "content": "A documentação oficial do React 2024 diz: 'Você provavelmente não precisa de useEffect'. Para buscar dados, use TanStack Query. Para sincronizar com props, use computação no render. useEffect é para sincronizar com sistemas EXTERNOS ao React.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Quando NÃO usar useEffect"
+      },
+      {
+        "type": "list",
+        "content": "Transformar dados para renderização — faça no corpo da função\nReagir a interações do usuário — use event handlers\nDerivar estado de props — calcule durante o render\nBuscar dados — prefira TanStack Query ou framework (Next.js, Remix)"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "useEffect roda DEPOIS do render — não bloqueia a tela",
+    "O array de dependências controla quando o efeito re-executa",
+    "[] = roda uma vez (mount); [x] = roda quando x muda; sem array = toda renderização",
+    "Use useEffect para sincronizar com o mundo externo (APIs, DOM, timers)"
+  ],
+  "commonMistakes": [
+    "Esquecer o array de dependências — o efeito roda em toda renderização, causando loops",
+    "Omitir dependências do array — o efeito usa valores desatualizados (stale closures)",
+    "Usar useEffect para lógica que deveria estar em event handlers",
+    "Buscar dados com useEffect sem tratar cleanup (race conditions)"
+  ],
+  "realWorldExample": "No Spotify Web, quando você abre a página de uma playlist, um useEffect (ou equivalente) dispara o fetch dos dados daquela playlist. O array de dependências contém o ID da playlist — quando muda, busca os novos dados.",
+  "encouragement": "useEffect é o hook mais debatido da comunidade React. Se parecer confuso no início, é normal — até devs seniores erram. A chave é: pergunte-se 'com qual sistema externo estou sincronizando?' Se a resposta for 'nenhum', provavelmente não precisa de useEffect."
+}

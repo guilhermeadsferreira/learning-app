@@ -1,0 +1,74 @@
+{
+  "id": "events",
+  "courseId": "react",
+  "moduleId": "state",
+  "title": "Eventos",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Eventos em React funcionam como garçons em um restaurante. O garçom (event handler) fica esperando o cliente (usuário) fazer um pedido (clicar, digitar, enviar). Quando acontece, o garçom leva o pedido para a cozinha (executa a função). A diferença do DOM vanilla? Em React você não precisa 'contratar' o garçom manualmente (addEventListener) — basta passar a função como prop.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Eventos no React vs. DOM"
+      },
+      {
+        "type": "paragraph",
+        "content": "No JavaScript vanilla, você usa addEventListener. Em React, você passa uma função diretamente como prop do elemento JSX. Os nomes dos eventos usam camelCase: onclick vira onClick, onchange vira onChange."
+      },
+      {
+        "type": "code",
+        "content": "// Vanilla JS:\ndocument.getElementById('btn')\n  .addEventListener('click', () => alert('Clicou!'));\n\n// React — muito mais simples:\nfunction App() {\n  const handleClick = () => alert('Clicou!');\n  return <button onClick={handleClick}>Clique</button>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Eventos mais usados"
+      },
+      {
+        "type": "list",
+        "content": "onClick — clique em botão, link, div\nonChange — digitação em input, seleção em select\nonSubmit — envio de formulário\nonKeyDown/onKeyUp — tecla pressionada/liberada\nonFocus/onBlur — elemento ganha/perde foco\nonMouseEnter/onMouseLeave — mouse entra/sai do elemento"
+      },
+      {
+        "type": "heading",
+        "content": "O objeto event"
+      },
+      {
+        "type": "paragraph",
+        "content": "Todo handler recebe automaticamente um objeto de evento (SyntheticEvent) como primeiro argumento. Ele funciona igual ao event do DOM, mas normalizado para funcionar em todos os browsers."
+      },
+      {
+        "type": "code",
+        "content": "function App() {\n  const handleChange = (e) => {\n    console.log(e.target.value); // valor do input\n  };\n\n  const handleSubmit = (e) => {\n    e.preventDefault(); // impede reload da página\n    console.log('Formulário enviado!');\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input onChange={handleChange} />\n      <button type=\"submit\">Enviar</button>\n    </form>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Passe a REFERÊNCIA da função, não a CHAMADA. Use onClick={handleClick} e NÃO onClick={handleClick()}. Com parênteses, a função executa imediatamente no render!",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente com: (1) um input de texto controlado por useState, (2) um botão que, ao clicar, adiciona o texto a uma lista na tela, e (3) a lista renderizada abaixo. Use onChange no input e onClick no botão.",
+    "starterCode": "import { useState } from 'react';\n\nexport default function App() {\n  const [texto, setTexto] = useState('');\n  const [lista, setLista] = useState([]);\n\n  return (\n    <div>\n      <input\n        value={texto}\n        placeholder=\"Digite algo...\"\n        // adicione onChange\n      />\n      <button>\n        Adicionar\n      </button>\n      <ul>\n        {/* renderize a lista aqui */}\n      </ul>\n    </div>\n  );\n}",
+    "solution": "import { useState } from 'react';\n\nexport default function App() {\n  const [texto, setTexto] = useState('');\n  const [lista, setLista] = useState([]);\n\n  return (\n    <div>\n      <input\n        value={texto}\n        placeholder=\"Digite algo...\"\n        onChange={(e) => setTexto(e.target.value)}\n      />\n      <button onClick={() => {\n        if (texto.trim()) {\n          setLista(prev => [...prev, texto]);\n          setTexto('');\n        }\n      }}>\n        Adicionar\n      </button>\n      <ul>\n        {lista.map((item, i) => (\n          <li key={i}>{item}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}",
+    "hint": "Use onChange={(e) => setTexto(e.target.value)} no input. No botão, use onClick para adicionar o texto ao array com setLista(prev => [...prev, texto]) e limpar o input com setTexto('').",
+    "solutionExplanation": "Combinamos onChange (captura digitação), onClick (adiciona à lista) e useState (armazena texto e lista). O spread operator [...prev, texto] cria um novo array sem mutar o anterior — essencial em React!",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Eventos em React usam camelCase: onClick, onChange, onSubmit",
+    "Passe a referência da função, não a chamada: onClick={fn}, não onClick={fn()}",
+    "Use e.preventDefault() em formulários para evitar reload",
+    "Todo handler recebe um SyntheticEvent com as mesmas propriedades do DOM"
+  ],
+  "commonMistakes": [
+    "Chamar a função em vez de referenciar: onClick={handleClick()} executa imediatamente!",
+    "Esquecer e.preventDefault() no onSubmit — a página recarrega",
+    "Mutar arrays/objetos do estado diretamente em vez de criar cópias novas"
+  ],
+  "realWorldExample": "Formulários de busca (como o Google) usam onChange para capturar cada tecla digitada e sugerir resultados em tempo real. O Slack usa onKeyDown para detectar Enter e enviar mensagens.",
+  "encouragement": "Eventos + estado = interatividade. Com essas duas peças, você já consegue construir todo-lists, formulários, jogos simples — qualquer coisa que responda ao usuário!"
+}

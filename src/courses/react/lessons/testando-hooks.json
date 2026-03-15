@@ -1,0 +1,26 @@
+{
+  "id": "testando-hooks",
+  "courseId": "react",
+  "moduleId": "testing",
+  "title": "Testando custom hooks",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Hooks só existem dentro de componentes. Para testar, use um componente de teste que usa o hook e verifique o resultado.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "renderHook"
+      },
+      {
+        "type": "paragraph",
+        "content": "@testing-library/react fornece renderHook. Envolve o hook em um componente e retorna result com o valor atual e rerender para simular atualizações."
+      },
+      {
+        "type": "code",
+        "content": "const { result } = renderHook(() => useCounter(0));\nexpect(result.current.count).toBe(0);\nact(() => result.current.increment());\nexpect(result.current.count).toBe(1);",
+        "language": "javascript"
+      }
+    ]
+  }
+}

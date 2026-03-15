@@ -1,0 +1,30 @@
+{
+  "id": "use-ref",
+  "courseId": "react",
+  "moduleId": "advanced-hooks",
+  "title": "useRef",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "useRef é como um porta-malas: guarda valores que não precisam causar re-render quando mudam, como referências ao DOM.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é useRef?"
+      },
+      {
+        "type": "paragraph",
+        "content": "useRef retorna um objeto mutável com propriedade .current. Alterar .current não causa re-render. Útil para referências DOM, valores entre renders e evitar closures obsoletas."
+      },
+      {
+        "type": "code",
+        "content": "const inputRef = useRef(null);\n// Focar no mount:\nuseEffect(() => inputRef.current?.focus(), []);\nreturn <input ref={inputRef} />;",
+        "language": "jsx"
+      },
+      {
+        "type": "list",
+        "content": "Referências DOM — acessar elementos diretamente\nValores mutáveis — guardar IDs de timers\nValor anterior — comparar com render anterior"
+      }
+    ]
+  }
+}

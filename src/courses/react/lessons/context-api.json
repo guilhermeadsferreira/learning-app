@@ -1,0 +1,25 @@
+{
+  "id": "context-api",
+  "courseId": "react",
+  "moduleId": "state-management",
+  "title": "Context API em profundidade",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Context é um canal de TV: o Provider transmite; qualquer componente na árvore pode sintonizar com useContext.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "createContext + Provider + useContext"
+      },
+      {
+        "type": "paragraph",
+        "content": "createContext cria o canal. Provider envolve a árvore e passa o value. useContext lê o value no componente filho. Quando value muda, todos os consumidores re-renderizam."
+      },
+      {
+        "type": "list",
+        "content": "Separe Contexts por preocupação — evite um Context gigante\nMemoize o value com useMemo para evitar re-renders desnecessários\nIdeal para: tema, auth, i18n — dados que mudam pouco"
+      }
+    ]
+  }
+}

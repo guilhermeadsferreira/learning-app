@@ -1,0 +1,25 @@
+{
+  "id": "use-effect-dependencies",
+  "courseId": "react",
+  "moduleId": "effects",
+  "title": "Array de dependências",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "O array de dependências é como uma lista de gatilhos: quando qualquer item muda, o efeito dispara de novo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Regras do array de dependências"
+      },
+      {
+        "type": "list",
+        "content": "[] — executa só uma vez (mount)\n[dep1, dep2] — executa quando dep1 ou dep2 mudam\nOmitir — executa em toda render (geralmente evite)\nSempre inclua todas as variáveis usadas dentro do efeito"
+      },
+      {
+        "type": "paragraph",
+        "content": "O React compara as dependências com Object.is. Valores primitivos e referências estáveis funcionam bem. Objetos/arrays criados inline causam re-execuções desnecessárias."
+      }
+    ]
+  }
+}

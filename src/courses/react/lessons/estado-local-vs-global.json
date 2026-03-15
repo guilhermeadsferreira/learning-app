@@ -1,0 +1,25 @@
+{
+  "id": "estado-local-vs-global",
+  "courseId": "react",
+  "moduleId": "state-management",
+  "title": "Estado local vs global",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Estado local é a gaveta do seu quarto; global é o quadro de avisos da casa. Use o menor escopo possível.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Quando usar cada um"
+      },
+      {
+        "type": "list",
+        "content": "useState local — input value, modal aberto, dados de um único componente\nContext — tema, idioma, usuário logado (muda pouco)\nZustand/Redux — carrinho, filtros complexos, estado que muda muito"
+      },
+      {
+        "type": "paragraph",
+        "content": "Coloque o estado o mais perto possível de quem o usa. Só eleve para o pai ou global quando múltiplos componentes precisarem."
+      }
+    ]
+  }
+}

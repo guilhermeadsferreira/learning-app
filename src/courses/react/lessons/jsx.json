@@ -1,0 +1,79 @@
+{
+  "id": "jsx",
+  "courseId": "react",
+  "moduleId": "intro",
+  "title": "JSX",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Lembra do Blade no Laravel? Você mistura HTML com PHP usando @if, @foreach, {{ $variavel }}. JSX é a mesma ideia, mas com JavaScript. Em vez de {{ $nome }}, você usa {nome}. Em vez de @if, usa {condição && <elemento>}. É HTML turbinado com JavaScript.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é JSX?"
+      },
+      {
+        "type": "paragraph",
+        "content": "JSX (JavaScript XML) é uma extensão de sintaxe que permite escrever marcação semelhante a HTML dentro do JavaScript. Parece HTML, mas na verdade é JavaScript — o compilador (Babel/SWC) transforma cada tag em uma chamada de função."
+      },
+      {
+        "type": "heading",
+        "content": "Por baixo dos panos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você escreve <h1>Olá</h1>, o compilador transforma em React.createElement('h1', null, 'Olá'). JSX é só 'açúcar sintático' — uma forma mais legível de escrever a mesma coisa."
+      },
+      {
+        "type": "code",
+        "content": "// Isso (JSX):\nconst element = <h1 className=\"titulo\">Olá, React!</h1>;\n\n// Vira isso (JavaScript puro):\nconst element = React.createElement(\n  'h1',\n  { className: 'titulo' },\n  'Olá, React!'\n);",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Regras do JSX"
+      },
+      {
+        "type": "list",
+        "content": "Retorne um único elemento raiz — use <div> ou <> (Fragment)\nFeche todas as tags — <img />, <br />, <input />\nUse className em vez de class (class é palavra reservada em JS)\nUse camelCase para atributos — onClick, onChange, htmlFor\nExpressions JavaScript vão entre chaves { }"
+      },
+      {
+        "type": "heading",
+        "content": "Interpolando JavaScript no JSX"
+      },
+      {
+        "type": "code",
+        "content": "const nome = 'Maria';\nconst idade = 25;\n\nfunction App() {\n  return (\n    <div>\n      <h1>Olá, {nome}!</h1>\n      <p>Idade: {idade}</p>\n      <p>Ano de nascimento: {2024 - idade}</p>\n      <p>Maiúsculo: {nome.toUpperCase()}</p>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Dentro das chaves {} você pode colocar qualquer expressão JavaScript: variáveis, operações, chamadas de função, ternários. Mas NÃO pode colocar statements como if/else ou for — use ternário ou .map() para isso.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente que exiba uma saudação personalizada. Declare duas variáveis (nome e profissao) e use-as no JSX: um h1 com 'Olá, {nome}!' e um p com 'Profissão: {profissao}'.",
+    "starterCode": "export default function App() {\n  // Declare as variáveis aqui\n\n  return (\n    <div>\n      {/* Use as variáveis no JSX */}\n    </div>\n  );\n}",
+    "solution": "export default function App() {\n  const nome = 'Maria';\n  const profissao = 'Desenvolvedora React';\n\n  return (\n    <div>\n      <h1>Olá, {nome}!</h1>\n      <p>Profissão: {profissao}</p>\n    </div>\n  );\n}",
+    "hint": "Declare variáveis com const antes do return. Use chaves {} para interpolar variáveis dentro do JSX.",
+    "solutionExplanation": "Declaramos variáveis com const dentro da função (antes do return), e usamos chaves {variavel} no JSX para inserir seus valores. Isso é a base de toda renderização dinâmica em React.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "JSX parece HTML, mas é JavaScript — o compilador transforma em createElement()",
+    "Use {} para inserir qualquer expressão JavaScript dentro do JSX",
+    "Sempre retorne um único elemento raiz (use Fragment <> se precisar)",
+    "className em vez de class, camelCase para eventos (onClick, onChange)"
+  ],
+  "commonMistakes": [
+    "Usar class em vez de className — class é reservado em JavaScript",
+    "Esquecer de fechar tags auto-fechantes: <img> deve ser <img />",
+    "Retornar múltiplos elementos sem um wrapper — use <> (Fragment)",
+    "Tentar usar if/else dentro das chaves — use ternário: {cond ? 'sim' : 'não'}"
+  ],
+  "realWorldExample": "Todo componente React usa JSX. Quando você vê um formulário de login com inputs, botões e mensagens de erro — tudo isso é JSX renderizando dados dinâmicos como erros de validação, estados de loading, etc.",
+  "encouragement": "JSX pode parecer estranho no início (HTML dentro do JS?!), mas em poucos dias vai parecer a coisa mais natural do mundo. É a ponte entre dados e interface."
+}

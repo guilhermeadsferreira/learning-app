@@ -1,0 +1,26 @@
+{
+  "id": "typescript-react",
+  "courseId": "react",
+  "moduleId": "advanced",
+  "title": "TypeScript com React",
+  "type": "explanation",
+  "xp": 20,
+  "analogy": "TypeScript no React é como um co-piloto: sugere tipos de props, detecta erros antes de rodar, e melhora a experiência no editor.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Tipando props"
+      },
+      {
+        "type": "code",
+        "content": "interface ButtonProps {\n  children: React.ReactNode;\n  onClick?: () => void;\n  variant?: 'primary' | 'secondary';\n}\n\nfunction Button({ children, onClick, variant = 'primary' }: ButtonProps) {\n  return <button onClick={onClick} className={variant}>...</button>;\n}",
+        "language": "typescript"
+      },
+      {
+        "type": "list",
+        "content": "React.ReactNode — para children\nReact.CSSProperties — para style\nReact.FormEvent, React.ChangeEvent — para eventos"
+      }
+    ]
+  }
+}

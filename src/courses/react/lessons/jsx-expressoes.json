@@ -1,0 +1,37 @@
+{
+  "id": "jsx-expressoes",
+  "courseId": "react",
+  "moduleId": "intro",
+  "title": "Expressões no JSX",
+  "type": "challenge",
+  "xp": 25,
+  "analogy": "As chaves {} no JSX são como uma janela para o JavaScript: tudo que você coloca dentro é avaliado como código.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Interpolando valores"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use chaves {} para inserir expressões JavaScript no JSX. Variáveis, operações e chamadas de função funcionam."
+      },
+      {
+        "type": "code",
+        "content": "const nome = 'Maria';\nreturn <h1>Olá, {nome}!</h1>;",
+        "language": "jsx"
+      },
+      {
+        "type": "paragraph",
+        "content": "Crie um componente que exiba a soma de dois números usando variáveis."
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Use duas variáveis (a e b) e exiba a soma no JSX.",
+    "starterCode": "export default function App() {\n  const a = 10;\n  const b = 5;\n  return (\n    <div>\n      {/* Exiba a soma de a + b */}\n    </div>\n  );\n}",
+    "solution": "export default function App() {\n  const a = 10;\n  const b = 5;\n  return (\n    <div>\n      <p>A soma é: {a + b}</p>\n    </div>\n  );\n}",
+    "hint": "Use {a + b} dentro do JSX para exibir a soma.",
+    "tests": []
+  }
+}

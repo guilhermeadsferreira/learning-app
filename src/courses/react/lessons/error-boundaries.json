@@ -1,0 +1,25 @@
+{
+  "id": "error-boundaries",
+  "courseId": "react",
+  "moduleId": "patterns",
+  "title": "Error Boundaries",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Error Boundary é como um paraquedas: se algo der errado no componente filho, ela captura e mostra uma UI de fallback em vez de derrubar a app.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que são Error Boundaries?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Componentes de classe com getDerivedStateFromError e componentDidCatch. Capturam erros na árvore de filhos e exibem fallback."
+      },
+      {
+        "type": "list",
+        "content": "Não capturam: erros em event handlers, async, SSR, no próprio boundary\nUse react-error-boundary para componente pronto\nColoque em níveis estratégicos — por rota ou widget"
+      }
+    ]
+  }
+}

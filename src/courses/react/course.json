@@ -1,0 +1,88 @@
+{
+  "id": "react",
+  "title": "React: Do Iniciante ao Avançado",
+  "description": "Curso completo de React incluindo ecossistema (Node, npm, Vite, Tailwind), hooks, roteamento, formulários, data fetching, testes e boas práticas.",
+  "icon": "⚛️",
+  "modules": [
+    {
+      "id": "ecosystem",
+      "title": "Ecossistema e Ferramentas",
+      "lessons": ["node-npm-intro", "package-json", "vite-intro", "criando-projeto", "estrutura-pastas"]
+    },
+    {
+      "id": "intro",
+      "title": "Introdução ao React",
+      "lessons": ["what-is-react", "jsx", "jsx-expressoes"]
+    },
+    {
+      "id": "components",
+      "title": "Componentes",
+      "lessons": ["components", "props", "props-children", "component-composition", "component-best-practices"]
+    },
+    {
+      "id": "state",
+      "title": "Estado e Interatividade",
+      "lessons": ["use-state", "events", "controlled-uncontrolled", "forms-basic"]
+    },
+    {
+      "id": "effects",
+      "title": "useEffect e Efeitos",
+      "lessons": ["use-effect-intro", "use-effect-dependencies", "use-effect-cleanup"]
+    },
+    {
+      "id": "advanced-hooks",
+      "title": "Hooks Avançados",
+      "lessons": ["use-ref", "use-context", "use-reducer", "use-memo-callback"]
+    },
+    {
+      "id": "custom-hooks",
+      "title": "Custom Hooks",
+      "lessons": ["custom-hooks-intro", "custom-hooks-criando", "custom-hooks-padroes", "custom-hooks-boas-praticas"]
+    },
+    {
+      "id": "styling",
+      "title": "Estilização com Tailwind CSS",
+      "lessons": ["css-react", "tailwind-intro", "tailwind-components", "tailwind-responsive", "tailwind-animacoes", "tailwind-projeto"]
+    },
+    {
+      "id": "routing",
+      "title": "React Router",
+      "lessons": ["react-router-intro", "rotas-basicas", "rotas-dinamicas", "rotas-aninhadas", "layout-routes", "react-router-navegacao", "react-router-pratica"]
+    },
+    {
+      "id": "state-management",
+      "title": "Gerenciamento de Estado",
+      "lessons": ["context-api", "context-best-practices", "estado-local-vs-global"]
+    },
+    {
+      "id": "forms",
+      "title": "Formulários Avançados",
+      "lessons": ["react-hook-form", "validacao-zod", "formularios-complexos"]
+    },
+    {
+      "id": "data-fetching",
+      "title": "Data Fetching",
+      "lessons": ["fetch-api", "loading-error-states", "tanstack-query"]
+    },
+    {
+      "id": "patterns",
+      "title": "Padrões e Boas Práticas",
+      "lessons": ["clean-code-react", "componentes-reutilizaveis", "compound-components", "error-boundaries"]
+    },
+    {
+      "id": "testing",
+      "title": "Testes",
+      "lessons": ["testing-intro", "react-testing-library", "testando-componentes", "testando-hooks"]
+    },
+    {
+      "id": "performance",
+      "title": "Performance",
+      "lessons": ["react-memo", "lazy-suspense", "code-splitting", "quando-otimizar"]
+    },
+    {
+      "id": "advanced",
+      "title": "Avançado",
+      "lessons": ["typescript-react", "react-19-novidades", "proximos-passos"]
+    }
+  ]
+}

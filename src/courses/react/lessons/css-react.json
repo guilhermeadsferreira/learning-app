@@ -1,0 +1,100 @@
+{
+  "id": "css-react",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "CSS no React: abordagens",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Estilizar no React é como escolher como pintar uma casa. Você pode usar um balde de tinta (CSS global — simples mas bagunçado), rolos com fita crepe delimitando áreas (CSS Modules — cada quarto isolado), adesivos decorativos prontos (Tailwind — cole o que precisa), ou contratar um pintor que segue suas instruções ao vivo (CSS-in-JS — dinâmico mas com custo).",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Por que CSS no React é diferente?"
+      },
+      {
+        "type": "paragraph",
+        "content": "No React, cada componente é uma unidade independente. O ideal é que os estilos também sejam — sem vazar para outros componentes, sem conflitos de nomes, sem surpresas. Por isso existem várias abordagens além do CSS tradicional."
+      },
+      {
+        "type": "heading",
+        "content": "1. CSS Global"
+      },
+      {
+        "type": "paragraph",
+        "content": "O jeito clássico: criar um arquivo .css e importar no componente. Funciona, mas os estilos são globais — uma classe .button definida num arquivo afeta TODOS os .button do app. Para projetos pequenos funciona; para projetos grandes, vira uma bagunça."
+      },
+      {
+        "type": "code",
+        "content": "/* styles.css */\n.card { border: 1px solid #ccc; padding: 16px; }\n\n// Component.jsx\nimport './styles.css';\nfunction Card() {\n  return <div className=\"card\">...</div>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "2. CSS Modules"
+      },
+      {
+        "type": "paragraph",
+        "content": "Arquivos .module.css geram nomes de classe únicos automaticamente (ex: Card_card_x7k2). Zero conflitos. O Vite suporta nativamente — basta nomear o arquivo com .module.css."
+      },
+      {
+        "type": "code",
+        "content": "/* Card.module.css */\n.card { border: 1px solid #ccc; padding: 16px; }\n.title { font-weight: bold; }\n\n// Card.jsx\nimport styles from './Card.module.css';\nfunction Card() {\n  return (\n    <div className={styles.card}>\n      <h2 className={styles.title}>Título</h2>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "3. Tailwind CSS (utility-first)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Classes utilitárias direto no className. Sem criar arquivos CSS, sem inventar nomes. É a abordagem dominante em 2024-2025 — usada por Vercel, Shopify, e a maioria dos templates modernos. Vamos aprofundar nas próximas lições."
+      },
+      {
+        "type": "code",
+        "content": "function Card() {\n  return (\n    <div className=\"border border-gray-200 rounded-lg p-4 shadow-sm\">\n      <h2 className=\"text-lg font-bold\">Título</h2>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "4. CSS-in-JS (styled-components, Emotion)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Estilos escritos em JavaScript, com template literals. Foi muito popular em 2018-2022, mas está em declínio por questões de performance (injeta CSS no runtime). Ainda usado em projetos legados."
+      },
+      {
+        "type": "code",
+        "content": "// styled-components\nconst Card = styled.div`\n  border: 1px solid #ccc;\n  padding: 16px;\n  border-radius: 8px;\n`;",
+        "language": "javascript"
+      },
+      {
+        "type": "heading",
+        "content": "Qual escolher?"
+      },
+      {
+        "type": "list",
+        "content": "Projeto novo em 2024+ → Tailwind CSS (velocidade, consistência, DX excelente)\nProjeto que precisa de CSS customizado complexo → CSS Modules (isolamento sem overhead)\nProjeto legado com styled-components → continue com ele, não vale migrar só por moda\nProtótipo rápido → Tailwind + shadcn/ui (componentes prontos)"
+      },
+      {
+        "type": "callout",
+        "content": "Neste curso, usamos Tailwind CSS como abordagem principal. É o padrão da indústria React moderna e o que você vai encontrar na maioria dos projetos e vagas.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "CSS global funciona mas causa conflitos em projetos grandes",
+    "CSS Modules isola estilos automaticamente via nomes únicos",
+    "Tailwind CSS é utility-first — classes direto no className, sem arquivos CSS",
+    "CSS-in-JS (styled-components) está em declínio por custo de runtime"
+  ],
+  "commonMistakes": [
+    "Usar class em vez de className no JSX — class é palavra reservada em JS",
+    "Misturar várias abordagens no mesmo projeto sem um padrão definido",
+    "Usar CSS global para componentes reutilizáveis — causa conflitos inevitáveis"
+  ],
+  "realWorldExample": "O site da Vercel (vercel.com) usa Tailwind CSS. O dashboard do Stripe usa CSS Modules. O app do Airbnb usava styled-components e migrou. Cada abordagem tem seu momento — mas a tendência é claramente Tailwind.",
+  "encouragement": "Não existe resposta 'errada' — mas existe a resposta certa para o momento. Domine Tailwind e CSS Modules, e você cobre 95% dos cenários."
+}

@@ -1,0 +1,92 @@
+{
+  "id": "tailwind-components",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "Tailwind + componentes React",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Se as classes Tailwind são ingredientes, componentes React são receitas prontas. Você cria um componente <Button variant='primary' size='lg' /> que encapsula as classes certas. Quem usa não precisa saber quais classes estão por baixo — só escolhe a variante.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O problema das classes repetidas"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você usa o mesmo combo de classes em vários lugares (bg-blue-500 text-white px-4 py-2 rounded-lg font-medium), qualquer mudança exige alterar N lugares. A solução? Encapsular em componentes React — assim a classe fica em um lugar só."
+      },
+      {
+        "type": "heading",
+        "content": "Padrão básico: componente com variantes"
+      },
+      {
+        "type": "code",
+        "content": "function Button({ children, variant = 'primary', size = 'md' }) {\n  const base = 'inline-flex items-center justify-center rounded-lg font-medium transition-colors';\n\n  const variants = {\n    primary: 'bg-blue-600 text-white hover:bg-blue-700',\n    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',\n    danger: 'bg-red-600 text-white hover:bg-red-700',\n    ghost: 'text-gray-600 hover:bg-gray-100',\n  };\n\n  const sizes = {\n    sm: 'px-3 py-1.5 text-sm',\n    md: 'px-4 py-2 text-sm',\n    lg: 'px-6 py-3 text-base',\n  };\n\n  return (\n    <button className={`${base} ${variants[variant]} ${sizes[size]}`}>\n      {children}\n    </button>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "O utilitário cn() — merge inteligente de classes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você precisa passar className adicional de fora (para customizar em casos específicos), concatenar strings pode causar conflitos: 'p-4 p-8' — qual vale? A função cn() (clsx + tailwind-merge) resolve isso: ela faz merge inteligente, onde a última classe ganha."
+      },
+      {
+        "type": "code",
+        "content": "// lib/utils.ts\nimport { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n\n// Uso no componente:\nfunction Card({ className, children }) {\n  return (\n    <div className={cn(\n      'rounded-lg border border-gray-200 bg-white p-4 shadow-sm',\n      className  // classes externas sobrescrevem conflitos\n    )}>\n      {children}\n    </div>\n  );\n}\n\n// Quem usa pode customizar:\n<Card className=\"p-8 shadow-lg\">  {/* p-8 sobrescreve p-4 */}",
+        "language": "tsx"
+      },
+      {
+        "type": "callout",
+        "content": "cn() já está configurado neste projeto em src/lib/utils.ts. Sempre que criar componentes com Tailwind, use cn() para aceitar className externo. É o padrão do shadcn/ui.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "CVA — Class Variance Authority"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para componentes com muitas variantes, CVA organiza tudo de forma tipada e declarativa. É a ferramenta que o shadcn/ui usa por baixo dos panos."
+      },
+      {
+        "type": "code",
+        "content": "import { cva } from 'class-variance-authority';\n\nconst buttonVariants = cva(\n  // classes base (sempre aplicadas)\n  'inline-flex items-center justify-center rounded-lg font-medium transition-colors',\n  {\n    variants: {\n      variant: {\n        primary: 'bg-blue-600 text-white hover:bg-blue-700',\n        secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',\n        ghost: 'text-gray-600 hover:bg-gray-100',\n      },\n      size: {\n        sm: 'px-3 py-1.5 text-sm',\n        md: 'px-4 py-2 text-sm',\n        lg: 'px-6 py-3 text-base',\n      },\n    },\n    defaultVariants: {\n      variant: 'primary',\n      size: 'md',\n    },\n  }\n);\n\n// buttonVariants({ variant: 'secondary', size: 'lg' })\n// → retorna a string de classes combinada",
+        "language": "tsx"
+      },
+      {
+        "type": "heading",
+        "content": "Classes condicionais com clsx"
+      },
+      {
+        "type": "code",
+        "content": "import { clsx } from 'clsx';\n\nfunction Badge({ label, active }) {\n  return (\n    <span className={clsx(\n      'rounded-full px-2 py-1 text-xs font-medium',\n      active\n        ? 'bg-green-100 text-green-800'\n        : 'bg-gray-100 text-gray-600'\n    )}>\n      {label}\n    </span>\n  );\n}",
+        "language": "jsx"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente Badge que receba 'label' e 'variant' ('success' | 'warning' | 'error' | 'info'). Cada variante tem cores diferentes (fundo claro + texto escuro da mesma cor). Use um objeto de mapeamento para as variantes. Renderize 4 badges no App, um de cada variante.",
+    "starterCode": "function Badge({ label, variant = 'info' }) {\n  // Crie o mapeamento de variantes e retorne o JSX\n  return null;\n}\n\nexport default function App() {\n  return (\n    <div className=\"flex gap-2 p-8\">\n      {/* Renderize 4 badges com variantes diferentes */}\n    </div>\n  );\n}",
+    "solution": "function Badge({ label, variant = 'info' }) {\n  const variants = {\n    success: 'bg-green-100 text-green-800',\n    warning: 'bg-yellow-100 text-yellow-800',\n    error: 'bg-red-100 text-red-800',\n    info: 'bg-blue-100 text-blue-800',\n  };\n\n  return (\n    <span className={`rounded-full px-3 py-1 text-xs font-medium ${variants[variant]}`}>\n      {label}\n    </span>\n  );\n}\n\nexport default function App() {\n  return (\n    <div className=\"flex gap-2 p-8\">\n      <Badge label=\"Ativo\" variant=\"success\" />\n      <Badge label=\"Pendente\" variant=\"warning\" />\n      <Badge label=\"Erro\" variant=\"error\" />\n      <Badge label=\"Info\" variant=\"info\" />\n    </div>\n  );\n}",
+    "hint": "Crie um objeto onde a chave é o nome da variante e o valor são as classes Tailwind. Use template literal para combinar classes base com a variante: `${base} ${variants[variant]}`.",
+    "solutionExplanation": "O padrão de mapear variantes para strings de classes é o fundamento de todo design system em Tailwind. É exatamente assim que shadcn/ui, Radix e Headless UI funcionam por baixo.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Encapsule classes repetidas em componentes React com props de variantes",
+    "Use cn() (clsx + tailwind-merge) para merge inteligente de classes",
+    "CVA organiza variantes complexas de forma tipada e declarativa",
+    "Sempre aceite className como prop para permitir customização externa"
+  ],
+  "commonMistakes": [
+    "Usar @apply no CSS para 'extrair' classes — isso anula a vantagem de Tailwind; use componentes React",
+    "Concatenar classes sem cn() — causa conflitos quando classes se sobrepõem",
+    "Hardcodar todas as classes sem variantes — fica impossível reutilizar o componente"
+  ],
+  "realWorldExample": "O shadcn/ui (a lib de componentes mais popular de 2024) usa exatamente esse padrão: CVA para variantes + cn() para merge + componentes React como wrapper. Cada componente aceita className para customização.",
+  "encouragement": "Esse padrão de variantes é o 'segredo' por trás de todo design system moderno. Dominando cn() + objetos de variantes, você constrói componentes no nível de bibliotecas profissionais."
+}

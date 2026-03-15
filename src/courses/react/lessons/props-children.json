@@ -1,0 +1,66 @@
+{
+  "id": "props-children",
+  "courseId": "react",
+  "moduleId": "components",
+  "title": "Props children",
+  "type": "challenge",
+  "xp": 20,
+  "difficulty": "beginner",
+  "analogy": "Pense em uma moldura de quadro. A moldura (componente wrapper) define o formato, a borda e o estilo — mas o quadro que vai dentro (children) pode ser qualquer coisa: uma foto, uma pintura, um poster. O componente não sabe e não se importa com o conteúdo; ele só cuida do 'invólucro'.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é children?"
+      },
+      {
+        "type": "paragraph",
+        "content": "children é uma prop especial e implícita que contém tudo que é passado ENTRE as tags de abertura e fechamento do componente. É o que torna possível criar componentes de layout, containers e wrappers genéricos."
+      },
+      {
+        "type": "code",
+        "content": "function Card({ children }) {\n  return (\n    <div className=\"border rounded-lg p-4 shadow\">\n      {children}\n    </div>\n  );\n}\n\n// Tudo entre <Card> e </Card> vira children:\n<Card>\n  <h2>Título do card</h2>\n  <p>Qualquer conteúdo aqui dentro.</p>\n  <button>Ação</button>\n</Card>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Por que children é poderoso?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sem children, você precisaria passar todo o conteúdo via props — ficaria confuso e inflexível. Com children, o componente wrapper se preocupa apenas com layout e estilo, enquanto o conteúdo fica livre."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Sem children: API inflexível\n<Card titulo=\"Olá\" descricao=\"Mundo\" botaoTexto=\"Clique\" />\n\n// ✅ Com children: composição flexível\n<Card>\n  <h2>Olá</h2>\n  <p>Mundo</p>\n  <button>Clique</button>\n  <img src=\"foto.jpg\" />  {/* Fácil adicionar qualquer coisa! */}\n</Card>",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Componentes como <main>, <section>, <Modal>, <Layout>, <Sidebar> são candidatos perfeitos para usar children. Tudo que é 'container genérico' se beneficia.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente AlertBox que recebe children e uma prop 'type' ('success' | 'error' | 'info'). Ele deve renderizar uma div com borda colorida (verde, vermelha ou azul) ao redor do children. Use-o 3 vezes no App com tipos diferentes e conteúdos diferentes.",
+    "starterCode": "function AlertBox({ children, type }) {\n  // Defina a cor da borda baseado no type\n  // Renderize children dentro de uma div estilizada\n  return null;\n}\n\nexport default function App() {\n  return (\n    <div>\n      {/* Use AlertBox 3 vezes com tipos e conteúdos diferentes */}\n    </div>\n  );\n}",
+    "solution": "function AlertBox({ children, type }) {\n  const colors = {\n    success: 'green',\n    error: 'red',\n    info: 'blue',\n  };\n  return (\n    <div style={{ border: `2px solid ${colors[type]}`, padding: 16, margin: 8, borderRadius: 8 }}>\n      {children}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <div>\n      <AlertBox type=\"success\">\n        <h3>Sucesso!</h3>\n        <p>Operação concluída.</p>\n      </AlertBox>\n      <AlertBox type=\"error\">\n        <p>Algo deu errado. Tente novamente.</p>\n      </AlertBox>\n      <AlertBox type=\"info\">\n        <p>Dica: use children para conteúdo flexível!</p>\n      </AlertBox>\n    </div>\n  );\n}",
+    "hint": "Crie um objeto mapeando type para cor. Use style={{ border: `2px solid ${cor}` }}. Renderize {children} dentro da div.",
+    "solutionExplanation": "AlertBox é um componente wrapper genérico: cuida do visual (borda colorida) sem se importar com o conteúdo interno. Cada uso tem conteúdo diferente — isso é o poder do children.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "children = tudo que está entre <Comp> e </Comp>",
+    "Ideal para componentes de layout, containers e wrappers",
+    "Permite composição flexível — o componente pai decide o conteúdo",
+    "children pode ser texto, elementos, outros componentes — qualquer coisa"
+  ],
+  "commonMistakes": [
+    "Esquecer de renderizar {children} dentro do componente — o conteúdo passado desaparece",
+    "Usar children quando props nomeadas seriam mais claras (ex: botão com ícone + texto)",
+    "Confundir children com props.children — com desestruturação, use { children } diretamente"
+  ],
+  "realWorldExample": "O componente <Layout> da maioria dos apps React usa children: ele renderiza Header, Sidebar e Footer fixos, e o conteúdo da página (children) muda conforme a rota. É a base de qualquer dashboard.",
+  "encouragement": "children é simples mas revolucionário. Ele habilita composição — o padrão mais importante do React. A partir de agora, você vai ver children em todo lugar!"
+}

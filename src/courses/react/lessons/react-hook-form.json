@@ -1,0 +1,26 @@
+{
+  "id": "react-hook-form",
+  "courseId": "react",
+  "moduleId": "forms",
+  "title": "React Hook Form",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "React Hook Form é como um assistente de formulários: menos re-renders, validação integrada, e API simples com register.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Por que React Hook Form?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Usa uncontrolled components e refs para minimizar re-renders. Performance superior a Formik. API com useForm, register, handleSubmit."
+      },
+      {
+        "type": "code",
+        "content": "const { register, handleSubmit, formState: { errors } } = useForm();\n\n<input {...register('email', { required: true })} />\n{errors.email && <span>Campo obrigatório</span>}",
+        "language": "jsx"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "react-19-novidades",
+  "courseId": "react",
+  "moduleId": "advanced",
+  "title": "React 19 novidades",
+  "type": "explanation",
+  "xp": 20,
+  "analogy": "React 19 é como um upgrade do carro: Actions, use(), useFormStatus — menos boilerplate, mais poder nativo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Principais recursos (2024)"
+      },
+      {
+        "type": "list",
+        "content": "Actions — funções async em forms com pending/error automático\nuseFormStatus — estado de submit sem prop drilling\nuse() — consumir Promises diretamente no componente\nuseOptimistic — UI otimista para mutations\nReact Compiler — memoização automática"
+      },
+      {
+        "type": "paragraph",
+        "content": "React 19 está estável desde dezembro 2024. O Compiler reduz a necessidade de useMemo/useCallback manual em muitos casos."
+      }
+    ]
+  }
+}

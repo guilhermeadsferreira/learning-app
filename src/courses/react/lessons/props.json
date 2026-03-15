@@ -1,0 +1,78 @@
+{
+  "id": "props",
+  "courseId": "react",
+  "moduleId": "components",
+  "title": "Props",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Props são como os argumentos de uma função PHP. Quando você chama criarUsuario($nome, $email), está passando dados para a função trabalhar. Em React, quando você escreve <Card titulo='React' />, está passando dados para o componente renderizar. Props = parâmetros visuais.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que são Props?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Props (abreviação de 'properties') são o mecanismo do React para passar dados de um componente pai para um componente filho. Elas tornam componentes configuráveis e reutilizáveis."
+      },
+      {
+        "type": "paragraph",
+        "content": "Sem props, cada componente mostraria sempre a mesma coisa — como uma função sem parâmetros. Com props, o mesmo componente <Card /> pode exibir conteúdos diferentes dependendo do que recebe."
+      },
+      {
+        "type": "heading",
+        "content": "Como usar props"
+      },
+      {
+        "type": "code",
+        "content": "// 1. Defina o componente recebendo props via desestruturação\nfunction Saudacao({ nome, cargo }) {\n  return (\n    <div>\n      <h2>Olá, {nome}!</h2>\n      <p>Cargo: {cargo}</p>\n    </div>\n  );\n}\n\n// 2. Passe as props como atributos\nfunction App() {\n  return (\n    <div>\n      <Saudacao nome=\"Maria\" cargo=\"Dev Frontend\" />\n      <Saudacao nome=\"João\" cargo=\"Dev Backend\" />\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Props são somente leitura"
+      },
+      {
+        "type": "paragraph",
+        "content": "Regra fundamental: NUNCA modifique as props dentro do componente. Se o componente recebe nome='Maria', ele não pode mudar esse valor. Props são como dados de entrada de uma função pura — entra dado, sai interface."
+      },
+      {
+        "type": "callout",
+        "content": "Precisa de um valor que muda? Isso é estado (useState), não props. Props vêm de fora; estado vive dentro do componente.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Props com valores padrão"
+      },
+      {
+        "type": "code",
+        "content": "function Botao({ texto = 'Clique aqui', cor = 'blue' }) {\n  return (\n    <button style={{ backgroundColor: cor }}>\n      {texto}\n    </button>\n  );\n}\n\n// Usa os valores padrão:\n<Botao />\n\n// Sobrescreve:\n<Botao texto=\"Enviar\" cor=\"green\" />",
+        "language": "jsx"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente Perfil que receba as props 'nome', 'idade' e 'linguagem'. Exiba o nome em um h2, e 'Idade: X — Linguagem favorita: Y' em um parágrafo. Use o componente duas vezes no App com dados diferentes.",
+    "starterCode": "function Perfil({ nome, idade, linguagem }) {\n  return (\n    <div>\n      {/* Exiba nome em h2 e idade + linguagem em p */}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <div>\n      {/* Use <Perfil /> duas vezes com dados diferentes */}\n    </div>\n  );\n}",
+    "solution": "function Perfil({ nome, idade, linguagem }) {\n  return (\n    <div>\n      <h2>{nome}</h2>\n      <p>Idade: {idade} — Linguagem favorita: {linguagem}</p>\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <div>\n      <Perfil nome=\"Ana\" idade={25} linguagem=\"React\" />\n      <Perfil nome=\"Carlos\" idade={30} linguagem=\"Vue\" />\n    </div>\n  );\n}",
+    "hint": "Use desestruturação para receber as props: { nome, idade, linguagem }. Números são passados com chaves: idade={25}.",
+    "solutionExplanation": "O componente Perfil recebe 3 props via desestruturação e as interpola no JSX. Ao usar o componente duas vezes com dados diferentes, demonstramos a reutilização — o mesmo 'molde' com conteúdos diferentes.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Props = dados passados do pai para o filho",
+    "Use desestruturação para acessá-las: function Comp({ prop1, prop2 })",
+    "Props são read-only — nunca modifique dentro do componente",
+    "Strings vão entre aspas; outros tipos (número, objeto, booleano) vão entre chaves"
+  ],
+  "commonMistakes": [
+    "Tentar modificar uma prop dentro do componente — props são imutáveis",
+    "Esquecer as chaves para valores não-string: idade=\"25\" passa string, idade={25} passa número",
+    "Confundir props com estado — props vêm de fora, estado vive dentro"
+  ],
+  "realWorldExample": "Pense no componente <Button> do seu design system. Ele recebe props como variant='primary', size='lg', disabled={true}. O mesmo componente serve para dezenas de botões diferentes na aplicação.",
+  "encouragement": "Props são o segundo pilar do React (depois de componentes). Com componentes + props, você já consegue construir interfaces complexas e reutilizáveis!"
+}

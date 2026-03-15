@@ -1,0 +1,60 @@
+{
+  "id": "what-is-react",
+  "courseId": "react",
+  "moduleId": "intro",
+  "title": "O que é React",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Imagine que você está montando uma casa com blocos LEGO. Cada cômodo é um bloco independente — a cozinha, o quarto, o banheiro. Você pode montar cada um separadamente, testá-lo, e depois encaixá-los para formar a casa inteira. Se a cozinha não ficou boa, você troca só ela sem derrubar a casa. React funciona exatamente assim: cada pedaço da sua interface é um 'bloco' (componente) independente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é React?"
+      },
+      {
+        "type": "paragraph",
+        "content": "React é uma biblioteca JavaScript criada pelo Facebook (hoje Meta) em 2013 para construir interfaces de usuário. Ela é usada por empresas como Netflix, Airbnb, Instagram, Nubank e milhares de startups."
+      },
+      {
+        "type": "paragraph",
+        "content": "A ideia central do React é simples: em vez de manipular o HTML diretamente (como você faz com jQuery ou vanilla JS), você descreve como a interface DEVE parecer para cada estado da aplicação, e o React se encarrega de atualizar o DOM de forma eficiente."
+      },
+      {
+        "type": "heading",
+        "content": "Declarativo vs. Imperativo"
+      },
+      {
+        "type": "paragraph",
+        "content": "No JavaScript tradicional (imperativo), você diz COMO fazer: 'pegue o elemento, mude o texto, adicione uma classe'. No React (declarativo), você diz O QUE quer ver: 'quero um botão com esse texto e essa cor'. É como a diferença entre dar um passo a passo de uma receita vs. mostrar a foto do prato pronto."
+      },
+      {
+        "type": "code",
+        "content": "// Imperativo (vanilla JS)\ndocument.getElementById('btn').textContent = 'Clicado!';\ndocument.getElementById('btn').classList.add('active');\n\n// Declarativo (React)\nfunction Botao({ clicado }) {\n  return (\n    <button className={clicado ? 'active' : ''}>\n      {clicado ? 'Clicado!' : 'Clique aqui'}\n    </button>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Por que usar React?"
+      },
+      {
+        "type": "list",
+        "content": "Componentização — divida sua UI em peças reutilizáveis e testáveis\nVirtual DOM — React calcula a mudança mínima necessária e só atualiza o que precisa\nUnidirecional — dados fluem de cima pra baixo, facilitando debug\nEcossistema gigante — React Router, TanStack Query, Next.js, milhares de bibliotecas\nMercado de trabalho — uma das skills mais requisitadas para frontend"
+      },
+      {
+        "type": "callout",
+        "content": "Você vem do PHP? Pense no React como o Blade/Twig do frontend: templates com lógica. A diferença é que tudo roda no navegador e a atualização é instantânea, sem reload.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "React é uma biblioteca para construir interfaces — não é um framework completo como Angular",
+    "A abordagem é declarativa: você descreve o resultado, não os passos",
+    "Tudo se baseia em componentes reutilizáveis",
+    "O Virtual DOM torna as atualizações eficientes e automáticas"
+  ],
+  "realWorldExample": "O feed do Instagram é feito em React. Cada post, cada story, cada comentário é um componente. Quando você curte um post, o React atualiza apenas o ícone do coração e o contador — sem recarregar a página inteira.",
+  "encouragement": "Se você já fez sites com HTML, CSS e JS, você já tem a base. React não é um bicho de sete cabeças — é uma forma mais organizada de fazer o que você já faz."
+}

@@ -1,0 +1,25 @@
+{
+  "id": "component-best-practices",
+  "courseId": "react",
+  "moduleId": "components",
+  "title": "Boas práticas de componentes",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Um bom componente é como uma função bem escrita: faz uma coisa, faz bem, e tem um nome que explica o que faz.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Princípios (2024)"
+      },
+      {
+        "type": "list",
+        "content": "Componentes pequenos e focados — responsabilidade única\nDefinir no topo do arquivo — nunca dentro de outros componentes\nNomes descritivos — Button, UserCard, não Comp1\nPreferir composição sobre herança"
+      },
+      {
+        "type": "paragraph",
+        "content": "Componentes definidos dentro de outros são recriados a cada render, causando perda de estado e problemas de performance. Sempre defina no nível superior do módulo."
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "controlled-uncontrolled",
+  "courseId": "react",
+  "moduleId": "state",
+  "title": "Controlled vs Uncontrolled",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Controlled é como um carro com volante: React controla o valor. Uncontrolled é como um carro autônomo: o DOM mantém o valor.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Componentes controlados"
+      },
+      {
+        "type": "paragraph",
+        "content": "O valor do input é controlado pelo estado React (value + onChange). A fonte da verdade é o estado."
+      },
+      {
+        "type": "code",
+        "content": "const [nome, setNome] = useState('');\n<input value={nome} onChange={e => setNome(e.target.value)} />",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Componentes não controlados"
+      },
+      {
+        "type": "paragraph",
+        "content": "O DOM mantém o valor. Use ref para acessar quando precisar. Útil para integração com libs como React Hook Form."
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "proximos-passos",
+  "courseId": "react",
+  "moduleId": "advanced",
+  "title": "Próximos passos",
+  "type": "explanation",
+  "xp": 10,
+  "analogy": "Dominar React abre portas: Next.js para full-stack, React Native para mobile, e um ecossistema rico de ferramentas.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Onde ir a partir daqui"
+      },
+      {
+        "type": "list",
+        "content": "Next.js — React com SSR, rotas, API routes\nRemix — full-stack com foco em forms e data\nReact Native — apps mobile\nZustand — estado global leve\nStorybook — documentar componentes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Pratique construindo projetos reais. A documentação oficial (react.dev) é a melhor referência. Boa jornada!"
+      }
+    ]
+  }
+}

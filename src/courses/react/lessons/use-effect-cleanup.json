@@ -1,0 +1,30 @@
+{
+  "id": "use-effect-cleanup",
+  "courseId": "react",
+  "moduleId": "effects",
+  "title": "Cleanup e subscriptions",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "O cleanup é como desligar a TV ao sair: você libera recursos para evitar vazamentos de memória.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Função de cleanup"
+      },
+      {
+        "type": "paragraph",
+        "content": "Retorne uma função do useEffect para limpar subscriptions, timers e listeners quando o componente desmontar ou antes do efeito rodar novamente."
+      },
+      {
+        "type": "code",
+        "content": "useEffect(() => {\n  const id = setInterval(() => setCount(c => c + 1), 1000);\n  return () => clearInterval(id);\n}, []);",
+        "language": "javascript"
+      },
+      {
+        "type": "list",
+        "content": "setInterval/setTimeout — clear no cleanup\nEvent listeners — removeEventListener\nWebSockets — close()\nSubscriptions — unsubscribe()"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "use-memo-callback",
+  "courseId": "react",
+  "moduleId": "advanced-hooks",
+  "title": "useMemo e useCallback",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "useMemo guarda o resultado de um cálculo; useCallback guarda uma função. Use só quando houver problema de performance real.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Regra de ouro: profile antes de otimizar"
+      },
+      {
+        "type": "paragraph",
+        "content": "A maioria das otimizações com useMemo/useCallback prejudica mais do que ajuda quando usadas sem necessidade. Só use após identificar problema com React DevTools Profiler."
+      },
+      {
+        "type": "list",
+        "content": "useMemo — cacheia cálculo caro ou referência para filho memoizado\nuseCallback — estabiliza função para filho memoizado ou deps de useEffect\nReact 19 Compiler — reduz necessidade de memoização manual"
+      }
+    ]
+  }
+}

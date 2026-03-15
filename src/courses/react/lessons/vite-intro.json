@@ -1,0 +1,25 @@
+{
+  "id": "vite-intro",
+  "courseId": "react",
+  "moduleId": "ecosystem",
+  "title": "Por que Vite?",
+  "type": "explanation",
+  "xp": 10,
+  "analogy": "Vite é como um carro esportivo: startup instantâneo e HMR ultrarrápido, enquanto Create React App era um carro antigo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Vite em 2024"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vite substituiu Create React App como a ferramenta recomendada para projetos React. Oferece servidor de desenvolvimento instantâneo e Hot Module Replacement (HMR) ultrarrápido."
+      },
+      {
+        "type": "list",
+        "content": "Startup instantâneo — usa ES modules nativos\nHMR rápido — atualiza sem recarregar a página\nBuild otimizado — Rollup para produção\nSuporte nativo a JSX, TypeScript e CSS"
+      }
+    ]
+  }
+}

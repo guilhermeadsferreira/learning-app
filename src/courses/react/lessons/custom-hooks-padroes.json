@@ -1,0 +1,33 @@
+{
+  "id": "custom-hooks-padroes",
+  "courseId": "react",
+  "moduleId": "custom-hooks",
+  "title": "Padrões: useFetch, useLocalStorage",
+  "type": "explanation",
+  "xp": 15,
+  "analogy": "Hooks como useFetch e useLocalStorage são receitas prontas para problemas comuns: buscar dados e persistir no navegador.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "useFetch (padrão simplificado)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Encapsula fetch + useState + useEffect em um hook que retorna { data, loading, error }. Para produção, prefira TanStack Query."
+      },
+      {
+        "type": "heading",
+        "content": "useLocalStorage"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sincroniza estado com localStorage. Útil para preferências do usuário, tema, carrinho. Lembre de tratar JSON.parse em try/catch."
+      },
+      {
+        "type": "list",
+        "content": "useDebounce — atrasa valor até parar de mudar\nuseOnClickOutside — detecta clique fora\nuseMediaQuery — responde a breakpoints"
+      }
+    ]
+  }
+}

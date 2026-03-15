@@ -1,0 +1,89 @@
+{
+  "id": "rotas-dinamicas",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Rotas dinâmicas e useParams",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "No PHP, quando você faz /produto.php?id=42, o $_GET['id'] captura o valor 42. Em React Router, você define /produto/:id e usa useParams() para pegar o valor. A diferença? A URL fica limpa (/produto/42 em vez de ?id=42) e tudo é tratado como componente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Parâmetros na URL"
+      },
+      {
+        "type": "paragraph",
+        "content": "Rotas dinâmicas usam :param na definição do path. Esse 'slot' captura qualquer valor da URL. Uma única definição de rota atende /produto/1, /produto/42, /produto/abc — o React Router extrai o valor e disponibiliza via useParams()."
+      },
+      {
+        "type": "code",
+        "content": "import { useParams, Link } from 'react-router-dom';\n\n// Definição da rota:\n// { path: '/produto/:id', element: <ProdutoDetalhe /> }\n\nfunction ProdutoDetalhe() {\n  const { id } = useParams();  // { id: '42' } quando URL = /produto/42\n\n  return (\n    <div>\n      <h1>Produto #{id}</h1>\n      <p>Carregando detalhes do produto {id}...</p>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Múltiplos parâmetros"
+      },
+      {
+        "type": "code",
+        "content": "// Rota: /curso/:cursoId/aula/:aulaId\n// URL:  /curso/react/aula/jsx\n\nfunction Aula() {\n  const { cursoId, aulaId } = useParams();\n  // cursoId = 'react', aulaId = 'jsx'\n\n  return <h1>{cursoId} — Aula: {aulaId}</h1>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Link para rotas dinâmicas"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para navegar para uma rota dinâmica, passe o valor concreto no Link. Você pode usar template literals ou concatenar strings."
+      },
+      {
+        "type": "code",
+        "content": "const produtos = [\n  { id: 1, nome: 'React' },\n  { id: 2, nome: 'TypeScript' },\n  { id: 3, nome: 'Tailwind' },\n];\n\nfunction ListaProdutos() {\n  return (\n    <ul>\n      {produtos.map(p => (\n        <li key={p.id}>\n          <Link to={`/produto/${p.id}`}>{p.nome}</Link>\n        </li>\n      ))}\n    </ul>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "useParams() sempre retorna strings. Se o id é um número, converta: const id = Number(params.id). Ou use parseInt(params.id, 10).",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Padrão: lista + detalhe"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão mais comum com rotas dinâmicas é lista/detalhe: uma rota /produtos mostra a lista, e /produtos/:id mostra o detalhe. É assim que funciona e-commerce, blog, dashboard de admin — qualquer CRUD."
+      },
+      {
+        "type": "code",
+        "content": "const router = createBrowserRouter([\n  { path: '/produtos', element: <ListaProdutos /> },\n  { path: '/produtos/:id', element: <ProdutoDetalhe /> },\n]);",
+        "language": "jsx"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um mini app com lista de usuários e página de detalhe. Na rota /users, exiba uma lista de 3 usuários com Link para /users/:id. Na rota /users/:id, use useParams para pegar o id e exibir 'Perfil do usuário #id'. Use createBrowserRouter com um Layout que tenha Navbar e Outlet.",
+    "starterCode": "import {\n  createBrowserRouter,\n  RouterProvider,\n  Link,\n  Outlet,\n  useParams,\n} from 'react-router-dom';\n\nconst users = [\n  { id: 1, name: 'Maria' },\n  { id: 2, name: 'João' },\n  { id: 3, name: 'Ana' },\n];\n\nfunction UserList() {\n  // Liste os users com Link para /users/:id\n  return <div><h1>Usuários</h1><p>Implemente a lista aqui</p></div>;\n}\n\nfunction UserDetail() {\n  // Use useParams para pegar o id\n  return <div><p>Implemente o detalhe aqui</p></div>;\n}\n\nfunction Layout() {\n  return (\n    <div>\n      <nav className=\"p-4 border-b\">\n        <Link to=\"/users\">Usuários</Link>\n      </nav>\n      <main className=\"p-4\"><Outlet /></main>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  {\n    element: <Layout />,\n    children: [\n      { path: '/', element: <UserList /> },\n      { path: '/users', element: <UserList /> },\n      { path: '/users/:id', element: <UserDetail /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "solution": "import {\n  createBrowserRouter,\n  RouterProvider,\n  Link,\n  Outlet,\n  useParams,\n} from 'react-router-dom';\n\nconst users = [\n  { id: 1, name: 'Maria' },\n  { id: 2, name: 'João' },\n  { id: 3, name: 'Ana' },\n];\n\nfunction UserList() {\n  return (\n    <div>\n      <h1 className=\"text-xl font-bold mb-4\">Usuários</h1>\n      <ul className=\"space-y-2\">\n        {users.map(u => (\n          <li key={u.id}>\n            <Link to={`/users/${u.id}`} className=\"text-blue-500 hover:underline\">\n              {u.name}\n            </Link>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\nfunction UserDetail() {\n  const { id } = useParams();\n  const user = users.find(u => u.id === Number(id));\n\n  if (!user) return <p>Usuário não encontrado.</p>;\n\n  return (\n    <div>\n      <h1 className=\"text-xl font-bold\">Perfil do usuário #{id}</h1>\n      <p className=\"mt-2\">Nome: {user.name}</p>\n      <Link to=\"/users\" className=\"mt-4 inline-block text-blue-500 hover:underline\">\n        ← Voltar para a lista\n      </Link>\n    </div>\n  );\n}\n\nfunction Layout() {\n  return (\n    <div>\n      <nav className=\"p-4 border-b\">\n        <Link to=\"/users\">Usuários</Link>\n      </nav>\n      <main className=\"p-4\"><Outlet /></main>\n    </div>\n  );\n}\n\nconst router = createBrowserRouter([\n  {\n    element: <Layout />,\n    children: [\n      { path: '/users', element: <UserList /> },\n      { path: '/users/:id', element: <UserDetail /> },\n    ],\n  },\n]);\n\nexport default function App() {\n  return <RouterProvider router={router} />;\n}",
+    "sandpackDependencies": { "react-router-dom": "^7.0.1" },
+    "hint": "Use Link to={`/users/${u.id}`} na lista. Use const { id } = useParams() no detalhe. Lembre-se: useParams retorna string, converta para número com Number(id) para comparar com user.id.",
+    "solutionExplanation": "O padrão lista/detalhe: /users mostra todos, /users/:id mostra um específico. useParams captura o :id da URL. Link com template literal constrói a URL dinâmica. Number(id) converte a string do param para comparação numérica.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    ":param na rota captura um valor dinâmico da URL",
+    "useParams() retorna um objeto com os valores (sempre como strings)",
+    "Link to={`/rota/${valor}`} navega para rotas dinâmicas",
+    "Padrão lista/detalhe é o fundamento de todo CRUD"
+  ],
+  "commonMistakes": [
+    "Comparar useParams string com id numérico sem converter — '1' !== 1",
+    "Esquecer de tratar o caso de 'não encontrado' — sempre valide se o item existe",
+    "Não usar Link — navegar com window.location recarrega a SPA inteira"
+  ],
+  "realWorldExample": "O Mercado Livre usa exatamente esse padrão: /produtos lista os resultados, /produto/MLB123456 mostra o detalhe. YouTube: /watch?v=abc123. GitHub: /user/repo. Todo CRUD web usa rotas dinâmicas.",
+  "encouragement": "O padrão lista/detalhe com useParams é o building block de 80% das apps web. Você vai usar isso em TODO projeto React."
+}

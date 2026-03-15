@@ -1,0 +1,69 @@
+{
+  "id": "use-reducer",
+  "courseId": "react",
+  "moduleId": "advanced-hooks",
+  "title": "useReducer",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Pense em um caixa eletrônico. Você não manipula o saldo diretamente — você envia uma AÇÃO ('depositar R$100', 'sacar R$50'). O banco (reducer) recebe a ação e decide o novo saldo. useReducer funciona igual: em vez de chamar setState com o novo valor, você despacha ações e uma função centralizada decide como o estado muda. Quando a lógica fica complexa, isso é muito mais organizado que vários useState.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Quando useState não basta"
+      },
+      {
+        "type": "paragraph",
+        "content": "useState é perfeito para estado simples (um boolean, um número, uma string). Mas quando o estado tem múltiplos subvalores, transições complexas ou lógica que depende do estado anterior, useReducer oferece mais controle e legibilidade."
+      },
+      {
+        "type": "heading",
+        "content": "O padrão reducer"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um reducer é uma função pura que recebe o estado atual e uma ação, e retorna o novo estado. É o mesmo conceito do Redux, mas embutido no React."
+      },
+      {
+        "type": "code",
+        "content": "import { useReducer } from 'react';\n\n// A função reducer: (estado, ação) => novo estado\nfunction reducer(state, action) {\n  switch (action.type) {\n    case 'increment':\n      return { count: state.count + 1 };\n    case 'decrement':\n      return { count: state.count - 1 };\n    case 'reset':\n      return { count: 0 };\n    default:\n      throw new Error(`Ação desconhecida: ${action.type}`);\n  }\n}\n\nfunction Contador() {\n  const [state, dispatch] = useReducer(reducer, { count: 0 });\n\n  return (\n    <div>\n      <p>{state.count}</p>\n      <button onClick={() => dispatch({ type: 'increment' })}>+</button>\n      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>\n      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "useState vs. useReducer"
+      },
+      {
+        "type": "list",
+        "content": "useState: estado simples, poucas transições, lógica inline\nuseReducer: estado complexo, múltiplas ações, lógica centralizada\nuseState: um contador, um toggle, uma string\nuseReducer: formulário com validação, carrinho de compras, wizard multi-step"
+      },
+      {
+        "type": "callout",
+        "content": "Regra prática: se você tem mais de 3 useState no mesmo componente e eles se relacionam, considere um useReducer.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um to-do list usando useReducer. O estado deve ser um array de tarefas. Implemente 3 ações: 'add' (adiciona tarefa), 'toggle' (marca/desmarca como feita) e 'remove' (remove tarefa). Cada tarefa tem id, text e done.",
+    "starterCode": "import { useReducer, useState } from 'react';\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case 'add':\n      // retorne novo array com a tarefa adicionada\n    case 'toggle':\n      // retorne array com o 'done' da tarefa invertido\n    case 'remove':\n      // retorne array sem a tarefa\n    default:\n      return state;\n  }\n}\n\nexport default function App() {\n  const [todos, dispatch] = useReducer(reducer, []);\n  const [text, setText] = useState('');\n\n  return (\n    <div>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <button onClick={() => {\n        dispatch({ type: 'add', text });\n        setText('');\n      }}>Adicionar</button>\n      <ul>\n        {todos.map(todo => (\n          <li key={todo.id}>\n            <span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>\n              {todo.text}\n            </span>\n            <button onClick={() => dispatch({ type: 'toggle', id: todo.id })}>✓</button>\n            <button onClick={() => dispatch({ type: 'remove', id: todo.id })}>✕</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}",
+    "solution": "import { useReducer, useState } from 'react';\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case 'add':\n      return [...state, { id: Date.now(), text: action.text, done: false }];\n    case 'toggle':\n      return state.map(t => t.id === action.id ? { ...t, done: !t.done } : t);\n    case 'remove':\n      return state.filter(t => t.id !== action.id);\n    default:\n      return state;\n  }\n}\n\nexport default function App() {\n  const [todos, dispatch] = useReducer(reducer, []);\n  const [text, setText] = useState('');\n\n  return (\n    <div>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <button onClick={() => {\n        dispatch({ type: 'add', text });\n        setText('');\n      }}>Adicionar</button>\n      <ul>\n        {todos.map(todo => (\n          <li key={todo.id}>\n            <span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>\n              {todo.text}\n            </span>\n            <button onClick={() => dispatch({ type: 'toggle', id: todo.id })}>✓</button>\n            <button onClick={() => dispatch({ type: 'remove', id: todo.id })}>✕</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}",
+    "hint": "Para 'add': use spread [...state, novaTarefa]. Para 'toggle': use .map() e inverta o done. Para 'remove': use .filter() para excluir pelo id.",
+    "solutionExplanation": "O reducer centraliza toda a lógica de mutação do estado. Cada ação descreve O QUE aconteceu (não COMO). O reducer decide como aplicar a mudança, sempre retornando um novo array (sem mutar o original).",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "useReducer = (state, action) => newState — lógica centralizada em uma função pura",
+    "dispatch({ type: 'action' }) envia ações; o reducer decide o novo estado",
+    "Use quando o estado é complexo ou tem múltiplas transições",
+    "O reducer DEVE ser puro: sem efeitos colaterais, sem mutação"
+  ],
+  "commonMistakes": [
+    "Mutar o estado diretamente no reducer (state.push()) em vez de retornar novo array/objeto",
+    "Esquecer o default case no switch — pode retornar undefined e quebrar o componente",
+    "Colocar lógica assíncrona no reducer — reducers são síncronos e puros"
+  ],
+  "realWorldExample": "O carrinho de compras de um e-commerce é perfeito para useReducer: ações como 'addItem', 'removeItem', 'updateQuantity', 'applyCoupon', 'clearCart' — tudo centralizado em um reducer, fácil de testar e debugar.",
+  "encouragement": "useReducer parece overkill no início, mas quando você trabalha com estado complexo, é como ter um mapa em vez de andar no escuro. Já ouviu falar de Redux? É o mesmo conceito, só que embutido no React!"
+}

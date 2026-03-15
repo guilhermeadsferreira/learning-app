@@ -1,0 +1,25 @@
+{
+  "id": "estrutura-pastas",
+  "courseId": "react",
+  "moduleId": "ecosystem",
+  "title": "Estrutura de pastas",
+  "type": "explanation",
+  "xp": 10,
+  "analogy": "Uma boa estrutura de pastas é como organizar uma gaveta: cada coisa no seu lugar facilita encontrar e manter.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Estrutura típica de um projeto React"
+      },
+      {
+        "type": "list",
+        "content": "src/ — código fonte\n  components/ — componentes reutilizáveis\n  pages/ — páginas/views\n  hooks/ — custom hooks\n  utils/ — funções utilitárias\n  assets/ — imagens, fontes\npublic/ — arquivos estáticos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Não existe uma estrutura única. O importante é ser consistente e escalável. Agrupe por feature ou por tipo — escolha o que faz sentido para seu projeto."
+      }
+    ]
+  }
+}

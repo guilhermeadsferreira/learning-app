@@ -1,0 +1,69 @@
+{
+  "id": "custom-hooks-criando",
+  "courseId": "react",
+  "moduleId": "custom-hooks",
+  "title": "Criando seu primeiro custom hook",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "No PHP, quando você repete o mesmo trecho de código em vários controllers, você extrai para uma classe helper ou um trait. Em React, quando vários componentes repetem a mesma lógica de estado + efeitos, você extrai para um custom hook. É refatoração pura — mover lógica reutilizável para um lugar só.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um Custom Hook?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um custom hook é uma função JavaScript que começa com 'use' e pode chamar outros hooks (useState, useEffect, etc.). Ele encapsula lógica reutilizável que envolve estado ou efeitos, sem precisar criar componentes wrapper."
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo: useToggle"
+      },
+      {
+        "type": "paragraph",
+        "content": "Muitos componentes precisam de um boolean que alterna (modal aberto/fechado, menu expandido/recolhido, dark mode on/off). Em vez de repetir a mesma lógica, criamos useToggle:"
+      },
+      {
+        "type": "code",
+        "content": "import { useState, useCallback } from 'react';\n\nfunction useToggle(initial = false) {\n  const [value, setValue] = useState(initial);\n  const toggle = useCallback(() => setValue(v => !v), []);\n  const setTrue = useCallback(() => setValue(true), []);\n  const setFalse = useCallback(() => setValue(false), []);\n  return { value, toggle, setTrue, setFalse };\n}\n\n// Uso em qualquer componente:\nfunction Modal() {\n  const { value: isOpen, toggle, setFalse: close } = useToggle();\n  return (\n    <div>\n      <button onClick={toggle}>Abrir/Fechar</button>\n      {isOpen && (\n        <div className=\"modal\">\n          <p>Conteúdo do modal</p>\n          <button onClick={close}>Fechar</button>\n        </div>\n      )}\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Regras para custom hooks"
+      },
+      {
+        "type": "list",
+        "content": "O nome DEVE começar com 'use' — é assim que React sabe que é um hook\nPode chamar outros hooks (useState, useEffect, useRef, outros custom hooks)\nSegue as mesmas regras dos hooks: só no topo da função, não em condicionais\nCada componente que usa o hook tem sua PRÓPRIA cópia do estado"
+      },
+      {
+        "type": "callout",
+        "content": "Custom hooks compartilham LÓGICA, não ESTADO. Se dois componentes usam useToggle, cada um tem seu próprio boolean independente.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um hook useCounter(initialValue) que retorne { count, increment, decrement, reset }. Use useState internamente. Depois use o hook no App com valor inicial 10, mostrando o count e botões para cada ação.",
+    "starterCode": "import { useState } from 'react';\n\nfunction useCounter(initial = 0) {\n  // Implemente o hook aqui\n  // Deve retornar { count, increment, decrement, reset }\n  return { count: 0, increment: () => {}, decrement: () => {}, reset: () => {} };\n}\n\nexport default function App() {\n  const { count, increment, decrement, reset } = useCounter(10);\n  return (\n    <div>\n      <p>Contagem: {count}</p>\n      <button onClick={increment}>+</button>\n      <button onClick={decrement}>-</button>\n      <button onClick={reset}>Resetar</button>\n    </div>\n  );\n}",
+    "solution": "import { useState } from 'react';\n\nfunction useCounter(initial = 0) {\n  const [count, setCount] = useState(initial);\n  return {\n    count,\n    increment: () => setCount(c => c + 1),\n    decrement: () => setCount(c => c - 1),\n    reset: () => setCount(initial),\n  };\n}\n\nexport default function App() {\n  const { count, increment, decrement, reset } = useCounter(10);\n  return (\n    <div>\n      <p>Contagem: {count}</p>\n      <button onClick={increment}>+</button>\n      <button onClick={decrement}>-</button>\n      <button onClick={reset}>Resetar</button>\n    </div>\n  );\n}",
+    "hint": "Use useState(initial) dentro do hook. Retorne um objeto com count (o valor) e funções que chamam setCount. Para reset, chame setCount(initial).",
+    "solutionExplanation": "O hook encapsula um useState e expõe uma API limpa. O componente não precisa saber sobre setCount — só usa increment, decrement e reset. Isso é abstração: esconder a complexidade por trás de uma interface simples.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Custom hooks começam com 'use' e encapsulam lógica reutilizável",
+    "Cada componente que usa o hook tem sua própria cópia do estado",
+    "Custom hooks podem combinar useState, useEffect, useRef e outros hooks",
+    "A API do hook (o que ele retorna) deve ser simples e focada"
+  ],
+  "commonMistakes": [
+    "Nomear sem o prefixo 'use' — React não aplica as regras dos hooks",
+    "Achar que dois componentes usando o mesmo hook compartilham estado — cada um tem o seu",
+    "Retornar muitos valores desconexos — um hook deve ter um propósito claro"
+  ],
+  "realWorldExample": "Hooks populares da comunidade: useLocalStorage (estado sincronizado com localStorage), useMediaQuery (detecta tamanho da tela), useDebounce (atrasa execução para inputs de busca). Todos seguem o mesmo padrão: encapsulam lógica complexa em uma interface simples.",
+  "encouragement": "Custom hooks são o superpoder que separa devs React intermediários dos avançados. Com eles, você cria 'blocos de lógica' reutilizáveis, assim como componentes são 'blocos de UI'!"
+}

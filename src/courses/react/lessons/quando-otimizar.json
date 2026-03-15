@@ -1,0 +1,25 @@
+{
+  "id": "quando-otimizar",
+  "courseId": "react",
+  "moduleId": "performance",
+  "title": "Profile antes de otimizar",
+  "type": "explanation",
+  "xp": 10,
+  "analogy": "Otimizar sem medir é como tomar remédio sem diagnóstico: pode não resolver e até piorar.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Regra de ouro"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use React DevTools Profiler para identificar componentes que re-renderizam demais ou têm render lento. Só então aplique React.memo, useMemo ou useCallback."
+      },
+      {
+        "type": "list",
+        "content": "Otimização prematura adiciona complexidade\nReact 19 Compiler reduz necessidade de memo manual\nExceções: libs que exigem referências estáveis, deps de useEffect"
+      }
+    ]
+  }
+}

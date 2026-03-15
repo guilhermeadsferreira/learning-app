@@ -1,0 +1,101 @@
+{
+  "id": "tailwind-responsive",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "Responsivo e Dark Mode",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Prefixos responsivos no Tailwind funcionam como instruções condicionais: 'SE a tela for grande (lg:), ENTÃO use 3 colunas; SENÃO use 1 coluna'. Você descreve o layout para cada breakpoint direto na classe, sem @media queries separadas. Dark mode é igual: 'SE dark mode, ENTÃO use fundo escuro'.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Design responsivo com prefixos"
+      },
+      {
+        "type": "paragraph",
+        "content": "No Tailwind, responsividade é mobile-first. As classes sem prefixo se aplicam a TODAS as telas. Prefixos como sm:, md:, lg:, xl: se aplicam a partir daquele breakpoint. Pense como 'a partir de...'."
+      },
+      {
+        "type": "code",
+        "content": "Breakpoints padrão:\nsm:  → 640px+ (tablets)\nmd:  → 768px+ (tablets landscape)\nlg:  → 1024px+ (laptops)\nxl:  → 1280px+ (desktops)\n2xl: → 1536px+ (monitores grandes)",
+        "language": "text"
+      },
+      {
+        "type": "heading",
+        "content": "Mobile-first em ação"
+      },
+      {
+        "type": "code",
+        "content": "// 1 coluna no mobile, 2 no tablet, 3 no desktop\n<div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4\">\n  <Card />\n  <Card />\n  <Card />\n</div>\n\n// Stack vertical no mobile, horizontal no desktop\n<div className=\"flex flex-col lg:flex-row gap-4\">\n  <Sidebar />   {/* Em cima no mobile, esquerda no desktop */}\n  <Content />   {/* Embaixo no mobile, direita no desktop */}\n</div>\n\n// Texto menor no mobile, maior no desktop\n<h1 className=\"text-2xl md:text-4xl lg:text-5xl font-bold\">\n  Título responsivo\n</h1>",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Regra de ouro: comece pelo mobile (sem prefixo) e adicione prefixos para telas maiores. NUNCA faça o contrário — o Tailwind é mobile-first por design.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Esconder e mostrar elementos"
+      },
+      {
+        "type": "code",
+        "content": "// Menu hamburger: visível no mobile, escondido no desktop\n<button className=\"lg:hidden\">Menu ☰</button>\n\n// Sidebar: escondida no mobile, visível no desktop\n<aside className=\"hidden lg:block w-64\">\n  <nav>...</nav>\n</aside>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Dark Mode"
+      },
+      {
+        "type": "paragraph",
+        "content": "O prefixo dark: aplica classes quando o sistema ou uma classe pai ativa dark mode. No Tailwind v4, o modo escuro é automático por @media (prefers-color-scheme). Para controle manual, configure com selector strategy."
+      },
+      {
+        "type": "code",
+        "content": "// Fundo branco no light, escuro no dark\n<div className=\"bg-white dark:bg-slate-900\">\n  <h1 className=\"text-gray-900 dark:text-white\">Título</h1>\n  <p className=\"text-gray-600 dark:text-gray-400\">Descrição</p>\n\n  <button className=\"\n    bg-blue-600 hover:bg-blue-700\n    dark:bg-blue-500 dark:hover:bg-blue-400\n    text-white rounded-lg px-4 py-2\n  \">\n    Ação\n  </button>\n</div>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Toggle de dark mode com React"
+      },
+      {
+        "type": "code",
+        "content": "function useDarkMode() {\n  const [dark, setDark] = useState(\n    () => document.documentElement.classList.contains('dark')\n  );\n\n  const toggle = () => {\n    document.documentElement.classList.toggle('dark');\n    setDark(d => !d);\n  };\n\n  return { dark, toggle };\n}\n\n// No componente:\nconst { dark, toggle } = useDarkMode();\n<button onClick={toggle}>\n  {dark ? '☀️ Light' : '🌙 Dark'}\n</button>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Combinando prefixos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Prefixos podem ser combinados: md:dark:bg-slate-800 aplica fundo escuro apenas em telas médias+ com dark mode ativo. hover:lg:underline aplica underline no hover apenas em telas grandes."
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um layout de perfil responsivo: no mobile (padrão) exiba avatar, nome e bio empilhados verticalmente (flex-col). Em telas md: e maiores, mude para horizontal (flex-row) com avatar ao lado. Adicione classes de dark mode para fundo e textos. Use hidden/block para mostrar um botão 'Editar' somente em telas lg:.",
+    "starterCode": "export default function App() {\n  return (\n    <div className=\"p-4\">\n      <div>\n        <img\n          src=\"https://i.pravatar.cc/120\"\n          alt=\"Avatar\"\n          className=\"size-24 rounded-full\"\n        />\n        <div>\n          <h2>Maria Silva</h2>\n          <p>Desenvolvedora React apaixonada por UI.</p>\n          <button>Editar perfil</button>\n        </div>\n      </div>\n    </div>\n  );\n}",
+    "solution": "export default function App() {\n  return (\n    <div className=\"min-h-screen bg-white p-4 dark:bg-slate-900\">\n      <div className=\"flex flex-col items-center gap-4 md:flex-row md:items-start\">\n        <img\n          src=\"https://i.pravatar.cc/120\"\n          alt=\"Avatar\"\n          className=\"size-24 rounded-full\"\n        />\n        <div className=\"text-center md:text-left\">\n          <h2 className=\"text-xl font-bold text-gray-900 dark:text-white\">\n            Maria Silva\n          </h2>\n          <p className=\"mt-1 text-gray-600 dark:text-gray-400\">\n            Desenvolvedora React apaixonada por UI.\n          </p>\n          <button className=\"mt-3 hidden rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700 lg:inline-flex\">\n            Editar perfil\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}",
+    "hint": "Use flex flex-col para mobile e md:flex-row para desktop. Use hidden lg:inline-flex no botão. Para dark mode, adicione dark:bg-slate-900 no container e dark:text-white nos textos.",
+    "solutionExplanation": "A abordagem mobile-first: flex-col (mobile) → md:flex-row (tablet+). text-center (mobile) → md:text-left (tablet+). O botão usa hidden (escondido por padrão) + lg:inline-flex (aparece em telas grandes). Dark mode usa dark: para inverter cores.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Mobile-first: sem prefixo = todas as telas; sm:/md:/lg: = a partir daquele breakpoint",
+    "hidden + lg:block = mostra elemento somente em telas grandes",
+    "dark: aplica estilos no modo escuro — dark:bg-slate-900, dark:text-white",
+    "Prefixos combinam: md:dark:bg-slate-800, hover:lg:text-blue-500"
+  ],
+  "commonMistakes": [
+    "Fazer desktop-first (lg: como base) em vez de mobile-first — Tailwind é mobile-first",
+    "Esquecer de testar em telas pequenas — sempre comece pelo mobile",
+    "Não configurar dark mode no Tailwind — verifique se darkMode está ativado"
+  ],
+  "realWorldExample": "O GitHub usa layout responsivo: sidebar fixa no desktop, hamburger menu no mobile. As issues empilham verticalmente no mobile e viram tabela no desktop. Tudo feito com as mesmas técnicas de breakpoints.",
+  "encouragement": "Responsividade com Tailwind é absurdamente mais rápida que @media queries manuais. Você faz em 5 minutos o que levaria 30 com CSS tradicional."
+}

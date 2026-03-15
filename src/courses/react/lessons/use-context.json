@@ -1,0 +1,66 @@
+{
+  "id": "use-context",
+  "courseId": "react",
+  "moduleId": "advanced-hooks",
+  "title": "useContext",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Imagine um prédio com um sistema de som central. O síndico (Provider) coloca uma mensagem no sistema, e todos os apartamentos (componentes filhos) ouvem automaticamente — sem precisar que alguém passe a mensagem de porta em porta (prop drilling). Context é o 'sistema de som' do React: dados compartilhados sem precisar passar por cada nível da árvore.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O problema: prop drilling"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sem Context, para passar dados do componente raiz até um componente profundo na árvore, você precisa passar props por cada nível intermediário — mesmo que esses níveis não usem o dado. Isso é 'prop drilling' e deixa o código verboso e frágil."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Prop drilling: tema passa por Header, depois Navbar, até chegar no Logo\nfunction App() {\n  return <Header tema=\"dark\" />;\n}\nfunction Header({ tema }) {\n  return <Navbar tema={tema} />;  // Header nem usa 'tema'!\n}\nfunction Navbar({ tema }) {\n  return <Logo tema={tema} />;    // Navbar nem usa 'tema'!\n}\nfunction Logo({ tema }) {\n  return <img className={tema} />; // só Logo precisa\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "A solução: Context"
+      },
+      {
+        "type": "paragraph",
+        "content": "Context permite 'teletransportar' dados para qualquer componente da árvore, sem passar por intermediários. Funciona em 3 passos: criar, prover, consumir."
+      },
+      {
+        "type": "code",
+        "content": "import { createContext, useContext, useState } from 'react';\n\n// 1. Criar o Context\nconst ThemeContext = createContext('light');\n\n// 2. Prover o valor (no topo da árvore)\nfunction App() {\n  const [tema, setTema] = useState('dark');\n  return (\n    <ThemeContext.Provider value={tema}>\n      <Header />\n      <button onClick={() => setTema(t => t === 'dark' ? 'light' : 'dark')}>\n        Trocar tema\n      </button>\n    </ThemeContext.Provider>\n  );\n}\n\n// 3. Consumir em qualquer filho (sem prop drilling!)\nfunction Logo() {\n  const tema = useContext(ThemeContext);\n  return <img className={tema} />;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Context não substitui todas as props! Use Context para dados 'globais' que mudam pouco: tema, idioma, autenticação. Para dados específicos de componentes, props ainda são melhores.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um Context de usuário (UserContext) com { nome, email }. Crie um Provider no App que forneça os dados. Crie um componente UserInfo que consome o context e exibe nome em h2 e email em p.",
+    "starterCode": "import { createContext, useContext } from 'react';\n\n// Crie o UserContext aqui\n\nfunction UserInfo() {\n  // Consuma o context aqui\n  return (\n    <div>\n      {/* Exiba nome e email */}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    // Envolva com o Provider\n    <div>\n      <h1>Meu App</h1>\n      <UserInfo />\n    </div>\n  );\n}",
+    "solution": "import { createContext, useContext } from 'react';\n\nconst UserContext = createContext({ nome: '', email: '' });\n\nfunction UserInfo() {\n  const { nome, email } = useContext(UserContext);\n  return (\n    <div>\n      <h2>{nome}</h2>\n      <p>{email}</p>\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <UserContext.Provider value={{ nome: 'Maria', email: 'maria@email.com' }}>\n      <div>\n        <h1>Meu App</h1>\n        <UserInfo />\n      </div>\n    </UserContext.Provider>\n  );\n}",
+    "hint": "Use createContext() para criar, .Provider value={} para fornecer, e useContext() para consumir. Desestruture o objeto: const { nome, email } = useContext(UserContext).",
+    "solutionExplanation": "Criamos o context com createContext, envolvemos a árvore com Provider passando os dados, e consumimos em UserInfo com useContext. O UserInfo acessa os dados diretamente, sem que o App precise passar props.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Context resolve prop drilling — dados acessíveis em qualquer nível da árvore",
+    "3 passos: createContext → Provider → useContext",
+    "Use para dados 'globais': tema, autenticação, idioma",
+    "Context re-renderiza TODOS os consumidores quando o valor muda"
+  ],
+  "commonMistakes": [
+    "Usar Context para tudo — causa re-renderizações desnecessárias; props são mais eficientes para dados locais",
+    "Esquecer o Provider — useContext retorna o valor padrão do createContext",
+    "Colocar objetos/arrays inline no value sem useMemo — cria referência nova a cada render"
+  ],
+  "realWorldExample": "Quase todo app React usa Context para tema (dark/light mode). Bibliotecas como React Router usam Context internamente para disponibilizar dados de rota em qualquer componente.",
+  "encouragement": "Context fecha o ciclo de 'dados em React': props passam dados pra baixo, estado gerencia dados locais, e Context compartilha dados globais. Com essas 3 ferramentas, você resolve 90% dos problemas de dados!"
+}

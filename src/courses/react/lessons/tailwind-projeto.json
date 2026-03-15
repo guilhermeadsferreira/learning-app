@@ -1,0 +1,60 @@
+{
+  "id": "tailwind-projeto",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "Projeto: componente completo",
+  "type": "challenge",
+  "xp": 30,
+  "difficulty": "intermediate",
+  "analogy": "Este é o momento de juntar todas as peças do LEGO estilizado. Você aprendeu as classes individuais — agora vai construir um componente real, completo, do tipo que aparece em qualquer dashboard profissional.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Hora de juntar tudo"
+      },
+      {
+        "type": "paragraph",
+        "content": "Nas lições anteriores, você aprendeu classes de layout, tipografia, cores, responsividade, dark mode, hover e transições. Agora você vai construir um componente ProductCard completo — o tipo de componente que existe em todo e-commerce."
+      },
+      {
+        "type": "heading",
+        "content": "O que o ProductCard precisa ter"
+      },
+      {
+        "type": "list",
+        "content": "Imagem do produto com rounded e object-cover\nNome do produto (font-semibold)\nPreço em destaque (text-lg font-bold text-green-600)\nBadge de desconto (se aplicável)\nBotão 'Adicionar ao carrinho' com hover e transição\nHover no card inteiro: shadow cresce, card sobe levemente\nResponsivo: grid de 1 col no mobile, 2 no md:, 3 no lg:"
+      },
+      {
+        "type": "heading",
+        "content": "Referência de padrões"
+      },
+      {
+        "type": "code",
+        "content": "// Padrão de imagem responsiva\n<img\n  src={url}\n  alt={nome}\n  className=\"h-48 w-full object-cover\"\n/>\n\n// Badge posicionado absoluto\n<div className=\"relative\">\n  <img ... />\n  <span className=\"absolute top-2 right-2 rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white\">\n    -20%\n  </span>\n</div>\n\n// Preço com desconto riscado\n<div className=\"flex items-center gap-2\">\n  <span className=\"text-lg font-bold text-green-600\">R$ 79,90</span>\n  <span className=\"text-sm text-gray-400 line-through\">R$ 99,90</span>\n</div>",
+        "language": "jsx"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um ProductCard e renderize 3 no App em um grid responsivo (1 col mobile, 2 md:, 3 lg:). Cada card deve ter: imagem (use https://picsum.photos/400/300?random=N), nome, preço, e botão 'Adicionar'. O card deve ter hover com shadow e translate. O botão deve ter hover com cor mais escura e transition.",
+    "starterCode": "const products = [\n  { id: 1, name: 'Notebook Pro', price: 'R$ 4.999', img: 'https://picsum.photos/400/300?random=1' },\n  { id: 2, name: 'Mouse Ergonômico', price: 'R$ 299', img: 'https://picsum.photos/400/300?random=2' },\n  { id: 3, name: 'Teclado Mecânico', price: 'R$ 599', img: 'https://picsum.photos/400/300?random=3' },\n];\n\nfunction ProductCard({ product }) {\n  // Implemente o card completo com Tailwind\n  return null;\n}\n\nexport default function App() {\n  return (\n    <div className=\"p-8\">\n      {/* Grid responsivo de ProductCards */}\n    </div>\n  );\n}",
+    "solution": "const products = [\n  { id: 1, name: 'Notebook Pro', price: 'R$ 4.999', img: 'https://picsum.photos/400/300?random=1' },\n  { id: 2, name: 'Mouse Ergonômico', price: 'R$ 299', img: 'https://picsum.photos/400/300?random=2' },\n  { id: 3, name: 'Teclado Mecânico', price: 'R$ 599', img: 'https://picsum.photos/400/300?random=3' },\n];\n\nfunction ProductCard({ product }) {\n  return (\n    <div className=\"group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg\">\n      <img\n        src={product.img}\n        alt={product.name}\n        className=\"h-48 w-full object-cover\"\n      />\n      <div className=\"p-4\">\n        <h3 className=\"font-semibold text-gray-900\">{product.name}</h3>\n        <p className=\"mt-1 text-lg font-bold text-green-600\">{product.price}</p>\n        <button className=\"mt-3 w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700\">\n          Adicionar ao carrinho\n        </button>\n      </div>\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <div className=\"p-8\">\n      <div className=\"grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3\">\n        {products.map((p) => (\n          <ProductCard key={p.id} product={p} />\n        ))}\n      </div>\n    </div>\n  );\n}",
+    "hint": "Card: overflow-hidden rounded-xl border shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all. Imagem: h-48 w-full object-cover. Grid: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6.",
+    "solutionExplanation": "Este componente combina tudo que você aprendeu: layout (flex, grid), tipografia (font-semibold, text-lg), cores (text-green-600, bg-blue-600), responsividade (grid-cols-1 md:grid-cols-2 lg:grid-cols-3), transições (transition-all, hover:shadow-lg), e composição React (ProductCard como componente reutilizável).",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Componentes completos combinam layout + tipografia + cores + interação",
+    "overflow-hidden no container arredonda os cantos da imagem automaticamente",
+    "object-cover na imagem evita distorção mantendo o aspect ratio",
+    "Grid responsivo com grid-cols-1 md:grid-cols-2 lg:grid-cols-3 é o padrão mais usado"
+  ],
+  "commonMistakes": [
+    "Esquecer overflow-hidden no card — a imagem vaza dos cantos arredondados",
+    "Não usar object-cover na imagem — ela distorce para caber no espaço",
+    "Usar tamanhos fixos (w-[350px]) em vez de grid responsivo — quebra em telas menores"
+  ],
+  "realWorldExample": "Abra qualquer e-commerce (Amazon, Mercado Livre, Shopify) e inspecione a listagem de produtos. Você vai encontrar exatamente esse padrão: grid responsivo, cards com imagem + info + botão, hover com elevação.",
+  "encouragement": "Você acabou de construir um componente de nível profissional! Isso é literalmente o que devs frontend fazem no dia a dia. O módulo de Tailwind está completo — agora você tem uma ferramenta poderosa no seu arsenal."
+}

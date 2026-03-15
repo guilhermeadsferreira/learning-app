@@ -1,0 +1,73 @@
+{
+  "id": "components",
+  "courseId": "react",
+  "moduleId": "components",
+  "title": "Componentes",
+  "type": "challenge",
+  "xp": 20,
+  "difficulty": "beginner",
+  "analogy": "Pense em componentes como funções do PHP que retornam HTML. No PHP, você pode ter uma função renderCard($titulo) que gera um bloco de HTML. Em React, o componente Card é uma função que retorna JSX. A diferença? O React atualiza tudo automaticamente quando os dados mudam.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que são Componentes?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Componentes são a unidade fundamental do React. Cada componente é uma função JavaScript que retorna JSX — um pedaço de interface. Eles permitem dividir a UI em partes independentes, reutilizáveis e testáveis."
+      },
+      {
+        "type": "paragraph",
+        "content": "Uma página inteira é uma árvore de componentes. O <App> contém o <Header>, que contém o <Logo> e o <NavMenu>, que contém vários <NavLink>. Cada um cuida apenas da sua responsabilidade."
+      },
+      {
+        "type": "heading",
+        "content": "Criando um componente"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um componente React é uma função que começa com letra maiúscula e retorna JSX. Convenção: um componente por arquivo."
+      },
+      {
+        "type": "code",
+        "content": "// Saudacao.jsx\nfunction Saudacao() {\n  return <h1>Olá, mundo!</h1>;\n}\n\nexport default Saudacao;\n\n// Usando em outro arquivo:\nimport Saudacao from './Saudacao';\n\nfunction App() {\n  return (\n    <div>\n      <Saudacao />\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Regras dos componentes"
+      },
+      {
+        "type": "list",
+        "content": "Nome SEMPRE com letra maiúscula — <Saudacao />, não <saudacao />\nDeve retornar JSX (ou null para não renderizar nada)\nPode conter lógica JavaScript antes do return\nUm componente por arquivo é a boa prática"
+      },
+      {
+        "type": "callout",
+        "content": "Se o nome começar com minúscula, React trata como tag HTML nativa. <saudacao /> tentaria renderizar uma tag HTML que não existe.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie dois componentes: Titulo (que exibe um h1 com 'Meu App') e Descricao (que exibe um p com 'Aprendendo React!'). Use ambos dentro do App.",
+    "starterCode": "// Crie o componente Titulo aqui\n\n// Crie o componente Descricao aqui\n\nexport default function App() {\n  return (\n    <div>\n      {/* Use seus componentes aqui */}\n    </div>\n  );\n}",
+    "solution": "function Titulo() {\n  return <h1>Meu App</h1>;\n}\n\nfunction Descricao() {\n  return <p>Aprendendo React!</p>;\n}\n\nexport default function App() {\n  return (\n    <div>\n      <Titulo />\n      <Descricao />\n    </div>\n  );\n}",
+    "hint": "Cada componente é uma função com letra maiúscula que retorna JSX. Use-os como tags: <Titulo />.",
+    "solutionExplanation": "Criamos duas funções (componentes) separadas, cada uma retornando um pedaço de JSX. No App, usamos como tags HTML customizadas. Isso é composição — a base de toda aplicação React.",
+    "tests": []
+  },
+  "keyTakeaways": [
+    "Componente = função com letra maiúscula que retorna JSX",
+    "Componentes são reutilizáveis — use-os como tags HTML customizadas",
+    "Divida a UI em componentes pequenos com responsabilidade única",
+    "Composição: componentes dentro de componentes formam a árvore da UI"
+  ],
+  "commonMistakes": [
+    "Nomear componente com minúscula — React precisa de maiúscula para distinguir de tags HTML",
+    "Criar componentes muito grandes — se tem mais de 100 linhas, provavelmente deve ser dividido",
+    "Esquecer o export — sem export, outros arquivos não conseguem importar o componente"
+  ],
+  "realWorldExample": "No e-commerce da Nubank, o componente <ProductCard> é reutilizado centenas de vezes na listagem de produtos. Muda apenas os dados (props), mas a estrutura visual é a mesma.",
+  "encouragement": "Componentes são o DNA do React. Dominando isso + props (próxima lição), você já consegue construir qualquer interface estática!"
+}
