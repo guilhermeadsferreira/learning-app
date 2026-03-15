@@ -40,7 +40,7 @@ This is a client-side-only gamified learning SPA (React 18 + TypeScript + Vite).
 
 ### Content Layer
 
-Courses and lessons are **declarative JSON files** loaded via Vite's `import.meta.glob` in `src/courses/index.ts`. Adding a new course means creating a directory under `src/courses/` with a `course.json` and lesson files — no code changes needed. Schemas are documented in `documents/product/course_schema.md` and `documents/product/lesson_schema.md`.
+Courses and lessons are **declarative JSON files** loaded via Vite's `import.meta.glob` in `src/courses/index.ts`. Adding a new course means creating a directory under `src/courses/` with a `course.json` and lesson files — no code changes needed. Schemas are documented in `documents/product/methodology/course_schema.md` and `documents/product/methodology/lesson_schema.md`.
 
 ### State Management
 

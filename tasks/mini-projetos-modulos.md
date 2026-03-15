@@ -120,4 +120,4 @@ Módulos como ecosystem, intro, advanced-hooks podem ficar sem projeto ou com pr
 2. **Documentação:** lesson_schema.md (e course_schema.md se necessário) atualizados com mini projetos.
 3. **Conteúdo:** pelo menos 1 mini projeto completo (ex.: state — TODO list) em `src/courses/react/lessons/` e referenciado no `course.json`.
 4. **Opcional:** 2–3 projetos adicionais (components, effects ou routing); ajustes de UI para destacar “Projeto do módulo”.
-5. **Pedagogy:** em `documents/product/pedagogy.md`, atualizar §8 removendo “_(aspiracional — não implementado)_” e indicando que mini projetos estão implementados para os módulos X, Y, Z.
+5. **Pedagogy:** em `documents/product/methodology/pedagogy.md`, atualizar §8 removendo “_(aspiracional — não implementado)_” e indicando que mini projetos estão implementados para os módulos X, Y, Z.

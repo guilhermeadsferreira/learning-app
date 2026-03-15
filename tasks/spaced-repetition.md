@@ -198,4 +198,4 @@ Lições já completadas antes da implementação do sistema não terão `Review
 3. `src/hooks/useReview.ts` — hook para consumo na UI
 4. UI de indicação (badge/card) + experiência de revisão
 5. Integração com sistema de XP
-6. Atualização de `documents/product/pedagogy.md` — remover marcação aspiracional de spaced repetition
+6. Atualização de `documents/product/methodology/pedagogy.md` — remover marcação aspiracional de spaced repetition

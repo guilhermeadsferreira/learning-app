@@ -6,10 +6,10 @@ Audite e melhore o curso indicado abaixo.
 
 Consulte como fonte de verdade:
 
-- `documents/product/course_schema.md`
-- `documents/product/lesson_schema.md`
-- `documents/product/content_generation.md`
-- `documents/product/pedagogy.md`
+- `documents/product/methodology/course_schema.md`
+- `documents/product/methodology/lesson_schema.md`
+- `documents/product/methodology/content_generation.md`
+- `documents/product/methodology/pedagogy.md`
 
 ---
 

@@ -6,9 +6,9 @@ Adicione uma nova lição ao curso com base nas informações abaixo.
 
 Consulte como fonte de verdade:
 
-- `documents/product/lesson_schema.md`
-- `documents/product/content_generation.md`
-- `documents/product/pedagogy.md`
+- `documents/product/methodology/lesson_schema.md`
+- `documents/product/methodology/content_generation.md`
+- `documents/product/methodology/pedagogy.md`
 
 ---
 
@@ -46,7 +46,7 @@ Se o tema for **conceitual** (gestão, soft skills), pule esta etapa.
 
 ## 3. Gerar JSON da lição
 
-Siga o schema em `documents/product/lesson_schema.md` e as diretrizes em `documents/product/content_generation.md`:
+Siga o schema em `documents/product/methodology/lesson_schema.md` e as diretrizes em `documents/product/methodology/content_generation.md`:
 
 ### Campos obrigatórios
 

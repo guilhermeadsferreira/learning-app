@@ -6,10 +6,10 @@ Crie um curso completo de ponta a ponta para o tema abaixo.
 
 Consulte como fonte de verdade:
 
-- `documents/product/course_schema.md`
-- `documents/product/lesson_schema.md`
-- `documents/product/content_generation.md`
-- `documents/product/pedagogy.md`
+- `documents/product/methodology/course_schema.md`
+- `documents/product/methodology/lesson_schema.md`
+- `documents/product/methodology/content_generation.md`
+- `documents/product/methodology/pedagogy.md`
 
 ---
 
@@ -71,7 +71,7 @@ Após aprovação, crie o arquivo:
 src/courses/{courseId}/course.json
 ```
 
-Seguindo o schema em `documents/product/course_schema.md`.
+Seguindo o schema em `documents/product/methodology/course_schema.md`.
 
 ---
 

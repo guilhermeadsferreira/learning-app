@@ -185,12 +185,12 @@ Para usar o Professor IA, configure uma API key (Claude ou OpenAI) via interface
 
 | Arquivo                                   | Conteúdo                               |
 | ----------------------------------------- | -------------------------------------- |
-| `documents/product/prd.md`                | Visão, escopo e próximos passos        |
-| `documents/product/pedagogy.md`           | Metodologia pedagógica detalhada       |
-| `documents/product/lesson_schema.md`      | Schema completo de lições              |
-| `documents/product/course_schema.md`      | Schema de cursos e módulos             |
-| `documents/product/AI_SYSTEM.md`          | Arquitetura do Professor IA            |
-| `documents/product/content_generation.md` | Prompt e guia para geração de conteúdo |
+| `documents/product/strategy/prd.md`                | Visão, escopo e próximos passos        |
+| `documents/product/methodology/pedagogy.md`           | Metodologia pedagógica detalhada       |
+| `documents/product/methodology/lesson_schema.md`      | Schema completo de lições              |
+| `documents/product/methodology/course_schema.md`      | Schema de cursos e módulos             |
+| `documents/product/systems/AI_SYSTEM.md`          | Arquitetura do Professor IA            |
+| `documents/product/methodology/content_generation.md` | Prompt e guia para geração de conteúdo |
 
 ---
 
