@@ -4,27 +4,101 @@
   "moduleId": "effects",
   "title": "Cleanup e subscriptions",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "O cleanup é como desligar a TV ao sair: você libera recursos para evitar vazamentos de memória.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O cleanup é como apagar as luzes e trancar a porta ao sair de casa. Se você sair sem desligar nada, a conta de luz continua subindo (vazamento de memória). A função de cleanup garante que tudo seja desligado antes de você ir embora — ou antes de 'reentrar' com novos valores.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "Função de cleanup"
+        "content": "Por que cleanup é necessário?"
       },
       {
         "type": "paragraph",
-        "content": "Retorne uma função do useEffect para limpar subscriptions, timers e listeners quando o componente desmontar ou antes do efeito rodar novamente."
+        "content": "Quando um componente desmonta ou quando o efeito precisa re-executar com novas dependências, o React chama a função de cleanup. Sem ela, timers continuam rodando, listeners acumulam, e WebSockets ficam abertos — causando vazamentos de memória e comportamentos inesperados."
+      },
+      {
+        "type": "heading",
+        "content": "Sintaxe: retornando a função de cleanup"
       },
       {
         "type": "code",
-        "content": "useEffect(() => {\n  const id = setInterval(() => setCount(c => c + 1), 1000);\n  return () => clearInterval(id);\n}, []);",
+        "content": "useEffect(() => {\n  // Setup: o que acontece quando o efeito roda\n  const id = setInterval(() => {\n    setSeconds(s => s + 1);\n  }, 1000);\n\n  // Cleanup: o que acontece quando o componente\n  // desmonta OU antes do efeito rodar novamente\n  return () => {\n    clearInterval(id);\n  };\n}, []);",
         "language": "javascript"
       },
       {
+        "type": "heading",
+        "content": "Quando o cleanup é executado?"
+      },
+      {
         "type": "list",
-        "content": "setInterval/setTimeout — clear no cleanup\nEvent listeners — removeEventListener\nWebSockets — close()\nSubscriptions — unsubscribe()"
+        "content": "Quando o componente desmonta (sai da tela)\nAntes de re-executar o efeito (quando uma dependência muda)\nA ordem é: cleanup do efeito anterior → setup do novo efeito"
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo: Event Listener"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um dos casos mais comuns de cleanup é adicionar e remover event listeners do window ou document:"
+      },
+      {
+        "type": "code",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction WindowSize() {\n  const [width, setWidth] = useState(window.innerWidth);\n\n  useEffect(() => {\n    const handleResize = () => setWidth(window.innerWidth);\n\n    window.addEventListener('resize', handleResize);\n\n    return () => {\n      window.removeEventListener('resize', handleResize);\n    };\n  }, []);\n\n  return <p>Largura: {width}px</p>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Sem o removeEventListener, cada vez que o componente montar, um NOVO listener é adicionado — mas os antigos nunca são removidos. Após 10 re-montagens, você teria 10 listeners duplicados rodando ao mesmo tempo.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo: Cleanup com dependências que mudam"
+      },
+      {
+        "type": "paragraph",
+        "content": "O cleanup também é crucial quando as dependências mudam. O React executa o cleanup do efeito anterior antes de rodar o novo:"
+      },
+      {
+        "type": "code",
+        "content": "function ChatRoom({ roomId }) {\n  useEffect(() => {\n    const connection = connectToRoom(roomId);\n    console.log(`Conectado à sala ${roomId}`);\n\n    return () => {\n      connection.disconnect();\n      console.log(`Desconectado da sala ${roomId}`);\n    };\n  }, [roomId]);\n  // Quando roomId muda: desconecta da sala anterior,\n  // depois conecta na nova sala\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Padrões comuns de cleanup"
+      },
+      {
+        "type": "list",
+        "content": "setInterval / setTimeout → clearInterval / clearTimeout\naddEventListener → removeEventListener\nWebSocket.open → WebSocket.close\nfetch com AbortController → controller.abort()\nSubscriptions (ex: Firebase) → unsubscribe()"
+      },
+      {
+        "type": "heading",
+        "content": "Cleanup para evitar race conditions"
+      },
+      {
+        "type": "code",
+        "content": "useEffect(() => {\n  let cancelled = false;\n\n  fetch(`/api/users/${userId}`)\n    .then(res => res.json())\n    .then(data => {\n      if (!cancelled) {\n        setUser(data);\n      }\n    });\n\n  return () => {\n    cancelled = true;\n  };\n}, [userId]);",
+        "language": "javascript"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sem essa flag, se o userId mudar rapidamente, a resposta de um fetch antigo pode sobrescrever os dados do fetch mais recente — mostrando dados do usuário errado."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Retorne uma função do useEffect para limpar recursos (timers, listeners, conexões)",
+    "O cleanup roda no unmount E antes de cada re-execução do efeito",
+    "Sem cleanup, listeners e timers acumulam, causando vazamentos de memória",
+    "Use flags ou AbortController para evitar race conditions em fetches"
+  ],
+  "commonMistakes": [
+    "Esquecer de retornar a função de cleanup — recursos ficam pendurados após o unmount",
+    "Criar a função handler inline no addEventListener, impossibilitando o removeEventListener (a referência é diferente)",
+    "Não tratar race conditions em fetches — dados antigos podem sobrescrever dados novos"
+  ],
+  "encouragement": "Cleanup é o que separa um useEffect funcional de um useEffect profissional. Quando você domina cleanup, seus componentes ficam previsíveis e livres de vazamentos — mesmo em cenários complexos.",
+  "realWorldExample": "No Google Maps web, ao navegar entre locais, o mapa precisa se conectar a serviços de tiles e rotas. Quando você sai da visualização, o cleanup desconecta esses serviços para liberar memória e conexões de rede. Sem isso, cada mudança de rota acumularia conexões abertas."
 }

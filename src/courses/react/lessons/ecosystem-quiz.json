@@ -1,0 +1,117 @@
+{
+  "id": "ecosystem-quiz",
+  "courseId": "react",
+  "moduleId": "ecosystem",
+  "title": "Quiz: Ecossistema React",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Assim como um mecânico precisa conhecer suas ferramentas antes de mexer no motor, um dev React precisa conhecer o ecossistema antes de escrever componentes.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre Node.js, npm, Vite, package.json e estrutura de pastas. Agora é hora de testar o que ficou! Escolha a resposta correta em cada pergunta."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal função do Node.js no desenvolvimento React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Renderizar componentes React no navegador",
+          "isCorrect": false,
+          "explanation": "Quem renderiza no navegador é o ReactDOM. O Node.js roda fora do navegador."
+        },
+        {
+          "id": "b",
+          "text": "Servir como runtime para ferramentas de build, gerenciamento de pacotes e servidor de desenvolvimento",
+          "isCorrect": true,
+          "explanation": "Exato! O Node.js é a infraestrutura que roda o Vite, o npm e outras ferramentas do ecossistema React."
+        },
+        {
+          "id": "c",
+          "text": "Substituir o JavaScript no frontend",
+          "isCorrect": false,
+          "explanation": "Node.js não substitui o JS no frontend — ele permite rodar JavaScript fora do navegador."
+        },
+        {
+          "id": "d",
+          "text": "Criar o banco de dados da aplicação",
+          "isCorrect": false,
+          "explanation": "Node.js pode ser usado em backends, mas no contexto React ele serve como runtime para ferramentas de desenvolvimento."
+        }
+      ]
+    },
+    {
+      "question": "No package.json, qual a diferença entre dependencies e devDependencies?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Não há diferença — são apenas formas de organização visual",
+          "isCorrect": false,
+          "explanation": "Há uma diferença prática: devDependencies não são incluídas no bundle de produção."
+        },
+        {
+          "id": "b",
+          "text": "dependencies são pacotes necessários em produção; devDependencies são ferramentas usadas apenas no desenvolvimento",
+          "isCorrect": true,
+          "explanation": "Correto! React vai em dependencies (o app precisa dele para funcionar), enquanto TypeScript e ESLint vão em devDependencies (são ferramentas de desenvolvimento)."
+        },
+        {
+          "id": "c",
+          "text": "dependencies são instaladas automaticamente; devDependencies precisam ser instaladas manualmente",
+          "isCorrect": false,
+          "explanation": "Ambas são instaladas com npm install. A diferença é sobre quando são necessárias: produção vs desenvolvimento."
+        },
+        {
+          "id": "d",
+          "text": "devDependencies são versões de teste das dependencies",
+          "isCorrect": false,
+          "explanation": "São categorias diferentes de pacotes, não versões alternativas. devDependencies são ferramentas de build e desenvolvimento."
+        }
+      ]
+    },
+    {
+      "question": "Por que o Vite substituiu o Create React App como ferramenta recomendada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Porque o Vite é um framework completo com backend incluso",
+          "isCorrect": false,
+          "explanation": "Vite é uma ferramenta de build, não um framework. Para framework com backend, existem Next.js e Remix."
+        },
+        {
+          "id": "b",
+          "text": "Porque o Create React App não funciona mais com React 18",
+          "isCorrect": false,
+          "explanation": "CRA ainda funciona, mas ficou sem manutenção ativa e é significativamente mais lento."
+        },
+        {
+          "id": "c",
+          "text": "Porque o Vite tem startup instantâneo, HMR ultrarrápido e builds otimizados usando ES modules nativos",
+          "isCorrect": true,
+          "explanation": "Exato! O Vite usa ES modules nativos do navegador para servir código instantaneamente, sem precisar empacotar tudo antes."
+        },
+        {
+          "id": "d",
+          "text": "Porque o Vite é obrigatório para usar TypeScript com React",
+          "isCorrect": false,
+          "explanation": "TypeScript funciona com qualquer bundler. O Vite é preferido pela velocidade, não por exclusividade de features."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Node.js é o runtime que sustenta as ferramentas do ecossistema React (Vite, npm, etc.)",
+    "package.json separa dependências de produção (dependencies) e de desenvolvimento (devDependencies)",
+    "Vite é a ferramenta de build recomendada por sua velocidade e uso de ES modules nativos"
+  ],
+  "encouragement": "Se acertou tudo, ótimo — o ecossistema já faz sentido para você. Se errou alguma, sem problema: esses conceitos ficam mais claros conforme você pratica criando projetos."
+}

@@ -1,0 +1,117 @@
+{
+  "id": "styling-quiz",
+  "courseId": "react",
+  "moduleId": "styling",
+  "title": "Quiz: Estilização com Tailwind",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Escolher a abordagem de estilização certa é como montar um look: você precisa conhecer as peças disponíveis (classes utilitárias), saber combinar (responsividade + dark mode), e adaptar ao contexto (mobile vs desktop). Quem domina o guarda-roupa, se veste bem em qualquer ocasião.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos sobre estilização"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre abordagens de CSS no React, classes utilitárias do Tailwind, componentes com variantes, design responsivo, dark mode e animações. Hora de verificar o que ficou!"
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal vantagem do Tailwind CSS sobre CSS global em projetos React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tailwind gera CSS menor porque remove propriedades duplicadas automaticamente",
+          "isCorrect": false,
+          "explanation": "O Tailwind faz purge de classes não usadas, mas a vantagem principal não é o tamanho do CSS — é a ausência de conflitos e a consistência do design system."
+        },
+        {
+          "id": "b",
+          "text": "Classes utilitárias evitam conflitos de nomes, mantêm consistência via design system embutido e eliminam a necessidade de arquivos CSS separados",
+          "isCorrect": true,
+          "explanation": "Exato! Com Tailwind, cada classe mapeia 1:1 para uma propriedade CSS. Não há nomes inventados, não há conflitos, e o design system (espaçamentos, cores, tipografia) garante consistência."
+        },
+        {
+          "id": "c",
+          "text": "Tailwind substitui completamente o CSS — você nunca precisa escrever CSS custom",
+          "isCorrect": false,
+          "explanation": "Tailwind cobre a maioria dos casos, mas às vezes CSS custom é necessário (animações complexas, estilos muito específicos). A ideia é resolver com utilitários primeiro."
+        },
+        {
+          "id": "d",
+          "text": "Tailwind é mais rápido porque compila CSS no servidor em vez do navegador",
+          "isCorrect": false,
+          "explanation": "Tailwind gera CSS em build time (não no servidor), mas a vantagem principal é a DX: sem conflitos, sem inventar nomes, com design system pronto."
+        }
+      ]
+    },
+    {
+      "question": "Como funciona o design responsivo mobile-first no Tailwind?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Você define os estilos para desktop primeiro e usa prefixos como sm: para sobrescrever em telas menores",
+          "isCorrect": false,
+          "explanation": "É o contrário! Tailwind é mobile-first: classes sem prefixo se aplicam a todas as telas, e prefixos como md: e lg: adicionam estilos a partir daquele breakpoint."
+        },
+        {
+          "id": "b",
+          "text": "Classes sem prefixo se aplicam a todas as telas; prefixos como md: e lg: aplicam estilos a partir daquele breakpoint (telas maiores)",
+          "isCorrect": true,
+          "explanation": "Correto! Por exemplo, grid-cols-1 md:grid-cols-2 lg:grid-cols-3 significa: 1 coluna no mobile, 2 a partir de 768px, 3 a partir de 1024px."
+        },
+        {
+          "id": "c",
+          "text": "Você precisa escrever @media queries separadas no CSS para cada breakpoint",
+          "isCorrect": false,
+          "explanation": "Esse é o jeito tradicional. No Tailwind, os prefixos responsivos (sm:, md:, lg:) substituem as @media queries — tudo fica direto no className."
+        },
+        {
+          "id": "d",
+          "text": "O Tailwind detecta automaticamente o tamanho da tela e ajusta os estilos sem nenhuma classe extra",
+          "isCorrect": false,
+          "explanation": "Você precisa declarar explicitamente os breakpoints via prefixos. O Tailwind não adivinha o layout — você define com classes como md:flex-row ou lg:grid-cols-3."
+        }
+      ]
+    },
+    {
+      "question": "Qual combinação de classes Tailwind cria um botão com transição suave de cor no hover?",
+      "options": [
+        {
+          "id": "a",
+          "text": "bg-blue-600 hover:bg-blue-700 transition-colors duration-200",
+          "isCorrect": true,
+          "explanation": "Perfeito! bg-blue-600 define a cor base, hover:bg-blue-700 muda no hover, transition-colors anima a mudança, e duration-200 define 200ms de duração."
+        },
+        {
+          "id": "b",
+          "text": "bg-blue-600 hover:bg-blue-700 animate-pulse",
+          "isCorrect": false,
+          "explanation": "animate-pulse cria um efeito de pulsação infinita (opacidade), não uma transição suave de cor. Para transições, use transition-colors."
+        },
+        {
+          "id": "c",
+          "text": "bg-blue-600 onHover:bg-blue-700 transition-all",
+          "isCorrect": false,
+          "explanation": "O prefixo correto é hover:, não onHover:. Tailwind usa nomes padronizados que mapeiam para pseudo-classes CSS."
+        },
+        {
+          "id": "d",
+          "text": "bg-blue-600 hover:bg-blue-700 (sem transition — o navegador anima automaticamente)",
+          "isCorrect": false,
+          "explanation": "Sem transition-*, a mudança de cor é instantânea (pisca). Você precisa de transition-colors ou transition-all para que a animação aconteça."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Tailwind elimina conflitos de CSS com classes utilitárias 1:1 e design system embutido",
+    "Mobile-first: sem prefixo = mobile; md:/lg: = telas maiores (a partir de...)",
+    "Transições suaves exigem transition-colors/all + duration — sem elas, mudanças piscam"
+  ],
+  "encouragement": "Se acertou tudo, excelente — você domina os fundamentos de estilização moderna em React. Se errou alguma, revise as lições anteriores: cada conceito aqui é usado diariamente no desenvolvimento profissional."
+}

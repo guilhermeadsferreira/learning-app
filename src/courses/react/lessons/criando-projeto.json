@@ -4,7 +4,8 @@
   "moduleId": "ecosystem",
   "title": "Criando projeto com Vite",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "beginner",
   "analogy": "Criar um projeto React com Vite é como pedir uma pizza pronta: um comando e você tem tudo configurado.",
   "content": {
     "sections": [
@@ -28,7 +29,37 @@
       {
         "type": "list",
         "content": "cd meu-app — entra na pasta\nnpm install — instala dependências\nnpm run dev — inicia o servidor"
+      },
+      {
+        "type": "heading",
+        "content": "O que acontece por trás"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você roda npm create vite@latest, o npm baixa o pacote create-vite e executa seu script de scaffolding. Ele cria a estrutura de pastas, o package.json com as dependências corretas, os arquivos de configuração (vite.config.ts, tsconfig.json) e um componente App inicial para você começar."
+      },
+      {
+        "type": "code",
+        "content": "# Fluxo completo para criar e rodar um projeto\nnpm create vite@latest meu-app -- --template react-ts\ncd meu-app\nnpm install\nnpm run dev\n\n# O terminal vai mostrar algo como:\n#   VITE v5.x.x  ready in 300ms\n#   ➜  Local:   http://localhost:5173/",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O -- antes de --template é necessário para passar a flag diretamente ao create-vite, e não ao npm. Sem ele, o npm pode ignorar o argumento.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "npm create vite@latest meu-app -- --template react-ts cria um projeto React + TypeScript completo",
+    "Após criar, você precisa entrar na pasta (cd), instalar dependências (npm install) e iniciar o servidor (npm run dev)",
+    "O servidor local roda em http://localhost:5173 por padrão"
+  ],
+  "commonMistakes": [
+    "Esquecer o -- antes de --template — sem ele, a flag pode ser ignorada pelo npm",
+    "Tentar rodar npm run dev sem antes executar npm install — as dependências não são instaladas automaticamente",
+    "Criar o projeto dentro de outra pasta de projeto Node — isso pode causar conflitos de dependências"
+  ],
+  "encouragement": "Com um comando você tem um projeto React funcional com TypeScript, servidor de desenvolvimento e hot reload. O setup que antes levava horas de configuração manual agora leva segundos.",
+  "realWorldExample": "Na maioria das empresas, o setup inicial do projeto é feito uma vez pelo tech lead ou pelo boilerplate do time. Mas entender esse processo ajuda a configurar projetos pessoais, contribuir em open source e debugar problemas de build."
 }

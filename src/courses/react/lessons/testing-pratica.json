@@ -1,0 +1,52 @@
+{
+  "id": "testing-pratica",
+  "courseId": "react",
+  "moduleId": "testing",
+  "title": "Praticando Testes",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Testes são como o controle de qualidade numa fábrica: antes do produto sair da linha de montagem, ele passa por verificações automáticas. Se algo não está no padrão, o alarme toca antes de chegar ao cliente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Desafio: Testando um Counter"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio, você vai escrever testes para um componente Counter. O componente já está pronto — sua missão é garantir que ele funciona corretamente escrevendo testes com React Testing Library."
+      },
+      {
+        "type": "code",
+        "content": "// O que seus testes devem verificar:\n// 1. O contador começa em 0\n// 2. Clicar no botão \"+1\" incrementa o valor para 1\n// 3. Clicar no botão \"Resetar\" volta o valor para 0",
+        "language": "javascript"
+      },
+      {
+        "type": "callout",
+        "content": "Lembre-se do padrão Arrange-Act-Assert: renderize o componente, interaja com ele e verifique o resultado. Use screen.getByText para encontrar elementos e fireEvent.click para simular cliques.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Escreva um teste para o componente Counter abaixo. O teste deve: 1) Verificar que o contador começa em 0, 2) Clicar no botão '+1' e verificar que o valor muda para 1, 3) Clicar no botão 'Resetar' e verificar que volta a 0.",
+    "starterCode": "import { useState } from 'react';\n\n// Componente Counter (já implementado)\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>Contagem: {count}</p>\n      <button onClick={() => setCount(c => c + 1)}>+1</button>\n      <button onClick={() => setCount(0)}>Resetar</button>\n    </div>\n  );\n}\n\n// ============================\n// Escreva seus testes abaixo\n// ============================\n\nimport { render, screen, fireEvent } from '@testing-library/react';\n\ntest('contador começa em 0', () => {\n  // Arrange: renderize o Counter\n  // Assert: verifique que \"Contagem: 0\" está na tela\n});\n\ntest('incrementa ao clicar em +1', () => {\n  // Arrange: renderize o Counter\n  // Act: clique no botão \"+1\"\n  // Assert: verifique que \"Contagem: 1\" está na tela\n});\n\ntest('reseta ao clicar em Resetar', () => {\n  // Arrange: renderize o Counter\n  // Act: clique em \"+1\" e depois em \"Resetar\"\n  // Assert: verifique que \"Contagem: 0\" está na tela\n});",
+    "solution": "import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>Contagem: {count}</p>\n      <button onClick={() => setCount(c => c + 1)}>+1</button>\n      <button onClick={() => setCount(0)}>Resetar</button>\n    </div>\n  );\n}\n\nimport { render, screen, fireEvent } from '@testing-library/react';\n\ntest('contador começa em 0', () => {\n  render(<Counter />);\n  expect(screen.getByText('Contagem: 0')).toBeInTheDocument();\n});\n\ntest('incrementa ao clicar em +1', () => {\n  render(<Counter />);\n  fireEvent.click(screen.getByText('+1'));\n  expect(screen.getByText('Contagem: 1')).toBeInTheDocument();\n});\n\ntest('reseta ao clicar em Resetar', () => {\n  render(<Counter />);\n  fireEvent.click(screen.getByText('+1'));\n  fireEvent.click(screen.getByText('Resetar'));\n  expect(screen.getByText('Contagem: 0')).toBeInTheDocument();\n});",
+    "tests": [],
+    "hint": "Use render(<Counter />) para montar o componente. Depois, use screen.getByText('Contagem: 0') para encontrar o texto na tela. Para simular cliques, use fireEvent.click(screen.getByText('+1')). A verificação é feita com expect(...).toBeInTheDocument().",
+    "solutionExplanation": "Cada teste segue o padrão Arrange-Act-Assert. O render() monta o componente no DOM virtual. screen.getByText() encontra elementos pelo texto visível — exatamente como o usuário veria. fireEvent.click() simula o clique. E expect().toBeInTheDocument() verifica que o elemento existe na tela. Note que cada teste é independente: o render() cria uma instância nova do componente, então o estado não vaza entre testes."
+  },
+  "keyTakeaways": [
+    "Cada teste deve ser independente — render() cria uma nova instância do componente",
+    "Use screen.getByText para buscar elementos pelo texto visível ao usuário",
+    "fireEvent.click simula cliques. O expect().toBeInTheDocument() verifica presença na tela"
+  ],
+  "commonMistakes": [
+    "Não renderizar o componente em cada teste — cada test() precisa do seu próprio render()",
+    "Usar querySelector em vez das queries do RTL — perde a semântica e a resiliência do teste",
+    "Verificar o estado interno (count === 1) em vez do texto na tela ('Contagem: 1') — teste comportamento, não implementação"
+  ],
+  "encouragement": "Parabéns por escrever seus primeiros testes React! Esse padrão de render → interagir → verificar é o que você vai usar em qualquer projeto profissional. Agora você tem uma habilidade que te diferencia no mercado!",
+  "realWorldExample": "Em apps como o iFood, o componente de quantidade de itens no carrinho funciona exatamente como esse Counter: incrementar, decrementar, resetar. Os testes garantem que o usuário nunca vai ver uma quantidade negativa ou que o botão de limpar realmente zera o carrinho."
+}

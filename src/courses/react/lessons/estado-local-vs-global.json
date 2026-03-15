@@ -4,7 +4,8 @@
   "moduleId": "state-management",
   "title": "Estado local vs global",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Estado local é a gaveta do seu quarto; global é o quadro de avisos da casa. Use o menor escopo possível.",
   "content": {
     "sections": [
@@ -21,5 +22,18 @@
         "content": "Coloque o estado o mais perto possível de quem o usa. Só eleve para o pai ou global quando múltiplos componentes precisarem."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Comece sempre com estado local (useState) — só eleve quando necessário",
+    "Context é ideal para dados globais que mudam pouco (tema, auth, idioma)",
+    "Para estado complexo e frequentemente atualizado, considere Zustand ou Redux",
+    "O princípio do menor escopo evita complexidade desnecessária e re-renders"
+  ],
+  "commonMistakes": [
+    "Colocar todo estado no nível global por 'precaução', gerando re-renders desnecessários e complexidade",
+    "Usar Context para estado de formulário que muda a cada tecla digitada",
+    "Elevar estado para o componente raiz quando apenas dois irmãos precisam compartilhá-lo — o pai direto seria suficiente"
+  ],
+  "realWorldExample": "Em um e-commerce, o valor de um campo de busca é estado local (só o SearchBar usa). O usuário logado é Context (vários componentes leem, muda raramente). O carrinho de compras pode ser Zustand — muda frequentemente e é acessado em várias páginas.",
+  "encouragement": "Saber escolher o escopo certo do estado é o que separa um código React organizado de um espaguete de re-renders. Você está no caminho certo! 🎯"
 }

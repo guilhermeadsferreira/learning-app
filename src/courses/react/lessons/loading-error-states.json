@@ -4,22 +4,89 @@
   "moduleId": "data-fetching",
   "title": "Estados de loading e erro",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Uma requisição tem três estados: carregando (esperando), sucesso (dados) ou erro (algo falhou). A UI deve refletir cada um.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "Padrão com useState"
+        "content": "Por que gerenciar loading e erro?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você faz uma requisição, ela não é instantânea. O usuário precisa saber que algo está acontecendo (loading) e ser informado se algo der errado (erro). Sem isso, a tela fica em branco ou congelada — uma péssima experiência. Apps profissionais sempre mostram feedback visual para cada estado."
+      },
+      {
+        "type": "callout",
+        "content": "Pesquisas de UX mostram que usuários abandonam páginas que demoram mais de 3 segundos sem feedback visual. Um simples spinner pode reduzir a taxa de abandono em até 40%.",
+        "variant": "info"
+      },
+      {
+        "type": "heading",
+        "content": "Os três estados de uma requisição"
       },
       {
         "type": "list",
-        "content": "loading — true enquanto fetch em andamento\nerror — mensagem ou null\ndata — resultado ou null"
+        "content": "loading — true enquanto o fetch está em andamento. Mostre um spinner ou skeleton.\nerror — mensagem de erro ou null. Mostre uma mensagem amigável se algo falhou.\ndata — o resultado da requisição ou null. Renderize o conteúdo quando disponível."
+      },
+      {
+        "type": "heading",
+        "content": "Padrão completo com useState e useEffect"
+      },
+      {
+        "type": "paragraph",
+        "content": "Veja como implementar os três estados usando useState para cada um e useEffect para disparar o fetch:"
+      },
+      {
+        "type": "code",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction UserList() {\n  const [users, setUsers] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    fetch('https://jsonplaceholder.typicode.com/users')\n      .then(res => {\n        if (!res.ok) throw new Error(`Erro: ${res.status}`);\n        return res.json();\n      })\n      .then(data => {\n        setUsers(data);\n        setLoading(false);\n      })\n      .catch(err => {\n        setError(err.message);\n        setLoading(false);\n      });\n  }, []);\n\n  if (loading) return <p>Carregando...</p>;\n  if (error) return <p>Erro: {error}</p>;\n\n  return (\n    <ul>\n      {users.map(user => (\n        <li key={user.id}>{user.name}</li>\n      ))}\n    </ul>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Note o res.ok no código acima. O fetch não rejeita a Promise em erros HTTP (404, 500). Ele só rejeita em falha de rede. Você precisa verificar res.ok manualmente e lançar um erro se necessário.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Renderização condicional"
+      },
+      {
+        "type": "paragraph",
+        "content": "O segredo é a ordem dos ifs no return. Primeiro verifique loading, depois error, e por fim renderize os dados. Essa ordem garante que cada estado tenha seu feedback visual correto. Em apps reais, o estado de loading pode ser um skeleton (formato que imita o layout final), e o estado de erro pode ter um botão de 'Tentar novamente'."
+      },
+      {
+        "type": "heading",
+        "content": "Versão com async/await"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você pode usar async/await dentro do useEffect criando uma função interna, já que a callback do useEffect não pode ser async diretamente:"
+      },
+      {
+        "type": "code",
+        "content": "useEffect(() => {\n  async function fetchUsers() {\n    try {\n      const res = await fetch('/api/users');\n      if (!res.ok) throw new Error(`Erro: ${res.status}`);\n      const data = await res.json();\n      setUsers(data);\n    } catch (err) {\n      setError(err.message);\n    } finally {\n      setLoading(false);\n    }\n  }\n  fetchUsers();\n}, []);",
+        "language": "javascript"
       },
       {
         "type": "paragraph",
         "content": "Renderize condicionalmente: se loading, mostre skeleton/spinner; se error, mostre mensagem; se data, mostre o conteúdo. TanStack Query encapsula isso automaticamente."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Toda requisição tem três estados: loading, error e data — a UI deve refletir cada um",
+    "Verifique res.ok no fetch porque ele não rejeita automaticamente em erros HTTP",
+    "Use renderização condicional na ordem: loading → error → dados",
+    "O try/catch com async/await é mais legível que .then/.catch encadeados"
+  ],
+  "commonMistakes": [
+    "Não mostrar feedback de loading, deixando a tela em branco enquanto carrega",
+    "Esquecer de tratar erros, fazendo o app quebrar silenciosamente",
+    "Confiar que fetch rejeita em status 404/500 (ele só rejeita em falha de rede)",
+    "Tornar a callback do useEffect diretamente async (não é permitido — crie uma função interna)"
+  ],
+  "realWorldExample": "Abra o Twitter/X e observe: quando você abre o app, aparece um skeleton dos tweets (loading). Se a internet cair, aparece uma mensagem de erro com botão 'Tentar novamente'. Quando os dados chegam, os tweets aparecem. Esse é exatamente o padrão loading → error → data que você acabou de aprender.",
+  "encouragement": "Você agora sabe criar interfaces que respondem ao usuário em qualquer situação — carregando, com erro ou com dados. Isso é o que separa um app amador de um app profissional. Muito bem!"
 }

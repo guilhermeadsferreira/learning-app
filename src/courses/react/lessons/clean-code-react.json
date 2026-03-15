@@ -4,7 +4,8 @@
   "moduleId": "patterns",
   "title": "Código limpo em React",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Código limpo é como uma casa organizada: cada coisa no lugar, nomes que explicam o propósito, sem bagunça desnecessária.",
   "content": {
     "sections": [
@@ -19,7 +20,64 @@
       {
         "type": "paragraph",
         "content": "A documentação React recomenda: não use useMemo/useCallback por padrão. Só quando houver problema de performance identificado."
+      },
+      {
+        "type": "heading",
+        "content": "Bons nomes vs. nomes ruins"
+      },
+      {
+        "type": "paragraph",
+        "content": "Nomes de componentes, funções e variáveis devem comunicar a intenção. Se você precisa de um comentário para explicar o que algo faz, o nome provavelmente está ruim."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Nomes vagos — o que é \"d\"? O que \"Item\" renderiza?\nconst d = new Date();\nfunction Item({ x }) {\n  return <div>{x}</div>;\n}\n\n// ✅ Nomes descritivos — intenção clara\nconst createdAt = new Date();\nfunction ProductCard({ product }) {\n  return (\n    <div>\n      <h3>{product.name}</h3>\n      <p>{product.price}</p>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Extraindo componentes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando um componente faz muitas coisas, extraia partes em componentes menores. A regra é simples: se um trecho de JSX tem uma responsabilidade clara, ele pode virar um componente."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Componente \"god\" — faz tudo numa função só\nfunction UserProfile({ user }) {\n  return (\n    <div>\n      <img src={user.avatar} alt={user.name} />\n      <h2>{user.name}</h2>\n      <p>{user.bio}</p>\n      <ul>\n        {user.posts.map(post => (\n          <li key={post.id}>\n            <h3>{post.title}</h3>\n            <p>{post.excerpt}</p>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\n// ✅ Responsabilidades separadas\nfunction UserAvatar({ src, name }) {\n  return <img src={src} alt={name} />;\n}\n\nfunction PostItem({ post }) {\n  return (\n    <li>\n      <h3>{post.title}</h3>\n      <p>{post.excerpt}</p>\n    </li>\n  );\n}\n\nfunction UserProfile({ user }) {\n  return (\n    <div>\n      <UserAvatar src={user.avatar} name={user.name} />\n      <h2>{user.name}</h2>\n      <p>{user.bio}</p>\n      <ul>\n        {user.posts.map(post => (\n          <PostItem key={post.id} post={post} />\n        ))}\n      </ul>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Early returns"
+      },
+      {
+        "type": "paragraph",
+        "content": "Early returns reduzem indentação e tornam o fluxo mais claro. Trate os casos excepcionais primeiro e deixe o caminho principal no final."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Indentação profunda — difícil de seguir\nfunction Dashboard({ user, isLoading, error }) {\n  if (!error) {\n    if (!isLoading) {\n      if (user) {\n        return <UserDashboard user={user} />;\n      } else {\n        return <p>Usuário não encontrado</p>;\n      }\n    } else {\n      return <Spinner />;\n    }\n  } else {\n    return <ErrorMessage error={error} />;\n  }\n}\n\n// ✅ Early returns — fluxo linear\nfunction Dashboard({ user, isLoading, error }) {\n  if (error) return <ErrorMessage error={error} />;\n  if (isLoading) return <Spinner />;\n  if (!user) return <p>Usuário não encontrado</p>;\n\n  return <UserDashboard user={user} />;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Legibilidade é mais importante que esperteza. Código \"inteligente\" que ninguém entende é código ruim. Prefira sempre clareza sobre concisão.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Nomes descritivos eliminam a necessidade de comentários",
+    "Componentes grandes devem ser quebrados em componentes menores com responsabilidades claras",
+    "Early returns reduzem complexidade e deixam o fluxo mais fácil de seguir",
+    "Legibilidade sempre vem antes de otimização prematura"
+  ],
+  "commonMistakes": [
+    "Usar nomes genéricos como 'data', 'item', 'handle' sem contexto — dificulta manutenção",
+    "Criar componentes com 200+ linhas sem extrair subcomponentes — vira um 'god component'",
+    "Usar useMemo/useCallback em tudo 'por precaução' sem medir performance real"
+  ],
+  "encouragement": "Código limpo não é sobre perfeição — é sobre comunicação. Se outro desenvolvedor consegue ler seu código e entender rapidamente, você está no caminho certo! 🧹",
+  "realWorldExample": "No dia a dia de times de desenvolvimento, a maior parte do tempo é gasta lendo código, não escrevendo. Empresas como Airbnb e Google têm guias de estilo rígidos justamente porque nomes claros, componentes pequenos e early returns economizam horas de revisão de código e reduzem bugs em produção."
 }

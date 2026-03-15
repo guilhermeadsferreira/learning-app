@@ -4,22 +4,72 @@
   "moduleId": "forms",
   "title": "Formulários dinâmicos",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "Formulários com arrays são como listas de compras: você adiciona e remove itens. useFieldArray do React Hook Form resolve isso.",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Formulários com arrays são como listas de compras: você adiciona e remove itens dinamicamente. O useFieldArray do React Hook Form é o carrinho de supermercado que gerencia essa lista para você — sem perder performance.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "useFieldArray"
+        "content": "useFieldArray — listas dinâmicas de campos"
       },
       {
         "type": "paragraph",
-        "content": "Para campos repetidos (lista de endereços, itens de pedido), use useFieldArray. Retorna fields, append, remove, e você mapeia para inputs."
+        "content": "Quando o formulário precisa de campos repetidos (lista de endereços, itens de um pedido, habilidades de um currículo), o useFieldArray gerencia o array de forma performática, sem re-renderizar o formulário inteiro."
+      },
+      {
+        "type": "code",
+        "content": "import { useForm, useFieldArray } from 'react-hook-form';\n\nfunction PedidoForm() {\n  const { control, register, handleSubmit } = useForm({\n    defaultValues: {\n      itens: [{ produto: '', quantidade: 1 }]\n    }\n  });\n\n  const { fields, append, remove } = useFieldArray({\n    control,\n    name: 'itens'\n  });\n\n  return (\n    <form onSubmit={handleSubmit((data) => console.log(data))}>\n      {fields.map((field, index) => (\n        <div key={field.id}>\n          <input {...register(`itens.${index}.produto`)} placeholder=\"Produto\" />\n          <input\n            type=\"number\"\n            {...register(`itens.${index}.quantidade`, { valueAsNumber: true })}\n          />\n          <button type=\"button\" onClick={() => remove(index)}>Remover</button>\n        </div>\n      ))}\n\n      <button type=\"button\" onClick={() => append({ produto: '', quantidade: 1 })}>\n        Adicionar Item\n      </button>\n      <button type=\"submit\">Enviar Pedido</button>\n    </form>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre use field.id como key no map — nunca o index! O useFieldArray gera IDs estáveis para cada item, garantindo que o React reconcilia corretamente ao adicionar/remover.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Hooks úteis para formulários complexos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Além do useFieldArray, o React Hook Form oferece hooks para cenários avançados de formulários com muitos componentes."
       },
       {
         "type": "list",
-        "content": "useController — para componentes controlados customizados\nuseFormContext — acessar form em componentes aninhados\nuseWatch — observar campos sem re-renderizar o root"
+        "content": "useController — conecta componentes controlados customizados (Select, DatePicker) ao formulário\nuseFormContext — acessa o formulário em componentes aninhados sem prop drilling\nuseWatch — observa campos específicos sem re-renderizar o formulário inteiro"
+      },
+      {
+        "type": "heading",
+        "content": "useFormContext — formulários em múltiplos componentes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando o formulário é grande demais para um único componente, o useFormContext permite que componentes filhos acessem register, errors e outros métodos via Context."
+      },
+      {
+        "type": "code",
+        "content": "import { useForm, FormProvider, useFormContext } from 'react-hook-form';\n\nfunction EnderecoFields() {\n  const { register, formState: { errors } } = useFormContext();\n  return (\n    <>\n      <input {...register('endereco.rua')} placeholder=\"Rua\" />\n      <input {...register('endereco.cidade')} placeholder=\"Cidade\" />\n    </>\n  );\n}\n\nfunction CadastroCompleto() {\n  const methods = useForm();\n  return (\n    <FormProvider {...methods}>\n      <form onSubmit={methods.handleSubmit(console.log)}>\n        <input {...methods.register('nome')} placeholder=\"Nome\" />\n        <EnderecoFields />\n        <button type=\"submit\">Salvar</button>\n      </form>\n    </FormProvider>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Em formulários com muitos campos, isole seções em componentes menores usando useFormContext. Isso melhora legibilidade e permite que o React otimize re-renders por componente.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "useFieldArray gerencia arrays de campos com append, remove e fields",
+    "Sempre use field.id (não index) como key nos campos dinâmicos",
+    "useFormContext elimina prop drilling em formulários divididos em componentes",
+    "useWatch observa campos específicos sem causar re-renders globais"
+  ],
+  "commonMistakes": [
+    "Usar index como key nos campos de useFieldArray — causa bugs ao remover itens do meio",
+    "Esquecer de passar control para o useFieldArray — ele precisa saber qual formulário controlar",
+    "Não envolver com FormProvider ao usar useFormContext — causa erro 'useFormContext must be used inside FormProvider'"
+  ],
+  "encouragement": "Se você entendeu useFieldArray e useFormContext, você já consegue construir formulários de qualquer complexidade: multi-step, com listas dinâmicas e divididos em componentes. Esses são os padrões usados em apps profissionais de verdade.",
+  "realWorldExample": "Formulários de checkout em e-commerces usam useFieldArray para a lista de itens do carrinho. Apps de RH usam useFormContext para dividir cadastros complexos (dados pessoais, endereço, documentos) em etapas. Plataformas como Notion e Linear usam useWatch para previews em tempo real."
 }

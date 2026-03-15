@@ -4,8 +4,9 @@
   "moduleId": "advanced-hooks",
   "title": "useMemo e useCallback",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "useMemo guarda o resultado de um cálculo; useCallback guarda uma função. Use só quando houver problema de performance real.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "useMemo é como uma calculadora com memória: se você pedir o mesmo cálculo de novo, ela mostra o resultado salvo em vez de recalcular. useCallback é como salvar um atalho no celular — a função é a mesma, mas a referência não muda. Use só quando houver problema de performance real.",
   "content": {
     "sections": [
       {
@@ -17,9 +18,61 @@
         "content": "A maioria das otimizações com useMemo/useCallback prejudica mais do que ajuda quando usadas sem necessidade. Só use após identificar problema com React DevTools Profiler."
       },
       {
+        "type": "callout",
+        "content": "Otimização prematura é a raiz de todo mal! Adicionar useMemo e useCallback em tudo não torna seu app mais rápido — na verdade, adiciona overhead de memória e complexidade. Meça primeiro, otimize depois.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "useMemo: cacheando cálculos caros"
+      },
+      {
+        "type": "paragraph",
+        "content": "useMemo recebe uma função e um array de dependências. Ele executa a função e guarda o resultado. Nas próximas renderizações, se as dependências não mudaram, retorna o valor cacheado sem recalcular."
+      },
+      {
+        "type": "code",
+        "content": "import { useMemo, useState } from 'react';\n\nfunction ProductList({ products }) {\n  const [search, setSearch] = useState('');\n  const [sortBy, setSortBy] = useState('name');\n\n  // ✅ Recalcula só quando products, search ou sortBy mudam\n  const filteredProducts = useMemo(() => {\n    console.log('Filtrando...');\n    return products\n      .filter(p => p.name.toLowerCase().includes(search.toLowerCase()))\n      .sort((a, b) => a[sortBy] > b[sortBy] ? 1 : -1);\n  }, [products, search, sortBy]);\n\n  return (\n    <div>\n      <input value={search} onChange={e => setSearch(e.target.value)} />\n      {filteredProducts.map(p => <div key={p.id}>{p.name}</div>)}\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "useCallback: estabilizando referências de funções"
+      },
+      {
+        "type": "paragraph",
+        "content": "Toda vez que um componente renderiza, as funções declaradas dentro dele são recriadas com uma nova referência. Isso é um problema quando você passa essas funções para componentes filhos memoizados com React.memo — eles re-renderizam porque a referência da prop mudou. useCallback resolve isso: mantém a mesma referência da função entre renders."
+      },
+      {
+        "type": "code",
+        "content": "import { useCallback, useState, memo } from 'react';\n\n// Filho memoizado: só re-renderiza se props mudarem\nconst TodoItem = memo(function TodoItem({ todo, onToggle }) {\n  console.log('Renderizou:', todo.text);\n  return (\n    <li onClick={() => onToggle(todo.id)}>\n      {todo.done ? '✅' : '⬜'} {todo.text}\n    </li>\n  );\n});\n\nfunction TodoList() {\n  const [todos, setTodos] = useState([\n    { id: 1, text: 'Estudar React', done: false },\n    { id: 2, text: 'Fazer exercício', done: false },\n  ]);\n\n  // ✅ Referência estável — TodoItem não re-renderiza sem necessidade\n  const handleToggle = useCallback((id) => {\n    setTodos(prev => prev.map(t =>\n      t.id === id ? { ...t, done: !t.done } : t\n    ));\n  }, []);\n\n  return <ul>{todos.map(t => <TodoItem key={t.id} todo={t} onToggle={handleToggle} />)}</ul>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Quando realmente usar?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Nem todo cálculo precisa de useMemo e nem toda função precisa de useCallback. Use quando: (1) o cálculo é genuinamente caro (filtrar/ordenar listas grandes, processar dados); (2) o valor ou função é passado como prop para um componente memoizado com React.memo; (3) a função é usada como dependência em useEffect e recria loops desnecessários."
+      },
+      {
         "type": "list",
-        "content": "useMemo — cacheia cálculo caro ou referência para filho memoizado\nuseCallback — estabiliza função para filho memoizado ou deps de useEffect\nReact 19 Compiler — reduz necessidade de memoização manual"
+        "content": "useMemo — cacheia cálculo caro ou referência para filho memoizado\nuseCallback — estabiliza função para filho memoizado ou deps de useEffect\nReact 19 Compiler — reduz necessidade de memoização manual\nRegra: se não mediu o problema, não otimize"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "useMemo cacheia o RESULTADO de uma função; useCallback cacheia a REFERÊNCIA de uma função",
+    "Ambos recebem um array de dependências — recalculam/recriam só quando as deps mudam",
+    "Use useMemo para cálculos caros (filtrar, ordenar, processar dados grandes)",
+    "Use useCallback quando passar funções para componentes memoizados com React.memo"
+  ],
+  "commonMistakes": [
+    "Usar useMemo/useCallback em tudo — adiciona overhead sem benefício; meça antes com o Profiler",
+    "Esquecer dependências no array — o valor/função fica desatualizado (stale closure)",
+    "Usar useCallback sem React.memo no filho — a função é estável, mas o filho re-renderiza de qualquer forma"
+  ],
+  "realWorldExample": "Em um dashboard com tabelas grandes, useMemo evita recalcular filtros e ordenações a cada re-render. Em listas virtualizadas, useCallback estabiliza handlers de clique para que apenas as linhas visíveis re-renderizem.",
+  "encouragement": "useMemo e useCallback são ferramentas de precisão, não de uso geral. O fato de você saber QUANDO usar (e quando não usar) já te coloca à frente da maioria. Performance é sobre medir, não adivinhar!"
 }

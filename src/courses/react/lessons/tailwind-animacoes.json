@@ -4,7 +4,7 @@
   "moduleId": "styling",
   "title": "Hover, transições e animações",
   "type": "challenge",
-  "xp": 20,
+  "xp": 25,
   "difficulty": "intermediate",
   "analogy": "Prefixos de estado no Tailwind são como sensores em um prédio inteligente. hover: é o sensor de movimento (alguém passou), focus: é o sensor de toque (alguém interagiu), active: é o sensor de pressão (está pressionando). Cada sensor dispara um conjunto de estilos automaticamente.",
   "content": {

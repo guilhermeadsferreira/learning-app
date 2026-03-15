@@ -1,0 +1,56 @@
+{
+  "id": "formulario-pratica",
+  "courseId": "react",
+  "moduleId": "forms",
+  "title": "Praticando Formulários",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Criar um formulário com validação é como preencher uma candidatura de emprego: cada campo tem requisitos específicos (nome completo, email válido, senha forte), e o sistema só aceita quando tudo está preenchido corretamente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Desafio: Formulário de Cadastro com Validação"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio, você vai criar um formulário de cadastro completo usando React Hook Form. O formulário deve ter campos para nome, email e senha, cada um com suas próprias regras de validação e mensagens de erro."
+      },
+      {
+        "type": "code",
+        "content": "// O que seu formulário deve fazer:\n// 1. Campos: nome, email e senha\n// 2. Validação:\n//    - Nome: obrigatório, mínimo 3 caracteres\n//    - Email: obrigatório, formato válido\n//    - Senha: obrigatória, mínimo 6 caracteres\n// 3. Mensagens de erro abaixo de cada campo\n// 4. Ao submeter com sucesso, exibir os dados com alert()",
+        "language": "javascript"
+      },
+      {
+        "type": "callout",
+        "content": "Use register com regras de validação inline. Não precisa de Zod para este desafio — o foco é dominar o básico do React Hook Form.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um formulário de cadastro com campos nome, email e senha. Use React Hook Form para controlar o formulário. Adicione validação: nome obrigatório (mínimo 3 caracteres), email válido, senha com mínimo 6 caracteres. Mostre mensagens de erro abaixo de cada campo.",
+    "starterCode": "import { useForm } from 'react-hook-form';\n\nexport default function CadastroForm() {\n  // 1. Configure o useForm e desestruture register, handleSubmit e errors\n\n  // 2. Crie a função onSubmit que exibe os dados\n\n  return (\n    <form>\n      <div>\n        <label>Nome</label>\n        <input placeholder=\"Seu nome\" />\n        {/* Mostre erro do nome aqui */}\n      </div>\n\n      <div>\n        <label>Email</label>\n        <input placeholder=\"seu@email.com\" />\n        {/* Mostre erro do email aqui */}\n      </div>\n\n      <div>\n        <label>Senha</label>\n        <input type=\"password\" placeholder=\"Mínimo 6 caracteres\" />\n        {/* Mostre erro da senha aqui */}\n      </div>\n\n      <button type=\"submit\">Cadastrar</button>\n    </form>\n  );\n}",
+    "solution": "import { useForm } from 'react-hook-form';\n\nexport default function CadastroForm() {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors }\n  } = useForm();\n\n  const onSubmit = (data) => {\n    alert(JSON.stringify(data, null, 2));\n  };\n\n  return (\n    <form onSubmit={handleSubmit(onSubmit)}>\n      <div>\n        <label>Nome</label>\n        <input\n          {...register('nome', {\n            required: 'Nome é obrigatório',\n            minLength: {\n              value: 3,\n              message: 'Nome deve ter pelo menos 3 caracteres'\n            }\n          })}\n          placeholder=\"Seu nome\"\n        />\n        {errors.nome && <span style={{ color: 'red' }}>{errors.nome.message}</span>}\n      </div>\n\n      <div>\n        <label>Email</label>\n        <input\n          {...register('email', {\n            required: 'Email é obrigatório',\n            pattern: {\n              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,\n              message: 'Email inválido'\n            }\n          })}\n          placeholder=\"seu@email.com\"\n        />\n        {errors.email && <span style={{ color: 'red' }}>{errors.email.message}</span>}\n      </div>\n\n      <div>\n        <label>Senha</label>\n        <input\n          type=\"password\"\n          {...register('senha', {\n            required: 'Senha é obrigatória',\n            minLength: {\n              value: 6,\n              message: 'Senha deve ter pelo menos 6 caracteres'\n            }\n          })}\n          placeholder=\"Mínimo 6 caracteres\"\n        />\n        {errors.senha && <span style={{ color: 'red' }}>{errors.senha.message}</span>}\n      </div>\n\n      <button type=\"submit\">Cadastrar</button>\n    </form>\n  );\n}",
+    "tests": [],
+    "hint": "Desestruture { register, handleSubmit, formState: { errors } } do useForm(). Use {...register('campo', { regras })} em cada input. No form, use onSubmit={handleSubmit(onSubmit)}. Para mostrar erros, use {errors.campo && <span>{errors.campo.message}</span>}.",
+    "solutionExplanation": "O useForm() retorna os métodos necessários. O register conecta cada input ao formulário com regras de validação (required, minLength, pattern). O handleSubmit valida todos os campos antes de chamar onSubmit — se alguma validação falhar, os erros são populados em formState.errors. Cada erro tem uma propriedade message com o texto que definimos nas regras.",
+    "sandpackDependencies": {
+      "react-hook-form": "^7.0.0"
+    }
+  },
+  "keyTakeaways": [
+    "register conecta inputs ao formulário e define regras de validação em um só lugar",
+    "handleSubmit só chama o callback se TODAS as validações passarem",
+    "errors.campo.message exibe a mensagem de erro customizada de cada campo",
+    "Pattern com regex valida formatos como email sem bibliotecas extras"
+  ],
+  "commonMistakes": [
+    "Esquecer de adicionar onSubmit={handleSubmit(onSubmit)} no form — sem isso o formulário faz reload da página",
+    "Usar onChange manual com register — o register já gerencia onChange internamente",
+    "Não desestruturar errors de formState — acessar formState.errors diretamente pode não triggar re-render"
+  ],
+  "encouragement": "Parabéns por criar seu primeiro formulário com React Hook Form! Esse padrão de register + handleSubmit + errors é a base de TODOS os formulários que você vai construir daqui em diante. Nas próximas lições, você vai adicionar Zod e campos dinâmicos sobre essa mesma fundação.",
+  "realWorldExample": "Todo app que você usa diariamente tem um formulário como esse: telas de cadastro do Spotify, login do Gmail, configurações de perfil do Instagram. A validação client-side com mensagens claras é essencial para uma boa experiência do usuário."
+}

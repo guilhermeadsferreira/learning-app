@@ -4,8 +4,9 @@
   "moduleId": "components",
   "title": "Composição de componentes",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "Composição é como montar LEGO: você combina peças pequenas para criar estruturas maiores, sem herança rígida.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Composição é como montar um prato no restaurante: você combina ingredientes prontos (arroz, feijão, salada) em diferentes combinações, sem precisar reinventar cada ingrediente do zero.",
   "content": {
     "sections": [
       {
@@ -19,7 +20,45 @@
       {
         "type": "list",
         "content": "Containment — componentes que recebem children\nSpecialization — componentes específicos que usam genéricos\nComposição mantém o código flexível e reutilizável"
+      },
+      {
+        "type": "heading",
+        "content": "Composição na prática"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão mais comum é criar componentes genéricos (containers) e compor com componentes específicos. O componente pai decide o layout; os filhos decidem o conteúdo."
+      },
+      {
+        "type": "code",
+        "content": "function PageLayout({ children, sidebar }) {\n  return (\n    <div style={{ display: 'flex' }}>\n      <aside style={{ width: 250 }}>{sidebar}</aside>\n      <main style={{ flex: 1 }}>{children}</main>\n    </div>\n  );\n}\n\nfunction MenuLateral() {\n  return (\n    <nav>\n      <a href=\"/\">Home</a>\n      <a href=\"/cursos\">Cursos</a>\n    </nav>\n  );\n}\n\nfunction App() {\n  return (\n    <PageLayout sidebar={<MenuLateral />}>\n      <h1>Bem-vindo!</h1>\n      <p>Conteúdo principal aqui.</p>\n    </PageLayout>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar composição?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use composição sempre que precisar de componentes flexíveis. Layouts, modais, cards, formulários — qualquer componente que precisa ser reutilizado com conteúdos diferentes é candidato a composição. Se você está pensando em criar uma 'classe pai' e 'estender', pare: no React, a resposta quase sempre é composição."
+      },
+      {
+        "type": "callout",
+        "content": "O próprio time do React afirma que nunca encontrou um caso de uso real onde herança fosse melhor que composição. Se precisar compartilhar lógica entre componentes, use custom hooks — não herança.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Composição = combinar componentes pequenos para formar interfaces complexas",
+    "Use children para conteúdo flexível e props para passar componentes específicos",
+    "Herança quase nunca é necessária em React — composição resolve"
+  ],
+  "commonMistakes": [
+    "Tentar usar herança (extends) em vez de composição — React não é POO clássico",
+    "Criar componentes que fazem tudo em vez de compor vários pequenos",
+    "Esquecer que props também podem receber componentes, não só dados"
+  ],
+  "realWorldExample": "Dashboards como o do Vercel usam composição extensivamente: um componente <DashboardLayout> recebe a sidebar e o conteúdo principal via composição, permitindo que cada página tenha conteúdo diferente sem duplicar a estrutura.",
+  "encouragement": "Composição é o padrão de ouro do React. Entender isso muda completamente a forma como você projeta interfaces — de 'herdar' para 'combinar'!"
 }

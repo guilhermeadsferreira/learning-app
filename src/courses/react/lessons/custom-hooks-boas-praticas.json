@@ -4,13 +4,14 @@
   "moduleId": "custom-hooks",
   "title": "Boas práticas de custom hooks",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Um bom custom hook é focado, testável e com API clara — como uma função bem desenhada.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "Boas práticas (2024)"
+        "content": "Boas práticas"
       },
       {
         "type": "list",
@@ -19,7 +20,56 @@
       {
         "type": "paragraph",
         "content": "Objetos como retorno facilitam desestruturação seletiva e evolução da API sem quebrar quem usa apenas parte do retorno."
+      },
+      {
+        "type": "heading",
+        "content": "Bom vs. ruim: estrutura de um hook"
+      },
+      {
+        "type": "paragraph",
+        "content": "Compare estas duas abordagens. O hook ruim mistura responsabilidades; o bom mantém foco em uma única preocupação:"
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Ruim: hook faz coisas demais (fetch + form + validação)\nfunction useUserPage() {\n  const [user, setUser] = useState(null);\n  const [formData, setFormData] = useState({});\n  const [errors, setErrors] = useState({});\n  const [loading, setLoading] = useState(false);\n\n  useEffect(() => { /* fetch user */ }, []);\n  const validate = () => { /* valida form */ };\n  const submit = () => { /* envia form */ };\n\n  return { user, formData, setFormData, errors, loading, validate, submit };\n}\n\n// ✅ Bom: cada hook tem uma responsabilidade\nfunction useUser(id) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    fetch(`/api/users/${id}`)\n      .then(res => res.json())\n      .then(setUser)\n      .finally(() => setLoading(false));\n  }, [id]);\n\n  return { user, loading };\n}\n\nfunction useForm(initialValues) {\n  const [values, setValues] = useState(initialValues);\n  const setValue = (key, val) =>\n    setValues(prev => ({ ...prev, [key]: val }));\n  const reset = () => setValues(initialValues);\n  return { values, setValue, reset };\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "API do retorno: objetos vs. arrays"
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Array — difícil lembrar a ordem, renomear é confuso\nconst [data, loading, error, refetch] = useFetch('/api/users');\n\n// ✅ Objeto — claro, extensível, desestruturação seletiva\nconst { data, error } = useFetch('/api/users');\n// Posso ignorar loading e refetch sem problemas",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Custom hooks podem ser testados isoladamente com @testing-library/react-hooks (ou renderHook do @testing-library/react). Teste o hook sem renderizar componentes — chame as funções retornadas e verifique o estado. Hooks puros (sem efeitos) são ainda mais fáceis de testar.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Checklist de qualidade"
+      },
+      {
+        "type": "list",
+        "content": "O hook tem uma responsabilidade clara e nomeada? (useToggle, useForm, useFetch)\nA API de retorno é um objeto com nomes descritivos?\nO hook é testável sem montar um componente complexo?\nSe o hook cresceu demais, ele pode ser composto por hooks menores?\nO nome comunica o propósito? (useAuth, useCart, useTheme)"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Cada hook deve ter uma única responsabilidade — se faz coisas demais, divida",
+    "Prefira retornar objetos em vez de arrays — mais legível e extensível",
+    "Hooks podem (e devem) ser compostos: um hook pode chamar outros hooks",
+    "Teste hooks com renderHook — sem precisar montar componentes inteiros"
+  ],
+  "commonMistakes": [
+    "Criar um hook 'god object' que gerencia estado da página inteira",
+    "Retornar arrays longos — ninguém lembra o que é o quarto elemento",
+    "Não testar hooks isoladamente — bugs ficam escondidos dentro de componentes",
+    "Nomear hooks de forma genérica (useData, useStuff) — o nome deve comunicar o propósito"
+  ],
+  "realWorldExample": "No código-fonte do Zustand (gerenciamento de estado), o hook useStore é composto internamente por useSyncExternalStore. No React Hook Form, useForm compõe useWatch, useFormState e useFieldArray. Composição de hooks é o padrão da indústria para manter complexidade sob controle.",
+  "encouragement": "Aplicar boas práticas desde o início evita refatorações dolorosas depois. Hooks pequenos, focados e bem nomeados são o segredo de codebases React sustentáveis!"
 }

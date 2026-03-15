@@ -4,7 +4,8 @@
   "moduleId": "advanced",
   "title": "React 19 novidades",
   "type": "explanation",
-  "xp": 20,
+  "xp": 10,
+  "difficulty": "advanced",
   "analogy": "React 19 é como um upgrade do carro: Actions, use(), useFormStatus — menos boilerplate, mais poder nativo.",
   "content": {
     "sections": [
@@ -19,7 +20,76 @@
       {
         "type": "paragraph",
         "content": "React 19 está estável desde dezembro 2024. O Compiler reduz a necessidade de useMemo/useCallback manual em muitos casos."
+      },
+      {
+        "type": "heading",
+        "content": "Actions — forms assíncronos nativos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Actions permitem passar funções async diretamente para o atributo action de um <form>. O React gerencia o estado de pending e error automaticamente — sem precisar de useState para loading."
+      },
+      {
+        "type": "code",
+        "content": "async function createUser(formData: FormData) {\n  const name = formData.get('name') as string;\n  await saveToDatabase({ name });\n}\n\nfunction SignupForm() {\n  return (\n    <form action={createUser}>\n      <input name=\"name\" placeholder=\"Nome\" />\n      <button type=\"submit\">Cadastrar</button>\n    </form>\n  );\n}",
+        "language": "typescript"
+      },
+      {
+        "type": "heading",
+        "content": "useFormStatus — estado do form sem prop drilling"
+      },
+      {
+        "type": "paragraph",
+        "content": "O hook useFormStatus permite que componentes filhos de um <form> acessem o estado de submissão sem precisar receber props. É ideal para criar botões de submit reutilizáveis."
+      },
+      {
+        "type": "code",
+        "content": "import { useFormStatus } from 'react-dom';\n\nfunction SubmitButton() {\n  const { pending } = useFormStatus();\n\n  return (\n    <button type=\"submit\" disabled={pending}>\n      {pending ? 'Enviando...' : 'Enviar'}\n    </button>\n  );\n}",
+        "language": "typescript"
+      },
+      {
+        "type": "heading",
+        "content": "use() — consumir Promises e Contexts"
+      },
+      {
+        "type": "paragraph",
+        "content": "O novo hook use() pode ser usado para consumir Promises (com Suspense) e Contexts. Diferente dos outros hooks, ele pode ser chamado dentro de condicionais."
+      },
+      {
+        "type": "code",
+        "content": "import { use, Suspense } from 'react';\n\nfunction UserProfile({ userPromise }: { userPromise: Promise<User> }) {\n  const user = use(userPromise);\n\n  return <h1>{user.name}</h1>;\n}\n\n// Uso com Suspense\n<Suspense fallback={<p>Carregando...</p>}>\n  <UserProfile userPromise={fetchUser(1)} />\n</Suspense>",
+        "language": "typescript"
+      },
+      {
+        "type": "heading",
+        "content": "ref como prop — sem forwardRef"
+      },
+      {
+        "type": "paragraph",
+        "content": "No React 19, ref é passado como uma prop normal. Não é mais necessário usar forwardRef — o que simplifica bastante componentes que precisam expor uma referência DOM."
+      },
+      {
+        "type": "code",
+        "content": "// React 19 — ref é uma prop comum\nfunction CustomInput({ ref, ...props }: { ref?: React.Ref<HTMLInputElement> }) {\n  return <input ref={ref} {...props} />;\n}\n\n// Antes (React 18) — precisava de forwardRef\n// const CustomInput = forwardRef<HTMLInputElement>((props, ref) => {\n//   return <input ref={ref} {...props} />;\n// });",
+        "language": "typescript"
+      },
+      {
+        "type": "callout",
+        "content": "Você não precisa migrar tudo de uma vez. React 19 é retrocompatível — forwardRef ainda funciona, Actions são opcionais, e o Compiler pode ser adotado incrementalmente.",
+        "variant": "info"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Actions eliminam boilerplate de loading/error em formulários — o React gerencia isso nativamente",
+    "use() permite consumir Promises dentro de componentes com Suspense, simplificando data fetching",
+    "ref agora é uma prop comum — forwardRef não é mais necessário em novos componentes"
+  ],
+  "commonMistakes": [
+    "Usar useFormStatus fora de um <form> com action — o hook só funciona em componentes filhos do form",
+    "Chamar use() com uma Promise criada durante o render — a Promise deve ser estável (vinda de props, cache ou estado)",
+    "Achar que o React Compiler substitui toda otimização manual — em casos complexos, useMemo/useCallback ainda podem ser úteis"
+  ],
+  "encouragement": "React 19 é uma evolução natural. Se você já entende hooks e componentes, a curva de aprendizado é suave. Comece experimentando Actions em um formulário simples — o ganho de produtividade é imediato.",
+  "realWorldExample": "Frameworks como Next.js 15 já usam Actions e use() como padrão. Ao dominar esses conceitos, você estará alinhado com o que as empresas estão adotando em novos projetos."
 }

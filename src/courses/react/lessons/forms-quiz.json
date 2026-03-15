@@ -1,0 +1,117 @@
+{
+  "id": "forms-quiz",
+  "courseId": "react",
+  "moduleId": "forms",
+  "title": "Quiz: Formulários Avançados",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Este quiz é como a revisão final antes de entregar um projeto: vamos verificar se todos os conceitos de formulários estão sólidos antes de seguir para o próximo módulo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revise seus conhecimentos sobre formulários"
+      },
+      {
+        "type": "paragraph",
+        "content": "Responda as perguntas abaixo para consolidar o que você aprendeu sobre React Hook Form, validação com Zod e formulários dinâmicos. Cada pergunta testa um conceito essencial para criar formulários profissionais em React."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal vantagem do React Hook Form sobre formulários controlados tradicionais (useState para cada campo)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tem mais funcionalidades de estilização",
+          "isCorrect": false,
+          "explanation": "O React Hook Form não lida com estilização — seu foco é gerenciamento de estado e validação do formulário."
+        },
+        {
+          "id": "b",
+          "text": "Minimiza re-renders usando uncontrolled components e refs",
+          "isCorrect": true,
+          "explanation": "Correto! O RHF usa refs internamente para monitorar os valores dos campos, evitando re-renders a cada digitação. Em formulários grandes, isso faz uma diferença enorme de performance."
+        },
+        {
+          "id": "c",
+          "text": "Funciona sem JavaScript no navegador",
+          "isCorrect": false,
+          "explanation": "O React Hook Form é uma biblioteca JavaScript — precisa de JS habilitado. A vantagem está na performance e na API declarativa."
+        },
+        {
+          "id": "d",
+          "text": "Substitui completamente o HTML nativo de formulários",
+          "isCorrect": false,
+          "explanation": "O RHF trabalha COM os elementos HTML nativos (input, select, textarea). Ele melhora o gerenciamento, não substitui o HTML."
+        }
+      ]
+    },
+    {
+      "question": "No código abaixo, qual é o papel do zodResolver?\n\nuseForm({ resolver: zodResolver(schema) })",
+      "options": [
+        {
+          "id": "a",
+          "text": "Converte o schema Zod em componentes React",
+          "isCorrect": false,
+          "explanation": "O zodResolver não gera componentes. Ele conecta a validação do Zod ao sistema de validação do React Hook Form."
+        },
+        {
+          "id": "b",
+          "text": "Conecta a validação do Zod ao React Hook Form, delegando toda validação ao schema",
+          "isCorrect": true,
+          "explanation": "Correto! O zodResolver adapta o schema Zod ao formato que o React Hook Form espera. Ao submeter o formulário, o RHF passa os dados para o Zod validar e converte os erros do Zod para o formato de formState.errors."
+        },
+        {
+          "id": "c",
+          "text": "Faz requisições HTTP para validar os dados no servidor",
+          "isCorrect": false,
+          "explanation": "O zodResolver faz validação local (client-side). Para validação server-side, você precisaria de uma API separada."
+        },
+        {
+          "id": "d",
+          "text": "Gera automaticamente os inputs do formulário baseado no schema",
+          "isCorrect": false,
+          "explanation": "O zodResolver não gera inputs. Você ainda precisa criar os inputs manualmente e conectá-los com register."
+        }
+      ]
+    },
+    {
+      "question": "Ao usar useFieldArray para campos dinâmicos, por que é importante usar field.id como key em vez do index do array?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Porque o index causa erro de compilação no TypeScript",
+          "isCorrect": false,
+          "explanation": "O TypeScript aceita index como key sem erro. O problema é de comportamento em runtime, não de tipagem."
+        },
+        {
+          "id": "b",
+          "text": "Porque o React exige keys únicas e index pode se repetir",
+          "isCorrect": false,
+          "explanation": "Index não se repete em um mesmo array. O problema é que o index MUDA quando você remove um item do meio — o React perde a referência de qual campo é qual."
+        },
+        {
+          "id": "c",
+          "text": "Porque field.id é estável e garante que o React reconcilia corretamente ao adicionar/remover itens",
+          "isCorrect": true,
+          "explanation": "Correto! Quando você remove o item 2 de uma lista de 5, os índices 3, 4 e 5 mudam. Com index como key, o React acha que esses campos foram modificados e perde o estado interno. O field.id é estável — cada item mantém sua identidade independente da posição."
+        },
+        {
+          "id": "d",
+          "text": "Porque field.id é obrigatório e sem ele o formulário não renderiza",
+          "isCorrect": false,
+          "explanation": "O formulário renderiza com qualquer key válida. Mas usar index causa bugs sutis de estado ao remover itens — valores aparecem no campo errado."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "React Hook Form minimiza re-renders com uncontrolled components — ideal para formulários grandes",
+    "zodResolver conecta Zod ao RHF, centralizando validação no schema",
+    "field.id garante reconciliação correta em listas dinâmicas — nunca use index como key"
+  ],
+  "encouragement": "Se você acertou as três questões, parabéns! Você domina os conceitos fundamentais de formulários avançados em React: performance com RHF, validação com Zod e campos dinâmicos com useFieldArray. Esses são os mesmos padrões usados em apps de produção."
+}

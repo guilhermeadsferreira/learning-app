@@ -4,8 +4,9 @@
   "moduleId": "forms",
   "title": "React Hook Form",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "React Hook Form é como um assistente de formulários: menos re-renders, validação integrada, e API simples com register.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "React Hook Form é como um assistente de formulários: enquanto o jeito tradicional (controlled) fica monitorando cada tecla que você digita, o RHF só coleta os dados quando você clica em 'enviar' — como um garçom eficiente que anota tudo de uma vez em vez de ir à cozinha a cada prato.",
   "content": {
     "sections": [
       {
@@ -14,13 +15,65 @@
       },
       {
         "type": "paragraph",
-        "content": "Usa uncontrolled components e refs para minimizar re-renders. Performance superior a Formik. API com useForm, register, handleSubmit."
+        "content": "Formulários controlados tradicionais atualizam o estado a cada tecla digitada, causando re-renders em todo o formulário. O React Hook Form usa uncontrolled components e refs internamente, resultando em performance muito superior — especialmente em formulários grandes."
+      },
+      {
+        "type": "callout",
+        "content": "Com React Hook Form, um formulário de 20 campos re-renderiza apenas o campo que mudou. Com controlled inputs tradicionais, TODOS os 20 campos re-renderizam a cada digitação.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Configuração básica com useForm"
+      },
+      {
+        "type": "paragraph",
+        "content": "O hook useForm retorna tudo que você precisa: register para conectar inputs, handleSubmit para processar o envio, e formState para acessar erros de validação."
       },
       {
         "type": "code",
-        "content": "const { register, handleSubmit, formState: { errors } } = useForm();\n\n<input {...register('email', { required: true })} />\n{errors.email && <span>Campo obrigatório</span>}",
+        "content": "import { useForm } from 'react-hook-form';\n\nfunction CadastroForm() {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors }\n  } = useForm();\n\n  const onSubmit = (data) => {\n    console.log(data);\n    // { nome: 'Maria', email: 'maria@email.com' }\n  };\n\n  return (\n    <form onSubmit={handleSubmit(onSubmit)}>\n      <input {...register('nome', { required: 'Nome é obrigatório' })} />\n      {errors.nome && <span>{errors.nome.message}</span>}\n\n      <input {...register('email', {\n        required: 'Email é obrigatório',\n        pattern: {\n          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,\n          message: 'Email inválido'\n        }\n      })} />\n      {errors.email && <span>{errors.email.message}</span>}\n\n      <button type=\"submit\">Cadastrar</button>\n    </form>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Entendendo o register"
+      },
+      {
+        "type": "paragraph",
+        "content": "O register conecta um input ao formulário. Ele retorna props como onChange, onBlur e ref. Ao usar o spread {...register('campo')}, o RHF monitora o campo sem causar re-renders no componente inteiro."
+      },
+      {
+        "type": "code",
+        "content": "// register aceita regras de validação como segundo argumento\nregister('senha', {\n  required: 'Senha é obrigatória',\n  minLength: {\n    value: 6,\n    message: 'Mínimo de 6 caracteres'\n  }\n})\n\n// Equivale a gerar automaticamente:\n// { onChange, onBlur, ref, name: 'senha' }",
+        "language": "javascript"
+      },
+      {
+        "type": "heading",
+        "content": "Fluxo de submissão"
+      },
+      {
+        "type": "paragraph",
+        "content": "O handleSubmit recebe sua função de callback e só a executa se TODAS as validações passarem. Se houver erros, ele popula o objeto errors automaticamente — sem precisar de state manual."
+      },
+      {
+        "type": "code",
+        "content": "// handleSubmit valida antes de chamar onSubmit\n<form onSubmit={handleSubmit(onSubmit)}>\n\n// Se a validação falhar, onSubmit NÃO é chamada.\n// Os erros ficam disponíveis em formState.errors.\n\n// Você pode ter um handler de erro separado:\nhandleSubmit(onValid, onInvalid)",
         "language": "jsx"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "useForm retorna register, handleSubmit e formState — a tríade essencial",
+    "register conecta inputs ao formulário sem controlled state",
+    "handleSubmit só executa o callback se todas as validações passarem",
+    "Erros ficam em formState.errors, indexados pelo nome do campo"
+  ],
+  "commonMistakes": [
+    "Esquecer de usar o spread {...register('campo')} — sem isso o campo não é registrado",
+    "Misturar controlled (useState + value) com register — causa conflito de controle",
+    "Não desestruturar errors de formState — acessar via formState.errors diretamente pode não trigger re-render"
+  ],
+  "encouragement": "React Hook Form é a biblioteca de formulários mais popular do ecossistema React por um motivo: ela é simples, performática e extensível. Dominando useForm, register e handleSubmit, você já consegue criar 90% dos formulários que vai encontrar em projetos reais.",
+  "realWorldExample": "Formulários de cadastro, login, checkout e perfil em apps como Nubank, iFood e Mercado Livre usam abordagens similares: validação declarativa, mensagens de erro por campo, e submissão condicional. O React Hook Form é usado em produção por milhares de empresas."
 }

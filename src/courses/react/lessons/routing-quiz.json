@@ -1,0 +1,66 @@
+{
+  "id": "routing-quiz",
+  "courseId": "react",
+  "moduleId": "routing",
+  "title": "Quiz: React Router",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Pense no React Router como o GPS do seu app. Você definiu os destinos (rotas), aprendeu a navegar (Link, useNavigate), a ler a localização (useParams, useLocation) e a criar atalhos inteligentes (rotas aninhadas). Agora é hora de testar se você sabe usar esse GPS sem precisar consultar o manual.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revisão: React Router"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste quiz você vai revisar os conceitos fundamentais de roteamento com React Router: definição de rotas, parâmetros dinâmicos, rotas aninhadas com Outlet, e navegação com Link e useNavigate. Boa sorte!"
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a forma correta de capturar um parâmetro dinâmico da URL (ex: /produto/:id) dentro de um componente?",
+      "options": [
+        { "text": "const { id } = useParams()", "isCorrect": true },
+        { "text": "const id = useLocation().params.id", "isCorrect": false },
+        { "text": "const id = window.location.pathname.split('/')[2]", "isCorrect": false },
+        { "text": "const { id } = useSearchParams()", "isCorrect": false }
+      ],
+      "explanation": "useParams() é o hook do React Router que retorna um objeto com os parâmetros dinâmicos definidos na rota (:id, :slug, etc). Ele sempre retorna strings."
+    },
+    {
+      "question": "Em rotas aninhadas, qual componente é usado no layout pai para indicar onde a rota filha ativa deve ser renderizada?",
+      "options": [
+        { "text": "<Children />", "isCorrect": false },
+        { "text": "<RouterView />", "isCorrect": false },
+        { "text": "<Outlet />", "isCorrect": true },
+        { "text": "<Route />", "isCorrect": false }
+      ],
+      "explanation": "O <Outlet /> funciona como um placeholder no layout pai. Quando uma rota filha está ativa, seu componente é renderizado no local onde o Outlet está posicionado."
+    },
+    {
+      "question": "Qual a diferença principal entre <Link> e useNavigate() para navegação?",
+      "options": [
+        {
+          "text": "Link é para rotas dinâmicas, useNavigate para rotas estáticas",
+          "isCorrect": false
+        },
+        {
+          "text": "Link é declarativo (usado no JSX como componente), useNavigate é programático (chamado em funções, ex: após submit)",
+          "isCorrect": true
+        },
+        { "text": "Link recarrega a página, useNavigate não", "isCorrect": false },
+        { "text": "Não há diferença — são intercambiáveis", "isCorrect": false }
+      ],
+      "explanation": "Link é um componente que o usuário clica para navegar (declarativo). useNavigate() retorna uma função para navegar via código — útil após ações como login, submit ou logout (programático). Ambos navegam sem recarregar a página."
+    }
+  ],
+  "keyTakeaways": [
+    "useParams() captura parâmetros dinâmicos da rota (:id, :slug)",
+    "<Outlet /> é o placeholder de rotas filhas em layouts aninhados",
+    "Link é navegação declarativa (no JSX); useNavigate é navegação programática (em funções)"
+  ],
+  "encouragement": "Se você acertou essas questões, o React Router já faz parte do seu repertório. Roteamento é a espinha dorsal de qualquer app React — e você domina os fundamentos."
+}

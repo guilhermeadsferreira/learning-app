@@ -4,10 +4,19 @@
   "moduleId": "performance",
   "title": "React.memo",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "React.memo é como um guarda de trânsito: só deixa o componente re-renderizar se as props mudaram (comparação superficial).",
   "content": {
     "sections": [
+      {
+        "type": "heading",
+        "content": "O que é React.memo?"
+      },
+      {
+        "type": "paragraph",
+        "content": "React.memo é um Higher-Order Component que memoriza o resultado da renderização. Se as props não mudarem (comparação shallow), o React reutiliza o resultado anterior em vez de re-renderizar o componente."
+      },
       {
         "type": "heading",
         "content": "Quando usar"
@@ -17,9 +26,54 @@
         "content": "Componente com render caro\nProps que mudam pouco\nListas com muitos itens similares\nComponentes profundos na árvore"
       },
       {
+        "type": "heading",
+        "content": "Exemplo: envolvendo um componente com React.memo"
+      },
+      {
+        "type": "code",
+        "content": "import { memo } from 'react';\n\ninterface UserCardProps {\n  name: string;\n  avatar: string;\n}\n\nconst UserCard = memo(function UserCard({ name, avatar }: UserCardProps) {\n  console.log('UserCard renderizou');\n  return (\n    <div className=\"card\">\n      <img src={avatar} alt={name} />\n      <h3>{name}</h3>\n    </div>\n  );\n});\n\nexport default UserCard;",
+        "language": "tsx"
+      },
+      {
+        "type": "paragraph",
+        "content": "Com memo, o UserCard só re-renderiza quando name ou avatar mudam. Se o componente pai re-renderizar por outro motivo (ex: estado interno), o UserCard é pulado."
+      },
+      {
+        "type": "heading",
+        "content": "Quando memo NÃO funciona"
+      },
+      {
+        "type": "paragraph",
+        "content": "Se você passa uma função inline ou um objeto literal como prop, uma nova referência é criada a cada render — e o memo é quebrado."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Memo quebrado: handleClick é recriado a cada render\nfunction Parent() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <>\n      <button onClick={() => setCount(c => c + 1)}>+</button>\n      <UserCard\n        name=\"Ana\"\n        avatar=\"/ana.jpg\"\n        onClick={() => console.log('clicou')}  // nova ref!\n      />\n    </>\n  );\n}\n\n// ✅ Memo preservado: useCallback estabiliza a referência\nfunction Parent() {\n  const [count, setCount] = useState(0);\n\n  const handleClick = useCallback(() => {\n    console.log('clicou');\n  }, []);\n\n  return (\n    <>\n      <button onClick={() => setCount(c => c + 1)}>+</button>\n      <UserCard name=\"Ana\" avatar=\"/ana.jpg\" onClick={handleClick} />\n    </>\n  );\n}",
+        "language": "tsx"
+      },
+      {
+        "type": "callout",
+        "content": "React.memo não é uma bala de prata. Ele adiciona o custo de comparar props a cada render. Se as props mudam frequentemente, o memo só adiciona overhead sem benefício. Use com critério — meça antes com o React DevTools Profiler.",
+        "variant": "warning"
+      },
+      {
         "type": "paragraph",
         "content": "Cuidado: passar funções inline como props quebra o memo (nova referência a cada render). Use useCallback no pai ou mova a função para dentro do filho."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "React.memo pula a re-renderização quando as props não mudam (shallow comparison)",
+    "Funções e objetos inline criam novas referências e quebram o memo — use useCallback e useMemo",
+    "Memo tem custo: a comparação de props acontece toda vez, então só vale quando o render é caro",
+    "Sempre meça com Profiler antes de aplicar memo indiscriminadamente"
+  ],
+  "commonMistakes": [
+    "Usar React.memo em todos os componentes sem medir se há ganho real",
+    "Passar funções inline como props para componentes memorizados, anulando o benefício",
+    "Esquecer que memo faz comparação shallow — objetos aninhados com mesmos valores mas referências diferentes disparam re-render",
+    "Não usar useCallback/useMemo no componente pai para estabilizar props de referência"
+  ],
+  "realWorldExample": "Em dashboards com dezenas de cards de métricas, aplicar React.memo nos cards evita que todos re-renderizem quando apenas um dado muda. Isso torna a interface visivelmente mais fluida.",
+  "encouragement": "Saber quando e como usar memo é o que diferencia um dev React júnior de um pleno. Você está construindo esse olhar crítico agora! 🎯"
 }

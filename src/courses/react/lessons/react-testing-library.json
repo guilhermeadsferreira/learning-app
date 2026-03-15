@@ -4,7 +4,8 @@
   "moduleId": "testing",
   "title": "React Testing Library",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "RTL é como um usuário cego: encontra elementos por texto, label e roles — o que importa para acessibilidade.",
   "content": {
     "sections": [
@@ -19,7 +20,45 @@
       {
         "type": "list",
         "content": "Prioridade de queries: getByRole > getByLabelText > getByPlaceholderText > getByText > getByTestId\nuserEvent sobre fireEvent — simula interações reais\nARRANGE-ACT-ASSERT — estrutura dos testes"
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo prático"
+      },
+      {
+        "type": "paragraph",
+        "content": "Veja um teste completo que renderiza um componente, interage com ele e verifica o resultado. Esse é o padrão que você vai usar na maioria dos testes:"
+      },
+      {
+        "type": "code",
+        "content": "import { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport Greeting from './Greeting';\n\ntest('mostra mensagem ao clicar no botão', async () => {\n  // Arrange — renderiza o componente\n  render(<Greeting name=\"Maria\" />);\n\n  // Act — simula o clique do usuário\n  const button = screen.getByRole('button', { name: /saudar/i });\n  await userEvent.click(button);\n\n  // Assert — verifica o resultado na tela\n  expect(screen.getByText(/olá, maria/i)).toBeInTheDocument();\n});",
+        "language": "javascript"
+      },
+      {
+        "type": "callout",
+        "content": "Teste o comportamento, não a implementação! Em vez de verificar se um setState foi chamado, verifique se o texto correto aparece na tela. O teste deve quebrar quando o comportamento muda, não quando você refatora o código interno.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Queries essenciais"
+      },
+      {
+        "type": "list",
+        "content": "getByRole — busca por role ARIA (button, heading, textbox). Preferível por promover acessibilidade\ngetByText — busca por texto visível. Útil para verificar conteúdo na tela\ngetByLabelText — busca por label de formulário. Ideal para inputs\nfindByText — versão assíncrona do getByText. Espera o elemento aparecer (útil para loading states)"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "RTL testa componentes da perspectiva do usuário — queries buscam por texto, roles e labels",
+    "A estrutura padrão é Arrange (render) → Act (interação) → Assert (verificação)",
+    "Prefira getByRole sobre getByTestId — isso garante acessibilidade e testes mais resilientes"
+  ],
+  "commonMistakes": [
+    "Usar getByTestId como primeira opção — é o último recurso, prefira queries semânticas",
+    "Usar fireEvent quando userEvent é mais adequado — userEvent simula a interação real do navegador (focus, hover, click)",
+    "Esquecer de usar await com userEvent — as interações são assíncronas"
+  ],
+  "encouragement": "Você agora conhece a ferramenta mais usada para testar React no mundo real. O padrão Arrange-Act-Assert vai se repetir em todo teste que você escrever — pratique e vai virar automático!",
+  "realWorldExample": "Grandes projetos open-source como o Material UI usam React Testing Library extensivamente. Cada componente (Button, Dialog, TextField) tem testes que verificam interações reais: clicar, digitar, navegar com teclado. Isso garante que milhares de apps que dependem da lib não quebrem entre versões."
 }

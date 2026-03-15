@@ -1,0 +1,99 @@
+{
+  "id": "intro-quiz",
+  "courseId": "react",
+  "moduleId": "intro",
+  "title": "Quiz: Introdução ao React",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Pense neste quiz como um check-up rápido antes de seguir viagem — garantir que a bagagem essencial está no lugar.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revise o que você aprendeu"
+      },
+      {
+        "type": "paragraph",
+        "content": "Nas últimas lições, você conheceu o React, entendeu o que é JSX e aprendeu a usar expressões dentro das chaves {}. Agora é hora de testar seus conhecimentos antes de avançar para componentes."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a melhor definição para React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Um framework completo para construir aplicações full-stack",
+          "isCorrect": false,
+          "explanation": "React é uma biblioteca focada na camada de view (interface), não um framework completo como Angular ou Next.js."
+        },
+        {
+          "id": "b",
+          "text": "Uma biblioteca JavaScript para construir interfaces de usuário com componentes reutilizáveis",
+          "isCorrect": true,
+          "explanation": "Exato! React é uma biblioteca (não framework) criada pela Meta, focada em construir interfaces com componentes independentes e reutilizáveis."
+        },
+        {
+          "id": "c",
+          "text": "Uma linguagem de programação criada pelo Facebook",
+          "isCorrect": false,
+          "explanation": "React não é uma linguagem — é uma biblioteca JavaScript. Você escreve código JavaScript (ou TypeScript) usando React."
+        }
+      ]
+    },
+    {
+      "question": "O que o JSX é transformado pelo compilador?",
+      "options": [
+        {
+          "id": "a",
+          "text": "HTML puro que o navegador interpreta diretamente",
+          "isCorrect": false,
+          "explanation": "O navegador não entende JSX. O compilador (Babel/SWC) transforma JSX em chamadas JavaScript antes de chegar ao browser."
+        },
+        {
+          "id": "b",
+          "text": "Chamadas para React.createElement() que criam objetos JavaScript",
+          "isCorrect": true,
+          "explanation": "Correto! <h1>Olá</h1> vira React.createElement('h1', null, 'Olá'). JSX é açúcar sintático para essas chamadas."
+        },
+        {
+          "id": "c",
+          "text": "Código CSS otimizado para estilização",
+          "isCorrect": false,
+          "explanation": "JSX não tem relação com CSS. Ele é transformado em chamadas JavaScript que descrevem a estrutura da interface."
+        }
+      ]
+    },
+    {
+      "question": "Qual alternativa mostra o uso CORRETO de expressões dentro do JSX?",
+      "options": [
+        {
+          "id": "a",
+          "text": "{if (logado) return 'Olá'}",
+          "isCorrect": false,
+          "explanation": "if é um statement, não uma expressão. Statements não retornam valor e não podem ser usados dentro das chaves {}."
+        },
+        {
+          "id": "b",
+          "text": "{logado ? 'Olá' : 'Login'}",
+          "isCorrect": true,
+          "explanation": "Perfeito! O operador ternário é uma expressão — ele produz um valor. Por isso funciona dentro das chaves {}."
+        },
+        {
+          "id": "c",
+          "text": "{for (let i = 0; i < 3; i++) { ... }}",
+          "isCorrect": false,
+          "explanation": "for é um statement, não uma expressão. Para iterar no JSX, use .map() que retorna um array (expressão)."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "React é uma biblioteca (não framework) focada em interfaces com componentes",
+    "JSX é transformado em React.createElement() pelo compilador — não é HTML",
+    "Dentro das chaves {} só funcionam expressões, nunca statements como if ou for"
+  ],
+  "encouragement": "Se acertou as três, parabéns — os fundamentos estão sólidos. Se errou alguma, releia a lição correspondente. Entender bem essa base vai facilitar tudo o que vem pela frente."
+}

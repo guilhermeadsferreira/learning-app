@@ -1,0 +1,49 @@
+{
+  "id": "fetch-pratica",
+  "courseId": "react",
+  "moduleId": "data-fetching",
+  "title": "Praticando Data Fetching",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Buscar dados de uma API é como pedir comida por delivery: você faz o pedido (fetch), espera a entrega (loading), e pode receber o prato (sucesso) ou uma mensagem de que o restaurante fechou (erro). Sua UI precisa lidar com cada cenário.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Hora de praticar!"
+      },
+      {
+        "type": "paragraph",
+        "content": "Nas lições anteriores, você aprendeu o padrão fetch + useEffect, os três estados de uma requisição (loading, error, data) e como renderizar condicionalmente. Agora é hora de colocar tudo junto em um componente real."
+      },
+      {
+        "type": "callout",
+        "content": "Você vai usar a API pública JSONPlaceholder para buscar usuários reais. É uma API gratuita feita para praticar — perfeita para exercícios de data fetching.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente UserList que busca uma lista de usuários da API https://jsonplaceholder.typicode.com/users usando fetch + useEffect. Mostre um loading enquanto carrega, uma mensagem de erro se falhar, e a lista de nomes quando os dados chegarem.",
+    "starterCode": "import { useState, useEffect } from 'react';\n\nexport default function UserList() {\n  // Crie os estados: users, loading, error\n\n  // Use useEffect para buscar os dados\n\n  // Renderize condicionalmente: loading, error, lista\n  return (\n    <div>\n      <h2>Usuários</h2>\n      {/* Seu código aqui */}\n    </div>\n  );\n}",
+    "solution": "import { useState, useEffect } from 'react';\n\nexport default function UserList() {\n  const [users, setUsers] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    let cancelled = false;\n\n    fetch('https://jsonplaceholder.typicode.com/users')\n      .then(res => {\n        if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`);\n        return res.json();\n      })\n      .then(data => {\n        if (!cancelled) {\n          setUsers(data);\n          setLoading(false);\n        }\n      })\n      .catch(err => {\n        if (!cancelled) {\n          setError(err.message);\n          setLoading(false);\n        }\n      });\n\n    return () => { cancelled = true; };\n  }, []);\n\n  if (loading) return <p>Carregando...</p>;\n  if (error) return <p>Erro: {error}</p>;\n\n  return (\n    <div>\n      <h2>Usuários</h2>\n      <ul>\n        {users.map(user => (\n          <li key={user.id}>{user.name}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}",
+    "tests": [],
+    "hint": "Use três estados: loading (boolean), error (string | null) e users (array). Inicie o fetch dentro de um useEffect com array de dependências vazio. Lembre-se de verificar res.ok e usar um flag de cleanup.",
+    "solutionExplanation": "O componente segue o padrão clássico de data fetching em React: três useStates para controlar loading, error e dados; um useEffect com array vazio para disparar o fetch ao montar; verificação de res.ok para tratar erros HTTP; e um flag cancelled no cleanup para evitar setState em componente desmontado. A renderização condicional segue a ordem loading → error → dados."
+  },
+  "keyTakeaways": [
+    "O padrão completo de data fetching usa três estados: loading, error e data",
+    "O cleanup com flag cancelled previne bugs em componentes que desmontam durante o fetch",
+    "Sempre verifique res.ok porque o fetch não rejeita em erros HTTP",
+    "A renderização condicional deve seguir a ordem: loading → error → dados"
+  ],
+  "commonMistakes": [
+    "Inicializar loading como false — o componente renderiza sem dados e sem spinner",
+    "Esquecer o array de dependências vazio no useEffect, causando loop infinito",
+    "Não verificar res.ok, fazendo o app tratar um 404 como sucesso",
+    "Usar index como key no map em vez de user.id"
+  ],
+  "realWorldExample": "Todo app que lista dados — posts de um blog, produtos de um e-commerce, contatos de um CRM — segue exatamente esse padrão. O componente que você acabou de criar é a base para qualquer tela de listagem em React.",
+  "encouragement": "Você acabou de construir seu primeiro componente com data fetching completo! Loading, erro, cleanup, renderização — tudo funcionando. Isso é o que os devs fazem no dia a dia. Manda muito! 💪"
+}

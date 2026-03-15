@@ -4,23 +4,76 @@
   "moduleId": "forms",
   "title": "Validação com Zod",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "Zod é como um fiscal de dados: define o formato esperado e valida em runtime. Integra perfeitamente com React Hook Form.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Zod é como um fiscal de alfândega: você define as regras do que pode entrar (tipos, formatos, limites), e ele barra qualquer dado que não cumpra os requisitos — tudo com mensagens claras do motivo da rejeição.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "React Hook Form + Zod"
+        "content": "Por que Zod?"
       },
       {
         "type": "paragraph",
-        "content": "Use @hookform/resolvers/zod para conectar Zod ao React Hook Form. O schema Zod valida os dados e fornece mensagens de erro tipadas."
+        "content": "Validação com as regras inline do register funciona, mas fica difícil de manter em formulários complexos. O Zod permite definir um schema declarativo que valida em runtime E gera tipos TypeScript automaticamente — uma única fonte de verdade."
+      },
+      {
+        "type": "callout",
+        "content": "O Zod valida em runtime (diferente do TypeScript que só valida em compilação). Isso significa que dados vindos de APIs, formulários e localStorage são verificados de verdade.",
+        "variant": "info"
+      },
+      {
+        "type": "heading",
+        "content": "Criando um schema com z.object"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um schema Zod descreve a forma exata dos dados que você espera. Cada campo tem um tipo e pode ter regras de validação encadeadas com mensagens customizadas."
       },
       {
         "type": "code",
-        "content": "const schema = z.object({\n  email: z.string().email('Email inválido'),\n  senha: z.string().min(6, 'Mínimo 6 caracteres')\n});\n\nuseForm({ resolver: zodResolver(schema) });",
-        "language": "javascript"
+        "content": "import { z } from 'zod';\n\nconst cadastroSchema = z.object({\n  nome: z\n    .string()\n    .min(3, 'Nome deve ter pelo menos 3 caracteres'),\n  email: z\n    .string()\n    .email('Email inválido'),\n  senha: z\n    .string()\n    .min(6, 'Senha deve ter pelo menos 6 caracteres'),\n  idade: z\n    .number()\n    .min(18, 'Deve ser maior de 18 anos')\n    .optional()\n});\n\n// Zod gera o tipo TypeScript automaticamente!\ntype CadastroData = z.infer<typeof cadastroSchema>;\n// { nome: string; email: string; senha: string; idade?: number }",
+        "language": "typescript"
+      },
+      {
+        "type": "heading",
+        "content": "Integrando com React Hook Form"
+      },
+      {
+        "type": "paragraph",
+        "content": "O pacote @hookform/resolvers conecta o Zod ao React Hook Form. Basta passar o zodResolver na configuração do useForm e toda a validação é delegada ao schema."
+      },
+      {
+        "type": "code",
+        "content": "import { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\nimport { z } from 'zod';\n\nconst schema = z.object({\n  email: z.string().email('Email inválido'),\n  senha: z.string().min(6, 'Mínimo 6 caracteres')\n});\n\ntype FormData = z.infer<typeof schema>;\n\nfunction LoginForm() {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors }\n  } = useForm<FormData>({\n    resolver: zodResolver(schema)\n  });\n\n  return (\n    <form onSubmit={handleSubmit((data) => console.log(data))}>\n      <input {...register('email')} placeholder=\"Email\" />\n      {errors.email && <span>{errors.email.message}</span>}\n\n      <input type=\"password\" {...register('senha')} placeholder=\"Senha\" />\n      {errors.senha && <span>{errors.senha.message}</span>}\n\n      <button type=\"submit\">Entrar</button>\n    </form>\n  );\n}",
+        "language": "tsx"
+      },
+      {
+        "type": "heading",
+        "content": "Validações avançadas"
+      },
+      {
+        "type": "paragraph",
+        "content": "O Zod suporta validações complexas como confirmação de senha com refine, campos condicionais e transformações de dados."
+      },
+      {
+        "type": "code",
+        "content": "const senhaSchema = z.object({\n  senha: z.string().min(6),\n  confirmarSenha: z.string()\n}).refine(\n  (data) => data.senha === data.confirmarSenha,\n  {\n    message: 'As senhas não coincidem',\n    path: ['confirmarSenha'] // erro aparece no campo correto\n  }\n);",
+        "language": "typescript"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "z.object define o schema — uma única fonte de verdade para validação e tipos",
+    "z.infer gera o tipo TypeScript automaticamente a partir do schema",
+    "zodResolver conecta Zod ao React Hook Form via resolver",
+    "refine permite validações customizadas como comparação de campos"
+  ],
+  "commonMistakes": [
+    "Esquecer de instalar @hookform/resolvers — zodResolver não vem junto com react-hook-form",
+    "Definir regras de validação no register E no schema Zod — as regras do schema devem substituir as do register",
+    "Não usar z.infer para tipar o useForm — perde a segurança de tipos que é o principal benefício"
+  ],
+  "encouragement": "Zod + React Hook Form é a combinação mais popular do ecossistema React moderno para formulários. Com essa dupla, você tem validação robusta, tipos automáticos e mensagens de erro claras — tudo que um formulário profissional precisa.",
+  "realWorldExample": "Em apps como formulários de onboarding, cadastro multi-step e configurações de perfil, schemas Zod garantem que dados inválidos nunca cheguem ao backend. Muitos times usam o mesmo schema Zod no frontend E no backend (com Node.js), validando dos dois lados com zero duplicação."
 }

@@ -4,23 +4,76 @@
   "moduleId": "data-fetching",
   "title": "Fetch API e useEffect",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Buscar dados em React é como fazer um pedido: você dispara o fetch, espera a resposta, e atualiza o estado com o resultado.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "Padrão básico"
+        "content": "Por que usar fetch dentro do useEffect?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em React, efeitos colaterais — como buscar dados de uma API — não devem acontecer diretamente no corpo do componente. O corpo executa a cada render, então colocar um fetch ali causaria chamadas infinitas. O useEffect é o lugar certo: ele roda depois que o componente monta (e quando dependências mudam), garantindo que o fetch aconteça no momento correto."
+      },
+      {
+        "type": "heading",
+        "content": "Padrão básico: fetch + useEffect"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão mais comum combina useState para guardar os dados e useEffect para disparar a requisição. Veja o exemplo completo:"
       },
       {
         "type": "code",
-        "content": "useEffect(() => {\n  let cancelled = false;\n  fetch('/api/users')\n    .then(res => res.json())\n    .then(data => { if (!cancelled) setUsers(data); });\n  return () => { cancelled = true; };\n}, []);",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction UserList() {\n  const [users, setUsers] = useState([]);\n\n  useEffect(() => {\n    fetch('https://jsonplaceholder.typicode.com/users')\n      .then(res => res.json())\n      .then(data => setUsers(data));\n  }, []);\n\n  return (\n    <ul>\n      {users.map(user => (\n        <li key={user.id}>{user.name}</li>\n      ))}\n    </ul>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "O array vazio [] como segundo argumento do useEffect significa: 'execute apenas uma vez, quando o componente montar'. Se você esquecer esse array, o fetch vai rodar em loop infinito!",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Cleanup: evitando setState em componente desmontado"
+      },
+      {
+        "type": "paragraph",
+        "content": "Se o usuário navegar para outra página antes do fetch terminar, o componente desmonta — mas a Promise continua. Chamar setState num componente que não existe mais causa um warning. A solução é usar um flag de cancelamento no cleanup do useEffect:"
+      },
+      {
+        "type": "code",
+        "content": "useEffect(() => {\n  let cancelled = false;\n\n  fetch('/api/users')\n    .then(res => res.json())\n    .then(data => {\n      if (!cancelled) setUsers(data);\n    });\n\n  return () => { cancelled = true; };\n}, []);",
         "language": "javascript"
       },
       {
         "type": "paragraph",
-        "content": "Use um flag cancelled no cleanup para evitar setState em componente desmontado. Para produção, prefira TanStack Query que já trata isso."
+        "content": "Esse padrão funciona, mas exige bastante código manual. Para produção, bibliotecas como TanStack Query já resolvem isso automaticamente — veremos na próxima lição."
+      },
+      {
+        "type": "heading",
+        "content": "fetch vs axios"
+      },
+      {
+        "type": "paragraph",
+        "content": "A Fetch API é nativa do navegador — não precisa instalar nada. Axios é uma biblioteca popular que oferece interceptors, cancelamento nativo e conversão automática de JSON. Ambos funcionam com useEffect, mas fetch é suficiente para a maioria dos casos e é o padrão recomendado para aprender."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Use useEffect com array de dependências vazio para buscar dados ao montar o componente",
+    "Sempre trate a resposta do fetch com .then(res => res.json()) para converter o JSON",
+    "Use um flag de cleanup para evitar setState em componentes desmontados",
+    "Fetch é nativo do navegador; para projetos maiores, considere TanStack Query"
+  ],
+  "commonMistakes": [
+    "Esquecer o array de dependências [] no useEffect, causando loop infinito de requisições",
+    "Não tratar erros do fetch (o fetch só rejeita em falha de rede, não em status 404/500)",
+    "Fazer o fetch diretamente no corpo do componente em vez de dentro do useEffect",
+    "Esquecer de converter a resposta com .json() antes de usar os dados"
+  ],
+  "realWorldExample": "Em qualquer app real — e-commerce, rede social, dashboard — a primeira coisa que acontece ao abrir uma página é buscar dados do servidor. O Instagram busca posts, o Spotify busca playlists, o GitHub busca repositórios. Todos seguem esse mesmo padrão: montar componente → fetch → atualizar estado → renderizar dados.",
+  "encouragement": "Dominar o padrão fetch + useEffect é um marco importante! É a porta de entrada para trabalhar com dados reais em React. A partir daqui, tudo que você construir vai poder se conectar a APIs do mundo real. 🚀"
 }

@@ -4,13 +4,14 @@
   "moduleId": "components",
   "title": "Boas práticas de componentes",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "Um bom componente é como uma função bem escrita: faz uma coisa, faz bem, e tem um nome que explica o que faz.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Um bom componente é como um bom funcionário: tem uma responsabilidade clara, um nome que diz o que faz, e trabalha bem em equipe sem criar dependências desnecessárias.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "Princípios (2024)"
+        "content": "Princípios fundamentais"
       },
       {
         "type": "list",
@@ -19,7 +20,46 @@
       {
         "type": "paragraph",
         "content": "Componentes definidos dentro de outros são recriados a cada render, causando perda de estado e problemas de performance. Sempre defina no nível superior do módulo."
+      },
+      {
+        "type": "heading",
+        "content": "Bons vs maus padrões"
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Ruim: componente faz tudo (busca dados, lógica, layout)\nfunction UserPage() {\n  const [user, setUser] = useState(null);\n  const [posts, setPosts] = useState([]);\n  // 200 linhas de fetch, filtros, ordenação...\n  return (\n    <div>\n      {/* header, sidebar, lista, modal, footer... tudo aqui */}\n    </div>\n  );\n}\n\n// ✅ Bom: responsabilidade dividida\nfunction UserPage() {\n  return (\n    <PageLayout>\n      <UserHeader />\n      <UserPosts />\n    </PageLayout>\n  );\n}\n\nfunction UserHeader() {\n  // Só cuida do cabeçalho do usuário\n  return <header>...</header>;\n}\n\nfunction UserPosts() {\n  // Só cuida da lista de posts\n  return <section>...</section>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Princípio da Responsabilidade Única: se você precisa usar 'e' para descrever o que o componente faz ('exibe o header E carrega os posts E filtra E ordena'), ele está fazendo demais. Divida.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Checklist de qualidade"
+      },
+      {
+        "type": "list",
+        "content": "O nome explica o propósito sem ler o código?\nFaz apenas uma coisa? Se não, pode ser dividido?\nEstá definido no topo do módulo (nunca dentro de outro componente)?\nProps são claras e bem nomeadas?\nTem menos de ~100 linhas?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Essas práticas podem parecer exagero em projetos pequenos, mas são exatamente o que separa código profissional de código amador. Quando o projeto cresce, componentes bem estruturados economizam horas de refatoração."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Um componente deve ter responsabilidade única — se faz muita coisa, divida",
+    "Nunca defina componentes dentro de outros componentes",
+    "Nomes descritivos eliminam a necessidade de comentários",
+    "Componentes pequenos são mais fáceis de testar, reutilizar e manter"
+  ],
+  "commonMistakes": [
+    "Criar 'god components' com centenas de linhas que fazem tudo",
+    "Definir componentes dentro de outros — causa re-criação a cada render",
+    "Nomes genéricos como Component1, Item, Wrapper sem contexto"
+  ],
+  "realWorldExample": "Times de produto no Nubank e iFood seguem essas práticas: cada componente tem um arquivo, um propósito claro e um nome descritivo. Isso permite que dezenas de devs trabalhem no mesmo projeto sem conflito.",
+  "encouragement": "Boas práticas não são regras chatas — são o atalho para escrever código que você (e seu time) vão conseguir manter daqui a 6 meses sem querer chorar!"
 }

@@ -5,21 +5,65 @@
   "title": "Estrutura de pastas",
   "type": "explanation",
   "xp": 10,
+  "difficulty": "beginner",
   "analogy": "Uma boa estrutura de pastas é como organizar uma gaveta: cada coisa no seu lugar facilita encontrar e manter.",
   "content": {
     "sections": [
       {
         "type": "heading",
+        "content": "Estrutura gerada pelo Vite"
+      },
+      {
+        "type": "paragraph",
+        "content": "Ao criar um projeto com npm create vite@latest, a seguinte estrutura é gerada automaticamente:"
+      },
+      {
+        "type": "code",
+        "content": "meu-app/\n├── node_modules/       # dependências (não vai pro Git)\n├── public/             # arquivos estáticos (favicon, etc.)\n├── src/\n│   ├── assets/         # imagens, fontes, SVGs\n│   ├── App.tsx         # componente principal\n│   ├── App.css         # estilos do App\n│   ├── main.tsx        # ponto de entrada (renderiza o App)\n│   ├── index.css       # estilos globais\n│   └── vite-env.d.ts   # tipos do Vite\n├── index.html          # HTML principal\n├── package.json        # dependências e scripts\n├── tsconfig.json       # configuração TypeScript\n└── vite.config.ts      # configuração do Vite",
+        "language": "text"
+      },
+      {
+        "type": "heading",
         "content": "Estrutura típica de um projeto React"
+      },
+      {
+        "type": "paragraph",
+        "content": "Conforme o projeto cresce, você organiza o código dentro de src/ em pastas por responsabilidade:"
       },
       {
         "type": "list",
         "content": "src/ — código fonte\n  components/ — componentes reutilizáveis\n  pages/ — páginas/views\n  hooks/ — custom hooks\n  utils/ — funções utilitárias\n  assets/ — imagens, fontes\npublic/ — arquivos estáticos"
       },
       {
+        "type": "heading",
+        "content": "Arquivos-chave"
+      },
+      {
+        "type": "list",
+        "content": "main.tsx — ponto de entrada: importa React, ReactDOM e renderiza o App\nApp.tsx — componente raiz da aplicação\nindex.html — único HTML do projeto (SPA = Single Page Application)\nvite.config.ts — onde você configura plugins, aliases e opções do Vite"
+      },
+      {
         "type": "paragraph",
         "content": "Não existe uma estrutura única. O importante é ser consistente e escalável. Agrupe por feature ou por tipo — escolha o que faz sentido para seu projeto."
+      },
+      {
+        "type": "callout",
+        "content": "O index.html no Vite fica na raiz do projeto (não dentro de public/). Isso é diferente do Create React App, onde ficava em public/index.html.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "main.tsx é o ponto de entrada — conecta o React ao HTML via ReactDOM",
+    "App.tsx é o componente raiz da aplicação, onde a árvore de componentes começa",
+    "A pasta src/ contém todo o código-fonte; public/ contém arquivos estáticos",
+    "Organize subpastas por responsabilidade: components/, pages/, hooks/, utils/"
+  ],
+  "commonMistakes": [
+    "Colocar todo o código em poucos arquivos grandes em vez de separar em componentes e pastas — isso dificulta manutenção conforme o projeto cresce",
+    "Modificar arquivos dentro de node_modules/ para corrigir bugs — essas alterações são perdidas ao rodar npm install",
+    "Confundir public/ com src/assets/ — arquivos em public/ são servidos como estão; arquivos em src/assets/ são processados pelo Vite"
+  ],
+  "encouragement": "Entender a estrutura de pastas é o primeiro passo para se sentir em casa num projeto React. Não tente memorizar tudo agora — com a prática, cada arquivo e pasta vai fazer sentido naturalmente.",
+  "realWorldExample": "Em projetos profissionais, times definem uma convenção de pastas no início e documentam no README. Isso garante que qualquer dev novo consiga navegar o código sem precisar perguntar onde fica cada coisa."
 }

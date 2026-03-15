@@ -1,0 +1,46 @@
+{
+  "id": "patterns-pratica",
+  "courseId": "react",
+  "moduleId": "patterns",
+  "title": "Praticando Padrões React",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Padrões são como plantas arquitetônicas: seguir o blueprint certo garante que a construção seja sólida, manutenível e bonita.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Hora de praticar!"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio, você vai aplicar os padrões que aprendeu para criar um componente Alert reutilizável. Esse tipo de componente existe em toda design system profissional."
+      },
+      {
+        "type": "paragraph",
+        "content": "Você vai praticar: props para variantes, children para conteúdo flexível e composição de componentes."
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente reutilizável Alert que aceita as props: variant ('info', 'warning', 'error'), title (string) e children (conteúdo). Cada variant deve ter uma cor de fundo diferente. Use composição para permitir conteúdo flexível dentro do alerta.",
+    "starterCode": "function Alert({ variant = 'info', title, children }) {\n  // Defina os estilos para cada variant:\n  // - info: fundo azul claro\n  // - warning: fundo amarelo claro\n  // - error: fundo vermelho claro\n\n  return (\n    // Monte o JSX do componente aqui\n  );\n}\n\n// Teste seu componente:\nfunction App() {\n  return (\n    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '20px' }}>\n      <Alert variant=\"info\" title=\"Informação\">\n        <p>Sua conta foi criada com sucesso.</p>\n      </Alert>\n\n      <Alert variant=\"warning\" title=\"Atenção\">\n        <p>Seu plano expira em 3 dias.</p>\n      </Alert>\n\n      <Alert variant=\"error\" title=\"Erro\">\n        <p>Não foi possível salvar as alterações.</p>\n      </Alert>\n    </div>\n  );\n}",
+    "solution": "function Alert({ variant = 'info', title, children }) {\n  const styles = {\n    info: {\n      backgroundColor: '#dbeafe',\n      borderColor: '#3b82f6',\n      color: '#1e40af',\n    },\n    warning: {\n      backgroundColor: '#fef3c7',\n      borderColor: '#f59e0b',\n      color: '#92400e',\n    },\n    error: {\n      backgroundColor: '#fee2e2',\n      borderColor: '#ef4444',\n      color: '#991b1b',\n    },\n  };\n\n  const currentStyle = styles[variant];\n\n  return (\n    <div\n      style={{\n        padding: '16px',\n        borderRadius: '8px',\n        borderLeft: `4px solid ${currentStyle.borderColor}`,\n        backgroundColor: currentStyle.backgroundColor,\n        color: currentStyle.color,\n      }}\n    >\n      {title && (\n        <h3 style={{ margin: '0 0 8px', fontWeight: 'bold', fontSize: '16px' }}>\n          {title}\n        </h3>\n      )}\n      <div>{children}</div>\n    </div>\n  );\n}\n\nfunction App() {\n  return (\n    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '20px' }}>\n      <Alert variant=\"info\" title=\"Informação\">\n        <p>Sua conta foi criada com sucesso.</p>\n      </Alert>\n\n      <Alert variant=\"warning\" title=\"Atenção\">\n        <p>Seu plano expira em 3 dias.</p>\n      </Alert>\n\n      <Alert variant=\"error\" title=\"Erro\">\n        <p>Não foi possível salvar as alterações.</p>\n      </Alert>\n    </div>\n  );\n}",
+    "tests": [],
+    "hint": "Crie um objeto com os estilos para cada variant (info, warning, error). Use variant como chave para acessar o estilo correto. Não esqueça de renderizar children para o conteúdo flexível.",
+    "solutionExplanation": "O componente Alert usa um objeto de estilos indexado pela variant. Isso evita condicionais aninhados e facilita adicionar novas variantes. O children permite qualquer conteúdo dentro do alerta, e o title é renderizado condicionalmente."
+  },
+  "keyTakeaways": [
+    "Objetos de estilo indexados por variant são mais limpos que múltiplos if/else",
+    "children torna o componente flexível para qualquer tipo de conteúdo",
+    "Props com valor default (variant = 'info') dão uma boa experiência padrão"
+  ],
+  "commonMistakes": [
+    "Usar if/else ou switch para cada variant em vez de um objeto lookup — mais verboso e difícil de manter",
+    "Esquecer de renderizar children — o componente fica vazio",
+    "Hardcodar conteúdo dentro do Alert em vez de usar composição"
+  ],
+  "encouragement": "Parabéns por construir seu próprio componente reutilizável! Esse é exatamente o tipo de componente que você encontra em design systems profissionais. Você está construindo como um dev sênior! 🏗️",
+  "realWorldExample": "Componentes de alerta/notificação existem em todas as design systems: o Alert do shadcn/ui, o Alert do Material UI, o Toast do Chakra. Todos seguem esse mesmo padrão: variant para estilo, title para cabeçalho, children para conteúdo."
+}

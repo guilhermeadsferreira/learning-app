@@ -1,0 +1,117 @@
+{
+  "id": "advanced-quiz",
+  "courseId": "react",
+  "moduleId": "advanced",
+  "title": "Quiz: Tópicos Avançados",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Revisar conceitos avançados é como um piloto conferindo os instrumentos antes de decolar — dominar os detalhes traz confiança.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Revise o que você aprendeu sobre TypeScript com React, as novidades do React 19 e os próximos passos na sua jornada."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a forma correta de tipar um useState que pode ser um objeto User ou null?",
+      "options": [
+        {
+          "id": "a",
+          "text": "const [user, setUser] = useState(null)",
+          "isCorrect": false,
+          "explanation": "Sem o generic, o TypeScript infere o tipo como 'null' e não aceita atribuir um objeto User depois."
+        },
+        {
+          "id": "b",
+          "text": "const [user, setUser] = useState<User | null>(null)",
+          "isCorrect": true,
+          "explanation": "O generic <User | null> diz ao TypeScript que o estado pode ser User ou null, permitindo ambos os valores."
+        },
+        {
+          "id": "c",
+          "text": "const [user, setUser] = useState<any>(null)",
+          "isCorrect": false,
+          "explanation": "Usar 'any' funciona, mas anula os benefícios do TypeScript — você perde autocomplete e detecção de erros."
+        },
+        {
+          "id": "d",
+          "text": "const [user, setUser] = useState(User)",
+          "isCorrect": false,
+          "explanation": "Isso tentaria usar User como valor (não como tipo), o que causaria um erro."
+        }
+      ]
+    },
+    {
+      "question": "No React 19, qual é a principal vantagem do hook use() em relação ao useEffect para data fetching?",
+      "options": [
+        {
+          "id": "a",
+          "text": "use() é mais rápido que useEffect",
+          "isCorrect": false,
+          "explanation": "A velocidade da requisição é a mesma — o benefício é na ergonomia do código, não na performance da rede."
+        },
+        {
+          "id": "b",
+          "text": "use() pode consumir Promises diretamente com Suspense, eliminando estados de loading manuais",
+          "isCorrect": true,
+          "explanation": "O use() integra com Suspense para gerenciar loading automaticamente, sem precisar de useState + useEffect para controlar o estado."
+        },
+        {
+          "id": "c",
+          "text": "use() substitui completamente o useEffect em todas as situações",
+          "isCorrect": false,
+          "explanation": "use() é para consumir Promises e Contexts. useEffect ainda é necessário para efeitos colaterais como subscriptions e timers."
+        },
+        {
+          "id": "d",
+          "text": "use() funciona sem Suspense boundary",
+          "isCorrect": false,
+          "explanation": "Quando usado com Promises, use() precisa de um Suspense boundary para mostrar o fallback durante o carregamento."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a melhor estratégia ao terminar um curso de React e querer evoluir como desenvolvedor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Começar imediatamente outro curso de React mais avançado",
+          "isCorrect": false,
+          "explanation": "Consumir cursos em sequência sem praticar leva ao 'tutorial hell' — você assiste mas não constrói."
+        },
+        {
+          "id": "b",
+          "text": "Aprender Next.js, Remix, React Native e Zustand ao mesmo tempo",
+          "isCorrect": false,
+          "explanation": "Tentar aprender tudo ao mesmo tempo gera sobrecarga. Foque em uma ferramenta por vez e construa algo com ela."
+        },
+        {
+          "id": "c",
+          "text": "Construir um projeto real aplicando o que aprendeu, e depois explorar ferramentas como Next.js",
+          "isCorrect": true,
+          "explanation": "Projetos reais consolidam o aprendizado e revelam lacunas. Depois disso, você está pronto para explorar o ecossistema com uma base sólida."
+        },
+        {
+          "id": "d",
+          "text": "Decorar toda a documentação oficial antes de escrever qualquer código",
+          "isCorrect": false,
+          "explanation": "A documentação é referência, não livro didático. Consulte conforme a necessidade, enquanto constrói."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "TypeScript com generics é essencial para tipar estados complexos no React",
+    "React 19 traz APIs como use() e Actions que simplificam padrões comuns",
+    "A prática com projetos reais é o caminho mais eficaz para consolidar e evoluir"
+  ],
+  "encouragement": "Se você acertou essas questões, está com uma base sólida para enfrentar projetos reais com confiança. TypeScript e as novas APIs do React são ferramentas poderosas — e agora você sabe como usá-las."
+}

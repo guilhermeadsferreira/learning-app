@@ -1,0 +1,47 @@
+{
+  "id": "use-effect-pratica",
+  "courseId": "react",
+  "moduleId": "effects",
+  "title": "Praticando useEffect",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Pense em useEffect como configurar uma rotina automática: você programa o despertador (setInterval) ao ir dormir (mount), e desliga quando acorda (unmount). Se esquecer de desligar, ele vai tocar para sempre — mesmo depois que você já levantou.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Desafio: Cronômetro com useEffect"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio, você vai criar um componente Timer que conta os segundos desde que foi montado. Isso exercita os três pilares do useEffect: setup, dependências e cleanup."
+      },
+      {
+        "type": "code",
+        "content": "// O que seu Timer deve fazer:\n// 1. Mostrar os segundos na tela\n// 2. Incrementar a cada 1 segundo usando setInterval\n// 3. Limpar o interval quando o componente desmontar\n\n// Resultado esperado na tela:\n// \"Segundos: 0\" → \"Segundos: 1\" → \"Segundos: 2\" → ...",
+        "language": "javascript"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente Timer que mostra os segundos passados desde que foi montado. Use useEffect com setInterval. Ao desmontar, o interval deve ser limpo.",
+    "starterCode": "import { useState } from 'react';\n\nexport default function Timer() {\n  // 1. Crie um estado para os segundos\n\n  // 2. Use useEffect com setInterval para incrementar a cada 1s\n\n  // 3. Retorne a função de cleanup para limpar o interval\n\n  return (\n    <div>\n      <p>Segundos: {/* mostre os segundos aqui */}</p>\n    </div>\n  );\n}",
+    "solution": "import { useState, useEffect } from 'react';\n\nexport default function Timer() {\n  const [seconds, setSeconds] = useState(0);\n\n  useEffect(() => {\n    const intervalId = setInterval(() => {\n      setSeconds(s => s + 1);\n    }, 1000);\n\n    return () => clearInterval(intervalId);\n  }, []);\n\n  return (\n    <div>\n      <p>Segundos: {seconds}</p>\n    </div>\n  );\n}",
+    "tests": [],
+    "hint": "Use useEffect com um array de dependências vazio [] para rodar o setInterval apenas uma vez (no mount). Dentro do useEffect, retorne uma função que chama clearInterval com o ID do interval. Para evitar stale closures, use a forma funcional do setState: setSeconds(s => s + 1).",
+    "solutionExplanation": "O useEffect com [] roda apenas no mount, criando o interval uma vez. A função de cleanup (return () => clearInterval(intervalId)) é executada quando o componente desmonta, prevenindo vazamentos de memória. Usamos setSeconds(s => s + 1) em vez de setSeconds(seconds + 1) para evitar stale closures — a forma funcional sempre recebe o valor mais atual do estado."
+  },
+  "keyTakeaways": [
+    "setInterval dentro de useEffect precisa de cleanup com clearInterval",
+    "Use a forma funcional do setState (s => s + 1) para evitar stale closures",
+    "[] como dependência garante que o interval é criado apenas uma vez"
+  ],
+  "commonMistakes": [
+    "Esquecer o clearInterval no cleanup — o timer continua rodando após o componente sair da tela",
+    "Usar setSeconds(seconds + 1) em vez de setSeconds(s => s + 1) — causa stale closure onde seconds é sempre 0",
+    "Esquecer de importar useEffect junto com useState"
+  ],
+  "encouragement": "Se você conseguiu montar o timer com cleanup, você já domina o fluxo completo do useEffect: setup → execução → cleanup. Esse padrão se repete em quase todo uso real de efeitos colaterais.",
+  "realWorldExample": "Cronômetros e contadores regressivos aparecem em vários apps: tempo de sessão em bancos online, countdown de ofertas em e-commerces, e indicadores de 'digitando...' em chats. Todos seguem exatamente esse padrão de setInterval + cleanup."
+}

@@ -4,7 +4,8 @@
   "moduleId": "state-management",
   "title": "Context API em profundidade",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Context é um canal de TV: o Provider transmite; qualquer componente na árvore pode sintonizar com useContext.",
   "content": {
     "sections": [
@@ -14,12 +15,48 @@
       },
       {
         "type": "paragraph",
-        "content": "createContext cria o canal. Provider envolve a árvore e passa o value. useContext lê o value no componente filho. Quando value muda, todos os consumidores re-renderizam."
+        "content": "A Context API resolve o problema de prop drilling — quando você precisa passar dados por vários níveis de componentes intermediários que não usam esses dados. Com Context, o componente que precisa do valor acessa diretamente, sem depender da cadeia de props."
+      },
+      {
+        "type": "paragraph",
+        "content": "O fluxo tem três etapas: criar o contexto com createContext, envolver a árvore com o Provider passando um value, e consumir o valor com useContext em qualquer componente filho."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "import { createContext, useContext, useState } from 'react';\n\nconst ThemeContext = createContext('light');\n\nfunction ThemeProvider({ children }) {\n  const [theme, setTheme] = useState('light');\n\n  const toggleTheme = () =>\n    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));\n\n  return (\n    <ThemeContext.Provider value={{ theme, toggleTheme }}>\n      {children}\n    </ThemeContext.Provider>\n  );\n}\n\nfunction Header() {\n  const { theme, toggleTheme } = useContext(ThemeContext);\n  return (\n    <header style={{ background: theme === 'dark' ? '#333' : '#fff' }}>\n      <button onClick={toggleTheme}>Alternar tema</button>\n    </header>\n  );\n}"
+      },
+      {
+        "type": "callout",
+        "variant": "tip",
+        "content": "Quando usar Context vs props? Se o dado é usado por poucos componentes próximos, props são mais simples e diretas. Context brilha quando o dado precisa cruzar vários níveis da árvore — como tema, autenticação ou idioma."
+      },
+      {
+        "type": "paragraph",
+        "content": "O Provider deve envolver todos os componentes que precisam acessar o contexto. Normalmente ele fica no topo da árvore (em App ou em um layout), mas pode ser posicionado mais abaixo se o dado for local a uma seção da UI."
+      },
+      {
+        "type": "callout",
+        "variant": "warning",
+        "content": "Quando o value do Provider muda, todos os componentes que usam useContext daquele contexto re-renderizam. Por isso, evite passar objetos criados inline sem memoização — use useMemo para estabilizar a referência."
       },
       {
         "type": "list",
         "content": "Separe Contexts por preocupação — evite um Context gigante\nMemoize o value com useMemo para evitar re-renders desnecessários\nIdeal para: tema, auth, i18n — dados que mudam pouco"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "createContext cria o canal, Provider transmite, useContext consome",
+    "Context elimina prop drilling para dados que cruzam vários níveis",
+    "Use Context para dados que mudam pouco (tema, auth, idioma)",
+    "Memoize o value do Provider para evitar re-renders desnecessários"
+  ],
+  "commonMistakes": [
+    "Criar um único Context gigante com todo o estado da aplicação — isso causa re-renders em massa",
+    "Esquecer de envolver a árvore com o Provider e receber o valor default sem perceber",
+    "Passar objetos literais no value sem useMemo, causando re-render a cada render do Provider"
+  ],
+  "realWorldExample": "Em aplicações reais, Context é usado para tema (dark/light mode), autenticação (dados do usuário logado) e internacionalização (idioma atual). O Material UI e o Chakra UI, por exemplo, usam Context internamente para distribuir o tema para todos os componentes.",
+  "encouragement": "Você acabou de dominar o padrão mais importante para compartilhar estado em React sem prop drilling. Context é a base de muitas bibliotecas que você já usa! 🚀"
 }

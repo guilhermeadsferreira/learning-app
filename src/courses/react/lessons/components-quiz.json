@@ -1,0 +1,122 @@
+{
+  "id": "components-quiz",
+  "courseId": "react",
+  "moduleId": "components",
+  "title": "Quiz: Componentes e Props",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Esse quiz é como o encaixe final de um LEGO: você já tem as peças (componentes, props, children, composição) — agora vai testar se consegue montá-las no lugar certo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revisão: Componentes e Props"
+      },
+      {
+        "type": "paragraph",
+        "content": "Hora de testar o que você aprendeu sobre componentes, props, children e composição. Cada pergunta reforça um conceito essencial deste módulo — se errar, a explicação vai ajudar a fixar."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a regra obrigatória para nomear um componente React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deve começar com letra maiúscula",
+          "isCorrect": true,
+          "explanation": "Correto! React usa a capitalização para distinguir componentes (<Card />) de tags HTML nativas (<div />). Se começar com minúscula, React trata como tag HTML."
+        },
+        {
+          "id": "b",
+          "text": "Deve ter no máximo 10 caracteres",
+          "isCorrect": false,
+          "explanation": "Não existe limite de caracteres. O nome deve ser descritivo — UserProfileCard é melhor que UPC."
+        },
+        {
+          "id": "c",
+          "text": "Deve começar com 'use'",
+          "isCorrect": false,
+          "explanation": "O prefixo 'use' é convenção para hooks (useEffect, useState), não para componentes."
+        }
+      ]
+    },
+    {
+      "question": "O que acontece se você tentar modificar uma prop dentro de um componente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A prop é atualizada normalmente",
+          "isCorrect": false,
+          "explanation": "Props são read-only. Tentar modificá-las pode gerar erros ou comportamento inesperado."
+        },
+        {
+          "id": "b",
+          "text": "O React lança um erro ou o comportamento é inesperado",
+          "isCorrect": true,
+          "explanation": "Correto! Props são imutáveis. Se precisa de um valor que muda, use estado (useState). Props são dados de entrada — entram, não se modificam."
+        },
+        {
+          "id": "c",
+          "text": "A prop é atualizada mas só no componente filho",
+          "isCorrect": false,
+          "explanation": "Props não devem ser modificadas em lugar nenhum. Elas fluem do pai para o filho e são somente leitura."
+        }
+      ]
+    },
+    {
+      "question": "O que é a prop especial 'children'?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Uma lista de componentes filhos registrados no React",
+          "isCorrect": false,
+          "explanation": "children não é uma lista registrada. É simplesmente o conteúdo colocado entre as tags de abertura e fechamento do componente."
+        },
+        {
+          "id": "b",
+          "text": "Tudo que é passado entre as tags de abertura e fechamento do componente",
+          "isCorrect": true,
+          "explanation": "Correto! Em <Card><p>Olá</p></Card>, o <p>Olá</p> é o children do Card. Pode ser texto, elementos, outros componentes — qualquer coisa."
+        },
+        {
+          "id": "c",
+          "text": "Um array com todos os componentes da aplicação",
+          "isCorrect": false,
+          "explanation": "children é específico do componente, não global. Contém apenas o que foi passado entre as tags daquele componente."
+        }
+      ]
+    },
+    {
+      "question": "Por que React recomenda composição em vez de herança?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Porque herança é mais lenta em termos de performance",
+          "isCorrect": false,
+          "explanation": "A recomendação não é por performance, mas por flexibilidade. Composição permite combinar componentes de formas variadas sem acoplamento rígido."
+        },
+        {
+          "id": "b",
+          "text": "Porque composição é mais flexível e evita acoplamento rígido",
+          "isCorrect": true,
+          "explanation": "Correto! Composição permite combinar componentes livremente, sem hierarquias fixas. O próprio time do React afirma que nunca encontrou um caso onde herança fosse melhor."
+        },
+        {
+          "id": "c",
+          "text": "Porque JavaScript não suporta herança",
+          "isCorrect": false,
+          "explanation": "JavaScript suporta herança com classes (extends). Mas em React, composição é preferível porque é mais flexível e mais alinhada ao modelo declarativo."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Componentes começam com maiúscula e retornam JSX",
+    "Props são imutáveis — vêm do pai, nunca são modificadas pelo filho",
+    "children permite composição flexível de conteúdo"
+  ],
+  "encouragement": "Se acertou tudo, parabéns — você dominou a base do React! Se errou alguma, sem problema: volte na lição e releia. Repetição é o segredo da fixação."
+}

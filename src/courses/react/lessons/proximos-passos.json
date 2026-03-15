@@ -5,6 +5,7 @@
   "title": "Próximos passos",
   "type": "explanation",
   "xp": 10,
+  "difficulty": "beginner",
   "analogy": "Dominar React abre portas: Next.js para full-stack, React Native para mobile, e um ecossistema rico de ferramentas.",
   "content": {
     "sections": [
@@ -18,8 +19,33 @@
       },
       {
         "type": "paragraph",
-        "content": "Pratique construindo projetos reais. A documentação oficial (react.dev) é a melhor referência. Boa jornada!"
+        "content": "Pratique construindo projetos reais. A documentação oficial (react.dev) é a melhor referência."
+      },
+      {
+        "type": "heading",
+        "content": "Sugestões de projetos para praticar"
+      },
+      {
+        "type": "list",
+        "content": "Todo App com filtros, persistência e testes — consolida estado, efeitos e formulários\nDashboard com gráficos e data fetching — pratica TanStack Query, layout e responsividade\nClone de um app que você usa (Trello, Notion, Spotify) — exercita decomposição de componentes e arquitetura"
+      },
+      {
+        "type": "callout",
+        "content": "O segredo não é estudar mais frameworks — é construir. Cada projeto real que você termina vale mais do que dez tutoriais.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "React é a base — Next.js, React Native e outras ferramentas estendem o que você já sabe",
+    "Projetos reais consolidam o aprendizado muito mais do que tutoriais passivos",
+    "A documentação oficial (react.dev) é atualizada, interativa e a melhor referência disponível"
+  ],
+  "commonMistakes": [
+    "Pular para frameworks (Next.js, Remix) sem dominar os fundamentos de React — estado, efeitos e composição",
+    "Ficar preso no 'tutorial hell' — assistir vídeos infinitos sem nunca construir algo do zero",
+    "Tentar aprender tudo de uma vez — foque em uma ferramenta por vez e construa algo com ela antes de avançar"
+  ],
+  "encouragement": "Você completou um curso inteiro de React — do JSX aos hooks avançados, passando por roteamento, formulários e TypeScript. Isso não é pouco. Agora o próximo passo é seu: escolha um projeto, abra o editor e comece a construir. O melhor código que você vai escrever ainda está por vir.",
+  "realWorldExample": "Muitos desenvolvedores que hoje trabalham em empresas como Nubank, iFood e VTEX começaram exatamente onde você está — com os fundamentos de React. O diferencial deles foi praticar com projetos reais e contribuir em código aberto."
 }

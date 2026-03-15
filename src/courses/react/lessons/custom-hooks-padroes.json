@@ -4,7 +4,8 @@
   "moduleId": "custom-hooks",
   "title": "Padrões: useFetch, useLocalStorage",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Hooks como useFetch e useLocalStorage são receitas prontas para problemas comuns: buscar dados e persistir no navegador.",
   "content": {
     "sections": [
@@ -17,6 +18,11 @@
         "content": "Encapsula fetch + useState + useEffect em um hook que retorna { data, loading, error }. Para produção, prefira TanStack Query."
       },
       {
+        "type": "code",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction useFetch(url) {\n  const [data, setData] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    let cancelled = false;\n    setLoading(true);\n\n    fetch(url)\n      .then(res => {\n        if (!res.ok) throw new Error(`HTTP ${res.status}`);\n        return res.json();\n      })\n      .then(json => {\n        if (!cancelled) {\n          setData(json);\n          setError(null);\n        }\n      })\n      .catch(err => {\n        if (!cancelled) setError(err.message);\n      })\n      .finally(() => {\n        if (!cancelled) setLoading(false);\n      });\n\n    return () => { cancelled = true; };\n  }, [url]);\n\n  return { data, loading, error };\n}\n\n// Uso:\nfunction UserList() {\n  const { data, loading, error } = useFetch('/api/users');\n  if (loading) return <p>Carregando...</p>;\n  if (error) return <p>Erro: {error}</p>;\n  return <ul>{data.map(u => <li key={u.id}>{u.name}</li>)}</ul>;\n}",
+        "language": "jsx"
+      },
+      {
         "type": "heading",
         "content": "useLocalStorage"
       },
@@ -25,9 +31,37 @@
         "content": "Sincroniza estado com localStorage. Útil para preferências do usuário, tema, carrinho. Lembre de tratar JSON.parse em try/catch."
       },
       {
+        "type": "code",
+        "content": "import { useState } from 'react';\n\nfunction useLocalStorage(key, initialValue) {\n  const [value, setValue] = useState(() => {\n    try {\n      const stored = localStorage.getItem(key);\n      return stored ? JSON.parse(stored) : initialValue;\n    } catch {\n      return initialValue;\n    }\n  });\n\n  const setStoredValue = (newValue) => {\n    setValue(newValue);\n    localStorage.setItem(key, JSON.stringify(newValue));\n  };\n\n  return [value, setStoredValue];\n}\n\n// Uso:\nfunction ThemeToggle() {\n  const [theme, setTheme] = useLocalStorage('theme', 'dark');\n  return (\n    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>\n      Tema: {theme}\n    </button>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Quando extrair para um custom hook? Quando a mesma combinação de useState + useEffect (ou outra lógica com hooks) aparece em dois ou mais componentes. Se a lógica é complexa mas usada em um único lugar, um hook ainda pode ajudar na legibilidade — mas não é obrigatório.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Outros padrões populares"
+      },
+      {
         "type": "list",
-        "content": "useDebounce — atrasa valor até parar de mudar\nuseOnClickOutside — detecta clique fora\nuseMediaQuery — responde a breakpoints"
+        "content": "useDebounce — atrasa valor até parar de mudar (ideal para buscas)\nuseOnClickOutside — detecta clique fora de um elemento (menus, modais)\nuseMediaQuery — responde a breakpoints CSS (responsividade)\nuseWindowSize — retorna largura/altura da janela em tempo real"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "useFetch encapsula fetch + estado de loading/error — mas para produção use TanStack Query",
+    "useLocalStorage sincroniza estado com o navegador — ótimo para preferências",
+    "A flag 'cancelled' no useFetch evita atualizar estado em componente desmontado",
+    "Lazy initializer no useState (função como argumento) evita ler localStorage a cada render"
+  ],
+  "commonMistakes": [
+    "Não tratar cleanup no useFetch — causa atualizações em componentes desmontados",
+    "Esquecer try/catch no JSON.parse do useLocalStorage — valores inválidos quebram a app",
+    "Usar useFetch em produção sem cache, retry ou deduplicação — prefira TanStack Query",
+    "Não incluir a URL no array de dependências do useEffect dentro do useFetch"
+  ],
+  "realWorldExample": "A biblioteca usehooks-ts oferece dezenas de hooks prontos (useLocalStorage, useDebounce, useMediaQuery, etc.) testados e tipados. Estudar o código-fonte desses hooks é uma ótima forma de aprender padrões — mas entender como construí-los do zero te dá autonomia para criar os seus próprios.",
+  "encouragement": "Esses padrões vão aparecer em praticamente todo projeto React. Dominá-los agora significa que, ao entrar em qualquer codebase, você vai reconhecer a estrutura imediatamente!"
 }

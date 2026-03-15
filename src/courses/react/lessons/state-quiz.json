@@ -1,0 +1,99 @@
+{
+  "id": "state-quiz",
+  "courseId": "react",
+  "moduleId": "state",
+  "title": "Quiz: Estado e Interatividade",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Estado é como a memória de curto prazo do seu cérebro. Você lembra o número de telefone que acabou de ouvir — mas se alguém falar outro número, o anterior é substituído. React funciona assim: guarda o valor atual e, quando muda, atualiza tudo que depende dele.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revise seus conhecimentos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste quiz, você vai testar o que aprendeu sobre useState, eventos, componentes controlados e não controlados, e formulários. Cada pergunta tem apenas uma resposta correta — leia com atenção!"
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a forma correta de atualizar um estado que depende do valor anterior?",
+      "options": [
+        {
+          "id": "a",
+          "text": "setContador(contador + 1)",
+          "isCorrect": false,
+          "explanation": "Essa forma pode causar bugs com batching, pois usa o valor capturado no closure, que pode estar desatualizado."
+        },
+        {
+          "id": "b",
+          "text": "setContador(prev => prev + 1)",
+          "isCorrect": true,
+          "explanation": "A forma funcional garante que você sempre trabalha com o valor mais recente do estado, evitando bugs de batching."
+        },
+        {
+          "id": "c",
+          "text": "contador++ e depois setContador(contador)",
+          "isCorrect": false,
+          "explanation": "Modificar a variável de estado diretamente (contador++) não é detectado pelo React. Sempre use o setter."
+        }
+      ]
+    },
+    {
+      "question": "O que acontece se você usar onClick={handleClick()} (com parênteses) em vez de onClick={handleClick}?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A função é executada imediatamente durante a renderização, não no clique",
+          "isCorrect": true,
+          "explanation": "Com parênteses, a função é chamada no momento do render, não quando o usuário clica. O correto é passar a referência: onClick={handleClick}."
+        },
+        {
+          "id": "b",
+          "text": "Funciona normalmente — é só uma sintaxe alternativa",
+          "isCorrect": false,
+          "explanation": "Não é alternativa! Com parênteses, a função executa no render, causando comportamento inesperado ou loops infinitos."
+        },
+        {
+          "id": "c",
+          "text": "O React ignora e não executa a função em nenhum momento",
+          "isCorrect": false,
+          "explanation": "O React não ignora — a função é executada imediatamente no render, o que pode causar efeitos colaterais indesejados."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença principal entre um componente controlado e um não controlado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Controlado usa useEffect, não controlado usa useState",
+          "isCorrect": false,
+          "explanation": "Controlado usa useState (value + onChange). useEffect não está relacionado ao padrão controlado/não controlado."
+        },
+        {
+          "id": "b",
+          "text": "No controlado, o React mantém o valor via estado. No não controlado, o DOM mantém o valor e você acessa via ref",
+          "isCorrect": true,
+          "explanation": "No controlado, o estado React é a fonte da verdade (value + onChange). No não controlado, o DOM guarda o valor e você usa useRef para acessá-lo quando necessário."
+        },
+        {
+          "id": "c",
+          "text": "Componentes controlados são sempre mais rápidos que não controlados",
+          "isCorrect": false,
+          "explanation": "Performance não é a diferença principal. Não controlados podem até ser mais performáticos em formulários muito grandes, pois evitam re-renders a cada tecla."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "useState retorna [valor, setter] e o setter dispara re-renderização",
+    "Eventos em React usam camelCase e recebem referências de funções (sem parênteses)",
+    "Controlado = estado React como fonte da verdade; não controlado = DOM com useRef"
+  ],
+  "encouragement": "Se você acertou a maioria, parabéns — você já domina os fundamentos de estado e interatividade no React! Esses conceitos são a base de tudo que vem a seguir."
+}

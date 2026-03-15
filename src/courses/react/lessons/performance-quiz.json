@@ -1,0 +1,117 @@
+{
+  "id": "performance-quiz",
+  "courseId": "react",
+  "moduleId": "performance",
+  "title": "Quiz: Performance",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Revisar performance é como um mecânico fazendo o checklist final — cada ajuste conta para a velocidade do carro.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos sobre Performance em React"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar os conceitos mais importantes do módulo de performance. Cada pergunta testa um aspecto diferente das técnicas que você aprendeu."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que acontece quando você passa uma função inline como prop para um componente envolvido com React.memo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "O memo funciona normalmente e previne o re-render",
+          "isCorrect": false,
+          "explanation": "Incorreto. Funções inline criam uma nova referência a cada render, fazendo o memo detectar mudança e re-renderizar."
+        },
+        {
+          "id": "b",
+          "text": "O memo é 'quebrado' porque a função tem uma nova referência a cada render",
+          "isCorrect": true,
+          "explanation": "Correto! Funções inline criam novas referências a cada render. O memo faz comparação shallow e detecta a prop como 'diferente', re-renderizando o componente. Use useCallback para estabilizar a referência."
+        },
+        {
+          "id": "c",
+          "text": "O React lança um erro em tempo de execução",
+          "isCorrect": false,
+          "explanation": "Não há erro — o código funciona, mas o memo perde sua utilidade."
+        },
+        {
+          "id": "d",
+          "text": "O memo faz deep comparison e detecta que a função é igual",
+          "isCorrect": false,
+          "explanation": "React.memo faz comparação shallow (===), não deep. Duas funções com o mesmo corpo mas referências diferentes são consideradas diferentes."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a estratégia de code splitting mais comum e com melhor custo-benefício em aplicações React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dividir cada componente individual em um chunk separado",
+          "isCorrect": false,
+          "explanation": "Dividir cada componente gera muitos chunks pequenos, aumentando o número de requisições HTTP e podendo piorar a performance."
+        },
+        {
+          "id": "b",
+          "text": "Dividir por rota — cada página é um chunk separado",
+          "isCorrect": true,
+          "explanation": "Correto! Code splitting por rota é a estratégia mais eficaz. Cada página vira um chunk separado carregado sob demanda com React.lazy, reduzindo significativamente o bundle inicial."
+        },
+        {
+          "id": "c",
+          "text": "Carregar todas as dependências em um único bundle otimizado",
+          "isCorrect": false,
+          "explanation": "Um bundle único fica pesado em apps grandes, atrasando o carregamento inicial."
+        },
+        {
+          "id": "d",
+          "text": "Usar apenas Web Workers para processar o código em background",
+          "isCorrect": false,
+          "explanation": "Web Workers são para processamento pesado em background, não para dividir o bundle da aplicação."
+        }
+      ]
+    },
+    {
+      "question": "Antes de aplicar otimizações como React.memo e useMemo, qual é a primeira coisa que você deve fazer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aplicar memo em todos os componentes por precaução",
+          "isCorrect": false,
+          "explanation": "Aplicar memo indiscriminadamente adiciona overhead de comparação sem garantia de ganho. Otimização prematura é um anti-pattern."
+        },
+        {
+          "id": "b",
+          "text": "Reescrever os componentes usando classes em vez de funções",
+          "isCorrect": false,
+          "explanation": "Componentes de classe não são mais performáticos que funcionais. A escolha entre eles não é uma questão de performance."
+        },
+        {
+          "id": "c",
+          "text": "Medir com o React DevTools Profiler para identificar o gargalo real",
+          "isCorrect": true,
+          "explanation": "Correto! A regra de ouro é: meça antes de otimizar. O Profiler mostra exatamente quais componentes re-renderizam demais e quanto tempo cada render leva."
+        },
+        {
+          "id": "d",
+          "text": "Adicionar useCallback em todas as funções do projeto",
+          "isCorrect": false,
+          "explanation": "useCallback em todas as funções adiciona complexidade e overhead sem necessidade. Só vale quando a função é passada como prop para um componente memoizado."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "React.memo + useCallback trabalham juntos para prevenir re-renders desnecessários",
+    "Code splitting por rota é a estratégia com melhor custo-benefício",
+    "Sempre meça com Profiler antes de otimizar — evite otimização prematura"
+  ],
+  "encouragement": "Módulo de performance concluído! Você agora tem as ferramentas certas para construir apps React rápidos e eficientes. Lembre-se: medir primeiro, otimizar depois. 🚀"
+}

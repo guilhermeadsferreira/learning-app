@@ -1,0 +1,118 @@
+{
+  "id": "advanced-hooks-quiz",
+  "courseId": "react",
+  "moduleId": "advanced-hooks",
+  "title": "Quiz: Hooks Avançados",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Hooks avançados são como ferramentas especializadas numa oficina: cada um resolve um tipo específico de problema. Saber escolher a ferramenta certa é tão importante quanto saber usá-la.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revisão: Hooks Avançados"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste quiz, você vai testar seus conhecimentos sobre useRef, useContext, useReducer, useMemo e useCallback. Esses hooks cobrem cenários que vão além do básico de estado e efeitos — desde acessar o DOM diretamente até otimizar performance."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal diferença entre useRef e useState?",
+      "options": [
+        {
+          "id": "a",
+          "text": "useRef armazena apenas strings, useState armazena qualquer valor",
+          "isCorrect": false,
+          "explanation": "Ambos podem armazenar qualquer tipo de valor (objetos, números, strings, etc.)."
+        },
+        {
+          "id": "b",
+          "text": "Alterar useRef.current não causa re-render, alterar useState sim",
+          "isCorrect": true,
+          "explanation": "Exatamente! useRef persiste valores entre renders sem disparar re-renderização. Por isso é ideal para referências DOM e valores que não afetam a UI."
+        },
+        {
+          "id": "c",
+          "text": "useRef só funciona com componentes de classe",
+          "isCorrect": false,
+          "explanation": "useRef é um hook e funciona exclusivamente em componentes funcionais."
+        },
+        {
+          "id": "d",
+          "text": "useState é mais rápido que useRef em todos os casos",
+          "isCorrect": false,
+          "explanation": "Performance não é a diferença principal — a diferença é que useState causa re-render e useRef não."
+        }
+      ]
+    },
+    {
+      "question": "Qual das afirmações sobre useContext está CORRETA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "useContext substitui completamente o uso de props",
+          "isCorrect": false,
+          "explanation": "Context é para dados globais (tema, autenticação). Props continuam sendo melhores para dados específicos de componentes."
+        },
+        {
+          "id": "b",
+          "text": "useContext funciona sem um Provider — usa sempre o valor padrão do createContext",
+          "isCorrect": false,
+          "explanation": "Sem Provider, useContext retorna o valor padrão, mas isso geralmente indica um bug. O padrão correto é sempre ter um Provider."
+        },
+        {
+          "id": "c",
+          "text": "Quando o valor do Context muda, todos os componentes que usam useContext daquele Context re-renderizam",
+          "isCorrect": true,
+          "explanation": "Correto! Todos os consumidores re-renderizam quando o valor do Provider muda. Por isso, é importante não usar Context para dados que mudam com alta frequência."
+        },
+        {
+          "id": "d",
+          "text": "useContext só pode ser usado uma vez por componente",
+          "isCorrect": false,
+          "explanation": "Você pode chamar useContext quantas vezes quiser, inclusive com Contexts diferentes no mesmo componente."
+        }
+      ]
+    },
+    {
+      "question": "Em qual cenário useReducer é mais indicado que useState?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Para gerenciar um simples toggle (true/false)",
+          "isCorrect": false,
+          "explanation": "Para um toggle simples, useState é mais direto e legível: const [on, setOn] = useState(false)."
+        },
+        {
+          "id": "b",
+          "text": "Quando o estado tem múltiplos subvalores e transições complexas, como um carrinho de compras",
+          "isCorrect": true,
+          "explanation": "Perfeito! useReducer centraliza a lógica em uma função pura, tornando fácil gerenciar ações como 'addItem', 'removeItem', 'updateQuantity', etc."
+        },
+        {
+          "id": "c",
+          "text": "Sempre que precisar de performance melhor que useState",
+          "isCorrect": false,
+          "explanation": "useReducer não é sobre performance — é sobre organização. A escolha depende da complexidade do estado, não da velocidade."
+        },
+        {
+          "id": "d",
+          "text": "Para substituir useEffect em chamadas assíncronas",
+          "isCorrect": false,
+          "explanation": "Reducers são funções puras e síncronas. Chamadas assíncronas (fetch, timers) devem ficar em useEffect, não no reducer."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "useRef persiste valores sem causar re-render — ideal para DOM e valores mutáveis",
+    "useContext elimina prop drilling, mas re-renderiza todos os consumidores quando o valor muda",
+    "useReducer organiza estado complexo com múltiplas ações em uma função pura centralizada",
+    "useMemo/useCallback são ferramentas de otimização — use somente quando medir problema real"
+  ],
+  "encouragement": "Se você acertou a maioria, parabéns — você já domina os hooks avançados do React! Cada um resolve um problema diferente, e saber quando usar cada um é uma habilidade que vai te acompanhar em qualquer projeto profissional."
+}

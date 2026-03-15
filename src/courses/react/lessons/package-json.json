@@ -5,7 +5,8 @@
   "title": "package.json",
   "type": "explanation",
   "xp": 10,
-  "analogy": "package.json é a identidade do seu projeto: nome, versão, dependências e comandos disponíveis.",
+  "difficulty": "beginner",
+  "analogy": "O package.json é como a receita de um bolo: lista todos os ingredientes (dependências) e o modo de preparo (scripts). Qualquer pessoa com a receita consegue reproduzir o projeto.",
   "content": {
     "sections": [
       {
@@ -15,6 +16,27 @@
       {
         "type": "paragraph",
         "content": "O package.json descreve seu projeto: nome, versão, dependências e scripts. É o coração de qualquer projeto Node.js."
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo de um package.json real"
+      },
+      {
+        "type": "paragraph",
+        "content": "Veja como fica o package.json de um projeto React criado com Vite:"
+      },
+      {
+        "type": "code",
+        "content": "{\n  \"name\": \"meu-app-react\",\n  \"private\": true,\n  \"version\": \"0.1.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"tsc -b && vite build\",\n    \"preview\": \"vite preview\",\n    \"lint\": \"eslint .\"\n  },\n  \"dependencies\": {\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\"\n  },\n  \"devDependencies\": {\n    \"@types/react\": \"^18.3.0\",\n    \"@vitejs/plugin-react\": \"^4.3.0\",\n    \"typescript\": \"^5.5.0\",\n    \"vite\": \"^5.4.0\"\n  }\n}",
+        "language": "json"
+      },
+      {
+        "type": "heading",
+        "content": "Campos principais"
+      },
+      {
+        "type": "list",
+        "content": "name — nome do projeto (sem espaços, letras minúsculas)\nversion — versão semântica (major.minor.patch)\nscripts — atalhos de comando executados com npm run\ndependencies — pacotes necessários em produção\ndevDependencies — pacotes usados apenas no desenvolvimento"
       },
       {
         "type": "heading",
@@ -28,7 +50,33 @@
         "type": "code",
         "content": "{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview\"\n  }\n}",
         "language": "json"
+      },
+      {
+        "type": "heading",
+        "content": "dependencies vs devDependencies"
+      },
+      {
+        "type": "paragraph",
+        "content": "dependencies são pacotes que seu app precisa para funcionar (React, React Router). devDependencies são ferramentas de desenvolvimento que não vão para produção (TypeScript, ESLint, Vite). Ao instalar, use npm install pacote para dependências e npm install -D pacote para devDependencies."
+      },
+      {
+        "type": "callout",
+        "content": "O símbolo ^ antes da versão (ex: ^18.3.1) significa que o npm pode instalar versões compatíveis mais recentes (ex: 18.4.0), mas nunca uma major diferente (ex: 19.0.0).",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "package.json é o registro central do projeto — descreve nome, versão, scripts e dependências",
+    "dependencies vão para produção; devDependencies são apenas para desenvolvimento",
+    "Scripts como dev, build e preview são atalhos para comandos do Vite",
+    "O versionamento semântico (^18.3.1) controla quais atualizações o npm pode instalar automaticamente"
+  ],
+  "commonMistakes": [
+    "Editar package.json manualmente para adicionar dependências em vez de usar npm install — isso pode causar inconsistências com o package-lock.json",
+    "Não entender a diferença entre dependencies e devDependencies — colocar ferramentas de dev em dependencies ou vice-versa",
+    "Deletar o package-lock.json achando que é desnecessário — ele garante que todos instalem exatamente as mesmas versões"
+  ],
+  "encouragement": "O package.json parece intimidador no começo, mas é só um arquivo de configuração. Depois que você entende os campos principais — scripts, dependencies e devDependencies — o resto é consulta quando precisar.",
+  "realWorldExample": "Em qualquer empresa, quando um novo dev entra no time, ele clona o repositório e roda npm install. O package.json garante que todas as dependências corretas são instaladas automaticamente, sem precisar configurar nada manualmente."
 }

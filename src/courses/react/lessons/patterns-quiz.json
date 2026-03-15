@@ -1,0 +1,117 @@
+{
+  "id": "patterns-quiz",
+  "courseId": "react",
+  "moduleId": "patterns",
+  "title": "Quiz: Padrões e Boas Práticas",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Rever padrões é como um arquiteto revisando a planta — cada detalhe estrutural importa para a solidez do projeto.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Revise os conceitos de código limpo, componentes reutilizáveis, compound components e error boundaries."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a melhor prática para reduzir indentação excessiva e tornar o fluxo de um componente mais claro?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Usar ternários aninhados para todas as condições",
+          "isCorrect": false,
+          "explanation": "Ternários aninhados pioram a legibilidade. O fluxo fica difícil de acompanhar."
+        },
+        {
+          "id": "b",
+          "text": "Usar early returns — tratar os casos excepcionais primeiro e deixar o caminho principal no final",
+          "isCorrect": true,
+          "explanation": "Early returns eliminam indentação desnecessária e tornam o fluxo linear e fácil de seguir."
+        },
+        {
+          "id": "c",
+          "text": "Colocar toda a lógica condicional dentro de useEffect",
+          "isCorrect": false,
+          "explanation": "useEffect é para efeitos colaterais, não para lógica de renderização condicional."
+        },
+        {
+          "id": "d",
+          "text": "Envolver tudo em useMemo para evitar re-renders",
+          "isCorrect": false,
+          "explanation": "useMemo é para otimização de performance, não tem relação com clareza de fluxo condicional."
+        }
+      ]
+    },
+    {
+      "question": "O que torna um componente verdadeiramente reutilizável em React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ter o máximo de props possível para cobrir todos os casos",
+          "isCorrect": false,
+          "explanation": "Excesso de props (prop explosion) é um anti-pattern. Considere compound components ou composição."
+        },
+        {
+          "id": "b",
+          "text": "Usar props para variações e children para conteúdo flexível",
+          "isCorrect": true,
+          "explanation": "Props controlam variações previsíveis (variant, size) e children permitem conteúdo livre — essa é a base de componentes reutilizáveis."
+        },
+        {
+          "id": "c",
+          "text": "Nunca aceitar props — usar apenas estado interno",
+          "isCorrect": false,
+          "explanation": "Sem props, o componente não pode ser configurado pelo consumidor e não é reutilizável em contextos diferentes."
+        },
+        {
+          "id": "d",
+          "text": "Hardcodar todas as variações com if/else dentro do componente",
+          "isCorrect": false,
+          "explanation": "Isso funciona para poucas variações, mas não escala. Props com objetos de lookup são mais limpos."
+        }
+      ]
+    },
+    {
+      "question": "Sobre Error Boundaries, qual afirmação está CORRETA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Error Boundaries capturam erros em event handlers e código assíncrono",
+          "isCorrect": false,
+          "explanation": "Error Boundaries NÃO capturam erros em event handlers, async, setTimeout ou no próprio boundary. Para esses, use try/catch."
+        },
+        {
+          "id": "b",
+          "text": "Error Boundaries podem ser implementados com hooks como useErrorBoundary",
+          "isCorrect": false,
+          "explanation": "Não existe um hook nativo useErrorBoundary. Error Boundaries exigem componentes de classe com getDerivedStateFromError."
+        },
+        {
+          "id": "c",
+          "text": "Error Boundaries capturam erros de renderização na árvore de filhos e exibem um fallback",
+          "isCorrect": true,
+          "explanation": "Exatamente! Error Boundaries capturam erros durante o render dos filhos e exibem uma UI alternativa em vez de quebrar toda a aplicação."
+        },
+        {
+          "id": "d",
+          "text": "Basta colocar um único ErrorBoundary na raiz da app para proteger tudo",
+          "isCorrect": false,
+          "explanation": "Um único boundary na raiz esconde toda a UI quando qualquer erro acontece. Use boundaries granulares por rota ou seção."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Early returns simplificam o fluxo condicional de componentes",
+    "Componentes reutilizáveis combinam props para variações e children para conteúdo",
+    "Error Boundaries capturam apenas erros de render — event handlers e async exigem try/catch"
+  ],
+  "encouragement": "Você dominou os padrões e boas práticas do React! Esses conceitos vão te acompanhar em toda sua carreira como desenvolvedor. Continue praticando! 🎯"
+}

@@ -1,0 +1,117 @@
+{
+  "id": "effects-quiz",
+  "courseId": "react",
+  "moduleId": "effects",
+  "title": "Quiz: useEffect",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Esse quiz é como uma revisão de voo antes da decolagem: vamos verificar se todos os instrumentos (conceitos) estão funcionando antes de seguir para hooks mais avançados.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revise seus conhecimentos sobre useEffect"
+      },
+      {
+        "type": "paragraph",
+        "content": "Responda as perguntas abaixo para consolidar o que você aprendeu sobre useEffect, array de dependências e cleanup. Cada pergunta testa um conceito essencial para usar efeitos colaterais com segurança no React."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que acontece quando você passa um array vazio [] como segundo argumento do useEffect?",
+      "options": [
+        {
+          "id": "a",
+          "text": "O efeito nunca é executado",
+          "isCorrect": false,
+          "explanation": "O efeito é executado sim — uma vez, após o primeiro render (mount). O array vazio indica que não há dependências para observar."
+        },
+        {
+          "id": "b",
+          "text": "O efeito roda apenas uma vez, após o primeiro render",
+          "isCorrect": true,
+          "explanation": "Correto! Com [] o React entende que o efeito não depende de nenhum valor reativo, então executa apenas no mount e o cleanup roda no unmount."
+        },
+        {
+          "id": "c",
+          "text": "O efeito roda em toda renderização",
+          "isCorrect": false,
+          "explanation": "Esse é o comportamento quando você omite o array de dependências completamente (sem segundo argumento). Com [] ele roda apenas uma vez."
+        },
+        {
+          "id": "d",
+          "text": "O efeito é executado, mas o cleanup nunca roda",
+          "isCorrect": false,
+          "explanation": "O cleanup roda normalmente quando o componente desmonta. O array vazio apenas controla quando o efeito re-executa, não afeta o cleanup."
+        }
+      ]
+    },
+    {
+      "question": "Qual é o principal risco de omitir uma variável do array de dependências que é usada dentro do efeito?",
+      "options": [
+        {
+          "id": "a",
+          "text": "O componente não renderiza",
+          "isCorrect": false,
+          "explanation": "O componente renderiza normalmente. O problema é mais sutil — o efeito usa valores desatualizados."
+        },
+        {
+          "id": "b",
+          "text": "O efeito causa um loop infinito",
+          "isCorrect": false,
+          "explanation": "Loop infinito acontece quando o efeito atualiza uma dependência que ele observa. Omitir dependências causa o problema oposto: o efeito não re-executa quando deveria."
+        },
+        {
+          "id": "c",
+          "text": "O efeito usa valores desatualizados (stale closure)",
+          "isCorrect": true,
+          "explanation": "Correto! O efeito 'captura' o valor da variável no momento em que foi criado. Sem a dependência, ele nunca é recriado com o valor atualizado — isso é uma stale closure."
+        },
+        {
+          "id": "d",
+          "text": "O React lança um erro e impede a compilação",
+          "isCorrect": false,
+          "explanation": "O React não impede a compilação. O ESLint plugin exhaustive-deps emite um warning, mas é apenas um aviso — o código compila e roda (com bugs)."
+        }
+      ]
+    },
+    {
+      "question": "Quando a função de cleanup retornada pelo useEffect é executada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apenas quando o componente monta",
+          "isCorrect": false,
+          "explanation": "No mount, o React executa o setup (corpo do efeito), não o cleanup. O cleanup roda na desmontagem ou antes de re-executar o efeito."
+        },
+        {
+          "id": "b",
+          "text": "Apenas quando o componente desmonta",
+          "isCorrect": false,
+          "explanation": "O cleanup roda na desmontagem, mas TAMBÉM antes de cada re-execução do efeito quando as dependências mudam. Não é apenas no unmount."
+        },
+        {
+          "id": "c",
+          "text": "Quando o componente desmonta E antes de cada re-execução do efeito",
+          "isCorrect": true,
+          "explanation": "Correto! O cleanup roda em dois momentos: antes de re-executar o efeito (para limpar o anterior) e quando o componente desmonta (para limpar o último efeito)."
+        },
+        {
+          "id": "d",
+          "text": "Apenas se houver um erro no efeito",
+          "isCorrect": false,
+          "explanation": "O cleanup não é um error handler. Ele roda como parte do ciclo normal do efeito, independente de erros."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "[] = roda uma vez no mount; sem array = toda render; [dep] = quando dep muda",
+    "Omitir dependências causa stale closures — valores congelados no tempo",
+    "O cleanup roda no unmount E antes de cada re-execução do efeito"
+  ],
+  "encouragement": "Se você acertou as três, você já tem uma compreensão sólida do useEffect. Esses conceitos — dependências, cleanup e stale closures — são exatamente o que separa quem usa useEffect de quem domina useEffect."
+}

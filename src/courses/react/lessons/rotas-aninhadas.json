@@ -4,7 +4,7 @@
   "moduleId": "routing",
   "title": "Rotas aninhadas e Outlet",
   "type": "explanation",
-  "xp": 20,
+  "xp": 10,
   "difficulty": "intermediate",
   "analogy": "Pense num prédio com andares. O térreo (layout raiz) tem a recepção e os elevadores — eles estão sempre lá. O Outlet é o elevador: dependendo do andar (rota filha), o conteúdo muda, mas o térreo continua o mesmo. Dashboard com sidebar? A sidebar é o 'térreo', e o conteúdo que muda é o que o Outlet renderiza.",
   "content": {

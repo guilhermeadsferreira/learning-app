@@ -5,6 +5,7 @@
   "title": "Expressões no JSX",
   "type": "challenge",
   "xp": 25,
+  "difficulty": "beginner",
   "analogy": "As chaves {} no JSX são como uma janela para o JavaScript: tudo que você coloca dentro é avaliado como código.",
   "content": {
     "sections": [
@@ -22,8 +23,35 @@
         "language": "jsx"
       },
       {
+        "type": "heading",
+        "content": "O que conta como expressão?"
+      },
+      {
         "type": "paragraph",
-        "content": "Crie um componente que exiba a soma de dois números usando variáveis."
+        "content": "Uma expressão é qualquer trecho de código que produz um valor. Operações matemáticas, chamadas de função, ternários e acesso a propriedades de objetos são expressões válidas dentro das chaves."
+      },
+      {
+        "type": "code",
+        "content": "const preco = 49.9;\nconst desconto = 0.1;\n\nfunction App() {\n  return (\n    <div>\n      <p>Preço original: R$ {preco.toFixed(2)}</p>\n      <p>Desconto: {desconto * 100}%</p>\n      <p>Preço final: R$ {(preco * (1 - desconto)).toFixed(2)}</p>\n      <p>Status: {preco > 40 ? 'Premium' : 'Básico'}</p>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "O que NÃO pode ir dentro das chaves"
+      },
+      {
+        "type": "paragraph",
+        "content": "Statements como if/else, for, while e switch NÃO são expressões — eles não retornam um valor. Para lógica condicional, use operador ternário ou &&. Para listas, use .map()."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Isso NÃO funciona:\n// {if (logado) { return <p>Olá</p> }}\n\n// ✅ Use ternário:\n{logado ? <p>Olá!</p> : <p>Faça login</p>}\n\n// ✅ Use && para renderizar condicionalmente:\n{logado && <p>Bem-vindo de volta!</p>}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Regra prática: se você pode passar como argumento de uma função, pode colocar dentro das chaves {}. Se precisar de ponto e vírgula, provavelmente é um statement e não vai funcionar.",
+        "variant": "tip"
       }
     ]
   },
@@ -32,6 +60,20 @@
     "starterCode": "export default function App() {\n  const a = 10;\n  const b = 5;\n  return (\n    <div>\n      {/* Exiba a soma de a + b */}\n    </div>\n  );\n}",
     "solution": "export default function App() {\n  const a = 10;\n  const b = 5;\n  return (\n    <div>\n      <p>A soma é: {a + b}</p>\n    </div>\n  );\n}",
     "hint": "Use {a + b} dentro do JSX para exibir a soma.",
+    "solutionExplanation": "Dentro das chaves {} colocamos a expressão a + b, que o JavaScript avalia para 15. O React insere esse resultado diretamente no DOM. Funciona porque uma soma é uma expressão — ela produz um valor. Qualquer operação que gera um valor pode ser usada assim dentro do JSX.",
     "tests": []
-  }
+  },
+  "keyTakeaways": [
+    "Chaves {} abrem uma 'janela' para JavaScript dentro do JSX",
+    "Expressões (operações, ternários, chamadas de função) funcionam — statements (if, for) não",
+    "Use .toFixed(), .toUpperCase() e outros métodos diretamente nas chaves",
+    "Para condicionais no JSX, prefira ternário (? :) ou && em vez de if/else"
+  ],
+  "commonMistakes": [
+    "Tentar usar if/else dentro das chaves — use ternário ou && para lógica condicional",
+    "Esquecer que objetos não podem ser renderizados diretamente — {usuario} dá erro se for um objeto; use {usuario.nome}",
+    "Confundir chaves de expressão {} com template literals `` — no JSX, sempre use chaves"
+  ],
+  "realWorldExample": "Em um e-commerce, o preço de um produto com desconto é calculado diretamente no JSX: {(preco * (1 - desconto)).toFixed(2)}. Sem precisar de variáveis intermediárias.",
+  "encouragement": "Dominar expressões no JSX é como aprender a pensar em React. A partir de agora, cada dado dinâmico que você exibir vai passar por essas chaves {}."
 }

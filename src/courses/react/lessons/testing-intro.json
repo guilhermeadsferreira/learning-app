@@ -5,6 +5,7 @@
   "title": "Por que testar",
   "type": "explanation",
   "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Testes são como um co-piloto: não impedem acidentes, mas dão confiança para refatorar e evoluir o código.",
   "content": {
     "sections": [
@@ -19,7 +20,32 @@
       {
         "type": "paragraph",
         "content": "Teste como o usuário usa: interações, não implementação. React Testing Library segue esse princípio. Evite testar detalhes internos."
+      },
+      {
+        "type": "heading",
+        "content": "Tipos de teste"
+      },
+      {
+        "type": "list",
+        "content": "Testes unitários — verificam funções e componentes isolados\nTestes de integração — verificam como partes do sistema interagem entre si\nTestes end-to-end (E2E) — simulam o fluxo completo do usuário no navegador"
+      },
+      {
+        "type": "callout",
+        "content": "Em React, a maioria dos seus testes serão de integração usando React Testing Library. Eles renderizam componentes reais e simulam interações — o melhor custo-benefício entre confiança e velocidade.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Testes dão confiança para refatorar sem medo de quebrar funcionalidades",
+    "Prefira testar comportamento (o que o usuário vê e faz), não detalhes de implementação",
+    "A maioria dos testes em React são testes de integração com React Testing Library"
+  ],
+  "commonMistakes": [
+    "Testar detalhes de implementação (estado interno, métodos privados) em vez de comportamento visível",
+    "Escrever testes apenas depois de encontrar bugs — o ideal é escrever junto com o código",
+    "Buscar 100% de cobertura de código em vez de focar nos caminhos críticos"
+  ],
+  "encouragement": "Entender por que testar é o primeiro passo. Muitos devs começam a testar tarde e se arrependem. Você já está no caminho certo ao estudar isso agora!",
+  "realWorldExample": "No Spotify, cada componente de player (play, pause, skip, barra de progresso) tem testes que simulam cliques e verificam se o estado visual muda corretamente. Sem testes, uma mudança no botão de play poderia quebrar o shuffle sem ninguém perceber até o deploy."
 }

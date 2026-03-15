@@ -4,7 +4,8 @@
   "moduleId": "custom-hooks",
   "title": "O que são custom hooks",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Custom hooks são como módulos de comportamento: extraem lógica reutilizável e mantêm os componentes finos e focados.",
   "content": {
     "sections": [
@@ -17,9 +18,53 @@
         "content": "Custom hooks são funções JavaScript que começam com 'use' e podem chamar outros hooks. Encapsulam lógica compartilhada entre componentes."
       },
       {
+        "type": "paragraph",
+        "content": "Imagine que dois ou mais componentes repetem a mesma lógica de estado — por exemplo, controlar se algo está aberto ou fechado. Em vez de copiar e colar useState + handler em cada componente, você extrai essa lógica para uma função reutilizável: um custom hook."
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo: useToggle"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um dos hooks mais simples e úteis é o useToggle. Ele encapsula um boolean que alterna entre true e false — perfeito para modais, menus e switches:"
+      },
+      {
+        "type": "code",
+        "content": "import { useState, useCallback } from 'react';\n\nfunction useToggle(initial = false) {\n  const [value, setValue] = useState(initial);\n  const toggle = useCallback(() => setValue(v => !v), []);\n  return [value, toggle] as const;\n}\n\n// Uso:\nfunction Menu() {\n  const [isOpen, toggle] = useToggle();\n  return (\n    <div>\n      <button onClick={toggle}>\n        {isOpen ? 'Fechar' : 'Abrir'} Menu\n      </button>\n      {isOpen && <nav>Links aqui...</nav>}\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "O nome DEVE começar com 'use'. Essa convenção não é opcional — é assim que o React identifica hooks e aplica as regras (como não usar dentro de condicionais). Se você chamar seu hook de 'toggleState', o linter não vai detectar violações das regras dos hooks.",
+        "variant": "warning"
+      },
+      {
+        "type": "heading",
+        "content": "Por que custom hooks importam?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Custom hooks são o principal mecanismo de reutilização de lógica no React moderno. Antes deles, era preciso usar patterns complexos como Higher-Order Components (HOCs) ou Render Props. Com hooks, a reutilização é simples: extraia a lógica para uma função, retorne o que o componente precisa. Componentes ficam menores, mais legíveis e focados na UI."
+      },
+      {
         "type": "list",
-        "content": "Nome deve começar com use\nPodem usar useState, useEffect, outros hooks\nExtraia quando copiar lógica pela segunda vez\nTrate como módulos de comportamento, não mini-componentes"
+        "content": "Nome deve começar com use\nPodem usar useState, useEffect, outros hooks\nExtraia quando copiar lógica pela segunda vez\nTrate como módulos de comportamento, não mini-componentes\nCada componente que usa o hook tem sua PRÓPRIA cópia do estado"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Custom hooks são funções que começam com 'use' e encapsulam lógica reutilizável",
+    "Eles substituem padrões antigos (HOCs, Render Props) de forma mais simples",
+    "O prefixo 'use' é obrigatório para que o React aplique as regras dos hooks",
+    "Cada componente que usa um hook mantém seu próprio estado independente"
+  ],
+  "commonMistakes": [
+    "Nomear sem o prefixo 'use' — o linter não vai detectar violações das regras",
+    "Achar que custom hooks compartilham estado — cada componente tem sua cópia",
+    "Criar hooks muito cedo — extraia quando a lógica for realmente reutilizada",
+    "Confundir hooks com componentes — hooks retornam dados/funções, não JSX"
+  ],
+  "realWorldExample": "Bibliotecas populares como react-hook-form (useForm), TanStack Query (useQuery) e Framer Motion (useAnimation) são baseadas em custom hooks. Toda vez que você chama useForm() ou useQuery(), está usando um custom hook criado por outra pessoa — o mesmo padrão que você vai aprender a criar.",
+  "encouragement": "Entender custom hooks é o passo que transforma um desenvolvedor React intermediário em avançado. A partir daqui, você vai conseguir organizar e reutilizar lógica como um profissional!"
 }

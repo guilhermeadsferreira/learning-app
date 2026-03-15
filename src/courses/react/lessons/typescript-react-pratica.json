@@ -1,0 +1,42 @@
+{
+  "id": "typescript-react-pratica",
+  "courseId": "react",
+  "moduleId": "advanced",
+  "title": "Praticando TypeScript com React",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "advanced",
+  "analogy": "Tipar um componente é como ter a planta da casa antes de construir: você sabe exatamente o que cada parte espera, evita surpresas e garante que tudo encaixa.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Desafio: Componente UserCard tipado"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio você vai criar um componente React completamente tipado com TypeScript. O objetivo é praticar interfaces, union types, props opcionais e renderização condicional — tudo junto."
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um componente UserCard tipado com TypeScript. O componente deve receber as props: name (string), email (string), role ('admin' | 'user' | 'guest'), e onPromote (função opcional que recebe o name). Renderize um card com as informações e, se onPromote existir, mostre um botão 'Promover'.",
+    "starterCode": "interface UserCardProps {\n  // Defina os tipos aqui\n}\n\nexport default function UserCard() {\n  return (\n    <div style={{ border: '1px solid #ccc', padding: 16, borderRadius: 8 }}>\n      {/* Renderize name, email, role */}\n      {/* Se onPromote existir, mostre o botão */}\n    </div>\n  );\n}",
+    "solution": "interface UserCardProps {\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n  onPromote?: (name: string) => void;\n}\n\nexport default function UserCard({ name, email, role, onPromote }: UserCardProps) {\n  return (\n    <div style={{ border: '1px solid #ccc', padding: 16, borderRadius: 8 }}>\n      <h2>{name}</h2>\n      <p>{email}</p>\n      <span>{role}</span>\n      {onPromote && (\n        <button onClick={() => onPromote(name)}>Promover</button>\n      )}\n    </div>\n  );\n}",
+    "tests": [],
+    "hint": "Crie uma interface UserCardProps com os tipos especificados. Use o operador ? para props opcionais. Dentro do JSX, use && para renderizar condicionalmente o botão.",
+    "solutionExplanation": "A interface UserCardProps define o contrato do componente: name e email são strings obrigatórias, role usa union type para restringir os valores permitidos, e onPromote é opcional (?) — uma função que recebe uma string. No JSX, o operador && renderiza o botão apenas quando onPromote existe, evitando erros em runtime."
+  },
+  "keyTakeaways": [
+    "Interfaces documentam o contrato do componente — quem usar sabe exatamente o que passar",
+    "Union types ('admin' | 'user' | 'guest') restringem valores e previnem erros de digitação",
+    "Props opcionais com ? permitem componentes flexíveis sem sacrificar type safety"
+  ],
+  "commonMistakes": [
+    "Esquecer de desestruturar as props no parâmetro da função — sem isso, você precisa acessar props.name, props.email, etc.",
+    "Usar onClick={() => onPromote(name)} sem verificar se onPromote existe — causa erro em runtime",
+    "Definir role como string genérica em vez de union type — perde a validação de valores permitidos"
+  ],
+  "encouragement": "Se você conseguiu tipar esse componente, já está escrevendo React como se faz em projetos profissionais. A maioria dos componentes no mundo real segue exatamente esse padrão — interfaces, props opcionais e renderização condicional.",
+  "realWorldExample": "Componentes como UserCard, ProductCard e NotificationItem são comuns em dashboards e apps SaaS. Em times grandes, a tipagem garante que ninguém passe uma prop errada — o TypeScript avisa antes mesmo de rodar o código."
+}

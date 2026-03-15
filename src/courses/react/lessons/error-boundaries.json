@@ -4,7 +4,8 @@
   "moduleId": "patterns",
   "title": "Error Boundaries",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Error Boundary é como um paraquedas: se algo der errado no componente filho, ela captura e mostra uma UI de fallback em vez de derrubar a app.",
   "content": {
     "sections": [
@@ -19,7 +20,51 @@
       {
         "type": "list",
         "content": "Não capturam: erros em event handlers, async, SSR, no próprio boundary\nUse react-error-boundary para componente pronto\nColoque em níveis estratégicos — por rota ou widget"
+      },
+      {
+        "type": "heading",
+        "content": "Implementando um ErrorBoundary"
+      },
+      {
+        "type": "paragraph",
+        "content": "Error Boundaries precisam ser componentes de classe — é a única funcionalidade do React que ainda exige classes. O segredo está em dois métodos: getDerivedStateFromError (atualiza o estado para mostrar fallback) e componentDidCatch (para logging)."
+      },
+      {
+        "type": "code",
+        "content": "import { Component } from 'react';\n\nclass ErrorBoundary extends Component {\n  constructor(props) {\n    super(props);\n    this.state = { hasError: false, error: null };\n  }\n\n  static getDerivedStateFromError(error) {\n    return { hasError: true, error };\n  }\n\n  componentDidCatch(error, errorInfo) {\n    console.error('ErrorBoundary capturou:', error, errorInfo);\n  }\n\n  render() {\n    if (this.state.hasError) {\n      return (\n        this.props.fallback || (\n          <div className=\"p-4 bg-red-50 border border-red-200 rounded\">\n            <h2 className=\"text-red-800 font-bold\">Algo deu errado</h2>\n            <p className=\"text-red-600\">{this.state.error?.message}</p>\n          </div>\n        )\n      );\n    }\n\n    return this.props.children;\n  }\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Usando o ErrorBoundary"
+      },
+      {
+        "type": "paragraph",
+        "content": "Envolva partes da árvore de componentes que podem falhar. Se um filho disparar um erro durante o render, o ErrorBoundary mostra o fallback em vez de quebrar a aplicação inteira."
+      },
+      {
+        "type": "code",
+        "content": "function App() {\n  return (\n    <div>\n      <h1>Minha App</h1>\n\n      {/* Protege uma seção que pode falhar */}\n      <ErrorBoundary fallback={<p>Erro ao carregar o dashboard</p>}>\n        <Dashboard />\n      </ErrorBoundary>\n\n      {/* Outro boundary independente */}\n      <ErrorBoundary fallback={<p>Erro na sidebar</p>}>\n        <Sidebar />\n      </ErrorBoundary>\n    </div>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Error Boundaries só capturam erros durante renderização, em métodos de ciclo de vida e em construtores da árvore de filhos. Erros em event handlers, código assíncrono (setTimeout, fetch) e no próprio boundary NÃO são capturados. Para esses casos, use try/catch normalmente.",
+        "variant": "warning"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Error Boundaries capturam erros de render e mostram fallback em vez de derrubar a aplicação",
+    "São a única funcionalidade React que exige componentes de classe",
+    "getDerivedStateFromError atualiza estado, componentDidCatch faz logging",
+    "Use a biblioteca react-error-boundary para uma solução pronta e mais ergonômica"
+  ],
+  "commonMistakes": [
+    "Achar que Error Boundaries capturam tudo — erros em event handlers e async precisam de try/catch separado",
+    "Colocar um único ErrorBoundary na raiz da app — se algo falha, toda a UI some. Prefira boundaries granulares",
+    "Tentar implementar Error Boundaries com hooks — não é possível, precisa ser classe"
+  ],
+  "encouragement": "Error Boundaries são o que separa apps amadoras de apps profissionais. Com eles, sua aplicação fica resiliente — um erro em uma parte não derruba tudo! 🛡️",
+  "realWorldExample": "Apps de produção como Facebook e Netflix usam Error Boundaries em nível de rota e widget. Se um componente de recomendações falha, o resto da página continua funcionando. O Next.js implementa error.tsx, que é basicamente um Error Boundary automático por rota."
 }

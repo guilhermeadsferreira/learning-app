@@ -1,0 +1,117 @@
+{
+  "id": "data-fetching-quiz",
+  "courseId": "react",
+  "moduleId": "data-fetching",
+  "title": "Quiz: Data Fetching",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Revisar conceitos é como verificar a receita antes de servir o prato — cada detalhe importa para o resultado final.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar os conceitos de data fetching que você aprendeu neste módulo: Fetch API, estados de loading e erro, e TanStack Query."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Por que colocamos o fetch dentro de um useEffect com array de dependências vazio ([])?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Porque o useEffect é mais rápido que chamar fetch diretamente",
+          "isCorrect": false,
+          "explanation": "O useEffect não afeta a velocidade do fetch. Ele controla quando o efeito colateral acontece."
+        },
+        {
+          "id": "b",
+          "text": "Para que o fetch execute apenas uma vez, quando o componente montar",
+          "isCorrect": true,
+          "explanation": "Exato! O array vazio diz ao React: 'execute esse efeito apenas na montagem'. Sem ele, o fetch rodaria a cada re-render, causando loop infinito."
+        },
+        {
+          "id": "c",
+          "text": "Porque o fetch não funciona fora do useEffect",
+          "isCorrect": false,
+          "explanation": "O fetch funciona em qualquer lugar, mas no corpo do componente ele seria chamado a cada render, causando loop infinito."
+        },
+        {
+          "id": "d",
+          "text": "Para garantir que o fetch use cache do navegador",
+          "isCorrect": false,
+          "explanation": "O cache do navegador é independente do useEffect. O useEffect controla quando o efeito é executado."
+        }
+      ]
+    },
+    {
+      "question": "O que acontece quando fetch recebe uma resposta com status 404?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Promise é rejeitada e cai no .catch()",
+          "isCorrect": false,
+          "explanation": "Pegadinha clássica! O fetch só rejeita em falha de rede. Status 404 é considerado uma resposta válida."
+        },
+        {
+          "id": "b",
+          "text": "A Promise é resolvida normalmente — você precisa verificar res.ok manualmente",
+          "isCorrect": true,
+          "explanation": "Correto! O fetch considera qualquer resposta HTTP como sucesso. Você precisa verificar res.ok ou res.status para detectar erros HTTP."
+        },
+        {
+          "id": "c",
+          "text": "O navegador mostra um erro automaticamente",
+          "isCorrect": false,
+          "explanation": "O navegador não mostra nenhum erro visual. Cabe ao seu código verificar e tratar o status da resposta."
+        },
+        {
+          "id": "d",
+          "text": "O fetch retorna null em vez de dados",
+          "isCorrect": false,
+          "explanation": "O fetch retorna um objeto Response normalmente, mesmo em status de erro. Os dados do body ainda podem conter uma mensagem de erro do servidor."
+        }
+      ]
+    },
+    {
+      "question": "Qual a principal vantagem do TanStack Query sobre o padrão manual de fetch + useEffect?",
+      "options": [
+        {
+          "id": "a",
+          "text": "É mais rápido que o fetch nativo",
+          "isCorrect": false,
+          "explanation": "O TanStack Query usa o fetch por baixo dos panos. A vantagem não é velocidade bruta, mas gerenciamento automático."
+        },
+        {
+          "id": "b",
+          "text": "Gerencia automaticamente cache, loading, error, retry e cleanup",
+          "isCorrect": true,
+          "explanation": "Exato! Com uma chamada de useQuery, você ganha cache inteligente, estados de loading/error, retry automático, refetch em foco, e cleanup — tudo sem código manual."
+        },
+        {
+          "id": "c",
+          "text": "Não precisa de nenhuma configuração inicial",
+          "isCorrect": false,
+          "explanation": "Você precisa configurar o QueryClientProvider envolvendo a aplicação. Mas depois disso, cada useQuery é muito mais simples que o padrão manual."
+        },
+        {
+          "id": "d",
+          "text": "Substitui completamente o useState e useEffect no React",
+          "isCorrect": false,
+          "explanation": "O TanStack Query substitui o uso de useState/useEffect para data fetching, mas esses hooks continuam sendo usados para outros propósitos no React."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "O array vazio no useEffect garante que o fetch execute apenas na montagem",
+    "O fetch não rejeita em erros HTTP — verifique res.ok manualmente",
+    "TanStack Query automatiza cache, loading, error, retry e cleanup"
+  ],
+  "encouragement": "Módulo de Data Fetching concluído! Você dominou desde o fetch manual até ferramentas profissionais como TanStack Query. Esse é um dos conhecimentos mais importantes em React — agora você sabe como conectar seus componentes ao mundo real! 🎉"
+}

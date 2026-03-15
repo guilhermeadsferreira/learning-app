@@ -1,0 +1,117 @@
+{
+  "id": "state-management-quiz",
+  "courseId": "react",
+  "moduleId": "state-management",
+  "title": "Quiz: Gerenciamento de Estado",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Revisar é como conferir a lista de compras antes de sair do supermercado — garante que você não esqueceu nada importante.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar os conceitos de gerenciamento de estado, Context API e boas práticas que você aprendeu neste módulo."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal vantagem da Context API em relação a passar props manualmente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Context é mais rápido que props em termos de performance",
+          "isCorrect": false,
+          "explanation": "Na verdade, Context pode causar re-renders adicionais. A vantagem é organizacional, não de performance."
+        },
+        {
+          "id": "b",
+          "text": "Elimina prop drilling — componentes acessam dados diretamente sem depender de intermediários",
+          "isCorrect": true,
+          "explanation": "Correto! Context permite que componentes profundos na árvore acessem dados sem que componentes intermediários precisem repassar props."
+        },
+        {
+          "id": "c",
+          "text": "Context substitui completamente o useState e não precisa mais de estado local",
+          "isCorrect": false,
+          "explanation": "Context não substitui useState. Estado local continua sendo a melhor escolha para dados usados por um único componente."
+        },
+        {
+          "id": "d",
+          "text": "Context persiste os dados no navegador automaticamente",
+          "isCorrect": false,
+          "explanation": "Context armazena dados apenas em memória durante a sessão. Para persistência, você precisa de localStorage ou um backend."
+        }
+      ]
+    },
+    {
+      "question": "Quando é mais adequado usar estado local (useState) em vez de Context?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Quando o dado é usado por muitos componentes em diferentes níveis da árvore",
+          "isCorrect": false,
+          "explanation": "Nesse caso, Context ou uma biblioteca de estado global seria mais adequado."
+        },
+        {
+          "id": "b",
+          "text": "Quando o dado é usado apenas por um componente ou por componentes muito próximos",
+          "isCorrect": true,
+          "explanation": "Correto! Estado local é mais simples e eficiente quando o dado não precisa cruzar vários níveis da árvore."
+        },
+        {
+          "id": "c",
+          "text": "Quando o dado precisa ser acessado em todas as páginas da aplicação",
+          "isCorrect": false,
+          "explanation": "Dados acessados em toda a aplicação são candidatos ideais para Context ou estado global."
+        },
+        {
+          "id": "d",
+          "text": "Nunca — Context é sempre superior a useState",
+          "isCorrect": false,
+          "explanation": "useState é a escolha padrão e mais simples. Context adiciona complexidade e só deve ser usado quando realmente necessário."
+        }
+      ]
+    },
+    {
+      "question": "Qual é uma boa prática ao usar Context API?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Criar um único Context com todo o estado da aplicação para centralizar",
+          "isCorrect": false,
+          "explanation": "Isso causa re-renders em massa. Qualquer mudança no contexto re-renderiza todos os consumidores."
+        },
+        {
+          "id": "b",
+          "text": "Usar useContext(ThemeContext) diretamente em todos os componentes",
+          "isCorrect": false,
+          "explanation": "Funciona, mas o padrão recomendado é criar um custom hook (useTheme) que valida o Provider e simplifica o consumo."
+        },
+        {
+          "id": "c",
+          "text": "Separar contextos por responsabilidade e encapsular com custom hooks",
+          "isCorrect": true,
+          "explanation": "Correto! Contextos separados (ThemeContext, AuthContext) evitam re-renders desnecessários, e custom hooks (useTheme, useAuth) simplificam o consumo e validam o Provider."
+        },
+        {
+          "id": "d",
+          "text": "Sempre passar um valor default completo no createContext para evitar erros",
+          "isCorrect": false,
+          "explanation": "Um valor default pode mascarar a ausência do Provider. O padrão recomendado é usar undefined e validar no custom hook com throw."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Context elimina prop drilling, não é sobre performance",
+    "Estado local (useState) é a escolha padrão — só eleve quando necessário",
+    "Separe contextos por responsabilidade e use custom hooks para consumir"
+  ],
+  "encouragement": "Módulo de gerenciamento de estado completo! Você agora entende quando e como usar estado local, Context API e boas práticas. Essas decisões são o dia a dia de um dev React. 🏆"
+}

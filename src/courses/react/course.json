@@ -19,13 +19,14 @@
         "package-json",
         "vite-intro",
         "criando-projeto",
-        "estrutura-pastas"
+        "estrutura-pastas",
+        "ecosystem-quiz"
       ]
     },
     {
       "id": "intro",
       "title": "Introdução ao React",
-      "lessons": ["what-is-react", "jsx", "jsx-expressoes"]
+      "lessons": ["what-is-react", "jsx", "jsx-expressoes", "intro-quiz"]
     },
     {
       "id": "components",
@@ -35,23 +36,36 @@
         "props",
         "props-children",
         "component-composition",
-        "component-best-practices"
+        "component-best-practices",
+        "components-quiz"
       ]
     },
     {
       "id": "state",
       "title": "Estado e Interatividade",
-      "lessons": ["use-state", "events", "controlled-uncontrolled", "forms-basic"]
+      "lessons": ["use-state", "events", "controlled-uncontrolled", "forms-basic", "state-quiz"]
     },
     {
       "id": "effects",
       "title": "useEffect e Efeitos",
-      "lessons": ["use-effect-intro", "use-effect-dependencies", "use-effect-cleanup"]
+      "lessons": [
+        "use-effect-intro",
+        "use-effect-dependencies",
+        "use-effect-cleanup",
+        "use-effect-pratica",
+        "effects-quiz"
+      ]
     },
     {
       "id": "advanced-hooks",
       "title": "Hooks Avançados",
-      "lessons": ["use-ref", "use-context", "use-reducer", "use-memo-callback"]
+      "lessons": [
+        "use-ref",
+        "use-context",
+        "use-reducer",
+        "use-memo-callback",
+        "advanced-hooks-quiz"
+      ]
     },
     {
       "id": "custom-hooks",
@@ -60,7 +74,8 @@
         "custom-hooks-intro",
         "custom-hooks-criando",
         "custom-hooks-padroes",
-        "custom-hooks-boas-praticas"
+        "custom-hooks-boas-praticas",
+        "custom-hooks-quiz"
       ]
     },
     {
@@ -72,7 +87,8 @@
         "tailwind-components",
         "tailwind-responsive",
         "tailwind-animacoes",
-        "tailwind-projeto"
+        "tailwind-projeto",
+        "styling-quiz"
       ]
     },
     {
@@ -85,23 +101,42 @@
         "rotas-aninhadas",
         "layout-routes",
         "react-router-navegacao",
-        "react-router-pratica"
+        "react-router-pratica",
+        "routing-quiz"
       ]
     },
     {
       "id": "state-management",
       "title": "Gerenciamento de Estado",
-      "lessons": ["context-api", "context-best-practices", "estado-local-vs-global"]
+      "lessons": [
+        "context-api",
+        "context-best-practices",
+        "estado-local-vs-global",
+        "context-pratica",
+        "state-management-quiz"
+      ]
     },
     {
       "id": "forms",
       "title": "Formulários Avançados",
-      "lessons": ["react-hook-form", "validacao-zod", "formularios-complexos"]
+      "lessons": [
+        "react-hook-form",
+        "validacao-zod",
+        "formularios-complexos",
+        "formulario-pratica",
+        "forms-quiz"
+      ]
     },
     {
       "id": "data-fetching",
       "title": "Data Fetching",
-      "lessons": ["fetch-api", "loading-error-states", "tanstack-query"]
+      "lessons": [
+        "fetch-api",
+        "loading-error-states",
+        "tanstack-query",
+        "fetch-pratica",
+        "data-fetching-quiz"
+      ]
     },
     {
       "id": "patterns",
@@ -110,7 +145,9 @@
         "clean-code-react",
         "componentes-reutilizaveis",
         "compound-components",
-        "error-boundaries"
+        "error-boundaries",
+        "patterns-pratica",
+        "patterns-quiz"
       ]
     },
     {
@@ -120,18 +157,33 @@
         "testing-intro",
         "react-testing-library",
         "testando-componentes",
-        "testando-hooks"
+        "testando-hooks",
+        "testing-pratica",
+        "testing-quiz"
       ]
     },
     {
       "id": "performance",
       "title": "Performance",
-      "lessons": ["react-memo", "lazy-suspense", "code-splitting", "quando-otimizar"]
+      "lessons": [
+        "react-memo",
+        "lazy-suspense",
+        "code-splitting",
+        "quando-otimizar",
+        "performance-pratica",
+        "performance-quiz"
+      ]
     },
     {
       "id": "advanced",
       "title": "Avançado",
-      "lessons": ["typescript-react", "react-19-novidades", "proximos-passos"]
+      "lessons": [
+        "typescript-react",
+        "react-19-novidades",
+        "typescript-react-pratica",
+        "advanced-quiz",
+        "proximos-passos"
+      ]
     }
   ]
 }

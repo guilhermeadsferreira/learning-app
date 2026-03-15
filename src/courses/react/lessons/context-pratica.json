@@ -1,0 +1,48 @@
+{
+  "id": "context-pratica",
+  "courseId": "react",
+  "moduleId": "state-management",
+  "title": "Praticando Context API",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Context é como um quadro de avisos compartilhado: o Provider escreve a mensagem, e qualquer componente da sala pode ler sem precisar que alguém passe de mão em mão.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Desafio: Theme Context"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio, você vai criar um sistema de tema (dark/light) usando Context API. O objetivo é praticar o fluxo completo: criar o contexto, implementar o Provider com estado, e consumir o valor em um componente filho."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "// Padrão Provider + Consumer\nconst MyContext = createContext();\n\nfunction MyProvider({ children }) {\n  const [value, setValue] = useState('default');\n  return (\n    <MyContext.Provider value={{ value, setValue }}>\n      {children}\n    </MyContext.Provider>\n  );\n}\n\nfunction MyConsumer() {\n  const { value } = useContext(MyContext);\n  return <p>{value}</p>;\n}"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Crie um ThemeContext que armazena o tema atual ('light' ou 'dark'). Crie um ThemeProvider com um botão para alternar o tema. Crie um componente Card que consome o contexto e muda sua cor de fundo conforme o tema.",
+    "starterCode": "import { createContext, useContext, useState } from 'react';\n\n// 1. Crie o ThemeContext\nconst ThemeContext = createContext();\n\n// 2. Crie o ThemeProvider\nfunction ThemeProvider({ children }) {\n  // Use useState para gerenciar o tema\n  // Passe o tema e a função de toggle pelo Provider\n  return null;\n}\n\n// 3. Crie o componente Card\nfunction Card() {\n  // Consuma o contexto com useContext\n  // Mude o background conforme o tema\n  return null;\n}\n\n// 4. Monte o App usando o Provider\nexport default function App() {\n  return (\n    <div>\n      {/* Envolva com ThemeProvider */}\n      <Card />\n    </div>\n  );\n}",
+    "solution": "import { createContext, useContext, useState } from 'react';\n\nconst ThemeContext = createContext();\n\nfunction ThemeProvider({ children }) {\n  const [theme, setTheme] = useState('light');\n\n  const toggleTheme = () =>\n    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));\n\n  return (\n    <ThemeContext.Provider value={{ theme, toggleTheme }}>\n      {children}\n    </ThemeContext.Provider>\n  );\n}\n\nfunction Card() {\n  const { theme, toggleTheme } = useContext(ThemeContext);\n\n  const styles = {\n    background: theme === 'dark' ? '#1a1a2e' : '#ffffff',\n    color: theme === 'dark' ? '#e0e0e0' : '#1a1a2e',\n    padding: '24px',\n    borderRadius: '12px',\n    textAlign: 'center',\n    border: '1px solid',\n    borderColor: theme === 'dark' ? '#333' : '#ddd',\n  };\n\n  return (\n    <div style={styles}>\n      <h2>Tema atual: {theme}</h2>\n      <button onClick={toggleTheme}>Alternar tema</button>\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <ThemeProvider>\n      <div style={{ padding: '40px' }}>\n        <Card />\n      </div>\n    </ThemeProvider>\n  );\n}",
+    "tests": [],
+    "hint": "Crie o contexto com createContext. No Provider, use useState para gerenciar o tema e passe o valor e a função toggle pelo value do Provider.",
+    "solutionExplanation": "O ThemeProvider usa useState para armazenar o tema e uma função toggleTheme para alterná-lo. Esses valores são passados pelo value do Provider. O Card consome o contexto com useContext e usa o tema para definir estilos dinamicamente. Esse padrão elimina prop drilling — o Card acessa o tema diretamente, sem precisar receber props do pai."
+  },
+  "keyTakeaways": [
+    "O Provider centraliza o estado e o expõe para toda a subárvore",
+    "useContext permite consumir o valor sem receber props",
+    "A função de toggle passada pelo contexto permite que qualquer componente altere o estado global",
+    "Esse padrão é a base de sistemas de tema em bibliotecas profissionais"
+  ],
+  "commonMistakes": [
+    "Esquecer de envolver os componentes filhos com o Provider — sem ele, useContext retorna o valor default",
+    "Não passar children no Provider, fazendo os filhos desaparecerem",
+    "Tentar modificar o tema diretamente em vez de usar a função toggle do contexto"
+  ],
+  "realWorldExample": "Aplicações como GitHub, Twitter e VS Code usam exatamente esse padrão para implementar dark mode. O Provider fica no topo da árvore e qualquer componente pode ler o tema ou alternálo.",
+  "encouragement": "Parabéns! Você implementou o padrão completo de Context API — createContext, Provider e useContext. Isso é o que frameworks profissionais fazem por baixo dos panos! 🎉"
+}

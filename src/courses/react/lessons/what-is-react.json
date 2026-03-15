@@ -55,6 +55,11 @@
     "Tudo se baseia em componentes reutilizáveis",
     "O Virtual DOM torna as atualizações eficientes e automáticas"
   ],
+  "commonMistakes": [
+    "Achar que React é um framework completo — na verdade é uma biblioteca focada na camada de view, e você escolhe as demais peças (roteamento, estado global, etc.)",
+    "Confundir React com JavaScript puro — React usa JS por baixo, mas tem suas próprias convenções (JSX, hooks, ciclo de vida). Aprender JS bem facilita muito.",
+    "Pensar que o Virtual DOM é uma cópia do HTML — ele é uma representação em memória (objeto JS) que o React usa para calcular mudanças antes de tocar no DOM real."
+  ],
   "realWorldExample": "O feed do Instagram é feito em React. Cada post, cada story, cada comentário é um componente. Quando você curte um post, o React atualiza apenas o ícone do coração e o contador — sem recarregar a página inteira.",
   "encouragement": "Se você já fez sites com HTML, CSS e JS, você já tem a base. React não é um bicho de sete cabeças — é uma forma mais organizada de fazer o que você já faz."
 }

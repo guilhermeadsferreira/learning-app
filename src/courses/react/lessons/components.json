@@ -4,7 +4,7 @@
   "moduleId": "components",
   "title": "Componentes",
   "type": "challenge",
-  "xp": 20,
+  "xp": 25,
   "difficulty": "beginner",
   "analogy": "Pense em componentes como funções do PHP que retornam HTML. No PHP, você pode ter uma função renderCard($titulo) que gera um bloco de HTML. Em React, o componente Card é uma função que retorna JSX. A diferença? O React atualiza tudo automaticamente quando os dados mudam.",
   "content": {

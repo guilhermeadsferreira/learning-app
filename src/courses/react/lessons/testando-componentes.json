@@ -4,19 +4,58 @@
   "moduleId": "testing",
   "title": "Testando componentes",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Testar componente é como fazer uma entrevista: renderize, interaja, verifique o resultado.",
   "content": {
     "sections": [
       {
+        "type": "heading",
+        "content": "O fluxo de testar um componente"
+      },
+      {
+        "type": "paragraph",
+        "content": "Testar um componente React segue sempre o mesmo fluxo: renderizar, encontrar elementos na tela, interagir (se necessário) e verificar o resultado. Veja um exemplo completo:"
+      },
+      {
         "type": "code",
-        "content": "import { render, screen, userEvent } from '@testing-library/react';\n\ntest('incrementa ao clicar', async () => {\n  render(<Counter />);\n  await userEvent.click(screen.getByRole('button', { name: /incrementar/i }));\n  expect(screen.getByText(/1/)).toBeInTheDocument();\n});",
+        "content": "import { render, screen } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport Counter from './Counter';\n\ntest('incrementa ao clicar', async () => {\n  render(<Counter />);\n  await userEvent.click(screen.getByRole('button', { name: /incrementar/i }));\n  expect(screen.getByText(/1/)).toBeInTheDocument();\n});",
         "language": "javascript"
       },
       {
         "type": "list",
-        "content": "render — monta o componente\nscreen — queries para encontrar elementos\nuserEvent — cliques, digitação\nfindBy — para elementos assíncronos"
+        "content": "render — monta o componente no DOM virtual de teste\nscreen — queries para encontrar elementos na tela\nuserEvent — simula cliques, digitação e outras interações do usuário\nfindBy — para elementos que aparecem de forma assíncrona (loading, fetch)"
+      },
+      {
+        "type": "heading",
+        "content": "Testando props e renderização condicional"
+      },
+      {
+        "type": "paragraph",
+        "content": "Componentes que recebem props ou exibem conteúdo condicionalmente precisam de testes para cada cenário:"
+      },
+      {
+        "type": "code",
+        "content": "import { render, screen } from '@testing-library/react';\nimport Alert from './Alert';\n\ntest('exibe mensagem de erro quando type é error', () => {\n  render(<Alert type=\"error\" message=\"Algo deu errado\" />);\n  expect(screen.getByRole('alert')).toHaveTextContent('Algo deu errado');\n});\n\ntest('não renderiza quando message é vazia', () => {\n  const { container } = render(<Alert type=\"info\" message=\"\" />);\n  expect(container).toBeEmptyDOMElement();\n});",
+        "language": "javascript"
+      },
+      {
+        "type": "callout",
+        "content": "Cada test() deve testar UM comportamento específico. Nomes descritivos como 'exibe mensagem de erro quando type é error' documentam o que o componente faz.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "O fluxo padrão é: render → query → (interact) → assert",
+    "Teste cada cenário de props e renderização condicional separadamente",
+    "Use nomes descritivos nos testes — eles servem como documentação viva do componente"
+  ],
+  "commonMistakes": [
+    "Testar detalhes internos do componente (ex: verificar se useState foi chamado) em vez do que aparece na tela",
+    "Colocar múltiplas verificações não relacionadas no mesmo test() — dificulta entender o que quebrou",
+    "Esquecer de passar props obrigatórias ao renderizar, causando erros confusos no teste"
+  ],
+  "encouragement": "Se você consegue renderizar um componente e verificar o que aparece na tela, você já sabe a base de 90% dos testes React. O resto é variação desse mesmo padrão!",
+  "realWorldExample": "Em apps de e-commerce, componentes como ProductCard são testados com diferentes combinações de props: produto em promoção, produto esgotado, produto com avaliações. Cada cenário é um test() que garante que o componente se comporta corretamente para aquela situação."
 }

@@ -4,7 +4,7 @@
   "moduleId": "components",
   "title": "Props children",
   "type": "challenge",
-  "xp": 20,
+  "xp": 25,
   "difficulty": "beginner",
   "analogy": "Pense em uma moldura de quadro. A moldura (componente wrapper) define o formato, a borda e o estilo — mas o quadro que vai dentro (children) pode ser qualquer coisa: uma foto, uma pintura, um poster. O componente não sabe e não se importa com o conteúdo; ele só cuida do 'invólucro'.",
   "content": {

@@ -1,0 +1,117 @@
+{
+  "id": "custom-hooks-quiz",
+  "courseId": "react",
+  "moduleId": "custom-hooks",
+  "title": "Quiz: Custom Hooks",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Hora de testar se os conceitos de custom hooks estão consolidados — pense neste quiz como um checkpoint antes de seguir em frente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revisão: Custom Hooks"
+      },
+      {
+        "type": "paragraph",
+        "content": "Responda as perguntas abaixo para verificar seu entendimento sobre criação, convenções e padrões de custom hooks no React."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a regra obrigatória para nomear um custom hook?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deve começar com 'hook' (ex: hookToggle)",
+          "isCorrect": false,
+          "explanation": "A convenção do React exige o prefixo 'use', não 'hook'."
+        },
+        {
+          "id": "b",
+          "text": "Deve começar com 'use' (ex: useToggle)",
+          "isCorrect": true,
+          "explanation": "Correto! O prefixo 'use' é obrigatório para que o React e o linter identifiquem a função como um hook e apliquem as regras dos hooks."
+        },
+        {
+          "id": "c",
+          "text": "Pode ter qualquer nome, desde que receba props como argumento",
+          "isCorrect": false,
+          "explanation": "Sem o prefixo 'use', o React não reconhece a função como hook e as regras dos hooks não são aplicadas."
+        },
+        {
+          "id": "d",
+          "text": "Deve começar com letra maiúscula como componentes (ex: Toggle)",
+          "isCorrect": false,
+          "explanation": "Nomes com letra maiúscula são para componentes. Hooks usam o prefixo 'use' em camelCase."
+        }
+      ]
+    },
+    {
+      "question": "O que acontece quando dois componentes diferentes usam o mesmo custom hook (ex: useToggle)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Eles compartilham o mesmo estado — alterar em um afeta o outro",
+          "isCorrect": false,
+          "explanation": "Custom hooks compartilham lógica, não estado. Cada componente recebe sua própria cópia independente."
+        },
+        {
+          "id": "b",
+          "text": "Cada componente recebe sua própria cópia independente do estado",
+          "isCorrect": true,
+          "explanation": "Correto! Cada chamada ao hook cria uma instância separada de useState/useEffect. Os componentes compartilham a lógica, mas o estado é independente."
+        },
+        {
+          "id": "c",
+          "text": "O React gera um erro porque hooks não podem ser usados em mais de um componente",
+          "isCorrect": false,
+          "explanation": "Hooks são feitos para serem reutilizados! Cada componente simplesmente cria sua própria instância."
+        },
+        {
+          "id": "d",
+          "text": "Funciona apenas se o hook usar useRef em vez de useState",
+          "isCorrect": false,
+          "explanation": "Tanto useState quanto useRef funcionam em custom hooks reutilizáveis. A independência de estado é garantida em ambos os casos."
+        }
+      ]
+    },
+    {
+      "question": "Quando é recomendado extrair lógica para um custom hook?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sempre que usar useState — todo estado deve estar em hooks",
+          "isCorrect": false,
+          "explanation": "Nem todo estado precisa de um hook dedicado. Um simples useState local é perfeitamente válido."
+        },
+        {
+          "id": "b",
+          "text": "Apenas quando a lógica envolver chamadas de API",
+          "isCorrect": false,
+          "explanation": "Hooks servem para qualquer lógica reutilizável, não apenas chamadas de API."
+        },
+        {
+          "id": "c",
+          "text": "Quando a mesma combinação de hooks/lógica se repete em dois ou mais componentes",
+          "isCorrect": true,
+          "explanation": "Correto! A regra prática é: extraia quando copiar pela segunda vez. Também vale para lógica complexa que dificulta a leitura do componente."
+        },
+        {
+          "id": "d",
+          "text": "Nunca — custom hooks são apenas para bibliotecas, não para código da aplicação",
+          "isCorrect": false,
+          "explanation": "Custom hooks são uma das ferramentas mais poderosas para organizar código em qualquer aplicação React."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "O prefixo 'use' é obrigatório para custom hooks — permite ao React e ao linter aplicar as regras",
+    "Custom hooks compartilham lógica, não estado — cada componente tem sua instância independente",
+    "Extraia para um hook quando a mesma lógica se repetir em mais de um componente"
+  ],
+  "encouragement": "Se você acertou as três, parabéns — custom hooks já fazem parte do seu repertório! Se errou alguma, revise as lições anteriores e tente novamente. Cada erro é uma oportunidade de fixar o conceito."
+}

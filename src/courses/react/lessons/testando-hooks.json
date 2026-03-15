@@ -4,7 +4,8 @@
   "moduleId": "testing",
   "title": "Testando custom hooks",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "advanced",
   "analogy": "Hooks só existem dentro de componentes. Para testar, use um componente de teste que usa o hook e verifique o resultado.",
   "content": {
     "sections": [
@@ -18,9 +19,47 @@
       },
       {
         "type": "code",
-        "content": "const { result } = renderHook(() => useCounter(0));\nexpect(result.current.count).toBe(0);\nact(() => result.current.increment());\nexpect(result.current.count).toBe(1);",
+        "content": "import { renderHook, act } from '@testing-library/react';\nimport useCounter from './useCounter';\n\ntest('inicia com valor padrão', () => {\n  const { result } = renderHook(() => useCounter(0));\n  expect(result.current.count).toBe(0);\n});\n\ntest('incrementa o contador', () => {\n  const { result } = renderHook(() => useCounter(0));\n  act(() => result.current.increment());\n  expect(result.current.count).toBe(1);\n});\n\ntest('reseta para o valor inicial', () => {\n  const { result } = renderHook(() => useCounter(5));\n  act(() => result.current.increment());\n  act(() => result.current.reset());\n  expect(result.current.count).toBe(5);\n});",
+        "language": "javascript"
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar renderHook vs render"
+      },
+      {
+        "type": "list",
+        "content": "renderHook — para testar hooks isolados, sem precisar criar um componente manualmente\nrender — quando o hook está acoplado a JSX e faz mais sentido testar o componente que usa o hook\nact() — obrigatório ao chamar funções que atualizam estado dentro do hook"
+      },
+      {
+        "type": "callout",
+        "content": "Se o seu hook retorna JSX ou está fortemente ligado a um componente, pode ser mais simples testar o componente que usa o hook diretamente com render, em vez de usar renderHook.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Testando hooks com dependências externas"
+      },
+      {
+        "type": "paragraph",
+        "content": "Hooks que dependem de Context ou providers precisam de um wrapper:"
+      },
+      {
+        "type": "code",
+        "content": "import { renderHook } from '@testing-library/react';\nimport { ThemeProvider } from './ThemeContext';\nimport useTheme from './useTheme';\n\ntest('retorna o tema do provider', () => {\n  const wrapper = ({ children }) => (\n    <ThemeProvider value=\"dark\">{children}</ThemeProvider>\n  );\n  const { result } = renderHook(() => useTheme(), { wrapper });\n  expect(result.current).toBe('dark');\n});",
         "language": "javascript"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "renderHook permite testar custom hooks sem criar componentes manuais",
+    "Envolva atualizações de estado com act() para que o React processe as mudanças",
+    "Use a opção wrapper do renderHook quando o hook depende de Providers (Context, Router)"
+  ],
+  "commonMistakes": [
+    "Esquecer de usar act() ao chamar funções que atualizam estado — o teste pode ler valores desatualizados",
+    "Tentar usar hooks fora de um componente sem renderHook — hooks só funcionam dentro de componentes React",
+    "Não passar o wrapper quando o hook usa useContext — causa erro de 'Provider not found'"
+  ],
+  "encouragement": "Testar hooks é a parte mais avançada de testes em React. Se você entendeu renderHook e act(), você já tem habilidade para testar qualquer lógica reutilizável da sua aplicação!",
+  "realWorldExample": "Em aplicações como o Notion, hooks customizados controlam lógica complexa: useEditor, useCollaboration, usePermissions. Cada um é testado com renderHook para garantir que a lógica funciona independentemente da UI. Quando a equipe refatora a interface, os testes de hooks garantem que o comportamento não quebrou."
 }

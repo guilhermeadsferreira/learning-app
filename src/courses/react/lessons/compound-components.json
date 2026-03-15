@@ -4,7 +4,8 @@
   "moduleId": "patterns",
   "title": "Compound Components",
   "type": "explanation",
-  "xp": 20,
+  "xp": 10,
+  "difficulty": "advanced",
   "analogy": "Compound components são como <select> e <option>: componentes separados que trabalham juntos, compartilhando estado via Context.",
   "content": {
     "sections": [
@@ -24,7 +25,47 @@
       {
         "type": "paragraph",
         "content": "Radix UI e shadcn/ui usam esse padrão. Evita prop explosion e dá máxima flexibilidade ao usuário do componente."
+      },
+      {
+        "type": "heading",
+        "content": "Implementando: Accordion com Context"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vamos construir um Accordion passo a passo. O componente pai gerencia qual item está aberto, e os filhos leem esse estado via Context."
+      },
+      {
+        "type": "code",
+        "content": "import { createContext, useContext, useState } from 'react';\n\nconst AccordionContext = createContext(null);\n\nfunction Accordion({ children }) {\n  const [openItem, setOpenItem] = useState(null);\n\n  function toggle(value) {\n    setOpenItem(prev => (prev === value ? null : value));\n  }\n\n  return (\n    <AccordionContext.Provider value={{ openItem, toggle }}>\n      <div className=\"divide-y border rounded-lg\">\n        {children}\n      </div>\n    </AccordionContext.Provider>\n  );\n}\n\nfunction AccordionItem({ value, title, children }) {\n  const { openItem, toggle } = useContext(AccordionContext);\n  const isOpen = openItem === value;\n\n  return (\n    <div>\n      <button\n        onClick={() => toggle(value)}\n        className=\"w-full text-left p-4 font-medium\"\n      >\n        {title} {isOpen ? '▲' : '▼'}\n      </button>\n      {isOpen && (\n        <div className=\"p-4 pt-0 text-gray-600\">\n          {children}\n        </div>\n      )}\n    </div>\n  );\n}\n\nAccordion.Item = AccordionItem;",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Usando o Accordion"
+      },
+      {
+        "type": "code",
+        "content": "<Accordion>\n  <Accordion.Item value=\"1\" title=\"O que é React?\">\n    Uma biblioteca JavaScript para construir interfaces.\n  </Accordion.Item>\n  <Accordion.Item value=\"2\" title=\"O que são hooks?\">\n    Funções que permitem usar estado e efeitos em componentes funcionais.\n  </Accordion.Item>\n  <Accordion.Item value=\"3\" title=\"O que é JSX?\">\n    Uma extensão de sintaxe que permite escrever HTML dentro do JavaScript.\n  </Accordion.Item>\n</Accordion>",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Compound components brilham quando o componente tem múltiplas partes que precisam de flexibilidade na ordem e composição. Se o componente é simples (ex: um botão), props normais são suficientes.",
+        "variant": "info"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Compound components usam Context para compartilhar estado entre pai e filhos",
+    "A API fica declarativa — o consumidor compõe as partes como quiser",
+    "Use dot notation (Accordion.Item) para agrupar subcomponentes logicamente",
+    "É o padrão por trás de bibliotecas como Radix UI, Headless UI e shadcn/ui"
+  ],
+  "commonMistakes": [
+    "Esquecer de criar o Context e tentar compartilhar estado via props cascateadas — derrota o propósito do padrão",
+    "Usar compound components para componentes simples que funcionariam bem só com props",
+    "Não tratar o caso em que o subcomponente é usado fora do pai — adicione validação no useContext"
+  ],
+  "encouragement": "Compound components é um padrão avançado, e entendê-lo te coloca num nível profissional. Quando você olhar o código do shadcn/ui ou Radix, vai reconhecer esse padrão em todo lugar! 🧩",
+  "realWorldExample": "O componente Dialog do shadcn/ui usa compound components: <Dialog><Dialog.Trigger>Abrir</Dialog.Trigger><Dialog.Content>...</Dialog.Content></Dialog>. Você, como consumidor, decide onde colocar cada parte. A equipe do Radix UI escolheu esse padrão exatamente para dar máxima flexibilidade sem prop explosion."
 }

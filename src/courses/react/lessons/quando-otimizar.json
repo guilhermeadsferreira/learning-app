@@ -5,6 +5,7 @@
   "title": "Profile antes de otimizar",
   "type": "explanation",
   "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Otimizar sem medir é como tomar remédio sem diagnóstico: pode não resolver e até piorar.",
   "content": {
     "sections": [
@@ -21,5 +22,19 @@
         "content": "Otimização prematura adiciona complexidade\nReact 19 Compiler reduz necessidade de memo manual\nExceções: libs que exigem referências estáveis, deps de useEffect"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Sempre meça antes de otimizar — use o React DevTools Profiler",
+    "Otimização prematura adiciona complexidade sem ganho real",
+    "React.memo, useMemo e useCallback têm custo — só valem quando o ganho é mensurável",
+    "O React Compiler (React 19+) automatiza muitas dessas otimizações"
+  ],
+  "commonMistakes": [
+    "Aplicar memo em todos os componentes 'por precaução' — isso adiciona overhead de comparação sem necessidade",
+    "Otimizar sem medir: resolver um problema que não existe",
+    "Ignorar otimizações reais (como reduzir o tamanho do estado global) e focar apenas em memo",
+    "Não considerar que o React já é rápido por padrão para a maioria dos casos"
+  ],
+  "realWorldExample": "Em um app real, um dev notou que uma tela demorava 200ms para responder a cliques. Usando o Profiler, descobriu que um único componente de gráfico re-renderizava 47 vezes por interação. Um React.memo resolveu o problema — sem precisar otimizar o app inteiro.",
+  "encouragement": "A mentalidade de 'medir primeiro, otimizar depois' é o que separa engenheiros que resolvem problemas reais de quem apenas adiciona complexidade. Você está no caminho certo!"
 }

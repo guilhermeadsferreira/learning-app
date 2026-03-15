@@ -4,7 +4,8 @@
   "moduleId": "advanced-hooks",
   "title": "useRef",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "useRef é como um porta-malas: guarda valores que não precisam causar re-render quando mudam, como referências ao DOM.",
   "content": {
     "sections": [
@@ -22,9 +23,44 @@
         "language": "jsx"
       },
       {
+        "type": "heading",
+        "content": "Exemplo prático: foco automático em formulário"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um dos usos mais comuns de useRef é gerenciar foco em formulários. Quando o usuário abre um modal ou navega para uma página, você pode focar automaticamente no primeiro campo — melhorando a acessibilidade e a experiência do usuário."
+      },
+      {
+        "type": "code",
+        "content": "import { useRef, useEffect } from 'react';\n\nfunction LoginForm() {\n  const emailRef = useRef(null);\n\n  useEffect(() => {\n    emailRef.current?.focus();\n  }, []);\n\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    // Se validação falhar, volta o foco pro campo\n    if (!emailRef.current.value.includes('@')) {\n      emailRef.current.focus();\n      return;\n    }\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input ref={emailRef} type=\"email\" placeholder=\"Email\" />\n      <button type=\"submit\">Entrar</button>\n    </form>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Usos comuns de useRef"
+      },
+      {
         "type": "list",
         "content": "Referências DOM — acessar elementos diretamente\nValores mutáveis — guardar IDs de timers\nValor anterior — comparar com render anterior"
+      },
+      {
+        "type": "callout",
+        "content": "Nunca leia ou escreva ref.current durante a renderização (fora de useEffect ou event handlers). Isso pode causar bugs difíceis de rastrear porque o React não monitora mudanças em refs.",
+        "variant": "warning"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "useRef persiste valores entre renders sem causar re-render",
+    "Alterar .current não dispara atualização da UI — diferente de useState",
+    "Principal uso: acessar elementos DOM diretamente (foco, scroll, medidas)",
+    "Também útil para guardar valores mutáveis como IDs de setInterval/setTimeout"
+  ],
+  "commonMistakes": [
+    "Modificar ref.current durante a renderização — refs devem ser lidas/escritas em useEffect ou event handlers",
+    "Confundir useRef com useState — se o valor precisa aparecer na tela, use useState",
+    "Esquecer de acessar .current — useRef retorna { current: valor }, não o valor diretamente"
+  ],
+  "realWorldExample": "Gerenciamento de foco em formulários: focar automaticamente no primeiro campo ao abrir um modal, voltar o foco para um campo com erro após validação, ou controlar play/pause de um elemento <video> sem re-renderizar o componente.",
+  "encouragement": "useRef é uma ferramenta sutil, mas poderosa. Enquanto useState controla o que o usuário vê, useRef controla o que acontece 'por trás dos panos'. Dominar os dois é o que separa um dev React iniciante de um intermediário!"
 }

@@ -4,10 +4,19 @@
   "moduleId": "performance",
   "title": "Code splitting",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Code splitting é como dividir um livro em capítulos: o leitor baixa só o capítulo que está lendo, não o livro inteiro.",
   "content": {
     "sections": [
+      {
+        "type": "heading",
+        "content": "O que é code splitting?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Code splitting é a técnica de dividir o JavaScript da sua aplicação em múltiplos arquivos (chunks) que são carregados sob demanda. Em vez de um bundle gigante, o navegador baixa apenas o código necessário para a página atual."
+      },
       {
         "type": "heading",
         "content": "Estratégias"
@@ -17,9 +26,54 @@
         "content": "Por rota — cada página em um chunk\nPor componente — modais, drawers sob demanda\nPor feature — carregar módulos quando necessário"
       },
       {
+        "type": "heading",
+        "content": "Code splitting por rota com React.lazy"
+      },
+      {
+        "type": "paragraph",
+        "content": "A estratégia mais comum e eficaz é dividir por rota. Cada página vira um chunk separado, carregado apenas quando o usuário navega até ela."
+      },
+      {
+        "type": "code",
+        "content": "import { lazy, Suspense } from 'react';\nimport { createBrowserRouter, RouterProvider } from 'react-router';\n\nconst Home = lazy(() => import('./pages/Home'));\nconst Products = lazy(() => import('./pages/Products'));\nconst ProductDetail = lazy(() => import('./pages/ProductDetail'));\nconst Checkout = lazy(() => import('./pages/Checkout'));\n\nconst router = createBrowserRouter([\n  {\n    path: '/',\n    element: (\n      <Suspense fallback={<PageSkeleton />}>\n        <Home />\n      </Suspense>\n    ),\n  },\n  {\n    path: '/products',\n    element: (\n      <Suspense fallback={<PageSkeleton />}>\n        <Products />\n      </Suspense>\n    ),\n  },\n  {\n    path: '/products/:id',\n    element: (\n      <Suspense fallback={<PageSkeleton />}>\n        <ProductDetail />\n      </Suspense>\n    ),\n  },\n  {\n    path: '/checkout',\n    element: (\n      <Suspense fallback={<PageSkeleton />}>\n        <Checkout />\n      </Suspense>\n    ),\n  },\n]);\n\nfunction App() {\n  return <RouterProvider router={router} />;\n}",
+        "language": "tsx"
+      },
+      {
+        "type": "heading",
+        "content": "Code splitting por componente"
+      },
+      {
+        "type": "paragraph",
+        "content": "Componentes pesados que não aparecem imediatamente (modais, drawers, editores) também são bons candidatos para lazy loading."
+      },
+      {
+        "type": "code",
+        "content": "const RichTextEditor = lazy(() => import('./RichTextEditor'));\n\nfunction PostForm() {\n  const [showEditor, setShowEditor] = useState(false);\n\n  return (\n    <div>\n      <button onClick={() => setShowEditor(true)}>\n        Abrir editor\n      </button>\n      {showEditor && (\n        <Suspense fallback={<p>Carregando editor...</p>}>\n          <RichTextEditor />\n        </Suspense>\n      )}\n    </div>\n  );\n}",
+        "language": "tsx"
+      },
+      {
+        "type": "callout",
+        "content": "Code splitting por rota é a estratégia com melhor custo-benefício. O Vite já faz isso automaticamente com import() dinâmico. Comece pelas rotas antes de otimizar componentes individuais.",
+        "variant": "tip"
+      },
+      {
         "type": "paragraph",
         "content": "Vite e webpack fazem split automático com import(). Combinar com React.lazy nas rotas pode reduzir bundle inicial em 37-58%."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Code splitting divide o bundle em chunks menores carregados sob demanda",
+    "A estratégia mais eficaz é dividir por rota — cada página é um chunk separado",
+    "Componentes pesados que não aparecem de imediato (modais, editores) também se beneficiam",
+    "Vite faz code splitting automático com import() dinâmico — basta usar React.lazy"
+  ],
+  "commonMistakes": [
+    "Dividir componentes muito pequenos — o overhead da requisição HTTP pode ser maior que o ganho",
+    "Não usar Suspense com fallback adequado, causando flash de tela vazia",
+    "Esquecer de testar a experiência com conexão lenta (Chrome DevTools → Network → Slow 3G)",
+    "Não agrupar componentes relacionados — dividir demais gera muitos chunks pequenos"
+  ],
+  "realWorldExample": "Um e-commerce carrega a página de produtos imediatamente, mas faz lazy loading do checkout, do painel admin e do chat de suporte. Isso reduz o bundle inicial de 2MB para 600KB, acelerando o First Contentful Paint.",
+  "encouragement": "Code splitting é uma das otimizações mais impactantes que você pode fazer — e com Vite + React.lazy, são poucas linhas de código para ganhos enormes!"
 }

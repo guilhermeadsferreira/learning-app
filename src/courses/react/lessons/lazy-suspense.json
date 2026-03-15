@@ -4,19 +4,68 @@
   "moduleId": "performance",
   "title": "Lazy loading e Suspense",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "React.lazy carrega componentes sob demanda, como streaming de vídeo. Suspense mostra fallback enquanto carrega.",
   "content": {
     "sections": [
       {
+        "type": "heading",
+        "content": "Lazy loading e Suspense"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em apps grandes, carregar tudo de uma vez deixa o carregamento inicial lento. React.lazy permite importar componentes de forma assíncrona — o código só é baixado quando o componente é realmente necessário."
+      },
+      {
+        "type": "heading",
+        "content": "Como funciona"
+      },
+      {
+        "type": "paragraph",
+        "content": "React.lazy recebe uma função que retorna um import() dinâmico. Esse import gera um chunk separado no build. O componente Suspense envolve o lazy component e exibe um fallback enquanto o chunk é carregado."
+      },
+      {
         "type": "code",
-        "content": "const Dashboard = React.lazy(() => import('./Dashboard'));\n\n<Suspense fallback={<Loading />}>\n  <Dashboard />\n</Suspense>",
-        "language": "jsx"
+        "content": "import { lazy, Suspense } from 'react';\n\nconst Dashboard = lazy(() => import('./Dashboard'));\nconst Settings = lazy(() => import('./Settings'));\n\nfunction App() {\n  return (\n    <Suspense fallback={<div>Carregando...</div>}>\n      <Routes>\n        <Route path=\"/dashboard\" element={<Dashboard />} />\n        <Route path=\"/settings\" element={<Settings />} />\n      </Routes>\n    </Suspense>\n  );\n}",
+        "language": "tsx"
       },
       {
         "type": "paragraph",
         "content": "React.lazy + import() geram chunks separados. O usuário baixa só o que precisa. Suspense exibe fallback até o componente carregar. Ideal para rotas."
+      },
+      {
+        "type": "heading",
+        "content": "Suspense com fallback personalizado"
+      },
+      {
+        "type": "paragraph",
+        "content": "O fallback pode ser qualquer componente React — um spinner, skeleton, ou uma mensagem amigável. Em apps profissionais, skeletons dão melhor percepção de velocidade."
+      },
+      {
+        "type": "code",
+        "content": "function LoadingSkeleton() {\n  return (\n    <div className=\"animate-pulse space-y-4 p-6\">\n      <div className=\"h-8 bg-gray-700 rounded w-1/3\" />\n      <div className=\"h-4 bg-gray-700 rounded w-full\" />\n      <div className=\"h-4 bg-gray-700 rounded w-2/3\" />\n    </div>\n  );\n}\n\n<Suspense fallback={<LoadingSkeleton />}>\n  <Dashboard />\n</Suspense>",
+        "language": "tsx"
+      },
+      {
+        "type": "callout",
+        "content": "React.lazy só funciona com default exports. Se seu componente usa named export, crie um wrapper: lazy(() => import('./MyComponent').then(mod => ({ default: mod.MyComponent })))",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "React.lazy + import() dividem o bundle e carregam componentes sob demanda",
+    "Suspense fornece um fallback visual enquanto o componente carrega",
+    "Lazy loading é mais efetivo em rotas e componentes pesados que nem sempre são acessados",
+    "Use skeletons no fallback para melhor experiência do usuário"
+  ],
+  "commonMistakes": [
+    "Esquecer de envolver o lazy component com Suspense — causa erro em runtime",
+    "Aplicar lazy em componentes que são sempre visíveis na tela principal — não há ganho",
+    "Usar React.lazy com named exports sem o wrapper .then(mod => ({ default: mod.X }))",
+    "Colocar o Suspense muito distante do lazy component, criando fallbacks que cobrem áreas grandes demais"
+  ],
+  "realWorldExample": "Apps como Gmail carregam a inbox primeiro e fazem lazy loading da tela de configurações. Isso reduz o bundle inicial e acelera o primeiro carregamento para a maioria dos usuários.",
+  "encouragement": "Lazy loading é uma técnica simples com impacto enorme. Com poucas linhas, você pode reduzir o tempo de carregamento do seu app pela metade!"
 }

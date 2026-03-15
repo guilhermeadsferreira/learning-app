@@ -4,7 +4,7 @@
   "moduleId": "routing",
   "title": "Projeto: mini app multi-página",
   "type": "challenge",
-  "xp": 30,
+  "xp": 25,
   "difficulty": "intermediate",
   "analogy": "Este é o momento de juntar tudo do React Router em um mini projeto real. Assim como um arquiteto não projeta só um cômodo, mas a casa inteira com fluxo entre os espaços — você vai criar um app com múltiplas 'páginas', navegação, rotas dinâmicas e layout compartilhado.",
   "content": {

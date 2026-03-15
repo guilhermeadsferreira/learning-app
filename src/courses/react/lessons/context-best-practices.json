@@ -4,7 +4,8 @@
   "moduleId": "state-management",
   "title": "Boas práticas do Context",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Context mal usado é como um alto-falante para toda a cidade: qualquer mudança faz todo mundo ouvir. Divida em canais menores.",
   "content": {
     "sections": [
@@ -13,13 +14,75 @@
         "content": "Práticas recomendadas"
       },
       {
-        "type": "list",
-        "content": "Contextos separados — ThemeContext, AuthContext, não AppContext com tudo\nMemoize value — useMemo para o objeto passado ao Provider\nCustom hooks — useTheme() em vez de useContext(ThemeContext) direto\nEvite default value — esconder Provider faltando pode mascarar bugs"
+        "type": "paragraph",
+        "content": "Context é poderoso, mas sem cuidado pode causar problemas de performance e manutenção. As boas práticas a seguir garantem que seus contextos sejam previsíveis, performáticos e fáceis de testar."
+      },
+      {
+        "type": "heading",
+        "content": "1. Separe contextos por responsabilidade"
       },
       {
         "type": "paragraph",
-        "content": "Para estado que muda frequentemente (lista de itens, filtros), considere Zustand ou Redux. Context causa re-render em todos os consumidores quando o value muda."
+        "content": "Em vez de um AppContext com tudo, crie contextos específicos. Assim, quando o tema muda, só os consumidores de ThemeContext re-renderizam — e não os que usam auth."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "// ❌ Ruim: tudo junto\nconst AppContext = createContext();\n// value={{ theme, user, language, cart }} — qualquer mudança re-renderiza tudo\n\n// ✅ Bom: separado por responsabilidade\nconst ThemeContext = createContext();\nconst AuthContext = createContext();\nconst LanguageContext = createContext();\n\nfunction App() {\n  return (\n    <ThemeProvider>\n      <AuthProvider>\n        <LanguageProvider>\n          <MainApp />\n        </LanguageProvider>\n      </AuthProvider>\n    </ThemeProvider>\n  );\n}"
+      },
+      {
+        "type": "heading",
+        "content": "2. Encapsule com custom hooks"
+      },
+      {
+        "type": "paragraph",
+        "content": "Exponha o contexto através de um hook customizado. Isso esconde o import do contexto, facilita refatoração e permite validar se o Provider existe."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "const AuthContext = createContext(undefined);\n\nfunction AuthProvider({ children }) {\n  const [user, setUser] = useState(null);\n  const login = (userData) => setUser(userData);\n  const logout = () => setUser(null);\n\n  return (\n    <AuthContext.Provider value={{ user, login, logout }}>\n      {children}\n    </AuthContext.Provider>\n  );\n}\n\nfunction useAuth() {\n  const context = useContext(AuthContext);\n  if (!context) {\n    throw new Error('useAuth deve ser usado dentro de AuthProvider');\n  }\n  return context;\n}\n\n// Uso: const { user, logout } = useAuth();"
+      },
+      {
+        "type": "callout",
+        "variant": "tip",
+        "content": "O padrão useAuth() em vez de useContext(AuthContext) é usado pela maioria das bibliotecas profissionais. Ele simplifica o consumo, centraliza validação e facilita testes com mocks."
+      },
+      {
+        "type": "heading",
+        "content": "3. Memoize o value do Provider"
+      },
+      {
+        "type": "paragraph",
+        "content": "Se o Provider re-renderiza (porque seu pai re-renderizou), um objeto literal no value cria uma nova referência a cada render, forçando todos os consumidores a re-renderizar."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "// ❌ Nova referência a cada render\n<ThemeContext.Provider value={{ theme, toggleTheme }}>\n\n// ✅ Referência estável com useMemo\nconst value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);\n<ThemeContext.Provider value={value}>"
+      },
+      {
+        "type": "callout",
+        "variant": "warning",
+        "content": "Evite colocar estado que muda frequentemente em Context (como posição do mouse, valor de input em tempo real). Para esses casos, considere Zustand, Jotai ou estado local."
+      },
+      {
+        "type": "list",
+        "content": "Contextos separados — ThemeContext, AuthContext, não AppContext com tudo\nMemoize value — useMemo para o objeto passado ao Provider\nCustom hooks — useTheme() em vez de useContext(ThemeContext) direto\nEvite default value genérico — undefined + throw no hook ajuda a detectar Provider faltando"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Separe contextos por responsabilidade para evitar re-renders desnecessários",
+    "Encapsule com custom hooks (useAuth, useTheme) para simplificar consumo e validar Provider",
+    "Memoize o value do Provider com useMemo para estabilizar a referência",
+    "Context não é ideal para estado que muda com alta frequência — considere bibliotecas dedicadas"
+  ],
+  "commonMistakes": [
+    "Colocar todo o estado da aplicação em um único Context gigante",
+    "Não validar a existência do Provider no custom hook, mascarando bugs silenciosos",
+    "Usar Context para estado que muda a cada keystroke (formulários), causando re-renders em cascata"
+  ],
+  "realWorldExample": "Bibliotecas como React Router, Material UI e Next.js usam internamente o padrão de contextos separados com custom hooks. O React Router, por exemplo, tem contextos distintos para location, navigation e outlet — cada um isolado para performance.",
+  "encouragement": "Agora você sabe como organizar Context como um profissional. Essas boas práticas vão fazer sua aplicação escalar sem dor de cabeça! 💪"
 }

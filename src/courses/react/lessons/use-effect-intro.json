@@ -4,7 +4,7 @@
   "moduleId": "effects",
   "title": "O que é useEffect",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
   "difficulty": "intermediate",
   "analogy": "Imagine que seu componente é um ator em uma peça de teatro. O 'render' é o momento em que ele atua no palco. O useEffect é o que acontece nos bastidores DEPOIS da cena: trocar o figurino (atualizar o título da página), chamar o próximo ator (buscar dados), ou limpar o cenário (cancelar um timer). São os efeitos colaterais — coisas que acontecem fora do palco principal.",
   "content": {

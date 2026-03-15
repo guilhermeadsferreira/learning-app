@@ -1,0 +1,48 @@
+{
+  "id": "performance-pratica",
+  "courseId": "react",
+  "moduleId": "performance",
+  "title": "Praticando Performance",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Otimizar performance é como fazer a regulagem de um motor: você não troca todas as peças — identifica o gargalo, ajusta com precisão e mede o resultado. React.memo e useCallback são suas ferramentas de afinação.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Otimizando re-renders desnecessários"
+      },
+      {
+        "type": "paragraph",
+        "content": "Neste desafio, você vai otimizar um componente que sofre de re-renders desnecessários. O ExpensiveList re-renderiza toda vez que o usuário digita no input, mesmo que a lista não tenha mudado."
+      },
+      {
+        "type": "paragraph",
+        "content": "Sua missão: usar React.memo no ExpensiveList e useCallback no handler onDelete para que o componente só re-renderize quando os items realmente mudarem."
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "O componente abaixo tem um problema de performance: o ExpensiveList re-renderiza toda vez que o input muda, mesmo sem a lista mudar. Use React.memo e useCallback para otimizar o componente. O ExpensiveList só deve re-renderizar quando os items mudarem.",
+    "starterCode": "import { useState } from 'react';\n\nfunction ExpensiveList({ items, onDelete }) {\n  console.log('ExpensiveList renderizou!');\n  return (\n    <ul>\n      {items.map(item => (\n        <li key={item.id}>\n          {item.name}\n          <button onClick={() => onDelete(item.id)}>Remover</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nexport default function App() {\n  const [search, setSearch] = useState('');\n  const [items, setItems] = useState([\n    { id: 1, name: 'React' },\n    { id: 2, name: 'TypeScript' },\n    { id: 3, name: 'Vite' },\n  ]);\n\n  const handleDelete = (id) => {\n    setItems(prev => prev.filter(item => item.id !== id));\n  };\n\n  return (\n    <div>\n      <input\n        value={search}\n        onChange={e => setSearch(e.target.value)}\n        placeholder=\"Pesquisar...\"\n      />\n      <p>Buscando: {search}</p>\n      <ExpensiveList items={items} onDelete={handleDelete} />\n    </div>\n  );\n}",
+    "solution": "import { useState, memo, useCallback } from 'react';\n\nconst ExpensiveList = memo(function ExpensiveList({ items, onDelete }) {\n  console.log('ExpensiveList renderizou!');\n  return (\n    <ul>\n      {items.map(item => (\n        <li key={item.id}>\n          {item.name}\n          <button onClick={() => onDelete(item.id)}>Remover</button>\n        </li>\n      ))}\n    </ul>\n  );\n});\n\nexport default function App() {\n  const [search, setSearch] = useState('');\n  const [items, setItems] = useState([\n    { id: 1, name: 'React' },\n    { id: 2, name: 'TypeScript' },\n    { id: 3, name: 'Vite' },\n  ]);\n\n  const handleDelete = useCallback((id) => {\n    setItems(prev => prev.filter(item => item.id !== id));\n  }, []);\n\n  return (\n    <div>\n      <input\n        value={search}\n        onChange={e => setSearch(e.target.value)}\n        placeholder=\"Pesquisar...\"\n      />\n      <p>Buscando: {search}</p>\n      <ExpensiveList items={items} onDelete={handleDelete} />\n    </div>\n  );\n}",
+    "tests": [],
+    "hint": "Envolva ExpensiveList com memo() e estabilize handleDelete com useCallback. Lembre-se: useCallback com array de dependências vazio [] mantém a mesma referência entre renders.",
+    "solutionExplanation": "Ao envolver ExpensiveList com memo(), o React compara as props antes de re-renderizar. Mas isso só funciona se as props mantêm a mesma referência. Por isso, usamos useCallback em handleDelete com dependências vazias (usando o padrão funcional de setItems). Assim, quando o usuário digita no input, o App re-renderiza, mas o ExpensiveList é pulado porque items e onDelete não mudaram."
+  },
+  "keyTakeaways": [
+    "React.memo previne re-renders quando as props não mudam (shallow comparison)",
+    "useCallback estabiliza referências de funções entre renders",
+    "O padrão funcional de setState (prev => ...) permite usar useCallback com deps vazias",
+    "Sempre verifique no console.log se o componente realmente parou de re-renderizar"
+  ],
+  "commonMistakes": [
+    "Usar memo sem useCallback nas funções passadas como props — o memo é anulado",
+    "Colocar items no array de dependências do useCallback quando não é necessário (usar padrão funcional de setState)",
+    "Esquecer de envolver com memo() e aplicar apenas useCallback — os dois são necessários juntos",
+    "Não testar se a otimização realmente funcionou (verificar console.log ou Profiler)"
+  ],
+  "realWorldExample": "Em apps com listas grandes (feeds, tabelas de dados, catálogos), cada item re-renderizando desnecessariamente causa lentidão perceptível. Aplicar memo + useCallback em listas com mais de 50 itens é uma prática padrão em times profissionais.",
+  "encouragement": "Parabéns por chegar até aqui! Otimizar performance é uma habilidade avançada que muitos devs nunca dominam. Você já está praticando!"
+}

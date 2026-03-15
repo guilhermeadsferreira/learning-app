@@ -4,7 +4,8 @@
   "moduleId": "advanced",
   "title": "TypeScript com React",
   "type": "explanation",
-  "xp": 20,
+  "xp": 10,
+  "difficulty": "advanced",
   "analogy": "TypeScript no React é como um co-piloto: sugere tipos de props, detecta erros antes de rodar, e melhora a experiência no editor.",
   "content": {
     "sections": [
@@ -13,14 +14,61 @@
         "content": "Tipando props"
       },
       {
+        "type": "paragraph",
+        "content": "O primeiro passo com TypeScript no React é tipar as props dos seus componentes. Isso garante que quem usar o componente saiba exatamente o que precisa passar — e o editor avisa na hora se algo estiver errado."
+      },
+      {
         "type": "code",
         "content": "interface ButtonProps {\n  children: React.ReactNode;\n  onClick?: () => void;\n  variant?: 'primary' | 'secondary';\n}\n\nfunction Button({ children, onClick, variant = 'primary' }: ButtonProps) {\n  return <button onClick={onClick} className={variant}>...</button>;\n}",
         "language": "typescript"
       },
       {
+        "type": "heading",
+        "content": "Tipando useState"
+      },
+      {
+        "type": "paragraph",
+        "content": "O useState infere o tipo automaticamente a partir do valor inicial. Mas quando o estado pode ser null ou ter um tipo mais complexo, é preciso definir o tipo explicitamente com generics."
+      },
+      {
+        "type": "code",
+        "content": "// Tipo inferido automaticamente como number\nconst [count, setCount] = useState(0);\n\n// Tipo explícito — o estado pode ser User ou null\ninterface User {\n  name: string;\n  email: string;\n}\n\nconst [user, setUser] = useState<User | null>(null);\n\n// Tipo explícito com array\nconst [items, setItems] = useState<string[]>([]);",
+        "language": "typescript"
+      },
+      {
+        "type": "heading",
+        "content": "Tipos úteis do React"
+      },
+      {
         "type": "list",
-        "content": "React.ReactNode — para children\nReact.CSSProperties — para style\nReact.FormEvent, React.ChangeEvent — para eventos"
+        "content": "React.ReactNode — para children\nReact.CSSProperties — para style\nReact.FormEvent<HTMLFormElement> — para onSubmit\nReact.ChangeEvent<HTMLInputElement> — para onChange\nReact.MouseEvent<HTMLButtonElement> — para onClick"
+      },
+      {
+        "type": "heading",
+        "content": "Tipando eventos"
+      },
+      {
+        "type": "code",
+        "content": "function SearchForm() {\n  const [query, setQuery] = useState('');\n\n  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {\n    setQuery(e.target.value);\n  };\n\n  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {\n    e.preventDefault();\n    console.log('Buscando:', query);\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input value={query} onChange={handleChange} />\n    </form>\n  );\n}",
+        "language": "typescript"
+      },
+      {
+        "type": "callout",
+        "content": "Na dúvida sobre qual tipo usar em um evento, passe o mouse sobre o handler inline no VSCode — o editor mostra o tipo completo automaticamente.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Use interfaces para tipar props — isso documenta o contrato do componente",
+    "useState infere tipos simples, mas precisa de generics para tipos complexos ou nullable",
+    "Os tipos React.ChangeEvent e React.FormEvent cobrem a maioria dos eventos de formulário"
+  ],
+  "commonMistakes": [
+    "Usar 'any' para silenciar erros — isso anula os benefícios do TypeScript",
+    "Esquecer de tipar o useState quando o valor inicial é null (ex: useState(null) sem generic)",
+    "Confundir React.ReactNode com string — ReactNode aceita JSX, strings, números e arrays"
+  ],
+  "encouragement": "TypeScript parece burocrático no começo, mas em poucas semanas ele vira seu melhor aliado. Erros que antes só apareciam em produção agora são pegos na hora — e o autocomplete do editor fica poderoso.",
+  "realWorldExample": "Em projetos profissionais, TypeScript com React é praticamente o padrão. Times como os do Airbnb, Stripe e Discord usam TypeScript para garantir que mudanças em componentes compartilhados não quebrem outros pontos do app."
 }

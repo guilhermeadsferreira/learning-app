@@ -4,8 +4,9 @@
   "moduleId": "state",
   "title": "Controlled vs Uncontrolled",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "Controlled é como um carro com volante: React controla o valor. Uncontrolled é como um carro autônomo: o DOM mantém o valor.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Pense em dois tipos de termostato. O controlado é como um termostato inteligente: você define a temperatura pelo app e ele obedece. O não-controlado é como um termostato manual de parede: ele funciona sozinho, e você só confere a temperatura quando precisa.",
   "content": {
     "sections": [
       {
@@ -14,11 +15,11 @@
       },
       {
         "type": "paragraph",
-        "content": "O valor do input é controlado pelo estado React (value + onChange). A fonte da verdade é o estado."
+        "content": "Em um componente controlado, o React é a fonte da verdade. O valor do input vem do estado (value={estado}) e só muda quando o estado muda (onChange). Isso dá controle total: você pode validar, formatar, bloquear ou transformar o valor a cada tecla digitada."
       },
       {
         "type": "code",
-        "content": "const [nome, setNome] = useState('');\n<input value={nome} onChange={e => setNome(e.target.value)} />",
+        "content": "import { useState } from 'react';\n\nfunction InputControlado() {\n  const [nome, setNome] = useState('');\n\n  return (\n    <div>\n      <input\n        value={nome}\n        onChange={e => setNome(e.target.value)}\n        placeholder=\"Digite seu nome\"\n      />\n      <p>Olá, {nome || '...'}!</p>\n    </div>\n  );\n}",
         "language": "jsx"
       },
       {
@@ -27,8 +28,39 @@
       },
       {
         "type": "paragraph",
-        "content": "O DOM mantém o valor. Use ref para acessar quando precisar. Útil para integração com libs como React Hook Form."
+        "content": "Em um componente não controlado, o DOM mantém o valor internamente. Você usa useRef para criar uma referência ao elemento e acessa o valor quando precisa (ex: no submit). É útil para formulários simples ou integração com bibliotecas como React Hook Form."
+      },
+      {
+        "type": "code",
+        "content": "import { useRef } from 'react';\n\nfunction InputNaoControlado() {\n  const inputRef = useRef(null);\n\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    alert('Nome: ' + inputRef.current.value);\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input ref={inputRef} placeholder=\"Digite seu nome\" />\n      <button type=\"submit\">Enviar</button>\n    </form>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar cada um?"
+      },
+      {
+        "type": "list",
+        "content": "Controlado: validação em tempo real, formatação de input, campos interdependentes, formulários complexos\nNão controlado: formulários simples, integração com libs externas, file inputs, performance em formulários muito grandes"
+      },
+      {
+        "type": "callout",
+        "content": "A recomendação do React é usar componentes controlados na maioria dos casos. Use não-controlados apenas quando tiver um bom motivo (performance, integração com lib, file input).",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Controlado: value + onChange — React é a fonte da verdade",
+    "Não controlado: useRef — o DOM mantém o valor internamente",
+    "Prefira controlado para validação e lógica em tempo real",
+    "Use não controlado para file inputs e integração com libs como React Hook Form"
+  ],
+  "commonMistakes": [
+    "Colocar value= sem onChange — o input fica travado e o usuário não consegue digitar",
+    "Misturar controlado e não controlado no mesmo input (usar value e ref ao mesmo tempo)",
+    "Acessar ref.current antes do componente montar — o valor será null"
+  ],
+  "realWorldExample": "O campo de busca do Google é controlado: cada tecla digitada atualiza o estado e dispara sugestões em tempo real. Já o input de upload de arquivo (<input type='file'>) é sempre não controlado — o browser gerencia o valor internamente por segurança.",
+  "encouragement": "Entender a diferença entre controlado e não controlado é o que separa quem 'usa React' de quem 'entende React'. Agora você sabe escolher a abordagem certa para cada situação!"
 }

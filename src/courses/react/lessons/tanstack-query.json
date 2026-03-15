@@ -4,7 +4,8 @@
   "moduleId": "data-fetching",
   "title": "TanStack Query",
   "type": "explanation",
-  "xp": 20,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "TanStack Query é como um gerenciador de cache para dados do servidor: cache, refetch, retry, loading e error — tudo automático.",
   "content": {
     "sections": [
@@ -14,17 +15,69 @@
       },
       {
         "type": "paragraph",
-        "content": "Evite useEffect para fetch. useQuery gerencia loading, error, cache, refetch e retry. A documentação oficial recomenda: não use useEffect para buscar dados."
+        "content": "Nas lições anteriores, você viu que buscar dados com fetch + useEffect exige muito código manual: gerenciar loading, error, cleanup, cache... TanStack Query (antigo React Query) resolve tudo isso com uma API simples e poderosa. A própria documentação do React recomenda: não use useEffect para buscar dados em produção."
+      },
+      {
+        "type": "heading",
+        "content": "Setup inicial"
+      },
+      {
+        "type": "paragraph",
+        "content": "Para usar TanStack Query, você precisa envolver sua aplicação com um QueryClientProvider. Isso cria o contexto de cache que todos os hooks vão compartilhar:"
       },
       {
         "type": "code",
-        "content": "const { data, isLoading, error } = useQuery({\n  queryKey: ['users'],\n  queryFn: () => fetch('/api/users').then(r => r.json())\n});",
-        "language": "javascript"
+        "content": "import { QueryClient, QueryClientProvider } from '@tanstack/react-query';\n\nconst queryClient = new QueryClient();\n\nfunction App() {\n  return (\n    <QueryClientProvider client={queryClient}>\n      <MyApp />\n    </QueryClientProvider>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "useQuery: buscando dados"
+      },
+      {
+        "type": "paragraph",
+        "content": "O hook useQuery recebe dois campos essenciais: queryKey (identifica o cache) e queryFn (a função que busca os dados). Ele retorna loading, error e data — sem precisar de useState ou useEffect:"
+      },
+      {
+        "type": "code",
+        "content": "import { useQuery } from '@tanstack/react-query';\n\nfunction UserList() {\n  const { data, isLoading, error } = useQuery({\n    queryKey: ['users'],\n    queryFn: () =>\n      fetch('https://jsonplaceholder.typicode.com/users')\n        .then(res => res.json())\n  });\n\n  if (isLoading) return <p>Carregando...</p>;\n  if (error) return <p>Erro: {error.message}</p>;\n\n  return (\n    <ul>\n      {data.map(user => (\n        <li key={user.id}>{user.name}</li>\n      ))}\n    </ul>\n  );\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Perceba: zero useState, zero useEffect, zero cleanup manual. O TanStack Query cuida de tudo — inclusive retry automático em caso de erro e cache inteligente.",
+        "variant": "tip"
+      },
+      {
+        "type": "heading",
+        "content": "Conceitos-chave"
       },
       {
         "type": "list",
-        "content": "queryKey — identifica o cache\nqueryFn — função que retorna Promise\nMutations — useMutation para POST/PUT/DELETE\nInvalidation — refetch quando dados mudam"
+        "content": "queryKey — array que identifica unicamente os dados no cache. Ex: ['users'], ['user', userId]\nqueryFn — função que retorna uma Promise com os dados\nstaleTime — tempo que os dados ficam 'frescos' no cache antes de refetch\nMutations — useMutation para POST/PUT/DELETE\nInvalidation — queryClient.invalidateQueries() para forçar refetch quando dados mudam"
+      },
+      {
+        "type": "heading",
+        "content": "Comparação: fetch manual vs TanStack Query"
+      },
+      {
+        "type": "paragraph",
+        "content": "Com fetch manual, você precisa de 3 useStates + 1 useEffect + cleanup + tratamento de erro. Com TanStack Query, uma chamada de useQuery resolve tudo e ainda adiciona cache, retry, refetch em foco, e deduplicação de requisições automaticamente. Para projetos reais, é a escolha recomendada."
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "TanStack Query elimina a necessidade de useState + useEffect para data fetching",
+    "queryKey identifica os dados no cache; queryFn é a função que busca os dados",
+    "O QueryClientProvider deve envolver toda a aplicação",
+    "Use useMutation para operações de escrita (POST, PUT, DELETE)"
+  ],
+  "commonMistakes": [
+    "Esquecer de envolver o app com QueryClientProvider",
+    "Usar strings simples em vez de arrays como queryKey (ex: 'users' em vez de ['users'])",
+    "Não incluir variáveis dinâmicas na queryKey (ex: ['user', userId] em vez de ['user'])",
+    "Misturar useEffect para fetch quando TanStack Query já está disponível no projeto"
+  ],
+  "realWorldExample": "A maioria dos projetos React profissionais usa TanStack Query. Ele é usado em apps de empresas como Netflix, Microsoft e Airbnb. Quando você abre uma aba e volta, os dados atualizam automaticamente. Quando a internet cai e volta, ele refaz as requisições. É o padrão da indústria para data fetching em React.",
+  "encouragement": "Parabéns! Você agora conhece a ferramenta que os devs profissionais usam no dia a dia para data fetching. Entender o fetch manual primeiro e depois ver como TanStack Query simplifica tudo é o caminho certo — você sabe o que acontece por baixo dos panos!"
 }

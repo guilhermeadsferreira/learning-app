@@ -4,7 +4,7 @@
   "moduleId": "routing",
   "title": "Hooks de navegação avançados",
   "type": "explanation",
-  "xp": 20,
+  "xp": 10,
   "difficulty": "intermediate",
   "analogy": "Os hooks do React Router são como as ferramentas de GPS do Waze. useLocation te diz ONDE você está (pathname, query params). useSearchParams são os filtros do mapa (ordenação, categoria). useNavigate é o 'recalculando rota' — muda o destino programaticamente.",
   "content": {

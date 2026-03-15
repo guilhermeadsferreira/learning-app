@@ -4,7 +4,8 @@
   "moduleId": "patterns",
   "title": "Componentes reutilizáveis",
   "type": "explanation",
-  "xp": 15,
+  "xp": 10,
+  "difficulty": "intermediate",
   "analogy": "Um componente reutilizável é como uma peça LEGO: funciona em vários contextos, aceita configuração via props, e tem API clara.",
   "content": {
     "sections": [
@@ -19,7 +20,51 @@
       {
         "type": "paragraph",
         "content": "Evite prop explosion: se um componente tem 20+ props, considere compound components ou slots (children como função)."
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo: botão reutilizável com variantes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um botão é o exemplo clássico de componente reutilizável. Em vez de criar um componente para cada estilo, usamos props para controlar variação."
+      },
+      {
+        "type": "code",
+        "content": "function Button({ variant = 'primary', size = 'md', children, ...props }) {\n  const baseStyles = 'rounded font-medium transition-colors';\n\n  const variants = {\n    primary: 'bg-blue-600 text-white hover:bg-blue-700',\n    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',\n    danger: 'bg-red-600 text-white hover:bg-red-700',\n  };\n\n  const sizes = {\n    sm: 'px-3 py-1 text-sm',\n    md: 'px-4 py-2 text-base',\n    lg: 'px-6 py-3 text-lg',\n  };\n\n  return (\n    <button\n      className={`${baseStyles} ${variants[variant]} ${sizes[size]}`}\n      {...props}\n    >\n      {children}\n    </button>\n  );\n}\n\n// Uso:\n<Button variant=\"primary\" size=\"lg\">Salvar</Button>\n<Button variant=\"danger\">Excluir</Button>\n<Button variant=\"secondary\" disabled>Cancelar</Button>",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Flexibilidade com children"
+      },
+      {
+        "type": "paragraph",
+        "content": "O prop children permite que o consumidor do componente defina o conteúdo livremente, sem que o componente precise prever todos os casos."
+      },
+      {
+        "type": "code",
+        "content": "function Card({ children }) {\n  return (\n    <div className=\"rounded-lg border p-4 shadow-sm\">\n      {children}\n    </div>\n  );\n}\n\n// O consumidor decide o conteúdo\n<Card>\n  <h2>Título</h2>\n  <p>Qualquer conteúdo aqui</p>\n  <Button variant=\"primary\">Ação</Button>\n</Card>",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "Componentes reutilizáveis devem ser flexíveis, não adivinhos. Use props para o que varia e children para conteúdo livre. Quanto menos opiniões o componente tiver, mais contextos ele atende.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Props controlam variações previsíveis (variant, size, disabled)",
+    "children permite conteúdo flexível definido pelo consumidor",
+    "Espalhe props restantes com ...props para manter a API nativa do elemento",
+    "Se o componente tem muitas props, é hora de repensar a arquitetura"
+  ],
+  "commonMistakes": [
+    "Criar um componente novo para cada variação visual em vez de usar props — gera duplicação",
+    "Não usar children e forçar todo conteúdo via props string — limita flexibilidade",
+    "Esquecer de repassar props nativas (onClick, className) com spread — quebra a composição"
+  ],
+  "encouragement": "Componentes reutilizáveis são o superpoder do React. Quando você domina esse padrão, começa a construir interfaces inteiras como montar blocos LEGO! 🧱",
+  "realWorldExample": "Toda design system profissional (Material UI, Chakra, shadcn/ui) é construída sobre esse princípio. O componente Button do shadcn/ui, por exemplo, usa exatamente esse padrão: variant + size + children + spread de props. Quando você usa <Button variant='outline'>Cancelar</Button>, está usando um componente reutilizável."
 }

@@ -5,7 +5,8 @@
   "title": "Por que Vite?",
   "type": "explanation",
   "xp": 10,
-  "analogy": "Vite é como um carro esportivo: startup instantâneo e HMR ultrarrápido, enquanto Create React App era um carro antigo.",
+  "difficulty": "beginner",
+  "analogy": "O Vite é como um micro-ondas: esquenta o que você precisa na hora, sem esperar o forno inteiro aquecer. Ferramentas antigas precisavam processar tudo antes de começar — o Vite serve só o necessário, instantaneamente.",
   "content": {
     "sections": [
       {
@@ -19,7 +20,46 @@
       {
         "type": "list",
         "content": "Startup instantâneo — usa ES modules nativos\nHMR rápido — atualiza sem recarregar a página\nBuild otimizado — Rollup para produção\nSuporte nativo a JSX, TypeScript e CSS"
+      },
+      {
+        "type": "heading",
+        "content": "Criando um projeto com Vite"
+      },
+      {
+        "type": "paragraph",
+        "content": "Com um único comando, o Vite cria toda a estrutura do projeto React com TypeScript:"
+      },
+      {
+        "type": "code",
+        "content": "# Criar projeto React + TypeScript\nnpm create vite@latest meu-app -- --template react-ts\n\n# Entrar na pasta e instalar dependências\ncd meu-app\nnpm install\n\n# Iniciar servidor de desenvolvimento\nnpm run dev",
+        "language": "bash"
+      },
+      {
+        "type": "heading",
+        "content": "Por que não Create React App?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Create React App (CRA) foi a ferramenta oficial por anos, mas ficou lento e sem manutenção. O time do React deixou de recomendá-lo. O Vite resolve os principais problemas: startup rápido (segundos vs minutos), HMR quase instantâneo, e builds menores e mais rápidos."
+      },
+      {
+        "type": "callout",
+        "content": "O Vite não é exclusivo do React — ele também funciona com Vue, Svelte, e vanilla JS. A arquitetura é a mesma, só muda o plugin.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "Vite é a ferramenta recomendada para criar projetos React modernos",
+    "O servidor de desenvolvimento usa ES modules nativos, tornando o startup instantâneo",
+    "HMR (Hot Module Replacement) atualiza o código no navegador sem recarregar a página",
+    "npm create vite@latest é o comando para iniciar um novo projeto"
+  ],
+  "commonMistakes": [
+    "Usar Create React App em projetos novos — ele está descontinuado e é significativamente mais lento que o Vite",
+    "Confundir Vite com um framework — Vite é uma ferramenta de build, não um framework como Next.js",
+    "Esquecer de rodar npm install após criar o projeto com Vite — o comando cria os arquivos mas não instala as dependências automaticamente"
+  ],
+  "encouragement": "O Vite simplifica muito o setup de um projeto React. Você não precisa entender como ele funciona por dentro — basta saber que ele transforma seu código moderno em algo que o navegador entende, de forma rápida e eficiente.",
+  "realWorldExample": "Times de desenvolvimento em empresas como GitLab e Shopify migraram de Webpack/CRA para Vite para reduzir o tempo de startup do ambiente de desenvolvimento de minutos para segundos, aumentando a produtividade diária dos devs."
 }

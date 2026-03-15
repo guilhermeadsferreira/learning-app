@@ -4,22 +4,94 @@
   "moduleId": "effects",
   "title": "Array de dependências",
   "type": "explanation",
-  "xp": 15,
-  "analogy": "O array de dependências é como uma lista de gatilhos: quando qualquer item muda, o efeito dispara de novo.",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O array de dependências é como uma lista de gatilhos de um alarme: quando qualquer sensor da lista detecta uma mudança, o alarme (efeito) dispara. Se a lista estiver vazia, o alarme só toca uma vez — na instalação. Se não houver lista, ele dispara a cada movimento.",
   "content": {
     "sections": [
       {
         "type": "heading",
-        "content": "Regras do array de dependências"
-      },
-      {
-        "type": "list",
-        "content": "[] — executa só uma vez (mount)\n[dep1, dep2] — executa quando dep1 ou dep2 mudam\nOmitir — executa em toda render (geralmente evite)\nSempre inclua todas as variáveis usadas dentro do efeito"
+        "content": "O papel do array de dependências"
       },
       {
         "type": "paragraph",
-        "content": "O React compara as dependências com Object.is. Valores primitivos e referências estáveis funcionam bem. Objetos/arrays criados inline causam re-execuções desnecessárias."
+        "content": "O segundo argumento do useEffect — o array de dependências — controla QUANDO o efeito é re-executado. É a parte mais importante de dominar para evitar bugs sutis e loops infinitos."
+      },
+      {
+        "type": "heading",
+        "content": "Os 3 cenários de dependências"
+      },
+      {
+        "type": "paragraph",
+        "content": "Existem três formas de declarar dependências, e cada uma tem um comportamento muito diferente:"
+      },
+      {
+        "type": "code",
+        "content": "// 1. Array vazio [] — roda APENAS no mount (uma vez)\nuseEffect(() => {\n  console.log('Componente montou!');\n  fetchUserData();\n}, []);\n\n// 2. Com dependências [count] — roda quando 'count' muda\nuseEffect(() => {\n  document.title = `Cliques: ${count}`;\n}, [count]);\n\n// 3. Sem array — roda em TODA renderização (evite!)\nuseEffect(() => {\n  console.log('Renderizou'); // isso roda MUITO\n});",
+        "language": "javascript"
+      },
+      {
+        "type": "heading",
+        "content": "Exemplo completo: dependências em ação"
+      },
+      {
+        "type": "code",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    setLoading(true);\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(data => {\n        setUser(data);\n        setLoading(false);\n      });\n  }, [userId]); // re-busca quando userId muda\n\n  if (loading) return <p>Carregando...</p>;\n  return <h1>{user.name}</h1>;\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "paragraph",
+        "content": "Nesse exemplo, o efeito re-executa toda vez que userId recebe um novo valor. Se o usuário navegar de /users/1 para /users/2, o fetch é disparado novamente automaticamente."
+      },
+      {
+        "type": "heading",
+        "content": "Como o React compara dependências"
+      },
+      {
+        "type": "paragraph",
+        "content": "O React usa Object.is para comparar cada dependência com seu valor anterior. Valores primitivos (string, number, boolean) funcionam de forma previsível. Mas objetos e arrays criados inline são referências novas a cada render — o que causa re-execuções desnecessárias."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Problema: options é um NOVO objeto a cada render\nfunction Chat({ roomId }) {\n  const options = { serverUrl: 'https://chat.example.com', roomId };\n\n  useEffect(() => {\n    const conn = createConnection(options);\n    conn.connect();\n    return () => conn.disconnect();\n  }, [options]); // reconecta em TODA renderização!\n}\n\n// ✅ Solução: mova o objeto para DENTRO do efeito\nfunction Chat({ roomId }) {\n  useEffect(() => {\n    const options = { serverUrl: 'https://chat.example.com', roomId };\n    const conn = createConnection(options);\n    conn.connect();\n    return () => conn.disconnect();\n  }, [roomId]); // reconecta só quando roomId muda\n}",
+        "language": "jsx"
+      },
+      {
+        "type": "heading",
+        "content": "Cuidado com stale closures"
+      },
+      {
+        "type": "callout",
+        "content": "Se você omitir uma dependência que o efeito usa, o código vai 'lembrar' do valor antigo (stale closure). O ESLint plugin react-hooks/exhaustive-deps avisa quando isso acontece — NUNCA ignore esse warning sem entender o motivo.",
+        "variant": "warning"
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Stale closure: count nunca atualiza dentro do interval\nuseEffect(() => {\n  const id = setInterval(() => {\n    console.log(count); // sempre mostra o valor inicial!\n  }, 1000);\n  return () => clearInterval(id);\n}, []); // count não está nas dependências\n\n// ✅ Corrigido: usar função atualizadora do setState\nuseEffect(() => {\n  const id = setInterval(() => {\n    setCount(c => c + 1); // não depende de count externo\n  }, 1000);\n  return () => clearInterval(id);\n}, []); // agora está correto sem count nas deps",
+        "language": "javascript"
+      },
+      {
+        "type": "heading",
+        "content": "Regra de ouro"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre inclua no array TODAS as variáveis reativas que o efeito lê. Se o ESLint reclamar, não suprima o warning — refatore o código para que as dependências sejam corretas.",
+        "variant": "tip"
       }
     ]
-  }
+  },
+  "keyTakeaways": [
+    "[] = roda uma vez no mount; [x] = roda quando x muda; sem array = toda render",
+    "Object.is compara deps — objetos/arrays inline são referências novas a cada render",
+    "Nunca omita dependências: isso causa stale closures com valores desatualizados",
+    "Confie no ESLint exhaustive-deps — ele detecta dependências faltantes"
+  ],
+  "commonMistakes": [
+    "Suprimir o warning do ESLint com eslint-disable em vez de corrigir as dependências",
+    "Passar objetos/arrays criados inline como dependência, causando re-execuções a cada render",
+    "Omitir o array de dependências completamente, fazendo o efeito rodar em toda renderização"
+  ],
+  "encouragement": "O array de dependências é onde a maioria dos bugs de useEffect nasce — e morre. Entender como ele funciona é o divisor de águas entre usar useEffect com medo e usar com confiança.",
+  "realWorldExample": "No Twitter/X, quando você troca de perfil, o feed precisa recarregar. Um useEffect observa o userId nas dependências: quando muda, dispara o fetch do novo feed. Se as dependências estivessem erradas, você veria o feed do usuário anterior — um bug clássico de stale closure."
 }

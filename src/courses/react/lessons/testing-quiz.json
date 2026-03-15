@@ -1,0 +1,117 @@
+{
+  "id": "testing-quiz",
+  "courseId": "react",
+  "moduleId": "testing",
+  "title": "Quiz: Testes",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Esse quiz é como a prova final da linha de montagem: vamos verificar se todos os conceitos de testes estão funcionando antes de seguir em frente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revise seus conhecimentos sobre testes em React"
+      },
+      {
+        "type": "paragraph",
+        "content": "Responda as perguntas abaixo para consolidar o que você aprendeu sobre testes, React Testing Library e renderHook. Cada pergunta testa um conceito essencial para testar aplicações React no mundo real."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a ordem de prioridade recomendada para queries do React Testing Library?",
+      "options": [
+        {
+          "id": "a",
+          "text": "getByTestId > getByText > getByRole",
+          "isCorrect": false,
+          "explanation": "Essa é a ordem invertida! getByTestId é o último recurso porque não tem significado semântico. Prefira queries que reflitam como o usuário interage com a página."
+        },
+        {
+          "id": "b",
+          "text": "getByRole > getByLabelText > getByText > getByTestId",
+          "isCorrect": true,
+          "explanation": "Correto! getByRole é preferível porque usa roles ARIA, promovendo acessibilidade. getByTestId deve ser o último recurso quando não há outra forma semântica de encontrar o elemento."
+        },
+        {
+          "id": "c",
+          "text": "querySelector > getByText > getByRole",
+          "isCorrect": false,
+          "explanation": "querySelector é uma API do DOM nativo, não faz parte do RTL. O RTL oferece queries semânticas que são mais resilientes e testam acessibilidade."
+        },
+        {
+          "id": "d",
+          "text": "Tanto faz, todas as queries são equivalentes",
+          "isCorrect": false,
+          "explanation": "Não são equivalentes! Queries semânticas (getByRole, getByLabelText) testam acessibilidade e são mais resilientes a mudanças de implementação do que getByTestId."
+        }
+      ]
+    },
+    {
+      "question": "Por que devemos envolver atualizações de estado com act() ao testar hooks com renderHook?",
+      "options": [
+        {
+          "id": "a",
+          "text": "É apenas uma convenção de estilo — o teste funciona sem act()",
+          "isCorrect": false,
+          "explanation": "Não é apenas estilo. Sem act(), o React pode não processar a atualização de estado antes da verificação, resultando em valores desatualizados no result.current."
+        },
+        {
+          "id": "b",
+          "text": "act() garante que o React processe todas as atualizações de estado antes de continuar",
+          "isCorrect": true,
+          "explanation": "Correto! act() informa ao React para processar todos os efeitos e atualizações de estado pendentes. Sem ele, result.current pode refletir o estado anterior à atualização."
+        },
+        {
+          "id": "c",
+          "text": "act() é necessário apenas para hooks assíncronos",
+          "isCorrect": false,
+          "explanation": "act() é necessário para qualquer atualização de estado, síncrona ou assíncrona. Toda chamada que modifica estado dentro de um hook deve ser envolvida em act()."
+        },
+        {
+          "id": "d",
+          "text": "act() previne vazamentos de memória no teste",
+          "isCorrect": false,
+          "explanation": "Vazamentos de memória são prevenidos pelo cleanup automático do RTL. act() tem outro propósito: sincronizar atualizações de estado com as asserções do teste."
+        }
+      ]
+    },
+    {
+      "question": "Qual abordagem é recomendada ao testar um componente React?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Verificar se o useState foi chamado com o valor correto",
+          "isCorrect": false,
+          "explanation": "Isso é testar implementação, não comportamento. Se você refatorar o componente para usar useReducer, o teste quebraria mesmo que o comportamento seja idêntico."
+        },
+        {
+          "id": "b",
+          "text": "Acessar o estado interno do componente e verificar seus valores",
+          "isCorrect": false,
+          "explanation": "O estado interno é detalhe de implementação. O RTL propositalmente não expõe o estado — o foco deve ser no que o usuário vê e faz."
+        },
+        {
+          "id": "c",
+          "text": "Renderizar o componente, interagir como um usuário faria e verificar o que aparece na tela",
+          "isCorrect": true,
+          "explanation": "Correto! Essa é a filosofia central do RTL. Teste o que o usuário vê (texto, botões, formulários) e como ele interage (clicar, digitar). Testes assim sobrevivem a refatorações."
+        },
+        {
+          "id": "d",
+          "text": "Mockar todas as dependências e testar o componente em completo isolamento",
+          "isCorrect": false,
+          "explanation": "Mockar em excesso cria testes frágeis que não refletem o comportamento real. O RTL incentiva testes de integração: renderize o componente com suas dependências reais quando possível."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Queries semânticas (getByRole, getByLabelText) são preferíveis por promoverem acessibilidade",
+    "act() garante que atualizações de estado sejam processadas antes das verificações",
+    "Teste comportamento (o que o usuário vê e faz), não implementação (estado interno, chamadas de hooks)"
+  ],
+  "encouragement": "Se você acertou as três perguntas, você já entende os fundamentos de testes em React. Esses conceitos — queries semânticas, act() e foco em comportamento — são o que toda equipe profissional espera de um desenvolvedor React!"
+}
