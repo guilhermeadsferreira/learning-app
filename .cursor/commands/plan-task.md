@@ -61,6 +61,8 @@ Quebre o trabalho em etapas ordenadas. Para cada etapa:
 - Quais arquivos serão criados ou modificados
 - Dependências com outras etapas
 
+**Última etapa obrigatória em todo plano:** ao concluir a implementação, marcar a task como `Status: concluído` e movê-la para `tasks/done/`.
+
 ### Riscos e pontos de atenção
 
 Identifique potenciais problemas, trade-offs e decisões que podem impactar o projeto.

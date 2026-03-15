@@ -97,7 +97,7 @@ Para lições com desafio ou quiz, incluir `solutionExplanation` (quando aplicá
 
 ## Formato JSON obrigatório
 
-A saída deve seguir **exatamente** o schema em [lesson_schema.md](lesson_schema.md).
+A saída deve seguir **exatamente** o schema em [lesson_schema.md](lesson_schema.md) e [course_schema.md](course_schema.md) para cursos. O `course.json` deve incluir o campo obrigatório `tags` (array de strings) para categorização na home.
 
 ### Campos obrigatórios em toda lição
 

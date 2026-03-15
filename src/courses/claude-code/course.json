@@ -3,6 +3,7 @@
   "title": "Claude Code: Do Iniciante ao Avançado",
   "description": "Domine o Claude Code de ponta a ponta: da instalação até Agent Teams, SDK, plugins, hooks, MCP, Skills, CI/CD e configuração enterprise. O curso mais completo sobre a ferramenta de codificação agêntica da Anthropic.",
   "icon": "🤖",
+  "tags": ["IA", "ferramentas", "produtividade", "claude"],
   "aiReviewContext": {
     "subject": "Claude Code",
     "expertise": "CLI, CLAUDE.md, hooks, MCP, skills, plugins, subagents, Agent Teams, GitHub Actions, SDK, permissions, enterprise",
@@ -13,12 +14,23 @@
     {
       "id": "intro",
       "title": "Introdução ao Claude Code",
-      "lessons": ["what-is-claude-code", "installation-setup", "first-interaction", "quiz-fundamentals"]
+      "lessons": [
+        "what-is-claude-code",
+        "installation-setup",
+        "first-interaction",
+        "quiz-fundamentals"
+      ]
     },
     {
       "id": "interface",
       "title": "Dominando a Interface",
-      "lessons": ["operation-modes", "slash-commands-shortcuts", "effective-prompts", "context-cost-management", "quiz-interface"]
+      "lessons": [
+        "operation-modes",
+        "slash-commands-shortcuts",
+        "effective-prompts",
+        "context-cost-management",
+        "quiz-interface"
+      ]
     },
     {
       "id": "memory",
@@ -33,7 +45,12 @@
     {
       "id": "skills",
       "title": "Skills",
-      "lessons": ["what-are-skills", "creating-skills", "skills-testing-distribution", "quiz-skills"]
+      "lessons": [
+        "what-are-skills",
+        "creating-skills",
+        "skills-testing-distribution",
+        "quiz-skills"
+      ]
     },
     {
       "id": "hooks",
@@ -43,7 +60,13 @@
     {
       "id": "mcp-plugins",
       "title": "MCP e Plugins",
-      "lessons": ["what-is-mcp", "configuring-mcp", "plugins-ecosystem", "mcp-skills-practice", "quiz-mcp-plugins"]
+      "lessons": [
+        "what-is-mcp",
+        "configuring-mcp",
+        "plugins-ecosystem",
+        "mcp-skills-practice",
+        "quiz-mcp-plugins"
+      ]
     },
     {
       "id": "agents",
@@ -58,7 +81,13 @@
     {
       "id": "productivity-enterprise",
       "title": "Produtividade e Enterprise",
-      "lessons": ["best-practices", "security-permissions", "enterprise-providers", "claude-code-sdk", "quiz-final"]
+      "lessons": [
+        "best-practices",
+        "security-permissions",
+        "enterprise-providers",
+        "claude-code-sdk",
+        "quiz-final"
+      ]
     }
   ]
 }

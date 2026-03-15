@@ -34,6 +34,7 @@ Exemplo:
   "title": "React: Do Iniciante ao Avançado",
   "description": "Curso completo de React incluindo ecossistema, hooks, roteamento, formulários, data fetching, testes e boas práticas.",
   "icon": "⚛️",
+  "tags": ["programação", "frontend", "react", "javascript"],
   "aiReviewContext": {
     "subject": "React",
     "expertise": "React, hooks, componentes, JSX, Tailwind"
@@ -57,14 +58,15 @@ Exemplo:
 
 ## Campos do curso
 
-| Campo           | Tipo            | Obrigatório | Descrição                                         |
-| --------------- | --------------- | ----------- | ------------------------------------------------- |
-| id              | string          | Sim         | Identificador único do curso                      |
-| title           | string          | Sim         | Título do curso                                   |
-| description     | string          | Sim         | Descrição do curso                                |
-| icon            | string          | Sim         | Emoji representativo (ex: ⚛️)                     |
-| modules         | Module[]        | Sim         | Array de módulos inline                           |
-| aiReviewContext | AIReviewContext | Não         | Contexto para prompts de IA (revisão e perguntas) |
+| Campo           | Tipo            | Obrigatório | Descrição                                                                              |
+| --------------- | --------------- | ----------- | -------------------------------------------------------------------------------------- |
+| id              | string          | Sim         | Identificador único do curso                                                           |
+| title           | string          | Sim         | Título do curso                                                                        |
+| description     | string          | Sim         | Descrição do curso                                                                     |
+| icon            | string          | Sim         | Emoji representativo (ex: ⚛️)                                                          |
+| tags            | string[]        | Sim         | Tags para categorização e filtragem na home (ex: ["programação", "frontend", "react"]) |
+| modules         | Module[]        | Sim         | Array de módulos inline                                                                |
+| aiReviewContext | AIReviewContext | Não         | Contexto para prompts de IA (revisão e perguntas)                                      |
 
 ### AIReviewContext (opcional)
 

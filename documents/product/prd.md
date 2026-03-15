@@ -104,7 +104,7 @@ O MVP foi superado. O projeto evoluiu além do escopo inicial e hoje inclui 16 m
 
 ### Cursos
 
-Listagem de cursos disponíveis.
+Listagem de cursos disponíveis na home, com busca por palavra-chave (título e descrição) e filtragem por tags de área (programação, frontend, IA, ferramentas, etc.). Cada curso exibe ícone, título, descrição e badges de tags.
 
 ### Módulos
 

@@ -36,3 +36,36 @@ export function getLesson(courseId: string, lessonId: string): Lesson | null {
 export function getAllCourses(): Course[] {
   return Object.values(courses)
 }
+
+export function getAllTags(): string[] {
+  const tagSet = new Set<string>()
+  for (const course of Object.values(courses)) {
+    for (const tag of course.tags) {
+      tagSet.add(tag)
+    }
+  }
+  return Array.from(tagSet).sort()
+}
+
+export function getCoursesByTag(tag: string): Course[] {
+  return Object.values(courses).filter((course) =>
+    course.tags.some((t) => t.toLowerCase() === tag.toLowerCase())
+  )
+}
+
+function normalizeForSearch(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+}
+
+export function searchCourses(query: string): Course[] {
+  const normalizedQuery = normalizeForSearch(query.trim())
+  if (!normalizedQuery) return Object.values(courses)
+  return Object.values(courses).filter((course) => {
+    const titleMatch = normalizeForSearch(course.title).includes(normalizedQuery)
+    const descMatch = normalizeForSearch(course.description).includes(normalizedQuery)
+    return titleMatch || descMatch
+  })
+}

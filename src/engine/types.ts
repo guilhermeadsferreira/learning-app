@@ -22,6 +22,7 @@ export interface Course {
   title: string
   description: string
   icon: string
+  tags: string[]
   modules: Module[]
   /** Contexto opcional para prompts de revisão por IA. Se ausente, usa fallback por courseId. */
   aiReviewContext?: AIReviewContext
