@@ -3,7 +3,7 @@
   "title": "Laravel: Do Básico ao Avançado",
   "description": "Curso completo de Laravel: da configuração de ambiente com PHP e Composer até recursos avançados como APIs REST, autenticação, filas, eventos e deploy. Aprenda o framework PHP mais popular do mundo na prática.",
   "icon": "🔴",
-  "tags": ["Backend", "PHP", "Laravel"],
+  "tags": ["Programação", "Backend", "PHP", "Laravel"],
   "aiReviewContext": {
     "subject": "Laravel",
     "expertise": "PHP, MVC, Eloquent ORM, Blade, migrations, autenticação, APIs REST, filas, eventos, Artisan CLI",

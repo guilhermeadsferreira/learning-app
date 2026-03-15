@@ -3,7 +3,7 @@
   "title": "React: Do Iniciante ao Avançado",
   "description": "Curso completo de React incluindo ecossistema (Node, npm, Vite, Tailwind), hooks, roteamento, formulários, data fetching, testes e boas práticas.",
   "icon": "⚛️",
-  "tags": ["Frontend", "JavaScript", "React"],
+  "tags": ["Programação", "Frontend", "JavaScript", "React"],
   "aiReviewContext": {
     "subject": "React",
     "expertise": "React, hooks, componentes, JSX, Tailwind, ecossistema, roteamento, formulários, testes",

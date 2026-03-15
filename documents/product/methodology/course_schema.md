@@ -105,13 +105,13 @@ Tags são tipadas como `CourseTag` em `src/engine/types.ts`. Apenas valores da l
 "tags": ["IA", "Produtividade"]
 
 // Curso de framework frontend
-"tags": ["Frontend", "JavaScript", "React"]
+"tags": ["Programação", "Frontend", "JavaScript", "React"]
 
 // Curso de arquitetura (sem linguagem específica)
 "tags": ["Arquitetura", "Programação"]
 
 // Curso de framework backend com linguagem específica
-"tags": ["Backend", "PHP", "Laravel"]
+"tags": ["Programação", "Backend", "PHP", "Laravel"]
 ```
 
 ### AIReviewContext (opcional)
