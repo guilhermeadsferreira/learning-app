@@ -6,21 +6,27 @@ Crie uma nova task de projeto com base no contexto abaixo.
 
 ---
 
-## 1. Analisar o contexto
+## 1. Classificar a task
 
-A partir de `$ARGUMENTS`, extraia:
+A partir de `$ARGUMENTS`, determine a **categoria** da task. Use a tabela abaixo como guia:
 
-- **Título curto** da task (usado no nome do arquivo)
-- **Área** da task (feature, infra, docs, refactor, investigação, etc.)
-- **Objetivo** claro e direto
+| Categoria | Quando usar | Artefato de saída esperado |
+|-----------|-------------|---------------------------|
+| `feature` | Nova funcionalidade de produto | Código implementado |
+| `refactor` | Melhoria interna sem mudança de comportamento | Código refatorado |
+| `conteúdo` | Criação de curso ou lição | JSON em `src/courses/` |
+| `decisão-técnica` | Pesquisa + decisão arquitetural sem implementação imediata | ADR em `documents/tech/adrs/` |
+| `auditoria` | Revisão de qualidade (código, conteúdo, arquitetura) | Relatório + correções |
+| `produto` | Estratégia, identidade, PRD, backlog | Documento em `documents/product/` |
+| `infra` | Deploy, build, CI/CD, configuração de ambiente | Config + documentação |
 
-Se o contexto for vago, infira o máximo possível e pergunte ao usuário apenas o que for essencial.
+Se o contexto for vago, infira a categoria e confirme com o usuário antes de prosseguir.
 
 ---
 
 ## 2. Destrinchar a task
 
-Expanda o contexto breve em uma task completa e detalhada, incluindo:
+Expanda o contexto em uma task completa, incluindo:
 
 ### Objetivo
 
@@ -48,7 +54,13 @@ Liste perguntas que precisam ser respondidas durante a execução.
 
 ### Entregável
 
-Descreva o resultado concreto esperado (arquivo, configuração, funcionalidade, documento, etc.)
+Descreva o resultado concreto esperado com base na categoria:
+
+- `feature` / `refactor` / `infra` → arquivos de código criados/modificados
+- `conteúdo` → diretório do curso em `src/courses/`
+- `decisão-técnica` → `documents/tech/adrs/ADR-NNN-titulo.md`
+- `auditoria` → relatório inline ou arquivo em `documents/`
+- `produto` → arquivo em `documents/product/`
 
 ---
 
@@ -68,6 +80,8 @@ Onde `{nome-da-task}` é o título em kebab-case (ex: `deploy-gratuito`, `sistem
 # {Título da Task}
 
 **Status:** pendente
+**Categoria:** {feature | refactor | conteúdo | decisão-técnica | auditoria | produto | infra}
+**Artefato:** {descrição do entregável concreto}
 
 ---
 
@@ -109,6 +123,8 @@ Apresente um resumo da task criada:
 
 ```
 Task criada: {título}
+Categoria: {categoria}
+Artefato: {entregável}
 Arquivo: tasks/{nome-da-task}.md
 Escopo: {n} etapas
 ```

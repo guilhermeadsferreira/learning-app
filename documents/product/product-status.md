@@ -83,7 +83,7 @@
 |----------|-----------------|--------------|
 | Identidade da plataforma (nome, marca, pitch) | Alto — ancora posicionamento | Baixa (decisão + texto) |
 | Mini projetos por módulo | Alto — aumenta retenção e aplicação prática | Alta |
-| Autenticação + persistência multi-device | Alto — remove atrito de troca de dispositivo | Muito alta |
+| Autenticação + persistência multi-device | Alto — remove atrito de troca de dispositivo | Muito alta — **decisão tomada: Supabase + OAuth (GitHub/Google). Ver `documents/tech/adrs/ADR-001-supabase-persistence.md`** |
 | Novos cursos (SQL, MongoDB, AWS, System Design) | Alto — amplia público-alvo | Média por curso |
 | Spaced repetition | Médio — diferencial pedagógico | Alta |
 | Projeto final de Arquitetura | Médio — ancora o curso mais avançado | Média |

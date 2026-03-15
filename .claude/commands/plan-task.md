@@ -21,10 +21,10 @@ Se não encontrar correspondência, liste as tasks disponíveis em `tasks/` e pe
 
 ## 2. Analisar a task
 
-Leia o arquivo da task e entenda:
+Leia o arquivo da task e identifique:
 
 - Objetivo
-- Contexto
+- **Categoria** (campo `Categoria:` no arquivo — se ausente, infira a partir do conteúdo)
 - Escopo e etapas
 - Questões em aberto
 - Entregável esperado
@@ -43,29 +43,74 @@ Antes de planejar, explore o estado atual do projeto para embasar o plano:
 
 ## 4. Elaborar o plano de execução
 
-Apresente um plano claro e acionável com:
+O conteúdo e a profundidade do plano dependem da **categoria da task**:
 
-### Visão geral
+### Se `decisão-técnica`
 
-Resumo em 2-3 frases do que será feito e qual a abordagem escolhida.
+O entregável é um ADR — não há implementação de código nesta task.
 
-### Decisões técnicas
+O plano deve incluir:
+- Mapeamento do estado atual relevante
+- Opções a avaliar (mínimo 2, máximo 4)
+- Critérios de decisão
+- Próximo número de ADR disponível em `documents/tech/adrs/` (verificar ADRs existentes)
+- Etapa final: criar `documents/tech/adrs/ADR-NNN-titulo-descritivo.md` usando o template em `_template.md`
+- Atualizar `product-status.md` se a decisão impactar o roadmap
+- Marcar task como `Status: concluído` e mover para `tasks/done/`
 
-Liste decisões que precisam ser tomadas (ex: qual lib usar, qual abordagem seguir) com prós e contras para cada opção. Apresente sua recomendação.
+**Após apresentar o plano:** perguntar se o usuário quer que a pesquisa e a escrita do ADR sejam feitas imediatamente.
 
-### Etapas de execução
+---
 
-Quebre o trabalho em etapas ordenadas. Para cada etapa:
+### Se `feature` ou `refactor`
 
+O plano deve incluir:
+
+**Visão geral** — resumo em 2-3 frases da abordagem.
+
+**Decisões técnicas** — opções com prós/contras e recomendação.
+
+**Etapas de execução** — ordenadas, com:
 - O que será feito
 - Quais arquivos serão criados ou modificados
 - Dependências com outras etapas
 
-**Última etapa obrigatória em todo plano:** ao concluir a implementação, marcar a task como `Status: concluído` e movê-la para `tasks/done/`.
+**Última etapa obrigatória:** marcar a task como `Status: concluído` e mover para `tasks/done/`.
 
-### Riscos e pontos de atenção
+**Riscos e pontos de atenção.**
 
-Identifique potenciais problemas, trade-offs e decisões que podem impactar o projeto.
+**Após apresentar o plano:** perguntar se o usuário quer iniciar a implementação imediatamente ou prefere revisar o plano primeiro.
+
+---
+
+### Se `conteúdo`
+
+Redirecionar para `/new-course` ou `/new-content` conforme o escopo. O plano deve:
+- Identificar se é um curso novo ou lição em curso existente
+- Listar os módulos/lições a criar
+- Confirmar o courseId e a estrutura de arquivos
+
+**Após apresentar o plano:** perguntar se o usuário quer iniciar a criação do conteúdo imediatamente.
+
+---
+
+### Se `auditoria`
+
+O plano deve incluir:
+- Escopo da auditoria (quais arquivos, quais critérios)
+- Metodologia (o que será verificado e como)
+- Entregável: relatório inline ou arquivo em `documents/`
+- Se houver correções, listar como etapas separadas pós-auditoria
+
+**Após apresentar o plano:** perguntar se o usuário quer executar a auditoria imediatamente.
+
+---
+
+### Se `produto` ou `infra`
+
+O plano segue o formato padrão (visão geral → etapas → riscos), adaptado ao tipo de entregável.
+
+**Após apresentar o plano:** perguntar se o usuário quer prosseguir.
 
 ---
 
@@ -77,4 +122,4 @@ Apresente o plano completo e pergunte:
 - Alguma etapa precisa ser ajustada?
 - Alguma decisão técnica precisa de mais discussão?
 
-Aguarde aprovação antes de sugerir início da implementação.
+Aguarde aprovação antes de iniciar qualquer execução.

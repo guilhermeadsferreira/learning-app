@@ -72,6 +72,7 @@ Business logic lives in hooks, not components:
 | `src/components/ui/`        | shadcn/ui components                               |
 | `documents/product/`        | PRD, pedagogy, schemas, AI system design           |
 | `documents/tech/`           | React and React Router best practices              |
+| `documents/tech/adrs/`      | Architecture Decision Records (ADR-NNN-titulo.md)  |
 | `tasks/`                    | Project task files (pendente/done)                 |
 
 > **Fronteira `engine/` vs `services/`:** `engine/` cobre lógica de domínio e persistência local (`localStorage`). Isso é uma exceção intencional à regra "sem I/O" — localStorage é storage interno, não integração externa. I/O externo (chamadas a APIs de terceiros) pertence exclusivamente a `services/`.
@@ -119,6 +120,7 @@ Após qualquer alteração, verifique se a documentação precisa ser atualizada
 | Alteração no fluxo pedagógico            | `pedagogy.md`                                                    |
 | Alteração em `src/services/ai/`          | `AI_SYSTEM.md`                                                   |
 | Nova feature entregue ou curso publicado | `product-status.md`                                              |
+| Decisão arquitetural tomada              | Criar `documents/tech/adrs/ADR-NNN-titulo.md` (usar `_template.md`) |
 
 **Regra central:** quando há divergência entre código e doc, corrija o documento (não o código), salvo decisão arquitetural explícita. Funcionalidades planejadas mas não implementadas devem ser marcadas como `*(aspiracional — não implementado ainda)*`.
 

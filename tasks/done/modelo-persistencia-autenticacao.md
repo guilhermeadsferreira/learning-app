@@ -1,6 +1,6 @@
 # Modelo de Persistência, Autenticação e Escolha de Storage
 
-**Status:** pendente
+**Status:** concluído — 2026-03-15
 
 ---
 
