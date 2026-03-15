@@ -90,6 +90,8 @@ export function LessonPage() {
           solution: lesson.challenge.solution,
           hint: lesson.challenge.hint,
           lessonContext: lesson.analogy,
+          courseId,
+          aiReviewContext: course?.aiReviewContext,
         },
         apiKey
       )
@@ -115,9 +117,14 @@ export function LessonPage() {
     }
 
     return askAIQuestion(
-      question,
-      lesson.title,
-      currentCodeRef.current || lesson.challenge?.starterCode || '',
+      {
+        question,
+        lessonTitle: lesson.title,
+        studentCode:
+          currentCodeRef.current || lesson.challenge?.starterCode || '',
+        courseId,
+        aiReviewContext: course?.aiReviewContext,
+      },
       apiKey
     )
   }

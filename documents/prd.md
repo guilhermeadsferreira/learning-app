@@ -30,16 +30,9 @@ A plataforma deve combinar:
 
 ---
 
-# 3. Público-alvo inicial
+# 3. Público-alvo
 
-Desenvolvedores que já possuem base em:
-
-* HTML
-* CSS
-* JavaScript
-* PHP
-
-Mas que estão migrando para frameworks modernos como React.
+Pessoas que querem evoluir na programação. A plataforma apoia os estudos com metodologias que favorecem retenção, percepção de evolução e prazer no aprendizado.
 
 ---
 
@@ -105,7 +98,7 @@ Conectar novos conceitos com conhecimentos prévios.
 
 # 7. Escopo do MVP
 
-O MVP precisa validar a ideia, então será **deliberadamente pequeno**.
+O MVP foi superado. O projeto evoluiu além do escopo inicial e hoje inclui 16 módulos, 65 lições, sistema de IA (Professor IA) e gamificação completa. As funcionalidades abaixo representam o estado atual.
 
 ## 7.1 Funcionalidades
 
@@ -148,24 +141,26 @@ Usuário pode reabrir lições anteriores.
 
 ## Curso
 
-**React Fundamentals**
+**React: Do Iniciante ao Avançado**
 
-### Estrutura inicial
+### Estrutura atual (16 módulos, 65 lições)
 
-#### Módulo 1 — Introdução
-
-* O que é React
-* JSX
-
-#### Módulo 2 — Componentes
-
-* Componentes
-* Props
-
-#### Módulo 3 — Estado
-
-* useState
-* eventos
+1. Ecossistema e Ferramentas (Node, npm, Vite, estrutura)
+2. Introdução ao React (o que é React, JSX)
+3. Componentes (props, children, composição, boas práticas)
+4. Estado e Interatividade (useState, eventos, controlled/uncontrolled, formulários)
+5. useEffect e Efeitos
+6. Hooks Avançados (useRef, useContext, useReducer, useMemo/useCallback)
+7. Custom Hooks
+8. Estilização com Tailwind CSS
+9. React Router
+10. Gerenciamento de Estado (Context API)
+11. Formulários Avançados (react-hook-form, Zod)
+12. Data Fetching (fetch, TanStack Query)
+13. Padrões e Boas Práticas
+14. Testes
+15. Performance
+16. Avançado (TypeScript, React 19)
 
 ---
 
@@ -217,11 +212,11 @@ A tela principal de lição deve conter:
 
 ## Editor
 
-* Sandpack ou Monaco Editor
+* Sandpack
 
-## Persistência (planejado)
+## Persistência
 
-* Supabase
+* localStorage (progresso e XP do usuário)
 
 ---
 
@@ -248,26 +243,25 @@ Isso permitirá criar novos cursos sem alterar o código da aplicação.
 # 12. Arquitetura conceitual
 
 ```
-learning-engine
-│
-├ courses
-│
-├ components
-│
-├ engine
-│
-├ pages
-│
-└ services
+src/
+├── components/     → editor, gamification, layout, lesson, ui
+├── courses/        → conteúdo declarativo (course.json, lessons/*.json)
+├── engine/         → types, progress, xp
+├── hooks/          → useCourse, useLesson, useProgress
+├── lib/            → utils
+├── pages/          → HomePage, CoursePage, LessonPage
+├── services/       → ai-review (Claude, OpenAI)
+└── styles/         → globals.css
 ```
 
 Descrição:
 
-* **courses** → conteúdo dos cursos
-* **components** → componentes reutilizáveis
-* **engine** → lógica de execução das lições
-* **pages** → páginas da aplicação
-* **services** → integração com APIs e persistência
+* **courses** → conteúdo dos cursos em JSON
+* **components** → editor (Sandpack), gamification (XP, progress bar), layout (AppShell, Header, Sidebar), lesson (ChallengeCard, FeedbackCard, AIReviewCard)
+* **engine** → tipos TypeScript, persistência de progresso, sistema de XP
+* **hooks** → acesso a curso, lição e progresso
+* **pages** → rotas da aplicação
+* **services** → integração com APIs de IA (revisão de código, chat)
 
 ---
 
@@ -284,13 +278,12 @@ Sinais positivos incluem:
 
 # 14. Fora de escopo (por enquanto)
 
-Não fazem parte do MVP inicial:
+Não fazem parte do escopo atual:
 
 * multiplayer
 * ranking global
 * marketplace de cursos
 * aplicativo mobile
-* IA tutor avançado
 * analytics complexos
 
 ---
@@ -300,12 +293,35 @@ Não fazem parte do MVP inicial:
 Possíveis evoluções da plataforma:
 
 * sistema de revisão automática (spaced repetition)
-* IA tutor para ajudar em exercícios
 * analytics de aprendizado
 * novos cursos (TypeScript, Next.js, Node, Docker)
 * sistema de conquistas e níveis
 * trilhas personalizadas
 * modo multiplayer ou comunidade
+
+**Já implementado:** IA tutor (Professor IA) — revisão de código e chat com Claude/OpenAI.
+
+---
+
+# 15.1 Sistema de IA (Professor IA)
+
+Implementado. Permite:
+
+* **Revisão de código**: o aluno envia seu código e recebe feedback estruturado (feedback, isCorrect, encouragement, suggestions, nextStepHint)
+* **Chat**: tirar dúvidas durante desafios
+* **Providers**: Claude (Anthropic) e OpenAI, com troca dinâmica
+* **API Key**: armazenada localmente no navegador
+
+---
+
+# 15.2 Sistema de XP
+
+Implementado. Valores por tipo de lição:
+
+* **explanation** / **quiz**: 10 XP
+* **challenge**: 25 XP
+
+Progresso persistido em localStorage.
 
 ---
 

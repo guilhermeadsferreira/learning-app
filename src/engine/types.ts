@@ -1,9 +1,30 @@
+/** Tipo de desafio — define como a IA avalia a resposta do aluno */
+export type ChallengeStyle =
+  | 'code'      // desafio de código (React, Python, FastAPI…)
+  | 'query'     // desafio de query (SQL, NoSQL…)
+  | 'scenario'  // desafio de cenário/decisão (Gestão, AWS…)
+  | 'written'   // desafio escrito/textual (documentação, análise…)
+
+/** Contexto para prompts de IA por curso. Permite adaptar revisão e respostas ao domínio. */
+export interface AIReviewContext {
+  /** Assunto principal (ex: "React", "PostgreSQL", "Gestão de Pessoas") */
+  subject: string
+  /** Áreas de expertise para o prompt (ex: "hooks, componentes, JSX, Tailwind") */
+  expertise?: string
+  /** Linguagem para blocos de código nas mensagens (default: "text") */
+  codeLanguage?: string
+  /** Como a IA deve avaliar a resposta do aluno (default: "code") */
+  challengeStyle?: ChallengeStyle
+}
+
 export interface Course {
   id: string
   title: string
   description: string
   icon: string
   modules: Module[]
+  /** Contexto opcional para prompts de revisão por IA. Se ausente, usa fallback por courseId. */
+  aiReviewContext?: AIReviewContext
 }
 
 export interface Module {
@@ -85,6 +106,10 @@ export interface AIReviewRequest {
   solution: string
   hint?: string
   lessonContext?: string
+  /** ID do curso (para prompts dinâmicos) */
+  courseId: string
+  /** Contexto de IA do curso. Se ausente, usa fallback. */
+  aiReviewContext?: AIReviewContext
 }
 
 export interface AIReviewResponse {

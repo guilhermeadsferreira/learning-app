@@ -1,0 +1,49 @@
+---
+description: Validação pós-implementação — garantir alinhamento entre código e documentação
+alwaysApply: true
+---
+
+# Pós-Auditoria de Implementação
+
+Após qualquer implementação ou alteração significativa, valide se a documentação está alinhada.
+
+## Checklist de validação
+
+### 1. Alterações em `src/engine/types.ts`
+
+- Novos campos ou tipos em `Lesson`, `Challenge`, `Course`, `Module`?
+- **Ação**: Atualizar `documents/lesson_schema.md` ou `documents/course_schema.md`
+
+### 2. Novas lições JSON (`src/courses/*/lessons/*.json`)
+
+- Campos obrigatórios presentes? (`id`, `courseId`, `moduleId`, `title`, `type`, `xp`, `content`)
+- `content.sections` com tipos válidos? (`heading`, `paragraph`, `code`, `list`, `callout`)
+- Lições `challenge` têm `instructions`, `starterCode`, `solution`, `tests`?
+- Presença de `analogy`, `keyTakeaways` (recomendado)?
+
+### 3. Novos componentes ou páginas
+
+- A arquitetura em `documents/prd.md` (seção 12) reflete a estrutura atual?
+
+### 4. Alterações na metodologia pedagógica
+
+- `documents/pedagogy.md` foi atualizado?
+
+### 5. Uso do prompt de geração de lições
+
+- `documents/content_generation.md` está alinhado com o schema em `lesson_schema.md`?
+
+## Formato de validação
+
+Ao final de alterações que possam gerar divergência, liste brevemente:
+
+```
+Docs a revisar (se houver):
+- [nome do doc]: [o que verificar]
+```
+
+Se não houver divergência, não é necessário listar.
+
+## Regra de ouro
+
+**Documentação e código devem evoluir juntos.** Nenhuma feature nova sem doc atualizada.
