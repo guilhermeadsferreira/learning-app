@@ -7,7 +7,7 @@ import { ProgressBar } from '@/components/gamification/ProgressBar'
 import { useProgress } from '@/hooks/useProgress'
 import { useCourse } from '@/hooks/useCourse'
 import { getCourse } from '@/courses'
-import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
+import { useSettingsDrawer } from '@/hooks/useSettingsDrawer'
 import { getAllProviders, getApiKey } from '@/services/ai'
 import { cn } from '@/lib/utils'
 

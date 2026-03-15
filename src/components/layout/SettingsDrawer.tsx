@@ -16,7 +16,7 @@ import {
   testProviderConnection,
   type AIProvider,
 } from '@/services/ai'
-import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
+import { useSettingsDrawer } from '@/hooks/useSettingsDrawer'
 import { cn } from '@/lib/utils'
 
 function maskApiKey(prefix: string): string {

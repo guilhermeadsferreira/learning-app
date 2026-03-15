@@ -45,7 +45,7 @@ Courses and lessons are **declarative JSON files** loaded via Vite's `import.met
 ### State Management
 
 - **`ProgressProvider`** (`src/hooks/useProgress.tsx`) — single context for `completedLessonIds`, `currentLessonId`, and `xp`. Auto-syncs to `localStorage` key `learning-engine-progress`. Includes migration logic in `src/engine/progress-migration.ts`.
-- **`SettingsDrawerContext`** (`src/contexts/SettingsDrawerContext.tsx`) — simple open/close state for the settings drawer.
+- **`SettingsDrawerProvider` / `useSettingsDrawer`** (`src/hooks/useSettingsDrawer.tsx`) — simple open/close state for the settings drawer.
 - AI provider and API keys are stored in `localStorage` under `learning-engine-ai-provider` and `learning-engine-api-key-{provider}` (never sent to a backend).
 
 ### Custom Hooks
@@ -53,6 +53,7 @@ Courses and lessons are **declarative JSON files** loaded via Vite's `import.met
 Business logic lives in hooks, not components:
 
 - `useProgress()` — progress management
+- `useSettingsDrawer()` — settings drawer open/close state
 - `useCourse()` / `useLesson()` — derive current course/lesson from route params
 - `useLessonNavigation()` — prev/next lesson
 - `useCourseFilter()` — search + tag filtering
@@ -63,14 +64,17 @@ Business logic lives in hooks, not components:
 | Path                        | Purpose                                            |
 | --------------------------- | -------------------------------------------------- |
 | `src/engine/types.ts`       | All shared TypeScript interfaces — start here      |
-| `src/engine/`               | XP calculation, progress persistence, migrations   |
+| `src/engine/`               | Domain logic: types, XP rules, progress mutations, localStorage persistence |
+| `src/services/`             | External API integrations (Anthropic, OpenAI, OpenRouter)                   |
+| `src/hooks/`                | Custom hooks + context providers (useProgress, useSettingsDrawer, etc.) |
 | `src/courses/`              | JSON content (courses + lessons)                   |
-| `src/services/ai/`          | Claude + OpenAI + OpenRouter integration (client-side keys) |
 | `src/components/lesson/`    | Lesson rendering, challenges, quizzes, AI feedback |
 | `src/components/ui/`        | shadcn/ui components                               |
 | `documents/product/`        | PRD, pedagogy, schemas, AI system design           |
 | `documents/tech/`           | React and React Router best practices              |
 | `tasks/`                    | Project task files (pendente/done)                 |
+
+> **Fronteira `engine/` vs `services/`:** `engine/` cobre lógica de domínio e persistência local (`localStorage`). Isso é uma exceção intencional à regra "sem I/O" — localStorage é storage interno, não integração externa. I/O externo (chamadas a APIs de terceiros) pertence exclusivamente a `services/`.
 
 ### TypeScript
 

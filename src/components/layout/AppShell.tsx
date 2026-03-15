@@ -4,7 +4,7 @@ import { Header } from './Header'
 import { SidebarCourseNavigation } from './SidebarCourseNavigation'
 import { SettingsDrawer } from './SettingsDrawer'
 import { Toaster } from '@/components/ui/sonner'
-import { SettingsDrawerProvider } from '@/contexts/SettingsDrawerContext'
+import { SettingsDrawerProvider } from '@/hooks/useSettingsDrawer'
 import { cn } from '@/lib/utils'
 
 export function AppShell() {

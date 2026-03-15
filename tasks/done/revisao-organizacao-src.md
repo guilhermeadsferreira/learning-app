@@ -1,6 +1,6 @@
 # Revisão da Organização de `src/`
 
-**Status:** pendente
+**Status:** concluído
 
 ---
 
