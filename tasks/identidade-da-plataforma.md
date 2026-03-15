@@ -12,11 +12,11 @@ Definir a identidade visual e verbal da plataforma: um nome próprio marcante, u
 
 Atualmente a plataforma se chama **"Learning Engine"** — um nome funcional, mas genérico e técnico demais. Não gera identidade, não é memorável para o público-alvo (pessoas que querem evoluir na programação) e não comunica o diferencial emocional da experiência.
 
-O slogan atual:
+O slogan atual (hero da home):
 
-> _"Aprenda programação de forma gamificada. Lições curtas, prática ativa e progresso visível."_
+> _"Chega de consumir e só ter a teoria. Lições curtas, prática ativa e feedback de IA."_
 
-Descreve bem o produto, mas é longo e descritivo — mais um subtítulo do que um gancho. Falta punch, falta aspiração.
+Alinhado ao pitch: gancho contra o problema (consumo passivo sem resultado), destaque para feedback de IA.
 
 Referências de identidade no produto atual:
 

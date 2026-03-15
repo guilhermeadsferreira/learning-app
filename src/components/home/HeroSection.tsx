@@ -12,7 +12,7 @@ export function HeroSection({ searchQuery, onSearchChange, className }: HeroSect
     <div className={cn('text-center', className)}>
       <h1 className="text-3xl font-bold text-slate-50">Learning Engine</h1>
       <p className="mt-2 text-slate-400">
-        Aprenda programação de forma gamificada. Lições curtas, prática ativa e progresso visível.
+        Chega de consumir e só ter a teoria. Lições curtas, prática ativa e feedback de IA.
       </p>
       <div className="relative mx-auto mt-6 max-w-md">
         <Search
