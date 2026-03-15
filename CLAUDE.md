@@ -51,25 +51,26 @@ Courses and lessons are **declarative JSON files** loaded via Vite's `import.met
 ### Custom Hooks
 
 Business logic lives in hooks, not components:
+
 - `useProgress()` — progress management
 - `useCourse()` / `useLesson()` — derive current course/lesson from route params
 - `useLessonNavigation()` — prev/next lesson
 - `useCourseFilter()` — search + tag filtering
-- `useAIReview()` — AI feedback workflow (`src/services/ai-review.ts`)
+- `useAIReview()` — AI feedback workflow (`src/services/ai/`)
 
 ### Key Directories
 
-| Path | Purpose |
-|------|---------|
-| `src/engine/types.ts` | All shared TypeScript interfaces — start here |
-| `src/engine/` | XP calculation, progress persistence, migrations |
-| `src/courses/` | JSON content (courses + lessons) |
-| `src/services/ai-review.ts` | Claude + OpenAI API integration (client-side keys) |
-| `src/components/lesson/` | Lesson rendering, challenges, quizzes, AI feedback |
-| `src/components/ui/` | shadcn/ui components |
-| `documents/product/` | PRD, pedagogy, schemas, AI system design |
-| `documents/tech/` | React and React Router best practices |
-| `tasks/` | Project task files (pendente/done) |
+| Path                        | Purpose                                            |
+| --------------------------- | -------------------------------------------------- |
+| `src/engine/types.ts`       | All shared TypeScript interfaces — start here      |
+| `src/engine/`               | XP calculation, progress persistence, migrations   |
+| `src/courses/`              | JSON content (courses + lessons)                   |
+| `src/services/ai/`          | Claude + OpenAI + OpenRouter integration (client-side keys) |
+| `src/components/lesson/`    | Lesson rendering, challenges, quizzes, AI feedback |
+| `src/components/ui/`        | shadcn/ui components                               |
+| `documents/product/`        | PRD, pedagogy, schemas, AI system design           |
+| `documents/tech/`           | React and React Router best practices              |
+| `tasks/`                    | Project task files (pendente/done)                 |
 
 ### TypeScript
 
@@ -88,13 +89,13 @@ Business logic lives in hooks, not components:
 
 Anti-patterns a evitar:
 
-| Evitar | Usar |
-|--------|------|
-| `Link` envolvendo `Button` | `Link` com `buttonVariants` ou `Button asChild` |
-| `key={i}` em listas dinâmicas | `key={item.id}` |
-| God component | Extrair `useX` e subcomponentes |
-| `useEffect` para estado derivado | Calcular durante o render |
-| `pathname.includes('/course/')` | `useMatch('/course/:courseId/*')` |
+| Evitar                           | Usar                                            |
+| -------------------------------- | ----------------------------------------------- |
+| `Link` envolvendo `Button`       | `Link` com `buttonVariants` ou `Button asChild` |
+| `key={i}` em listas dinâmicas    | `key={item.id}`                                 |
+| God component                    | Extrair `useX` e subcomponentes                 |
+| `useEffect` para estado derivado | Calcular durante o render                       |
+| `pathname.includes('/course/')`  | `useMatch('/course/:courseId/*')`               |
 
 - Importar de `react-router` (pacote canônico em v7)
 - Extraia lógica para custom hooks se o componente passar de ~200 linhas
@@ -106,17 +107,18 @@ Anti-patterns a evitar:
 
 Após qualquer alteração, verifique se a documentação precisa ser atualizada:
 
-| Gatilho | Documentos a verificar |
-|---------|----------------------|
-| Alteração em `src/engine/types.ts` | `lesson_schema.md`, `course_schema.md`, `content_generation.md` |
-| Nova lição JSON | Campos obrigatórios presentes + ID referenciado no `course.json` |
-| Novo componente/página/serviço | `prd.md` §12 (Arquitetura) |
-| Alteração no fluxo pedagógico | `pedagogy.md` |
-| Alteração em `src/services/ai-review.ts` | `AI_SYSTEM.md` |
+| Gatilho                                  | Documentos a verificar                                           |
+| ---------------------------------------- | ---------------------------------------------------------------- |
+| Alteração em `src/engine/types.ts`       | `lesson_schema.md`, `course_schema.md`, `content_generation.md`  |
+| Nova lição JSON                          | Campos obrigatórios presentes + ID referenciado no `course.json` |
+| Novo componente/página/serviço           | `prd.md` §12 (Arquitetura)                                       |
+| Alteração no fluxo pedagógico            | `pedagogy.md`                                                    |
+| Alteração em `src/services/ai/`          | `AI_SYSTEM.md`                                                   |
 
 **Regra central:** quando há divergência entre código e doc, corrija o documento (não o código), salvo decisão arquitetural explícita. Funcionalidades planejadas mas não implementadas devem ser marcadas como `*(aspiracional — não implementado ainda)*`.
 
 Se docs foram corrigidos após uma alteração, informe brevemente:
+
 ```
 Docs atualizados:
 - lesson_schema.md: adicionado campo `challengeType`
@@ -124,11 +126,11 @@ Docs atualizados:
 
 ## Slash commands disponíveis
 
-| Comando | Uso |
-|---------|-----|
-| `/git-commit` | Pré-revisão + commit semântico em PT-BR + push |
-| `/new-content [contexto]` | Adicionar lição a curso existente |
-| `/new-course [tema]` | Criar curso completo do zero |
-| `/new-task [contexto]` | Criar task de projeto em `tasks/` |
-| `/plan-task [nome da task]` | Planejar execução de uma task existente |
-| `/review-course [courseId]` | Auditar e melhorar curso existente |
+| Comando                     | Uso                                            |
+| --------------------------- | ---------------------------------------------- |
+| `/git-commit`               | Pré-revisão + commit semântico em PT-BR + push |
+| `/new-content [contexto]`   | Adicionar lição a curso existente              |
+| `/new-course [tema]`        | Criar curso completo do zero                   |
+| `/new-task [contexto]`      | Criar task de projeto em `tasks/`              |
+| `/plan-task [nome da task]` | Planejar execução de uma task existente        |
+| `/review-course [courseId]` | Auditar e melhorar curso existente             |

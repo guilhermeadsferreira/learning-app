@@ -1,0 +1,68 @@
+{
+  "id": "trade-offs-arquiteturais",
+  "courseId": "arquitetura-software",
+  "moduleId": "nfr-tradeoffs",
+  "title": "Trade-offs: A Arte de Escolher o Menos Pior",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Trade-off é como escolher entre velocidade e economia em um carro: você não pode maximizar os dois ao mesmo tempo. Um arquiteto não procura a solução perfeita — procura a solução cujas desvantagens são aceitáveis no contexto atual.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um trade-off arquitetural?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um trade-off ocorre quando melhorar um atributo de qualidade piora outro. Em sistemas de software, trade-offs são inevitáveis: não existe arquitetura que seja simultaneamente a mais escalável, a mais segura, a mais manutenível e a mais performática. Cada escolha tem um custo."
+      },
+      {
+        "type": "heading",
+        "content": "Trade-offs clássicos"
+      },
+      {
+        "type": "list",
+        "content": "Consistência vs. Disponibilidade: sistemas distribuídos geralmente precisam escolher (CAP theorem)\nDesempenho vs. Manutenibilidade: código hiper-otimizado é difícil de ler e manter\nFlexibilidade vs. Simplicidade: APIs muito genéricas são difíceis de entender e usar\nDesacoplamento vs. Observabilidade: microserviços são mais flexíveis, mas requests distribuídos são mais difíceis de rastrear\nVelocidade de entrega vs. Qualidade: cortar atalhos agora cria dívida técnica para o futuro"
+      },
+      {
+        "type": "heading",
+        "content": "Como documentar trade-offs"
+      },
+      {
+        "type": "paragraph",
+        "content": "O maior problema com trade-offs não é fazê-los — é não registrá-los. Quando a decisão é tomada sem documentação, o 'porquê' se perde. Seis meses depois, um novo engenheiro 'corrige' a decisão sem entender o contexto e reinstala o problema original."
+      },
+      {
+        "type": "paragraph",
+        "content": "Architecture Decision Records (ADRs) são a forma padrão de documentar trade-offs. Um ADR registra o contexto, as alternativas consideradas, a decisão tomada, e as consequências aceitas. Veremos ADRs em detalhe no módulo de documentação."
+      },
+      {
+        "type": "heading",
+        "content": "Aceitar o 'menos pior'"
+      },
+      {
+        "type": "paragraph",
+        "content": "Buscar a solução perfeita é uma armadilha. O objetivo é encontrar a solução cujas desvantagens são aceitáveis dado o contexto atual — e rever essa decisão quando o contexto muda. Paralisia por análise é um anti-padrão tão perigoso quanto decisões precipitadas."
+      },
+      {
+        "type": "callout",
+        "content": "A pergunta certa não é 'qual é a melhor solução?' mas sim 'quais são as desvantagens desta solução e posso conviver com elas hoje?'",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Todo trade-off melhora um atributo à custa de outro — não existe solução sem concessões",
+    "Documentar o 'porquê' de uma decisão é tão importante quanto a decisão em si",
+    "Revisitar trade-offs quando o contexto muda é responsabilidade do arquiteto",
+    "Aceitar o 'menos pior' consciente é mais saudável do que buscar a solução perfeita"
+  ],
+  "commonMistakes": [
+    "Tomar decisões arquiteturais sem documentar o raciocínio: o contexto se perde e a decisão parece arbitrária para quem chegou depois.",
+    "Não revisitar trade-offs: o que era o melhor trade-off para 10k usuários pode ser o pior para 10 milhões.",
+    "Evitar trade-offs difíceis: tentar agradar todos os atributos ao mesmo tempo geralmente resulta em um sistema complexo que não excele em nenhum."
+  ],
+  "realWorldExample": "O DynamoDB da Amazon é otimizado para escala e disponibilidade, com consistência eventual como padrão. Esse é um trade-off explícito: a Amazon escolheu disponibilidade em detrimento de consistência forte porque, para o carrinho de compras, mostrar um item desatualizado é melhor do que o site ficar fora do ar.",
+  "encouragement": "Fazer trade-offs conscientes é uma marca de maturidade arquitetural. Engenheiros junior evitam decisões difíceis; arquitetos as encaram, documentam e revisam. Você está desenvolvendo exatamente essa habilidade."
+}

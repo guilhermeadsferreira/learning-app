@@ -1,0 +1,64 @@
+{
+  "id": "threat-modeling",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-seguranca",
+  "title": "Threat Modeling: identificando ameaças",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Threat modeling é como contratar um detetive para pensar como um ladrão antes de construir o banco: onde estão as entradas? Quais cofres têm mais valor? Quais câmeras têm ponto cego? Melhor descobrir antes da abertura do que depois do primeiro assalto.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Threat Modeling?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Threat modeling é um processo estruturado para identificar, priorizar e mitigar ameaças de segurança a um sistema — antes de implementar. O objetivo é responder a quatro perguntas: O que estamos construindo? O que pode dar errado? O que vamos fazer a respeito? Fizemos um bom trabalho?"
+      },
+      {
+        "type": "heading",
+        "content": "STRIDE: framework de categorização de ameaças"
+      },
+      {
+        "type": "list",
+        "content": "Spoofing: se passar por outro usuário ou serviço (mitigação: autenticação forte)\nTampering: modificar dados em trânsito ou em repouso (mitigação: integridade/assinaturas)\nRepudiation: negar ter realizado uma ação (mitigação: logs de auditoria não-repudiáveis)\nInformation Disclosure: expor dados a quem não deveria ter acesso (mitigação: criptografia, controle de acesso)\nDenial of Service: tornar o sistema indisponível (mitigação: rate limiting, circuit breakers)\nElevation of Privilege: ganhar mais permissões do que autorizado (mitigação: autorização mínima, validação)"
+      },
+      {
+        "type": "heading",
+        "content": "Diagrama de Fluxo de Dados (DFD)"
+      },
+      {
+        "type": "paragraph",
+        "content": "O ponto de partida do threat modeling é um Diagrama de Fluxo de Dados (DFD): quais são os componentes do sistema, como os dados fluem entre eles, onde estão as fronteiras de confiança (trust boundaries). Cada cruzamento de fronteira é um ponto de ameaça potencial."
+      },
+      {
+        "type": "heading",
+        "content": "Quando fazer threat modeling"
+      },
+      {
+        "type": "paragraph",
+        "content": "Threat modeling deve ser feito durante o design — não depois. O custo de implementar mitigações cai drasticamente quando feito antes. Revise quando o design mudar significativamente, quando novos atores forem adicionados, ou quando o contexto de ameaças mudar (novo tipo de cliente, nova regulamentação)."
+      },
+      {
+        "type": "callout",
+        "content": "Você não precisa de um especialista de segurança para fazer threat modeling básico. O time de desenvolvimento pode e deve fazer isso como parte do processo de design. Ferramentas como OWASP Threat Dragon facilitam o processo.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Threat modeling identifica ameaças antes de implementar — muito mais barato que reagir a incidentes",
+    "STRIDE: framework de 6 categorias de ameaças — Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation",
+    "DFD + trust boundaries: mapeie o sistema e identifique onde dados mudam de mãos",
+    "Integre ao processo de design — não é uma atividade isolada de segurança"
+  ],
+  "commonMistakes": [
+    "Threat modeling como atividade única e final: ameaças mudam conforme o sistema evolui — revise periodicamente.",
+    "Focar apenas em ameaças externas: insiders (funcionários mal-intencionados) e erros internos são ameaças reais.",
+    "Não priorizar: nem toda ameaça tem o mesmo impacto. Use critérios como probabilidade × impacto para priorizar mitigações."
+  ],
+  "realWorldExample": "O Azure usa o Microsoft Threat Modeling Tool internamente. Equipes de produto passam pelo threat modeling como parte do ciclo de desenvolvimento — não como auditoria externa. O resultado é que vulnerabilidades críticas são encontradas no design, não em produção.",
+  "encouragement": "Threat modeling é uma das práticas mais impactantes que um time pode adotar com baixo custo. Começar com STRIDE e um diagrama de fluxo básico já cobre a maioria das ameaças críticas."
+}

@@ -1,0 +1,64 @@
+{
+  "id": "ddd-taticos-entidades-vo",
+  "courseId": "arquitetura-software",
+  "moduleId": "ddd",
+  "title": "Entidades, Value Objects e Aggregates",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Uma Entidade é como uma pessoa: tem identidade única (CPF), mesmo que mude de nome ou endereço, ainda é a mesma pessoa. Um Value Object é como um endereço: dois endereços idênticos são intercambiáveis — 'Rua das Flores, 10' é 'Rua das Flores, 10', não importa 'qual' é. Aggregate é o envelope: você não muda o endereço de uma pessoa diretamente — você pede à pessoa que atualize o próprio endereço.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Entidade: identidade que persiste"
+      },
+      {
+        "type": "paragraph",
+        "content": "Uma Entidade é um objeto definido por sua identidade única, não por seus atributos. Um cliente é uma Entidade: mesmo que mude de nome, e-mail e endereço, ainda é o mesmo cliente (identificado pelo ID). Dois clientes com os mesmos atributos são clientes diferentes se tiverem IDs diferentes."
+      },
+      {
+        "type": "heading",
+        "content": "Value Object: igualdade por valor"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Value Object é definido pelos seus atributos, não por identidade. Dinheiro é um Value Object: R$ 100,00 é R$ 100,00, independente de qual 'instância' é. Value Objects são imutáveis — você não 'muda' um endereço, você substitui por um novo. Isso os torna seguros para compartilhar e testar."
+      },
+      {
+        "type": "list",
+        "content": "Value Objects ideais: Dinheiro, CPF, E-mail, Endereço, Coordenadas, Intervalo de datas\nEntidades: Cliente, Pedido, Conta Bancária, Produto, Funcionário"
+      },
+      {
+        "type": "heading",
+        "content": "Aggregate: unidade de consistência"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Aggregate é um cluster de Entidades e Value Objects que deve ser tratado como uma unidade para fins de consistência. O Aggregate Root é a Entidade raiz — o único ponto de entrada para modificar o aggregate. Nenhum objeto externo pode referenciar ou modificar objetos internos do aggregate diretamente."
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Pedido é um Aggregate: tem itens, endereço de entrega, status de pagamento. Para adicionar um item, você chama pedido.adicionarItem(), não item.salvar(). O Pedido garante que as regras de consistência sejam mantidas (ex: não pode exceder o estoque, não pode modificar pedido pago)."
+      },
+      {
+        "type": "callout",
+        "content": "Aggregates devem ser pequenos: cada transação modifica um único aggregate. Aggregates grandes criam contenção e problemas de performance. Se você está frequentemente modificando múltiplos aggregates na mesma transação, revise seus limites.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Entidade: identidade única — dois objetos com mesmo atributos mas IDs diferentes são entidades distintas",
+    "Value Object: igualdade por valor, imutável — dois VOs com mesmos atributos são intercambiáveis",
+    "Aggregate: unidade de consistência com uma Entidade raiz como ponto de entrada",
+    "Agregates devem ser pequenos: uma transação, um aggregate"
+  ],
+  "commonMistakes": [
+    "Fazer tudo Entidade: objetos sem identidade significativa (Dinheiro, CPF) se beneficiam de ser Value Objects imutáveis.",
+    "Aggregates grandes: um Aggregate com 15 entidades internas vai criar problemas de concorrência e performance.",
+    "Referenciar objetos internos de um aggregate externamente: isso rompe o encapsulamento e as garantias de consistência."
+  ],
+  "realWorldExample": "Em um sistema de e-commerce, 'Pedido' é um Aggregate Root com 'ItemDePedido' como Entidade interna e 'Endereço' como Value Object. Para cancelar um item, você chama pedido.cancelarItem(itemId) — o Pedido garante que as regras de negócio sejam seguidas.",
+  "encouragement": "Esses três padrões são os blocos fundamentais do DDD tático. Uma vez que você os internaliza, começa a ver modelos de domínio de forma completamente diferente — e seu código passa a refletir o negócio com muito mais precisão."
+}

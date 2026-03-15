@@ -1,0 +1,122 @@
+{
+  "id": "quiz-roles-e-responsabilidades",
+  "courseId": "arquitetura-software",
+  "moduleId": "papel-arquiteto",
+  "title": "Quiz: Papéis e Responsabilidades",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Este quiz é como um mapa de bordo: antes de navegar em águas mais profundas, vamos confirmar que você sabe quem pilota o quê.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Revise os papéis arquiteturais"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre o que é arquitetura, as diferenças entre Tech Lead, Staff Engineer e Arquiteto, e o que é pensamento sistêmico. Vamos testar esses conceitos?"
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Quem normalmente toma decisões de arquitetura que afetam toda a organização?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tech Lead",
+          "isCorrect": false,
+          "explanation": "O Tech Lead atua no escopo do seu time, não da organização inteira. Suas decisões impactam principalmente o produto sob sua responsabilidade."
+        },
+        {
+          "id": "b",
+          "text": "Staff Engineer",
+          "isCorrect": false,
+          "explanation": "O Staff Engineer tem escopo de 2 a 4 times, mas não necessariamente toda a organização. Ele pode influenciar várias equipes, mas o arquiteto/principal engineer define a direção organizacional."
+        },
+        {
+          "id": "c",
+          "text": "Arquiteto / Principal Engineer",
+          "isCorrect": true,
+          "explanation": "Correto! O Arquiteto opera no escopo organizacional — define a direção técnica de toda a empresa ou de domínios críticos que atravessam múltiplos times."
+        }
+      ]
+    },
+    {
+      "question": "O que caracteriza o Tech Lead em relação ao tempo dedicado a escrever código?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Não escreve mais código — seu papel é apenas gerenciar o time",
+          "isCorrect": false,
+          "explanation": "Isso descreveria um gerente de engenharia (EM), não um Tech Lead. O TL mantém profundidade técnica e continua contribuindo com código."
+        },
+        {
+          "id": "b",
+          "text": "Dedica 30% a 70% do tempo escrevendo código",
+          "isCorrect": true,
+          "explanation": "Exato! O Tech Lead ainda é um desenvolvedor ativo — tipicamente 30% a 70% do tempo em código, dependendo do time e da fase do projeto."
+        },
+        {
+          "id": "c",
+          "text": "Escreve código 100% do tempo, sem responsabilidades de liderança",
+          "isCorrect": false,
+          "explanation": "Um dev sem responsabilidades de liderança seria um engenheiro sênior, não um Tech Lead. O TL acumula contribuição técnica com responsabilidades de liderança."
+        }
+      ]
+    },
+    {
+      "question": "Em quantos times um Staff Engineer tipicamente atua?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apenas 1 time, assim como o Tech Lead",
+          "isCorrect": false,
+          "explanation": "Atuar em apenas 1 time seria o escopo do Tech Lead. O Staff tem um raio de ação maior, cruzando múltiplos times."
+        },
+        {
+          "id": "b",
+          "text": "2 a 4 times, com alcance de 50 a 100 engenheiros",
+          "isCorrect": true,
+          "explanation": "Correto! O Staff Engineer opera além de um único time. Ele define padrões, lidera projetos de alta complexidade e faz mentoria de Tech Leads em um conjunto de times."
+        },
+        {
+          "id": "c",
+          "text": "Em toda a empresa, assim como o Arquiteto",
+          "isCorrect": false,
+          "explanation": "Esse seria o escopo do Arquiteto ou Principal Engineer. O Staff tem alcance intermediário — mais que um TL, menos que um Principal."
+        }
+      ]
+    },
+    {
+      "question": "Qual das afirmações sobre pensamento sistêmico é CORRETA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Significa otimizar cada componente do sistema individualmente",
+          "isCorrect": false,
+          "explanation": "Otimizar partes individualmente sem considerar o todo pode piorar o sistema globalmente. Pensamento sistêmico é justamente o oposto: enxergar como as partes se afetam mutuamente."
+        },
+        {
+          "id": "b",
+          "text": "Significa entender como decisões em uma parte afetam o sistema como um todo",
+          "isCorrect": true,
+          "explanation": "Exatamente! Pensamento sistêmico é a capacidade de antecipar efeitos colaterais, identificar cascatas de falha e alinhar decisões técnicas ao contexto de negócio."
+        },
+        {
+          "id": "c",
+          "text": "É exclusivo de arquitetos — devs não precisam pensar assim",
+          "isCorrect": false,
+          "explanation": "Todo engenheiro se beneficia de pensar sistemicamente. A diferença é que o arquiteto aplica essa visão em um escopo maior e com mais frequência."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "TL → time; Staff → múltiplos times; Arquiteto → organização",
+    "Tech Lead ainda escreve código; Arquiteto foca em estratégia e influência",
+    "Pensamento sistêmico é antecipar efeitos colaterais das decisões técnicas"
+  ],
+  "encouragement": "Ótimo começo! Entender os papéis é o primeiro passo para escolher um caminho de carreira consciente. Nos próximos módulos, vamos mergulhar nas ferramentas e técnicas que esses papéis usam."
+}

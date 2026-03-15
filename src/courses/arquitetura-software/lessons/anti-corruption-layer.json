@@ -1,0 +1,64 @@
+{
+  "id": "anti-corruption-layer",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-integracao",
+  "title": "Anti-Corruption Layer: isolando sistemas legados",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Anti-Corruption Layer é o tradutor diplomático entre dois países que falam idiomas diferentes e têm culturas distintas. Sem o tradutor, as negociações (integrações) são confusas e cheias de mal-entendidos. Com ele, cada lado fala seu próprio idioma e a tradução acontece na fronteira.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O problema: poluição de modelo"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você integra com um sistema legado ou externo, o modelo dele raramente corresponde ao seu. Se você usa diretamente os tipos e conceitos do sistema externo, seu domínio fica 'poluído' com eles: um campo chamado 'COD_CLIENTE_LEGADO' no coração do seu domínio é um sinal de que a contaminação aconteceu."
+      },
+      {
+        "type": "heading",
+        "content": "O que é Anti-Corruption Layer (ACL)?"
+      },
+      {
+        "type": "paragraph",
+        "content": "A Anti-Corruption Layer é uma camada de tradução na borda do seu sistema, que converte os conceitos e modelos do sistema externo para o vocabulário do seu domínio — e vice-versa. Ela isola seu domínio das mudanças e imperfeições do sistema externo."
+      },
+      {
+        "type": "list",
+        "content": "Traduz modelos: converte ClienteDTO do legado em Cliente do seu domínio\nAbstrai protocolos: o legado pode usar SOAP, você usa REST internamente\nIsolamento: mudanças no sistema externo afetam apenas a ACL, não o domínio\nFacade: simplifica uma API externa complexa em uma interface coesa"
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar ACL"
+      },
+      {
+        "type": "paragraph",
+        "content": "ACL é especialmente valiosa quando: (1) você não controla o sistema externo e ele pode mudar, (2) o modelo externo é semanticamente diferente do seu domínio, (3) você está fazendo uma migração gradual de um legado para um sistema novo."
+      },
+      {
+        "type": "paragraph",
+        "content": "Em termos de DDD, a ACL é o padrão recomendado quando dois Bounded Contexts têm modelos incompatíveis e você não tem influência sobre o contexto externo. É a forma de garantir que a linguagem ubíqua do seu domínio não seja contaminada."
+      },
+      {
+        "type": "callout",
+        "content": "ACL não é apenas para legados: qualquer integração com sistema externo (API de parceiro, provedor de pagamento, serviço SaaS) pode se beneficiar de uma camada de tradução que isola seu domínio de mudanças externas.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "ACL traduz modelos externos para o vocabulário do seu domínio na fronteira de integração",
+    "Protege o domínio de ser 'poluído' por conceitos e modelos de sistemas externos",
+    "Mudanças no sistema externo afetam apenas a ACL — o domínio interno permanece estável",
+    "Especialmente útil em migrações graduais de sistemas legados"
+  ],
+  "commonMistakes": [
+    "Deixar tipos do sistema externo vazarem para o domínio: uma vez que acontece, o acoplamento é difícil de reverter.",
+    "ACL com lógica de negócio: a camada deve apenas traduzir, não orquestrar regras de domínio.",
+    "Não criar ACL para APIs externas que 'parecem estáveis': APIs de terceiros mudam — uma ACL protege você dessas mudanças."
+  ],
+  "realWorldExample": "Uma fintech integrando com o sistema legado de um banco parceiro pode receber dados em formato COBOL-flat com campos crípticos. A ACL transla esses campos para o modelo rico do domínio da fintech. Quando o banco muda o layout, apenas a ACL precisa ser atualizada.",
+  "encouragement": "ACL é uma das ferramentas mais práticas da caixa do arquiteto. Qualquer integração que você precise fazer pode se beneficiar desse padrão — e você vai economizar muitas horas de refatoração futura."
+}

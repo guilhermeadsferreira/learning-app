@@ -1,0 +1,123 @@
+{
+  "id": "quiz-ddd",
+  "courseId": "arquitetura-software",
+  "moduleId": "ddd",
+  "title": "Quiz: Aplicando DDD na prática",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "DDD é um idioma — este quiz verifica se você está falando fluentemente ou só memorizando palavras.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "DDD em cenários reais"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu linguagem ubíqua, Bounded Contexts, Entidades, Value Objects, Aggregates, Repositories e Domain Services. Vamos testar a aplicação prática desses conceitos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que é linguagem ubíqua em DDD?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Um glossário técnico de padrões de design que desenvolvedores devem conhecer",
+          "isCorrect": false,
+          "explanation": "Linguagem ubíqua não é sobre padrões técnicos — é sobre termos do domínio de negócio. O vocabulário vem dos especialistas de domínio, não de livros de design patterns."
+        },
+        {
+          "id": "b",
+          "text": "Um vocabulário compartilhado entre desenvolvedores e especialistas de domínio, usado no código e nas conversas",
+          "isCorrect": true,
+          "explanation": "Exato! Linguagem ubíqua é o mesmo vocabulário no código, nos testes, nos documentos e nas reuniões. Quando o especialista de domínio fala 'Pedido Confirmado', o código tem PedidoConfirmado — sem traduções."
+        },
+        {
+          "id": "c",
+          "text": "A linguagem de programação usada no projeto",
+          "isCorrect": false,
+          "explanation": "DDD não prescreve linguagem de programação. Linguagem ubíqua é um vocabulário de domínio — pode ser implementado em Java, Python, TypeScript ou qualquer outra linguagem."
+        }
+      ]
+    },
+    {
+      "question": "Por que Bounded Contexts existem em DDD?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Para separar o código por camadas técnicas (banco, serviço, API)",
+          "isCorrect": false,
+          "explanation": "Bounded Contexts são fronteiras de domínio, não técnicas. Você separa pelo significado do negócio, não pela camada técnica."
+        },
+        {
+          "id": "b",
+          "text": "Para permitir que o mesmo termo tenha modelos distintos em contextos diferentes, evitando um modelo gigante e genérico",
+          "isCorrect": true,
+          "explanation": "Correto! 'Produto' em Catálogo tem atributos diferentes de 'Produto' em Estoque. Bounded Contexts permitem que cada domínio tenha seu próprio modelo, sem tentar criar uma classe 'Produto' que satisfaça tudo."
+        },
+        {
+          "id": "c",
+          "text": "Para definir quais microserviços serão criados no sistema",
+          "isCorrect": false,
+          "explanation": "Bounded Context é um conceito de design de domínio, não de infraestrutura. Você pode ter múltiplos Bounded Contexts em um monolito. A correspondência com microserviços é comum, mas não obrigatória."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença fundamental entre uma Entidade e um Value Object?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Entidade é persistida no banco; Value Object existe apenas em memória",
+          "isCorrect": false,
+          "explanation": "A distinção não é de persistência. Value Objects também podem ser persistidos. A diferença está na identidade: Entidade tem identidade única; Value Object é definido pelos seus atributos."
+        },
+        {
+          "id": "b",
+          "text": "Entidade tem identidade única e persiste por ela; Value Object é imutável e definido por seus atributos",
+          "isCorrect": true,
+          "explanation": "Exatamente! Um Cliente (Entidade) é o mesmo cliente mesmo que mude de nome. Um Endereço (Value Object) idêntico a outro é intercambiável — não há 'qual' endereço, apenas 'que' endereço."
+        },
+        {
+          "id": "c",
+          "text": "Entidade pode ter métodos; Value Object só tem atributos",
+          "isCorrect": false,
+          "explanation": "Value Objects podem e devem ter métodos (como dinheiro.adicionar(), cpf.isValido()). A distinção está na identidade e imutabilidade, não na presença de métodos."
+        }
+      ]
+    },
+    {
+      "question": "O que é um Aggregate Root em DDD?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A classe base de todas as entidades do domínio",
+          "isCorrect": false,
+          "explanation": "Aggregate Root não é uma classe base técnica — é um papel de domínio. É a Entidade raiz de um Aggregate que controla o acesso a todos os objetos internos."
+        },
+        {
+          "id": "b",
+          "text": "A Entidade raiz de um cluster de objetos, responsável por garantir a consistência do grupo",
+          "isCorrect": true,
+          "explanation": "Correto! O Aggregate Root é o único ponto de entrada para modificar o Aggregate. Ele garante que as invariantes (regras de consistência) sejam sempre respeitadas. Ninguém modifica objetos internos sem passar por ele."
+        },
+        {
+          "id": "c",
+          "text": "O objeto que o Repository persiste separadamente dos demais",
+          "isCorrect": false,
+          "explanation": "Na verdade é o oposto: o Repository persiste o Aggregate completo (incluindo todos os objetos internos) como uma unidade. O Aggregate Root é a referência — não uma entidade isolada."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Linguagem ubíqua: mesmo vocabulário no código e nas conversas — sem traduções",
+    "Bounded Context: cada domínio tem seu modelo — evita a classe genérica com 200 campos",
+    "Entidade: identidade única; Value Object: igualdade por atributos, imutável",
+    "Aggregate Root: ponto de entrada único para modificar o cluster — garante consistência"
+  ],
+  "encouragement": "DDD é um tema denso e recompensador. Você cobriu o essencial — os conceitos que aparecem em toda discussão de arquitetura de sistemas complexos. Continue praticando modelagem e os padrões vão se tornar naturais."
+}

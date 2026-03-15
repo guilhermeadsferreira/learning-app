@@ -1,0 +1,123 @@
+{
+  "id": "quiz-padroes-arquiteturais",
+  "courseId": "arquitetura-software",
+  "moduleId": "padroes-arquiteturais",
+  "title": "Quiz: Escolhendo o Padrão Certo",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Assim como um carpinteiro escolhe a ferramenta certa para cada tarefa, o arquiteto escolhe o padrão certo para cada problema. Este quiz testa se você sabe quando usar cada um.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Padrões na prática"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você conheceu arquitetura em camadas, monolito vs. microserviços, hexagonal e event-driven. Vamos testar a aplicação desses conceitos em cenários reais."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Em arquitetura em camadas, qual camada NÃO deve depender da camada de apresentação?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Somente a camada de dados",
+          "isCorrect": false,
+          "explanation": "Não apenas a camada de dados — a camada de negócio também não deve depender da apresentação. Na arquitetura em camadas, as dependências fluem de cima para baixo: apresentação depende de negócio, negócio depende de dados. Nunca o inverso."
+        },
+        {
+          "id": "b",
+          "text": "As camadas de negócio e de dados",
+          "isCorrect": true,
+          "explanation": "Correto! As dependências são unidirecionais: apresentação → negócio → dados. A camada de negócio e a de dados não devem conhecer a camada de apresentação — isso garantiria que a lógica de negócio pode ser chamada por APIs, CLIs ou UIs diferentes."
+        },
+        {
+          "id": "c",
+          "text": "Nenhuma camada — todas podem depender umas das outras",
+          "isCorrect": false,
+          "explanation": "Dependências bidirecionais ou circulares entre camadas eliminam a principal vantagem do padrão: isolamento e testabilidade. O fluxo deve ser sempre unidirecional."
+        }
+      ]
+    },
+    {
+      "question": "Um startup está lançando seu primeiro produto com um time de 3 engenheiros. O domínio ainda está sendo descoberto. Qual arquitetura é mais adequada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Microserviços, pois permite escalar no futuro",
+          "isCorrect": false,
+          "explanation": "Microserviços para um time de 3 pessoas em produto novo é um anti-padrão clássico. O domínio ainda não está consolidado, então você vai criar as fronteiras erradas — e refatorar serviços distribuídos é muito mais caro do que refatorar um monolito."
+        },
+        {
+          "id": "b",
+          "text": "Monolito (bem estruturado), evoluindo conforme o domínio se consolida",
+          "isCorrect": true,
+          "explanation": "Exato! Para times pequenos com domínio em descoberta, monolito modular é a escolha mais eficiente. Você evolui mais rápido, erra mais barato, e pode extrair serviços quando houver necessidade real."
+        },
+        {
+          "id": "c",
+          "text": "Serverless, pois elimina toda a infraestrutura",
+          "isCorrect": false,
+          "explanation": "Serverless pode ser adequado para partes específicas, mas não resolve a questão arquitetural central. A escolha entre monolito e microserviços é independente da infraestrutura de execução."
+        }
+      ]
+    },
+    {
+      "question": "Na arquitetura hexagonal, o que são os 'adapters'?",
+      "options": [
+        {
+          "id": "a",
+          "text": "As regras de negócio da aplicação",
+          "isCorrect": false,
+          "explanation": "As regras de negócio ficam no domínio, no centro do hexágono. Adapters são a borda externa — implementações concretas das portas definidas pelo domínio."
+        },
+        {
+          "id": "b",
+          "text": "Implementações concretas das portas que conectam o domínio à infraestrutura",
+          "isCorrect": true,
+          "explanation": "Correto! Adapters implementam as portas: PostgresOrderRepository é um adapter para a porta OrderRepository. Eles traduzem entre o mundo externo (banco, HTTP, mensageria) e o domínio."
+        },
+        {
+          "id": "c",
+          "text": "Interfaces que o domínio expõe para ser acionado externamente",
+          "isCorrect": false,
+          "explanation": "Isso descreve as portas (ports), não os adapters. Portas são contratos definidos pelo domínio; adapters são as implementações concretas desses contratos."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a principal vantagem de Event-Driven Architecture em relação a chamadas síncronas diretas entre serviços?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Consistência imediata dos dados em todos os serviços",
+          "isCorrect": false,
+          "explanation": "EDA tem consistência eventual, não imediata. Esse é justamente um dos trade-offs: você ganha desacoplamento mas perde a garantia de que todos os sistemas estão atualizados instantaneamente."
+        },
+        {
+          "id": "b",
+          "text": "Desacoplamento: produtores não precisam conhecer os consumidores",
+          "isCorrect": true,
+          "explanation": "Exatamente! Em EDA, o produtor publica um evento sem saber quem vai consumir. Você pode adicionar novos consumidores sem alterar o produtor — isso é desacoplamento real e permite que o sistema cresça sem aumentar o acoplamento."
+        },
+        {
+          "id": "c",
+          "text": "Debugging mais simples, pois tudo é assíncrono",
+          "isCorrect": false,
+          "explanation": "Na verdade, é o contrário: EDA torna o debugging mais complexo. Rastrear um fluxo distribuído por múltiplos eventos e consumidores requer ferramentas de observabilidade robustas como distributed tracing."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Camadas: dependências unidirecionais de cima para baixo — nunca o inverso",
+    "Monolito primeiro para times pequenos e domínios em descoberta",
+    "Hexagonal: adapters implementam portas — o domínio define contratos, infraestrutura os cumpre",
+    "EDA: desacoplamento como vantagem central; consistência eventual como trade-off"
+  ],
+  "encouragement": "Três módulos sólidos! Você está construindo uma base arquitetural real. Os próximos módulos vão mergulhar em padrões de integração, DDD e sistemas distribuídos — a parte onde as coisas ficam realmente interessantes."
+}

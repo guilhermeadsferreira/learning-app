@@ -1,5 +1,5 @@
 import { useState, useCallback, type RefObject } from 'react'
-import { reviewWithAI, askAIQuestion, getApiKey } from '@/services/ai-review'
+import { reviewWithAI, askAIQuestion, getApiKey } from '@/services/ai'
 import type { AIReviewResponse, Lesson, Course } from '@/engine/types'
 
 interface UseAIReviewParams {

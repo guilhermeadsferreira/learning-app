@@ -1,0 +1,68 @@
+{
+  "id": "comunicacao-sync-async",
+  "courseId": "arquitetura-software",
+  "moduleId": "sistemas-distribuidos",
+  "title": "Comunicação entre Serviços: síncrono vs. assíncrono",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Comunicação síncrona é como uma ligação telefônica: você espera a resposta antes de continuar. Assíncrona é como mandar uma mensagem de texto: você envia e vai fazer outra coisa — a resposta vem quando vier. Escolher o modelo certo depende de se você precisa da resposta agora ou pode continuar sem ela.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Comunicação Síncrona"
+      },
+      {
+        "type": "paragraph",
+        "content": "Na comunicação síncrona, o serviço chamador espera pela resposta antes de continuar o processamento. Os protocolos mais comuns são REST/HTTP e gRPC. É simples de entender e debugar — você tem um fluxo linear de chamadas. O problema: se o serviço chamado estiver lento ou fora do ar, o chamador fica bloqueado."
+      },
+      {
+        "type": "list",
+        "content": "REST/HTTP: amplamente suportado, fácil de testar, overhead maior\ngRPC: contrato forte (protobuf), menor overhead, streaming bidirecional\nGraphQL: flexibilidade no cliente para especificar os dados necessários"
+      },
+      {
+        "type": "heading",
+        "content": "Comunicação Assíncrona"
+      },
+      {
+        "type": "paragraph",
+        "content": "Na comunicação assíncrona, o serviço produtor envia uma mensagem e continua sem esperar. O consumidor processa quando puder. Isso desacopla temporalmente os serviços: o produtor não precisa que o consumidor esteja ativo no momento da publicação."
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar cada modelo"
+      },
+      {
+        "type": "list",
+        "content": "Use síncrono quando: precisa da resposta imediatamente, fluxo simples de request-reply, ou consistência imediata é necessária\nUse assíncrono quando: a operação pode ser processada depois, múltiplos consumidores precisam reagir, desacoplamento entre serviços é prioritário, ou o serviço destino pode estar temporariamente indisponível"
+      },
+      {
+        "type": "heading",
+        "content": "Híbrido: a realidade"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sistemas reais usam ambos. A compra em um e-commerce usa síncrono para validar o pagamento (precisa da resposta agora), mas usa assíncrono para enviar o e-mail de confirmação, atualizar o estoque e notificar o parceiro logístico (podem ser processados depois)."
+      },
+      {
+        "type": "callout",
+        "content": "Acoplamento temporal é o principal custo da comunicação síncrona: se qualquer serviço na cadeia estiver lento, todo o fluxo fica lento. Cadeias longas de chamadas síncronas são um sinal de alerta arquitetural.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Síncrono: simples, imediato, mas acopla temporalmente — lentidão propaga",
+    "Assíncrono: desacopla temporalmente, mas aumenta complexidade e resulta em consistência eventual",
+    "Híbrido é comum: síncrono onde a resposta é necessária agora, assíncrono para o restante",
+    "Cadeias longas de chamadas síncronas são anti-padrão — problemas de latência se acumulam"
+  ],
+  "commonMistakes": [
+    "Fazer tudo síncrono por simplicidade: cadeias longas de chamadas síncronas criam cascatas de falha.",
+    "Fazer tudo assíncrono por moda: operações que precisam de resposta imediata ficam muito complexas quando forçadas em async.",
+    "Ignorar timeouts em comunicação síncrona: sem timeout, uma chamada lenta bloqueia o serviço chamador indefinidamente."
+  ],
+  "realWorldExample": "No checkout do Magazine Luiza, a validação do cartão é síncrona (precisa saber se foi aprovado antes de confirmar). O envio de e-mail, atualização de loyalty points e notificação para o vendedor são assíncronos — podem ser processados em segundos ou minutos depois sem impactar a experiência de compra.",
+  "encouragement": "A escolha entre síncrono e assíncrono é uma das decisões arquiteturais mais frequentes. Com esse entendimento, você pode projetar sistemas que são rápidos, resilientes e desacoplados onde faz sentido."
+}

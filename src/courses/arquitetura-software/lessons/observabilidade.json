@@ -1,0 +1,64 @@
+{
+  "id": "observabilidade",
+  "courseId": "arquitetura-software",
+  "moduleId": "dados-cloud",
+  "title": "Observabilidade: Logs, Métricas e Traces",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Observabilidade é como o painel de instrumentos de um avião: logs são o diário de bordo (o que aconteceu e quando), métricas são os instrumentos de voo (altitude, velocidade, temperatura) e traces são o GPS que mostra a trajetória completa da viagem. Sem esse painel, você está voando às cegas.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Observabilidade vs. Monitoramento"
+      },
+      {
+        "type": "paragraph",
+        "content": "Monitoramento é reactive: você define alertas para problemas conhecidos e é notificado quando acontecem. Observabilidade é proativa: permite que você entenda o estado interno do sistema a partir de seus outputs — mesmo para problemas que você não antecipou. Um sistema observável responde à pergunta 'por que isso está acontecendo?' sem precisar adicionar mais instrumentação."
+      },
+      {
+        "type": "heading",
+        "content": "Os Três Pilares"
+      },
+      {
+        "type": "list",
+        "content": "Logs: registros textuais de eventos discretos. Contexto rico, mas alto volume e difíceis de agregar. Ferramentas: ELK Stack (Elasticsearch, Logstash, Kibana), Loki, CloudWatch Logs.\nMétricas: dados numéricos agregados ao longo do tempo (contadores, gauges, histogramas). Eficientes para alertas e dashboards. Ferramentas: Prometheus, Datadog, CloudWatch Metrics.\nTraces (Distributed Tracing): rastreamento de uma requisição através de múltiplos serviços. Mostra onde o tempo é gasto e onde as falhas ocorrem. Ferramentas: Jaeger, Zipkin, AWS X-Ray, OpenTelemetry."
+      },
+      {
+        "type": "heading",
+        "content": "Correlation ID: ligando os pontos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Correlation ID é um identificador único gerado na entrada de uma requisição e propagado por todos os serviços que ela atravessa. Com esse ID, você pode filtrar logs de múltiplos serviços e reconstruir a trajetória completa de uma requisição — essencial para debugar problemas em sistemas distribuídos."
+      },
+      {
+        "type": "heading",
+        "content": "SLOs, SLIs e SLAs"
+      },
+      {
+        "type": "paragraph",
+        "content": "Service Level Indicators (SLIs) são métricas que medem a qualidade do serviço (latência p99, taxa de erros). Service Level Objectives (SLOs) são os targets: 'p99 < 200ms em 99% do tempo'. Service Level Agreements (SLAs) são os contratos com clientes — geralmente mais conservadores que os SLOs internos."
+      },
+      {
+        "type": "callout",
+        "content": "OpenTelemetry está se tornando o padrão open-source para instrumentação. Com ele, você instrumenta uma vez e envia para qualquer backend (Jaeger, Datadog, New Relic). Invista em instrumentação padronizada desde o início.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Observabilidade > monitoramento: permite diagnosticar problemas desconhecidos, não apenas alertar sobre problemas conhecidos",
+    "Três pilares: logs (eventos discretos), métricas (números agregados), traces (fluxo entre serviços)",
+    "Correlation ID: propague por toda a requisição para poder reconstruir o fluxo em logs distribuídos",
+    "SLI → SLO → SLA: medir → definir objetivo → comprometer com cliente"
+  ],
+  "commonMistakes": [
+    "Logs sem estrutura (texto livre): impossível de agregar e pesquisar em escala. Use logs estruturados (JSON) com campos padronizados.",
+    "Observabilidade retroativa: adicionar instrumentação depois de um incidente é mais caro do que instrumentar desde o início.",
+    "Ignorar o custo de observabilidade: logs e traces em alta escala podem custar mais do que a infraestrutura da aplicação — defina políticas de sampling e retenção."
+  ],
+  "realWorldExample": "O Google SRE popularizou a abordagem de SLOs e error budgets. Se o SLO é 99,9% de disponibilidade, o error budget é 0,1% — equivalente a ~8,7h/ano. Quando o error budget se esgota, novos deployments são bloqueados até que a confiabilidade seja restaurada.",
+  "encouragement": "Observabilidade é o que separa times que 'debugam no escuro' de times que operam sistemas com confiança. Investir nisso desde o início é uma das decisões arquiteturais de maior retorno."
+}

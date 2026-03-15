@@ -1,0 +1,64 @@
+{
+  "id": "divida-tecnica",
+  "courseId": "arquitetura-software",
+  "moduleId": "documentacao-governanca",
+  "title": "Dívida Técnica: Identificação e Gestão",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Dívida técnica é como dívida financeira: às vezes você pega dinheiro emprestado (toma um atalho) para alcançar algo importante mais rápido. Mas a dívida tem juros: quanto mais tempo passa, mais caro fica pagar. E se nunca pagar, os juros acumulam até travar todo o sistema.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é dívida técnica?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Dívida técnica é o custo implícito de trabalho adicional criado por soluções técnicas sub-ótimas tomadas para ganhar velocidade no curto prazo. O termo foi cunhado por Ward Cunningham. Assim como dívida financeira, tem principal (o trabalho que precisará ser feito) e juros (o custo que cada nova mudança paga por não ter feito antes)."
+      },
+      {
+        "type": "heading",
+        "content": "Deliberada vs. Inadvertida"
+      },
+      {
+        "type": "list",
+        "content": "Deliberada consciente: 'sabemos que isso não é ideal, mas vamos lançar e corrigir depois' — documentar e priorizar\nDeliberada inconsciente: 'isso funciona agora, vamos em frente' — não percebeu o trade-off, mais difícil de gerenciar\nInadvertida: o time não tinha conhecimento suficiente para fazer melhor — resultado natural de aprendizado\nBit rot: dívida que acumula com o tempo sem ninguém decidir assumir"
+      },
+      {
+        "type": "heading",
+        "content": "Quando pagar"
+      },
+      {
+        "type": "paragraph",
+        "content": "Não toda dívida técnica precisa ser paga imediatamente — algumas nunca precisam. Priorize pela taxa de juros: dívida em código que muda frequentemente (core domain) tem juros altos. Dívida em código estável (utils, scripts) tem juros baixos. Quando a dívida começa a afetar a velocidade de entrega ou a estabilidade, é hora de pagar."
+      },
+      {
+        "type": "heading",
+        "content": "Comunicando para stakeholders"
+      },
+      {
+        "type": "paragraph",
+        "content": "Evite jargão técnico ao comunicar dívida. Em vez de 'precisamos refatorar o módulo de pagamento', tente 'adicionar desconto para assinantes vai levar 3 semanas porque a estrutura atual não suporta bem isso — se investirmos 1 sprint agora, próximas features nessa área serão 3x mais rápidas'. Custo em valor de negócio, não em complexidade técnica."
+      },
+      {
+        "type": "callout",
+        "content": "Dívida técnica não é sempre ruim. Dívida deliberada, documentada e planejada é uma ferramenta estratégica. O problema é dívida acidental, não documentada e não gerenciada — essa eventualmente paralisa o time.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Dívida técnica tem principal (trabalho futuro) e juros (custo de cada mudança por não ter feito antes)",
+    "Deliberada documentada é aceitável; inadvertida não gerenciada é perigosa",
+    "Priorize pela taxa de juros: dívida em código que muda frequentemente é mais urgente",
+    "Comunique para stakeholders em termos de velocidade e custo de negócio, não de complexidade técnica"
+  ],
+  "commonMistakes": [
+    "Nunca pagar a dívida: dívida com juros altos se acumula até tornar o sistema impossível de evoluir.",
+    "Pagar toda a dívida antes de entregar valor: refatoração sem entregar funcionalidade raramente tem apoio de negócio — e muitas vezes não é necessária.",
+    "Criar dívida sem documentar: dívida deliberada não documentada se torna inadvertida para quem vem depois."
+  ],
+  "realWorldExample": "O sistema de cálculo de fretes do Mercado Livre foi identificado como dívida crítica: cada nova regra de frete levava semanas. O time investiu um quarter refatorando completamente esse módulo. O resultado: features de frete que levavam semanas passaram a levar dias. O ROI foi mensurável.",
+  "encouragement": "Gerenciar dívida técnica é uma habilidade de liderança, não apenas técnica. Saber quando assumir dívida, quando pagar e como comunicar para o negócio é o que distingue um arquiteto eficaz."
+}

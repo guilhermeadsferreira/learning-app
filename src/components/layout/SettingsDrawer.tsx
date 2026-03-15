@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { Key, ExternalLink, CheckCircle2, XCircle } from 'lucide-react'
+import { Key, ExternalLink, CheckCircle2, XCircle, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import {
   getAllProviders,
@@ -11,8 +11,11 @@ import {
   getApiKey,
   setStoredApiKey,
   removeStoredApiKey,
+  getStoredModel,
+  setStoredModel,
+  testProviderConnection,
   type AIProvider,
-} from '@/services/ai-review'
+} from '@/services/ai'
 import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
 import { cn } from '@/lib/utils'
 
@@ -24,6 +27,8 @@ export function SettingsDrawer() {
   const { isOpen, closeSettings } = useSettingsDrawer()
   const [provider, setProvider] = useState<AIProvider>(getActiveProvider())
   const [apiKeyInput, setApiKeyInput] = useState('')
+  const [modelInput, setModelInput] = useState('')
+  const [isTesting, setIsTesting] = useState(false)
 
   const allProviders = getAllProviders()
   const config = allProviders.find((p) => p.id === provider)!
@@ -32,18 +37,45 @@ export function SettingsDrawer() {
 
   useEffect(() => {
     if (isOpen) {
-      setProvider(getActiveProvider())
+      const active = getActiveProvider()
+      setProvider(active)
       setApiKeyInput('')
+      setModelInput(getStoredModel(active) ?? '')
     }
   }, [isOpen])
 
-  const handleSave = () => {
+  const handleProviderChange = (p: AIProvider) => {
+    setProvider(p)
+    setApiKeyInput('')
+    setModelInput(getStoredModel(p) ?? '')
+  }
+
+  const handleSave = async () => {
     const trimmed = apiKeyInput.trim()
     if (!trimmed) return
-    setActiveProvider(provider)
-    setStoredApiKey(trimmed, provider)
-    setApiKeyInput('')
-    toast.success('Chave de API salva com sucesso')
+
+    setIsTesting(true)
+    try {
+      // Temporarily store model so ping uses the selected model
+      const pendingModel = modelInput.trim()
+      if (config.supportsModelSelection && pendingModel) {
+        setStoredModel(pendingModel, provider)
+      }
+
+      await testProviderConnection(provider, trimmed)
+
+      setActiveProvider(provider)
+      setStoredApiKey(trimmed, provider)
+      if (config.supportsModelSelection && pendingModel) {
+        setStoredModel(pendingModel, provider)
+      }
+      setApiKeyInput('')
+      toast.success('Conexão verificada! Chave salva.')
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Erro ao verificar conexão')
+    } finally {
+      setIsTesting(false)
+    }
   }
 
   const handleRemove = () => {
@@ -51,11 +83,6 @@ export function SettingsDrawer() {
     removeStoredApiKey(provider)
     setApiKeyInput('')
     toast.success('Chave de API removida')
-  }
-
-  const handleProviderChange = (p: AIProvider) => {
-    setProvider(p)
-    setApiKeyInput('')
   }
 
   const inputPlaceholder = hasStoredKey ? maskApiKey(config.keyPrefix) : config.keyPlaceholder
@@ -77,7 +104,7 @@ export function SettingsDrawer() {
               Professor IA
             </h3>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {allProviders.map((p) => (
                 <button
                   key={p.id}
@@ -112,17 +139,43 @@ export function SettingsDrawer() {
               />
             </div>
 
+            {config.supportsModelSelection && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <label className="text-xs text-slate-500">Modelo</label>
+                  <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-xs text-violet-400">
+                    Recomendado: {config.defaultModel}
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  value={modelInput}
+                  onChange={(e) => setModelInput(e.target.value)}
+                  placeholder={config.defaultModel}
+                  className="w-full rounded-lg border border-slate-700/50 bg-slate-900/50 px-3 py-2 text-sm text-slate-300 placeholder:text-slate-500 focus:border-violet-500/50 focus:outline-none"
+                  autoComplete="off"
+                />
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-2">
               <Button
                 size="sm"
                 onClick={handleSave}
-                disabled={!apiKeyInput.trim()}
+                disabled={!apiKeyInput.trim() || isTesting}
                 className="bg-violet-600 hover:bg-violet-500"
               >
-                Salvar
+                {isTesting ? (
+                  <>
+                    <Loader2 className="mr-1.5 size-3.5 animate-spin" />
+                    Verificando…
+                  </>
+                ) : (
+                  'Salvar'
+                )}
               </Button>
               {showRemoveButton && (
-                <Button size="sm" variant="destructive" onClick={handleRemove}>
+                <Button size="sm" variant="destructive" onClick={handleRemove} disabled={isTesting}>
                   Remover chave
                 </Button>
               )}

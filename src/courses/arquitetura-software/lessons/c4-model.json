@@ -1,0 +1,64 @@
+{
+  "id": "c4-model",
+  "courseId": "arquitetura-software",
+  "moduleId": "documentacao-governanca",
+  "title": "Modelo C4: Comunicando Arquitetura Visualmente",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O Modelo C4 é como o Google Maps com zoom: no nível mais alto você vê países (contexto), aproximando você vê cidades (containers), mais perto você vê bairros (componentes), e no máximo detalhe você vê cada rua (código). Cada nível serve uma audiência diferente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é o Modelo C4?"
+      },
+      {
+        "type": "paragraph",
+        "content": "C4 (Context, Container, Component, Code) é um conjunto de diagramas hierárquicos criado por Simon Brown para comunicar arquitetura de software. O objetivo é ter um conjunto mínimo de diagramas que cobrem diferentes níveis de abstração — cada um adequado para uma audiência específica."
+      },
+      {
+        "type": "heading",
+        "content": "Os 4 níveis"
+      },
+      {
+        "type": "list",
+        "content": "Context (C1): visão de mais alto nível — como o sistema se relaciona com usuários e sistemas externos. Audiência: stakeholders de negócio, times de gestão.\nContainer (C2): a arquitetura de alto nível — quais são os containers (serviços, apps, bancos) e como se comunicam. Audiência: devs e arquitetos de todos os times.\nComponent (C3): o interior de um container — quais componentes existem e como interagem. Audiência: devs do time responsável por aquele container.\nCode (C4): diagramas de classe ou similar para um componente específico. Raramente necessário — o código mesmo é a melhor documentação nesse nível."
+      },
+      {
+        "type": "heading",
+        "content": "Por que C4 funciona"
+      },
+      {
+        "type": "paragraph",
+        "content": "C4 resolve o problema de diagramas que tentam mostrar tudo ao mesmo tempo: ficam incompreensíveis. Com C4, cada diagrama tem uma pergunta específica que responde e uma audiência definida. Você não precisa criar os 4 níveis para todo sistema — C1 e C2 geralmente são suficientes para comunicar a arquitetura."
+      },
+      {
+        "type": "heading",
+        "content": "Ferramentas"
+      },
+      {
+        "type": "paragraph",
+        "content": "C4 pode ser criado com qualquer ferramenta de diagramação (draw.io, Miro, Lucidchart), mas ferramentas como Structurizr (do criador do C4) e PlantUML C4 extension suportam C4 nativamente. Diagrams as code (Mermaid, PlantUML) garantem que diagramas evoluem junto com o sistema no controle de versão."
+      },
+      {
+        "type": "callout",
+        "content": "Comece com C1 e C2. Se você criar apenas esses dois para todo novo sistema, já vai comunicar 80% do que stakeholders e outros times precisam saber sobre a arquitetura.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "C4: Context, Container, Component, Code — cada nível tem audiência e propósito específicos",
+    "C1 (Context): para stakeholders de negócio; C2 (Container): para todos os devs",
+    "C3 e C4 são opcionais — raramente o código em si é a melhor documentação de detalhe",
+    "Diagrams as code (Mermaid, PlantUML) garantem que diagramas evoluem com o sistema"
+  ],
+  "commonMistakes": [
+    "Um diagrama que tenta mostrar tudo: sem níveis de abstração, o diagrama fica incompreensível para qualquer audiência.",
+    "Diagramas desatualizados: o custo de manter diagramas manualmente é alto — use diagrams as code para facilitar.",
+    "Criar C3 e C4 para tudo: esses níveis têm alto custo de manutenção. Reserve para componentes críticos ou complexos."
+  ],
+  "realWorldExample": "O Monzo Bank usa C4 para documentar sua arquitetura de microserviços. O diagrama de Context mostra como o app mobile, parceiros e sistemas externos se conectam ao sistema. O Container mostra os serviços internos. Novos engenheiros têm uma visão clara do sistema em minutos.",
+  "encouragement": "C4 é um dos frameworks de documentação arquitetural mais práticos e adotados. Com dois diagramas simples, você comunica arquitetura de forma que engenheiros, gerentes e stakeholders conseguem entender — cada um no seu nível."
+}

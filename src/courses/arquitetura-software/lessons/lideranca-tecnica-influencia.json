@@ -1,0 +1,64 @@
+{
+  "id": "lideranca-tecnica-influencia",
+  "courseId": "arquitetura-software",
+  "moduleId": "lideranca-carreira",
+  "title": "Liderança Técnica: Influência sem Autoridade",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Influência sem autoridade é como ser o médico da família: você não manda em ninguém, mas quando você dá uma recomendação, as pessoas seguem — porque confiam no seu julgamento, você tem histórico de estar certo, e explicou o raciocínio claramente. Autoridade é cargo; influência é credibilidade construída.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é influência sem autoridade?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em organizações de engenharia, arquitetos e Staff Engineers raramente têm autoridade hierárquica sobre os times que precisam influenciar. Seu impacto vem da credibilidade técnica, da qualidade das soluções que propõem, da forma como comunicam e da confiança que constroem ao longo do tempo."
+      },
+      {
+        "type": "heading",
+        "content": "Ferramentas de influência técnica"
+      },
+      {
+        "type": "list",
+        "content": "RFCs (Request for Comments): documentos de proposta que convidam o time a contribuir antes de decidir — geram adesão por participação\nADRs: registrar decisões com raciocínio claro demonstra qualidade de pensamento e cria referência\nMentoria: ajudar outros a crescer cria aliados e amplifica seu impacto\nPublishing: escrever internamente (posts, talks, docs) torna suas ideias acessíveis além das conversas diretas\nContribuição de código: pull requests em outros times demonstram que você entende os problemas deles na prática"
+      },
+      {
+        "type": "heading",
+        "content": "Construindo confiança"
+      },
+      {
+        "type": "paragraph",
+        "content": "Confiança é a moeda da influência. Ela é construída sendo consistente (faz o que diz), sendo honesto sobre incertezas ('não sei, vou verificar'), entregando o que promete, e colocando o interesse do time/produto acima do seu próprio ego técnico. Confiança perdida demora muito mais para ser recuperada do que construída."
+      },
+      {
+        "type": "heading",
+        "content": "Storytelling técnico"
+      },
+      {
+        "type": "paragraph",
+        "content": "Influência requer comunicação eficaz. Storytelling técnico é apresentar contexto → problema → impacto → solução proposta — em vez de ir direto para a solução. 'Eu acho que deveríamos usar Event Sourcing' tem muito menos poder de persuasão do que 'hoje, toda vez que um pedido falha, perdemos o histórico para auditoria. Event Sourcing resolveria isso, aqui está como...'."
+      },
+      {
+        "type": "callout",
+        "content": "O maior inimigo da influência técnica é o ego: insistir na sua solução quando outra é melhor, não reconhecer quando errou, ou criticar sem construir. Influência de longo prazo exige humildade intelectual.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Influência vem de credibilidade construída, não de cargo — documentação e histórico de acertos importam",
+    "RFCs e ADRs são ferramentas de influência: convidam participação e criam registro de raciocínio",
+    "Confiança é a moeda da influência — construída com consistência e honestidade",
+    "Storytelling técnico: contexto → problema → impacto → solução — nunca comece pela solução"
+  ],
+  "commonMistakes": [
+    "Defender sua solução mesmo quando a do outro é melhor: credibilidade vem de consistência de julgamento, não de sempre ter razão.",
+    "Influenciar sem documentar: conversas de corredor não escalam — escreva para ampliar seu impacto.",
+    "Ignorar as preocupações do time: influência unidirecional sem ouvir as objeções gera resistência."
+  ],
+  "realWorldExample": "Will Larson (autor de Staff Engineer e An Elegant Puzzle) descreve o papel de Staff como 'resolver os problemas que importam para a organização, mesmo que você não tenha mandato formal'. Líderes técnicos como Kelsey Hightower (Google) influenciaram a adoção de Kubernetes globalmente através de talks, artigos e código — não por autoridade hierárquica.",
+  "encouragement": "Desenvolver influência sem autoridade é a habilidade mais valiosa no caminho para Staff e Arquiteto. E a boa notícia: ela é 100% construída com prática e intenção."
+}

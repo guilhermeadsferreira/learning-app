@@ -14,7 +14,16 @@ A IA é agnóstica ao domínio do curso. O comportamento se adapta automaticamen
 ## Localização no código
 
 ```
-src/services/ai-review.ts   → lógica central (providers, prompts, chamadas de API)
+src/services/ai/             → módulo principal (providers, keys, prompts, callers, connection, review)
+  providers.ts               → registry de providers, getActiveProvider, getActiveModel, getStoredModel
+  keys.ts                    → getStoredApiKey, setStoredApiKey, removeStoredApiKey, getApiKey
+  prompts.ts                 → buildReviewSystemPrompt, buildQuestionSystemPrompt, buildReviewUserMessage
+  callers.ts                 → callClaude, callOpenAI, callOpenRouter, callAI (dispatcher)
+  connection.ts              → testProviderConnection (ping de validação de chave)
+  review.ts                  → reviewWithAI, askAIQuestion (API pública)
+  index.ts                   → re-exporta tudo (ponto de entrada público)
+
+src/services/ai-review.ts    → shim de compatibilidade (re-exporta de src/services/ai)
 src/components/lesson/
   AIReviewCard.tsx           → exibição do feedback de revisão
   APIKeyDialog.tsx           → configuração de API key pelo aluno
@@ -24,14 +33,28 @@ src/components/lesson/
 
 ## Providers suportados
 
-| Provider           | Model                      | Prefixo da API Key |
-| ------------------ | -------------------------- | ------------------ |
-| Claude (Anthropic) | `claude-sonnet-4-20250514` | `sk-ant-`          |
-| OpenAI             | `gpt-4o-mini`              | `sk-`              |
+| Provider           | Model padrão                       | Prefixo da API Key | Seleção de modelo |
+| ------------------ | ---------------------------------- | ------------------ | ----------------- |
+| Claude (Anthropic) | `claude-sonnet-4-20250514`         | `sk-ant-`          | Não               |
+| OpenAI             | `gpt-4o-mini`                      | `sk-`              | Não               |
+| OpenRouter         | `meta-llama/llama-4-maverick:free` | `sk-or-`           | Sim               |
 
 O provider ativo é salvo em `localStorage` (`learning-engine-ai-provider`).
 
-O aluno pode trocar o provider a qualquer momento via interface.
+O aluno pode trocar o provider a qualquer momento via `SettingsDrawer`.
+
+### OpenRouter
+
+O OpenRouter roteia para centenas de modelos com uma única API key. Por suportar seleção dinâmica de modelo (`supportsModelSelection: true`), o `SettingsDrawer` exibe um campo extra para o usuário digitar o identificador do modelo desejado (ex: `openai/gpt-4o`, `google/gemini-2.5-flash:free`).
+
+O modelo escolhido é salvo em `localStorage` (`learning-engine-model-openrouter`).
+
+**Headers obrigatórios nas chamadas OpenRouter:**
+
+```
+HTTP-Referer: window.location.origin   (identifica a origem da requisição)
+X-Title: Learning Engine               (nome da aplicação na dashboard do OpenRouter)
+```
 
 ---
 
@@ -39,10 +62,33 @@ O aluno pode trocar o provider a qualquer momento via interface.
 
 A chave da API é obtida em ordem de prioridade:
 
-1. Variável de ambiente (`VITE_ANTHROPIC_API_KEY` ou `VITE_OPENAI_API_KEY`)
+1. Variável de ambiente (`VITE_ANTHROPIC_API_KEY`, `VITE_OPENAI_API_KEY` ou `VITE_OPENROUTER_API_KEY`)
 2. localStorage (`learning-engine-api-key-{provider}`)
 
-O aluno configura a chave via `APIKeyDialog`. Ela é salva localmente no navegador — nunca enviada para servidores próprios da plataforma.
+O aluno configura a chave via `SettingsDrawer`. Ela é salva localmente no navegador — nunca enviada para servidores próprios da plataforma.
+
+### Validação de chave (`testProviderConnection`)
+
+Antes de salvar, o `SettingsDrawer` chama `testProviderConnection(provider, apiKey)` com uma mensagem mínima (`max_tokens: 1`) para confirmar que a chave é válida. Se o ping falhar, a chave **não é salva** e o erro amigável é exibido via toast.
+
+```typescript
+// src/services/ai/connection.ts
+export async function testProviderConnection(provider: AIProvider, apiKey: string): Promise<void>
+// Lança Error com mensagem amigável se status != 200
+```
+
+---
+
+## Seleção de modelo
+
+```typescript
+// src/services/ai/providers.ts
+getStoredModel(provider?)   // modelo salvo no localStorage
+setStoredModel(model, provider?)   // salva o modelo escolhido
+getActiveModel(provider?)   // retorna stored ?? defaultModel
+```
+
+localStorage key: `learning-engine-model-{provider}` (ex: `learning-engine-model-openrouter`)
 
 ---
 
@@ -172,6 +218,7 @@ Se a resposta da IA não for JSON válido (ex: falha de parsing), o sistema reto
 | ----------------- | ------------ |
 | Revisão de código | 1000         |
 | Chat (pergunta)   | 600          |
+| Ping de validação | 1            |
 
 ---
 

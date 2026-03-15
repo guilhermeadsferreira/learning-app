@@ -1,0 +1,68 @@
+{
+  "id": "performance-seguranca-manutencao",
+  "courseId": "arquitetura-software",
+  "moduleId": "nfr-tradeoffs",
+  "title": "Performance, Segurança e Manutenibilidade",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Esses três NFRs formam um triângulo de tensão: otimizar performance extrema pode prejudicar manutenibilidade (código hiper-otimizado é ilegível). Adicionar segurança adiciona latência. Código muito genérico para ser manutenível pode ser mais lento. A arte está em encontrar o equilíbrio certo para o contexto.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Performance: latência e throughput"
+      },
+      {
+        "type": "paragraph",
+        "content": "Performance tem duas dimensões principais: latência (tempo para completar uma requisição) e throughput (quantas requisições o sistema processa por segundo). São independentes: um sistema pode ter latência baixa para cada requisição, mas throughput baixo se não conseguir processar muitas em paralelo."
+      },
+      {
+        "type": "paragraph",
+        "content": "Performance não deve ser otimizada prematuramente. O mantra é: 'premature optimization is the root of all evil'. Meça antes de otimizar. Use profilers para identificar onde está o gargalo real — 80% dos problemas de performance estão em 20% do código."
+      },
+      {
+        "type": "heading",
+        "content": "Segurança: confidencialidade, integridade e autenticidade"
+      },
+      {
+        "type": "paragraph",
+        "content": "Segurança em arquitetura abrange três pilares do modelo CIA: Confidencialidade (só quem deve acessa os dados), Integridade (dados não são alterados de forma não autorizada) e Disponibilidade (o sistema está acessível quando necessário). Um bom arquiteto define onde autenticação, autorização, criptografia e auditoria são aplicadas — e por quê."
+      },
+      {
+        "type": "paragraph",
+        "content": "O erro fatal é tratar segurança como 'adicionar depois'. Adicionar autenticação a um sistema que não foi projetado para ela é muito mais caro e arriscado do que projetá-la desde o início. Security by design é o princípio: segurança é uma restrição arquitetural, não uma feature."
+      },
+      {
+        "type": "heading",
+        "content": "Manutenibilidade: custo de evolução"
+      },
+      {
+        "type": "paragraph",
+        "content": "Manutenibilidade mede o quão fácil é modificar, testar, entender e operar o sistema. Um sistema com boa manutenibilidade tem código legível, testes automatizados, separação clara de responsabilidades e documentação viva. Isso reduz o custo de cada mudança futura."
+      },
+      {
+        "type": "list",
+        "content": "Legibilidade: código que se explica sem comentários extensos\nTestabilidade: componentes isolados que podem ser testados independentemente\nModularidade: mudanças localizadas que não propagam para o sistema todo\nObservabilidade: capacidade de entender o que está acontecendo em produção"
+      },
+      {
+        "type": "callout",
+        "content": "Manutenibilidade é o NFR que mais impacta a velocidade de entrega no longo prazo. Código difícil de manter desacelera o time progressivamente até paralisar o produto.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Performance = latência (tempo/req) + throughput (req/s) — meça antes de otimizar",
+    "Segurança deve ser projetada desde o início — adicioná-la depois é muito mais caro",
+    "Manutenibilidade reduz o custo de evolução do sistema ao longo do tempo",
+    "Os três NFRs estão em tensão: otimizar um pode prejudicar os outros"
+  ],
+  "commonMistakes": [
+    "Otimizar performance antes de identificar o gargalo real: você pode passar dias otimizando a camada errada.",
+    "Tratar segurança como checklist: segurança é um processo contínuo, não uma caixa para marcar no final.",
+    "Negligenciar manutenibilidade em favor de velocidade de entrega: dívida técnica se acumula com juros compostos."
+  ],
+  "realWorldExample": "Em 2017, a Equifax sofreu uma das maiores brechas de dados da história por não aplicar um patch de segurança disponível há meses. O custo final ultrapassou US$ 700 milhões. Segurança como 'depois' tem um custo que pode superar qualquer economia inicial.",
+  "encouragement": "Entender esses NFRs e como eles se tensionam é o que separa um engenheiro que entrega features de um arquiteto que entrega sistemas sustentáveis. Você está no caminho certo."
+}

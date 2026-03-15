@@ -1,0 +1,64 @@
+{
+  "id": "architecture-reviews",
+  "courseId": "arquitetura-software",
+  "moduleId": "avaliacao-arquitetura",
+  "title": "Architecture Reviews: como avaliar decisões",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Uma Architecture Review é como uma inspeção antes de uma grande obra: antes de fundar as colunas, engenheiros independentes examinam a planta, verificam se os cálculos estão corretos e se há riscos não considerados. É muito mais barato corrigir no papel do que após a construção.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é uma Architecture Review?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Uma Architecture Review é um processo estruturado de avaliação de decisões arquiteturais por um grupo de revisores — que pode incluir o próprio time, pares de outros times, ou um board de arquitetos. O objetivo não é aprovar ou reprovar por burocracia, mas identificar riscos que o time pode ter perdido e garantir alinhamento com padrões organizacionais."
+      },
+      {
+        "type": "heading",
+        "content": "Quando fazer"
+      },
+      {
+        "type": "list",
+        "content": "Antes de iniciar um projeto ou feature de alto impacto\nQuando uma decisão afeta múltiplos times ou sistemas\nAo adotar uma nova tecnologia crítica\nEm migrações de sistemas legados\nApós incidentes de produção com causa arquitetural"
+      },
+      {
+        "type": "heading",
+        "content": "Quem participa"
+      },
+      {
+        "type": "paragraph",
+        "content": "O time apresenta; revisores fazem perguntas. Revisores devem incluir alguém de fora do time (perspectiva externa), idealmente com experiência em domínios similares. O papel do revisor é questionar, não decretar — 'você considerou X?' não 'você tem que fazer X'."
+      },
+      {
+        "type": "heading",
+        "content": "Resultados possíveis"
+      },
+      {
+        "type": "list",
+        "content": "Aprovado: pode prosseguir com a arquitetura proposta\nAprovado com condições: aprovado, mas deve endereçar pontos específicos\nNecessita revisão: mudanças significativas necessárias antes de aprovar\nRejeitado: a proposta tem problemas fundamentais que precisam ser refeitos"
+      },
+      {
+        "type": "callout",
+        "content": "Architecture Review não deve ser um processo pesado e demorado. Reviews eficazes são focadas: uma hora com os documentos certos, as perguntas certas, e as pessoas certas. Burocracia excessiva torna reviews inúteis — o time as evita ou as faz de mentira.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Architecture Review identifica riscos antes da implementação — muito mais barato do que depois",
+    "Revisores questionam, não decretam: o objetivo é enriquecer a decisão, não bloquear",
+    "Faça antes de começar projetos de alto impacto, não durante ou depois",
+    "O processo deve ser leve o suficiente para que o time queira usá-lo"
+  ],
+  "commonMistakes": [
+    "Review como carimbo burocrático: se a review é pró-forma sem questionamentos reais, não agrega valor.",
+    "Review muito tardia: revisar arquitetura de código já implementado é muito mais caro e politicamente difícil.",
+    "Sem documentação da review: as decisões e os porquês devem ser registrados — idealmente como ADRs."
+  ],
+  "realWorldExample": "Grandes empresas como Google e Amazon têm comitês de Design Review (PRD reviews, design docs). O Google exige um design doc antes de qualquer feature significativa — não para burocratizar, mas porque o processo de escrever força clareza de pensamento antes de uma linha de código ser escrita.",
+  "encouragement": "Architecture Reviews são uma das formas mais eficazes de escalar o impacto de um arquiteto sênior: em vez de fazer tudo sozinho, você revisa e enriquece as decisões de múltiplos times simultaneamente."
+}

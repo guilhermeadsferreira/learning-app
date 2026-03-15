@@ -1,0 +1,68 @@
+{
+  "id": "escalabilidade-disponibilidade",
+  "courseId": "arquitetura-software",
+  "moduleId": "nfr-tradeoffs",
+  "title": "Escalabilidade, Disponibilidade e Resiliência",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Escalabilidade é aumentar a capacidade do restaurante quando a fila cresce — mais mesas, mais cozinheiros. Disponibilidade é nunca fechar as portas, mesmo quando um cozinheiro falta. Resiliência é ter um plano quando a geladeira quebra: o restaurante ainda serve o que é possível em vez de fechar tudo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Escalabilidade: crescer sem travar"
+      },
+      {
+        "type": "paragraph",
+        "content": "Escalabilidade vertical (scale-up) significa aumentar os recursos de uma única máquina: mais CPU, mais RAM, SSD mais rápido. É simples de implementar, mas tem um teto físico e financeiro — a maior máquina do mundo ainda tem limite."
+      },
+      {
+        "type": "paragraph",
+        "content": "Escalabilidade horizontal (scale-out) significa adicionar mais instâncias da mesma aplicação atrás de um load balancer. É o padrão em cloud: você escala para 10, 100 ou 1000 instâncias conforme a demanda. Requer que a aplicação seja stateless — sem estado local que impeça rodar em múltiplas instâncias."
+      },
+      {
+        "type": "list",
+        "content": "Scale-up: rápido de implementar, teto financeiro e físico\nScale-out: praticamente ilimitado, requer aplicação stateless\nAuto-scaling: ajuste automático baseado em métricas (CPU, requisições)\nSharding: particionar dados horizontalmente para escalar o banco"
+      },
+      {
+        "type": "heading",
+        "content": "Disponibilidade: medir o uptime"
+      },
+      {
+        "type": "paragraph",
+        "content": "Disponibilidade é expressa como percentual de uptime anual. Os 'noves' são a notação padrão: 99,9% (três noves) significa ~8,7 horas de downtime por ano. 99,99% (quatro noves) significa ~52 minutos. 99,999% (cinco noves) significa ~5 minutos. Cada nono adicional é muito mais caro de alcançar."
+      },
+      {
+        "type": "list",
+        "content": "99% (dois noves): ~3,65 dias de downtime/ano\n99,9% (três noves): ~8,7 horas/ano\n99,99% (quatro noves): ~52 minutos/ano\n99,999% (cinco noves): ~5 minutos/ano"
+      },
+      {
+        "type": "heading",
+        "content": "Resiliência: falhar bem"
+      },
+      {
+        "type": "paragraph",
+        "content": "Resiliência é diferente de disponibilidade: não é evitar falhas, é se recuperar delas rapidamente. Um sistema resiliente detecta falhas, isola o impacto, e retoma operação — parcial ou total — sem intervenção manual. Design para falha (design for failure) é o princípio: assuma que qualquer componente pode falhar a qualquer momento."
+      },
+      {
+        "type": "callout",
+        "content": "Alta disponibilidade exige redundância, e redundância exige que seus componentes sejam independentes. Se dois serviços compartilham o mesmo banco, a queda do banco derruba ambos — você tem redundância de fachada, não real.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Scale-out (horizontal) é o padrão em cloud; requer aplicação stateless",
+    "99,9% de disponibilidade = ~8,7h de downtime por ano; cada nono adicional é mais caro",
+    "Resiliência é recuperar-se de falhas, não evitá-las completamente",
+    "Design for failure: assuma que qualquer componente pode cair e planeje para isso"
+  ],
+  "commonMistakes": [
+    "Confundir escalabilidade com disponibilidade: escalar não garante uptime se não houver redundância.",
+    "Considerar SLAs de disponibilidade sem considerar o custo: 99,999% pode exigir infraestrutura multi-região, circuit breakers e chaos engineering.",
+    "Adicionar redundância parcial: dois serviços apontando para o mesmo banco não são realmente redundantes."
+  ],
+  "realWorldExample": "A Netflix usa chaos engineering (Chaos Monkey) para testar resiliência: a ferramenta derruba instâncias aleatoriamente em produção para garantir que o sistema se recupere. O resultado é um sistema que sobrevive a falhas de datacenter inteiro sem que o usuário perceba.",
+  "encouragement": "Esses conceitos são fundamentais para qualquer conversa de arquitetura. Quando alguém pedir 'cinco noves de disponibilidade', você vai saber exatamente o que está sendo pedido — e quanto isso vai custar."
+}

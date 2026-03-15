@@ -1,6 +1,6 @@
 # Especificação do Curso: Arquitetura de Software
 
-**Status:** pendente — usar Sonnet ou Opus para gerar o conteúdo
+**Status:** concluído
 
 **Objetivo:** Este documento serve como blueprint completo para criar o curso de Arquitetura de Software. Ao executar a geração, use este spec como fonte de verdade.
 

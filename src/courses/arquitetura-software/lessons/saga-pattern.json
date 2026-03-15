@@ -1,0 +1,64 @@
+{
+  "id": "saga-pattern",
+  "courseId": "arquitetura-software",
+  "moduleId": "sistemas-distribuidos",
+  "title": "Saga Pattern e Transações Distribuídas",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Saga é como uma viagem de férias parcelada em etapas: você reserva o voo, depois o hotel, depois o carro. Se o hotel cancelar após a reserva do voo, você precisa cancelar o voo também (compensação). Cada etapa é local e reversível — não há uma transação global que garanta tudo ou nada.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O problema das transações distribuídas"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em um monolito com um banco de dados, transações ACID garantem que operações complexas são atômicas. Em microserviços com bancos separados, transações distribuídas (2PC — Two-Phase Commit) são possíveis mas trazem alto acoplamento, baixa disponibilidade e complexidade operacional. Na prática, 2PC raramente é usado em sistemas modernos."
+      },
+      {
+        "type": "heading",
+        "content": "O Saga Pattern"
+      },
+      {
+        "type": "paragraph",
+        "content": "Saga divide uma transação distribuída em uma sequência de transações locais. Cada transação local atualiza seu próprio banco e publica um evento ou mensagem que dispara a próxima etapa. Se uma etapa falha, a Saga executa transações compensatórias para desfazer as etapas anteriores."
+      },
+      {
+        "type": "heading",
+        "content": "Orquestração vs. Coreografia"
+      },
+      {
+        "type": "paragraph",
+        "content": "Saga Orquestrada: um orquestrador central controla o fluxo, chamando cada serviço em sequência e tratando falhas. Mais fácil de visualizar e monitorar, mais acoplamento ao orquestrador. Implementado frequentemente com ferramentas como AWS Step Functions ou Camunda."
+      },
+      {
+        "type": "paragraph",
+        "content": "Saga Coreografada: cada serviço reage a eventos e publica novos eventos. Não há coordenador central. Mais desacoplado, mas mais difícil de rastrear o fluxo completo. O debugging requer boa observabilidade distribuída."
+      },
+      {
+        "type": "list",
+        "content": "Orquestrada: visibilidade centralizada, mais fácil de monitorar, orquestrador pode virar gargalo\nCoreografada: desacoplamento máximo, mais difícil de rastrear, risco de eventos cíclicos"
+      },
+      {
+        "type": "callout",
+        "content": "Transações compensatórias não são rollbacks — elas são operações de negócio que revertem o efeito de uma etapa anterior. Às vezes não é possível compensar completamente (ex: e-mail já enviado). Projete suas Sagas considerando o que pode e o que não pode ser compensado.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "2PC raramente usado em microserviços — alto acoplamento e baixa disponibilidade",
+    "Saga: sequência de transações locais com compensações em caso de falha",
+    "Orquestrada: controle centralizado, mais visibilidade; Coreografada: desacoplada, mais difícil de rastrear",
+    "Compensações são operações de negócio — nem sempre reversíveis completamente"
+  ],
+  "commonMistakes": [
+    "Tentar simular transações ACID em Saga: Saga oferece consistência eventual, não atomicidade. Projete os casos de uso aceitando isso.",
+    "Coreografia sem observabilidade: rastrear o estado de uma Saga distribuída exige correlation IDs e distributed tracing.",
+    "Ignorar operações não-compensáveis: e-mails enviados, notificações push — uma vez disparadas, não dá para 'desenviar'. Planeje para isso."
+  ],
+  "realWorldExample": "No Uber, a criação de uma viagem envolve cobrar o passageiro, reservar o motorista e mapear a rota — em serviços diferentes. Uma Saga orquestrada gerencia esse fluxo: se o motorista cancela após a reserva, a Saga compensa revertendo a cobrança e buscando outro motorista.",
+  "encouragement": "Saga é um dos padrões mais sofisticados de sistemas distribuídos. Entendê-lo significa que você pode arquitetar processos de negócio complexos que funcionam de forma confiável mesmo quando os serviços falham."
+}

@@ -1,0 +1,123 @@
+{
+  "id": "quiz-arquitetura-integracao",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-integracao",
+  "title": "Quiz: Cenários de Integração",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Integração é a cola entre sistemas — e este quiz testa se você sabe usar a cola certa no momento certo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Padrões de integração em cenários reais"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre API Gateway, Message Broker, Event Bus e Anti-Corruption Layer. Vamos aplicar esses padrões em cenários de decisão arquitetural."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a principal função de um API Gateway em uma arquitetura de microserviços?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Armazenar o estado compartilhado entre os microserviços",
+          "isCorrect": false,
+          "explanation": "Estado compartilhado entre serviços é um anti-padrão em microserviços. O API Gateway não deve armazenar estado de negócio — ele é um intermediário para roteamento e cross-cutting concerns."
+        },
+        {
+          "id": "b",
+          "text": "Ser o ponto único de entrada que centraliza autenticação, roteamento e observabilidade",
+          "isCorrect": true,
+          "explanation": "Correto! O API Gateway centraliza responsabilidades transversais: autenticação, autorização, rate limiting, roteamento e geração de métricas. Isso evita duplicar essas lógicas em cada serviço."
+        },
+        {
+          "id": "c",
+          "text": "Implementar a lógica de negócio central da aplicação",
+          "isCorrect": false,
+          "explanation": "Colocar lógica de negócio no gateway é um anti-padrão — o 'fat gateway'. O gateway deve ser fino: apenas cross-cutting concerns, sem domínio de negócio."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença fundamental entre um message broker e um event bus?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Broker usa REST; event bus usa WebSockets",
+          "isCorrect": false,
+          "explanation": "A diferença não é de protocolo de comunicação. A diferença fundamental está nas garantias de entrega e na persistência: brokers garantem entrega e persistem mensagens; event buses geralmente são mais efêmeros."
+        },
+        {
+          "id": "b",
+          "text": "Broker persiste mensagens e garante entrega; event bus é mais leve e pode ser efêmero",
+          "isCorrect": true,
+          "explanation": "Exato! Um broker como Kafka ou RabbitMQ persiste mensagens, lida com consumidores temporariamente offline e oferece garantias de entrega. Um event bus é mais simples — ideal para notificações não críticas dentro de um sistema."
+        },
+        {
+          "id": "c",
+          "text": "Event bus é para eventos de domínio; broker é para logs de sistema",
+          "isCorrect": false,
+          "explanation": "Ambos podem transportar eventos de domínio. A distinção está nas garantias e na persistência, não no tipo de mensagem."
+        }
+      ]
+    },
+    {
+      "question": "Quando é mais recomendado usar uma Anti-Corruption Layer (ACL)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Em integrações internas entre microserviços que usam o mesmo modelo de domínio",
+          "isCorrect": false,
+          "explanation": "Quando os serviços compartilham o mesmo modelo e linguagem, uma ACL adiciona indireção desnecessária. ACL é mais valiosa quando há divergência semântica entre modelos."
+        },
+        {
+          "id": "b",
+          "text": "Ao integrar com sistemas externos ou legados cujo modelo difere do seu domínio",
+          "isCorrect": true,
+          "explanation": "Correto! A ACL protege seu domínio quando o sistema externo tem um modelo semântica ou estruturalmente diferente. Ela traduz na fronteira, evitando que conceitos externos contaminem seu domínio."
+        },
+        {
+          "id": "c",
+          "text": "Apenas em sistemas legados com mais de 10 anos",
+          "isCorrect": false,
+          "explanation": "A ACL é relevante sempre que houver incompatibilidade de modelo — independente da idade do sistema. APIs de parceiros recentes, sistemas SaaS ou outros Bounded Contexts também podem precisar de ACL."
+        }
+      ]
+    },
+    {
+      "question": "O que é BFF (Backend for Frontend) no contexto de API Gateway?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Um framework JavaScript para construir APIs",
+          "isCorrect": false,
+          "explanation": "BFF não é um framework. É um padrão arquitetural onde você cria gateways especializados para cada tipo de cliente."
+        },
+        {
+          "id": "b",
+          "text": "Um gateway especializado criado para as necessidades de um tipo específico de cliente",
+          "isCorrect": true,
+          "explanation": "Exatamente! Em vez de um API Gateway genérico para todos os clientes, o BFF cria um backend dedicado para cada frontend (mobile, web, partners). Cada BFF otimiza seus contratos para as necessidades específicas do seu cliente."
+        },
+        {
+          "id": "c",
+          "text": "O banco de dados específico de um microserviço frontend",
+          "isCorrect": false,
+          "explanation": "BFF não tem relação com banco de dados. É um padrão de gateway que cria backends especializados por tipo de cliente para otimizar a experiência e o contrato de cada um."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "API Gateway: ponto único de entrada para cross-cutting concerns — fino, sem lógica de domínio",
+    "Broker vs. Bus: broker persiste e garante entrega; bus é leve e pode ser efêmero",
+    "ACL: proteção do domínio contra modelos externos incompatíveis",
+    "BFF: gateways especializados por tipo de cliente"
+  ],
+  "encouragement": "Módulo 4 concluído! Você agora entende como sistemas se comunicam e como proteger seu domínio dessas integrações. Próximo passo: DDD — a disciplina que formaliza como modelar domínios complexos."
+}

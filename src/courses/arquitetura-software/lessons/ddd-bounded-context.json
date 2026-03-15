@@ -1,0 +1,64 @@
+{
+  "id": "ddd-bounded-context",
+  "courseId": "arquitetura-software",
+  "moduleId": "ddd",
+  "title": "Bounded Context e Context Map",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Bounded Context é como os departamentos de uma empresa: o RH tem seu glossário ('colaborador', 'cargo', 'benefício'), o financeiro tem o seu ('funcionário', 'centro de custo', 'folha'). A mesma pessoa física é 'colaborador' para o RH e 'funcionário' para o financeiro. Cada departamento tem seu próprio modelo — e está tudo bem.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um Bounded Context?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Bounded Context é uma fronteira explícita dentro da qual um modelo de domínio específico se aplica. Dentro do contexto, os termos têm significado preciso e consistente. Fora do contexto, o mesmo termo pode ter um significado diferente — e isso é esperado e correto."
+      },
+      {
+        "type": "paragraph",
+        "content": "Um 'Produto' no contexto de Catálogo é um conjunto de atributos e fotos. O mesmo 'Produto' no contexto de Estoque é uma unidade contável com localização física. O mesmo 'Produto' no contexto de Precificação tem regras de desconto e preço dinâmico. Três modelos diferentes, todos corretos em seus contextos."
+      },
+      {
+        "type": "heading",
+        "content": "Context Map: as relações entre contextos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Context Map documenta como os Bounded Contexts se relacionam. Os padrões de relacionamento definem quem tem mais poder na integração:"
+      },
+      {
+        "type": "list",
+        "content": "Shared Kernel: dois contextos compartilham um subconjunto do modelo — mudanças são coordenadas\nCustomer-Supplier: o supplier fornece; o customer consome e tem voz nas mudanças\nConformist: o contexto downstream aceita o modelo do upstream sem questionar\nAnti-Corruption Layer: o downstream traduz o modelo do upstream para proteger seu domínio\nPublished Language: o upstream publica um modelo bem documentado que todos podem consumir"
+      },
+      {
+        "type": "heading",
+        "content": "Por que Bounded Contexts são importantes?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um modelo unificado para todo o sistema não escala: você vai acumular uma classe 'Produto' com 200 campos para satisfazer todos os contextos. Bounded Contexts permitem que cada time evolua seu modelo de forma autônoma, sem coordenação constante com outros times."
+      },
+      {
+        "type": "callout",
+        "content": "Em arquiteturas de microserviços, cada serviço frequentemente corresponde a um Bounded Context. Mas Bounded Context é um conceito de design — você pode ter um monolito modular com múltiplos contextos dentro de um mesmo processo.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Bounded Context é uma fronteira onde um modelo de domínio específico se aplica",
+    "O mesmo termo pode ter significados diferentes em contextos diferentes — e está correto",
+    "Context Map documenta as relações entre contextos e os padrões de integração",
+    "Bounded Contexts permitem autonomia de times e evolução independente dos modelos"
+  ],
+  "commonMistakes": [
+    "Tentar criar um modelo unificado para toda a empresa: resulta em um modelo com tantos campos que não serve bem a nenhum caso de uso.",
+    "Não documentar o Context Map: as relações entre contextos são decisões arquiteturais críticas que precisam ser explícitas.",
+    "Confundir Bounded Context com microserviço: um contexto pode estar em um monolito; um microserviço pode conter múltiplos contextos (o que é um anti-padrão, mas acontece)."
+  ],
+  "realWorldExample": "Em um e-commerce como a Amazon, 'Produto' no contexto de busca (search) tem modelo otimizado para indexação full-text. No contexto de fulfillment, 'Produto' é uma SKU com dimensões e peso para cálculo de frete. São modelos distintos que evoluem independentemente.",
+  "encouragement": "Bounded Contexts são a chave para escalar times em sistemas complexos. Quando você define fronteiras claras, cada time pode evoluir seu pedaço sem pedir permissão para os demais."
+}

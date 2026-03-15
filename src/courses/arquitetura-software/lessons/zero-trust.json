@@ -1,0 +1,64 @@
+{
+  "id": "zero-trust",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-seguranca",
+  "title": "Zero Trust: nunca confie, sempre verifique",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Zero Trust é como um aeroporto: você não entra direto na sala de embarque por estar 'dentro do prédio'. Cada portão verifica seu passaporte, seu bilhete, suas bagagens. Mesmo funcionários do aeroporto passam por controles. Confiança não é herdada da localização — é verificada a cada passo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O modelo de segurança tradicional está quebrado"
+      },
+      {
+        "type": "paragraph",
+        "content": "O modelo perimetral ('castelo e fosso') assume que tudo dentro da rede corporativa é confiável e tudo fora é ameaça. Esse modelo falhou: ataques de phishing comprometem credenciais de usuários 'dentro'. Funcionários maliciosos já estão dentro. Em cloud e trabalho remoto, não existe mais 'dentro da rede'."
+      },
+      {
+        "type": "heading",
+        "content": "Os princípios do Zero Trust"
+      },
+      {
+        "type": "list",
+        "content": "Never trust, always verify: toda requisição deve ser autenticada e autorizada, independente de origem\nAssume breach: opere como se o sistema já estivesse comprometido — minimize o raio de impacto\nLeast privilege: cada entidade (usuário, serviço) tem apenas as permissões mínimas necessárias\nVerificação contínua: autenticação não é um evento único — monitore comportamento e revogue acesso ao menor sinal de anomalia\nMicrossegmentação: divida a rede em segmentos isolados — comprometer um não dá acesso a tudo"
+      },
+      {
+        "type": "heading",
+        "content": "Identidade como o novo perímetro"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em Zero Trust, identidade substitui localização como o controle primário de segurança. Não importa de onde a requisição vem (dentro ou fora da rede) — importa quem está fazendo e se está autorizado. Isso se aplica a usuários humanos e a serviços: um microserviço deve provar sua identidade para chamar outro."
+      },
+      {
+        "type": "heading",
+        "content": "Implementação gradual"
+      },
+      {
+        "type": "paragraph",
+        "content": "Zero Trust é uma jornada, não uma implementação única. Comece pelos assets mais críticos: autenticação forte (MFA) em todos os acessos, inventário de identidades de serviços, monitoramento de acessos privilegiados. Evolua para microssegmentação e verificação contínua conforme a maturidade cresce."
+      },
+      {
+        "type": "callout",
+        "content": "Zero Trust não é um produto — é uma estratégia. Nenhum fornecedor vende 'Zero Trust completo'. É um conjunto de princípios, políticas e tecnologias que trabalham juntos.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Never trust, always verify: toda requisição é autenticada e autorizada — sem confiança implícita por localização",
+    "Assume breach: minimize o raio de impacto operando como se o sistema já estivesse comprometido",
+    "Least privilege: permissões mínimas para cada entidade — usuário ou serviço",
+    "Identidade é o novo perímetro: controle por quem faz a requisição, não de onde vem"
+  ],
+  "commonMistakes": [
+    "Achar que VPN substitui Zero Trust: VPN é justamente o modelo que Zero Trust questiona — ela cria 'dentro da rede' que o Zero Trust elimina.",
+    "Implementar Zero Trust de uma vez: é uma jornada de meses ou anos. Priorize os assets mais críticos primeiro.",
+    "Focar apenas em usuários humanos: serviços e workloads também precisam de identidade e autorização no modelo Zero Trust."
+  ],
+  "realWorldExample": "O Google implementou o BeyondCorp, sua versão de Zero Trust, após um ataque sofisticado em 2010. O resultado: qualquer Googler pode trabalhar de qualquer lugar sem VPN — a autenticação e autorização acontecem por identidade e contexto, não por localização de rede.",
+  "encouragement": "Zero Trust é o futuro da segurança empresarial. Entender seus princípios te posiciona para projetar sistemas que são seguros por design — não apenas seguros por terem um firewall na frente."
+}

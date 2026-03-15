@@ -1,0 +1,100 @@
+{
+  "id": "quiz-arquitetura-seguranca",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-seguranca",
+  "title": "Quiz: Decisões de Segurança",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Segurança é a única área onde ser paranóico é uma qualidade profissional. Este quiz testa se você pensa como um arquiteto de segurança.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Segurança em cenários práticos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre threat modeling com STRIDE, Zero Trust e segurança em microserviços. Vamos aplicar esses conceitos em cenários de decisão."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que representa a letra 'T' de STRIDE no threat modeling?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tracking — rastrear usuários sem consentimento",
+          "isCorrect": false,
+          "explanation": "Tracking não faz parte do STRIDE. As letras são: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege."
+        },
+        {
+          "id": "b",
+          "text": "Tampering — modificar dados em trânsito ou em repouso sem autorização",
+          "isCorrect": true,
+          "explanation": "Correto! Tampering é a ameaça de modificação não autorizada de dados — em trânsito (man-in-the-middle) ou em repouso (alteração de banco de dados). A mitigação principal é garantia de integridade (assinaturas digitais, checksums, TLS)."
+        },
+        {
+          "id": "c",
+          "text": "Transmission — interceptar comunicação entre serviços",
+          "isCorrect": false,
+          "explanation": "Interceptar comunicação seria Information Disclosure ou Spoofing, não uma categoria separada. STRIDE tem 6 categorias bem definidas."
+        }
+      ]
+    },
+    {
+      "question": "Qual é o princípio central do Zero Trust em relação à localização de rede?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Requisições de dentro da rede corporativa são confiáveis e não precisam de autenticação adicional",
+          "isCorrect": false,
+          "explanation": "Isso é exatamente o modelo perimetral que Zero Trust rejeita. 'Dentro da rede' não é mais suficiente para confiar — credenciais comprometidas, insider threats e workloads em cloud eliminam esse perímetro."
+        },
+        {
+          "id": "b",
+          "text": "A localização de rede não determina confiança — toda requisição deve ser verificada independentemente de origem",
+          "isCorrect": true,
+          "explanation": "Exatamente! 'Never trust, always verify' significa que mesmo uma requisição vindo de dentro da rede interna deve ser autenticada e autorizada. Confiança é baseada em identidade, não em localização."
+        },
+        {
+          "id": "c",
+          "text": "Todos os serviços externos devem ser bloqueados por padrão",
+          "isCorrect": false,
+          "explanation": "Zero Trust não é sobre bloquear tudo externo — é sobre verificar tudo, independentemente de ser interno ou externo. O foco é identidade e autorização contínua, não bloqueio de perímetro."
+        }
+      ]
+    },
+    {
+      "question": "Como proteger a comunicação entre microserviços internos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Comunicação interna não precisa de criptografia — a rede interna é segura",
+          "isCorrect": false,
+          "explanation": "Esse é o modelo perimetral que Zero Trust rejeita. Comunicação interna pode ser comprometida por um serviço infectado, por um atacante que obteve acesso à rede ou por erros de configuração. mTLS deve ser aplicado mesmo internamente."
+        },
+        {
+          "id": "b",
+          "text": "mTLS (mutual TLS) para autenticação mútua e criptografia em trânsito entre serviços",
+          "isCorrect": true,
+          "explanation": "Correto! mTLS garante que ambos os lados da comunicação se autenticam mutuamente usando certificados, além de criptografar o tráfego em trânsito. Service meshes como Istio podem implementar mTLS automaticamente sem modificar o código dos serviços."
+        },
+        {
+          "id": "c",
+          "text": "Basta ter um API Gateway com TLS na borda — o tráfego interno não precisa de proteção",
+          "isCorrect": false,
+          "explanation": "TLS apenas na borda (API Gateway) não protege o tráfego entre serviços internos. Defense in depth requer que cada comunicação seja protegida, mesmo dentro do sistema."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "STRIDE: 6 categorias de ameaças — Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation",
+    "Zero Trust: identidade como perímetro — localização não garante confiança",
+    "mTLS para comunicação entre microserviços — mesmo internamente",
+    "Defense in depth: segurança em cada camada, não apenas na borda"
+  ],
+  "encouragement": "Módulo 9 concluído! Segurança arquitetural é um diferencial raro e valioso. Você agora pensa em ameaças, Zero Trust e proteção de serviços distribuídos — habilidades de nível arquiteto sênior."
+}

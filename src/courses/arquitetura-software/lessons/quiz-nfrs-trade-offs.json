@@ -1,0 +1,123 @@
+{
+  "id": "quiz-nfrs-trade-offs",
+  "courseId": "arquitetura-software",
+  "moduleId": "nfr-tradeoffs",
+  "title": "Quiz: Identificando NFRs e Trade-offs",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Este quiz é como calibrar os instrumentos antes de voar: checar se você internalizou os NFRs que guiam toda decisão arquitetural.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Teste seus conhecimentos sobre NFRs"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre NFRs, escalabilidade, disponibilidade, performance, segurança, manutenibilidade e trade-offs. Vamos aplicar esses conceitos em cenários práticos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Um sistema com 99,9% de disponibilidade tem, aproximadamente, quantas horas de downtime por ano?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Menos de 1 hora por ano",
+          "isCorrect": false,
+          "explanation": "Menos de 1 hora seria equivalente a 99,99% ou mais. 99,9% (três noves) corresponde a aproximadamente 8,7 horas de downtime anual."
+        },
+        {
+          "id": "b",
+          "text": "Aproximadamente 8,7 horas por ano",
+          "isCorrect": true,
+          "explanation": "Correto! 99,9% de disponibilidade = 0,1% de downtime. 0,001 × 8.760 horas/ano ≈ 8,7 horas. Esse é um SLA comum em sistemas de médio porte."
+        },
+        {
+          "id": "c",
+          "text": "Mais de 3 dias por ano",
+          "isCorrect": false,
+          "explanation": "Mais de 3 dias seria algo em torno de 99% (dois noves). 99,9% (três noves) é 8,7 horas — bem melhor que isso."
+        }
+      ]
+    },
+    {
+      "question": "Para uma aplicação cloud-native com picos de tráfego imprevisíveis, qual estratégia de escalabilidade é mais adequada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Escalabilidade vertical: aumentar os recursos da única instância",
+          "isCorrect": false,
+          "explanation": "Scale-up tem teto físico e financeiro. Para picos imprevisíveis em cloud, você quer escalar rapidamente e só pagar pelo que usa — o que é justamente o que scale-out com auto-scaling oferece."
+        },
+        {
+          "id": "b",
+          "text": "Escalabilidade horizontal com auto-scaling",
+          "isCorrect": true,
+          "explanation": "Exato! Scale-out com auto-scaling é o padrão em cloud: adiciona instâncias durante picos e remove quando a demanda cai, otimizando custo e performance automaticamente."
+        },
+        {
+          "id": "c",
+          "text": "Não há necessidade de escalar se o código estiver bem otimizado",
+          "isCorrect": false,
+          "explanation": "Otimização de código tem um limite. Para lidar com picos de tráfego em escala, a escalabilidade de infraestrutura é fundamental — independente da qualidade do código."
+        }
+      ]
+    },
+    {
+      "question": "Por que segurança deve ser considerada desde o início do design arquitetural, e não adicionada depois?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Por regulamentação: a lei exige que segurança seja planejada antes do desenvolvimento",
+          "isCorrect": false,
+          "explanation": "Embora regulamentações como LGPD e PCI-DSS existam, o motivo principal é técnico: adicionar segurança retroativamente é muito mais caro, complexo e arriscado do que projetá-la desde o início."
+        },
+        {
+          "id": "b",
+          "text": "Porque adicionar segurança retroativamente é muito mais caro e gera mais risco",
+          "isCorrect": true,
+          "explanation": "Correto! Security by design significa que autenticação, autorização, criptografia e auditoria são restrições arquiteturais. Adicioná-las depois requer refatoração profunda e ainda pode deixar brechas."
+        },
+        {
+          "id": "c",
+          "text": "Porque segurança compromete performance e deve ser balanceada antes do desenvolvimento",
+          "isCorrect": false,
+          "explanation": "O trade-off entre segurança e performance existe, mas não é o motivo principal. O argumento central é que segurança é uma restrição arquitetural que precisa informar o design desde o começo."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a melhor definição de um trade-off arquitetural?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Uma decisão errada que precisa ser corrigida no futuro",
+          "isCorrect": false,
+          "explanation": "Um trade-off não é necessariamente uma decisão errada — é uma escolha consciente entre alternativas com vantagens e desvantagens diferentes. A decisão pode ser totalmente correta para o contexto atual."
+        },
+        {
+          "id": "b",
+          "text": "Uma situação onde não há boa solução disponível",
+          "isCorrect": false,
+          "explanation": "Trade-off não significa ausência de boas soluções. Significa que toda solução tem custos. Mesmo a melhor opção disponível tem desvantagens que precisam ser aceitas conscientemente."
+        },
+        {
+          "id": "c",
+          "text": "Uma escolha onde melhorar um atributo piora outro, exigindo decisão consciente",
+          "isCorrect": true,
+          "explanation": "Exatamente! Em arquitetura, trade-offs são inevitáveis: consistência vs. disponibilidade, performance vs. manutenibilidade, flexibilidade vs. simplicidade. A habilidade do arquiteto está em escolher conscientemente e documentar o porquê."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "99,9% = ~8,7h downtime/ano; cada nono adicional é mais caro de garantir",
+    "Scale-out com auto-scaling é o padrão para cargas variáveis em cloud",
+    "Segurança como restrição arquitetural, não feature: projetar desde o início",
+    "Trade-off: melhorar um atributo custa em outro — documentar o porquê é essencial"
+  ],
+  "encouragement": "Dois módulos concluídos! Você já tem o vocabulário básico de qualidade de sistemas. Nos próximos módulos, vamos ver como esses NFRs guiam a escolha de padrões arquiteturais concretos."
+}

@@ -1,0 +1,123 @@
+{
+  "id": "quiz-sistemas-distribuidos",
+  "courseId": "arquitetura-software",
+  "moduleId": "sistemas-distribuidos",
+  "title": "Quiz: Sistemas Distribuídos na Prática",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Sistemas distribuídos são como administrar uma empresa global com filiais em fusos horários diferentes. Este quiz testa se você sabe navegar nas complexidades dessa coordenação.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Conceitos avançados em prática"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você cobriu CAP, comunicação síncrona e assíncrona, Circuit Breaker, CQRS, Event Sourcing e Saga. Vamos testar a aplicação desses conceitos em cenários reais."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "No CAP Theorem, por que a Tolerância a Partição (P) é considerada inevitável em sistemas distribuídos?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Porque redes são sempre lentas e precisam de tolerância",
+          "isCorrect": false,
+          "explanation": "Tolerância a Partição não é sobre latência — é sobre falhas de rede que isolam partes do sistema. Redes de comunicação em sistemas distribuídos eventualmente sofrem partições (cabo cortado, datacenter inacessível). Por isso P não é opcional."
+        },
+        {
+          "id": "b",
+          "text": "Porque falhas de rede em sistemas distribuídos são inevitáveis — o sistema precisa continuar funcionando mesmo com partes isoladas",
+          "isCorrect": true,
+          "explanation": "Correto! Em sistemas distribuídos reais, partições de rede acontecem. Se o sistema não tolerar partições, qualquer falha de rede o derruba completamente. Portanto, P é um requisito básico — e a escolha real é entre C e A."
+        },
+        {
+          "id": "c",
+          "text": "Porque P é o único que pode ser garantido matematicamente",
+          "isCorrect": false,
+          "explanation": "Na verdade é o contrário: o teorema CAP mostra que você não pode garantir C, A e P simultaneamente. P é inevitável como requisito porque falhas de rede acontecem — mas isso não significa que P é 'garantível' de forma trivial."
+        }
+      ]
+    },
+    {
+      "question": "Quando é preferível usar comunicação assíncrona entre microserviços?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Quando você precisa de uma resposta imediata para continuar o processamento",
+          "isCorrect": false,
+          "explanation": "Quando a resposta é necessária imediatamente, a comunicação síncrona é mais adequada. Assíncrono é para quando você pode continuar sem esperar."
+        },
+        {
+          "id": "b",
+          "text": "Quando múltiplos serviços precisam reagir ao mesmo evento e o resultado pode ser eventual",
+          "isCorrect": true,
+          "explanation": "Exato! Assíncrono brilha quando múltiplos consumidores precisam reagir a um evento e o resultado não precisa ser imediato. Desacoplamento temporal é o benefício central — o produtor não precisa que os consumidores estejam disponíveis agora."
+        },
+        {
+          "id": "c",
+          "text": "Somente quando os serviços estão em datacenters diferentes",
+          "isCorrect": false,
+          "explanation": "A localização física não determina o modelo de comunicação. Assíncrono e síncrono são decisões de design baseadas nos requisitos de negócio, não na topologia de rede."
+        }
+      ]
+    },
+    {
+      "question": "O que faz um Circuit Breaker quando a taxa de falhas de um serviço excede o threshold?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aumenta o número de retries para tentar recuperar o serviço",
+          "isCorrect": false,
+          "explanation": "Mais retries quando o serviço já está degradado piora a situação — é exatamente o que o Circuit Breaker previne. Retries sem controle podem sobrecarregar um serviço que está tentando se recuperar."
+        },
+        {
+          "id": "b",
+          "text": "Abre o circuito: novas chamadas falham imediatamente sem tentar contato com o serviço degradado",
+          "isCorrect": true,
+          "explanation": "Correto! Quando o circuito abre, o chamador recebe falha rápida (fail fast) sem esperar pelo timeout do serviço degradado. Isso libera recursos do chamador e dá tempo para o serviço se recuperar."
+        },
+        {
+          "id": "c",
+          "text": "Redireciona as chamadas para um serviço backup automaticamente",
+          "isCorrect": false,
+          "explanation": "Redirecionamento para backup é um padrão separado (failover). O Circuit Breaker apenas controla quando chamar o serviço — a lógica de fallback/failover é implementada pelo chamador quando o circuit está aberto."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença entre Saga orquestrada e Saga coreografada?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Orquestrada usa REST; coreografada usa eventos",
+          "isCorrect": false,
+          "explanation": "Ambas as variantes podem usar eventos ou chamadas diretas. A diferença está em quem coordena: em orquestrada, um orquestrador central comanda; em coreografada, os serviços reagem a eventos sem coordenação central."
+        },
+        {
+          "id": "b",
+          "text": "Orquestrada tem um controlador central que coordena; coreografada não tem coordenador — cada serviço reage a eventos",
+          "isCorrect": true,
+          "explanation": "Exatamente! Em orquestrada, o orquestrador (ex: AWS Step Functions) conhece todo o fluxo e chama cada serviço. Em coreografada, cada serviço escuta eventos e reage independentemente — sem ninguém 'no comando'."
+        },
+        {
+          "id": "c",
+          "text": "Orquestrada é para fluxos curtos; coreografada é para fluxos longos",
+          "isCorrect": false,
+          "explanation": "A distinção não é pelo tamanho do fluxo. Ambas podem ser usadas para fluxos curtos ou longos. A escolha depende de preferência por controle centralizado vs. desacoplamento."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "CAP: P é inevitável — a escolha real é entre consistência e disponibilidade",
+    "Async para múltiplos consumidores e resultados eventuais; sync para respostas imediatas",
+    "Circuit Breaker: fail fast quando serviço degradado — protege o chamador",
+    "Saga orquestrada: controle central; coreografada: desacoplamento por eventos"
+  ],
+  "encouragement": "Sistemas distribuídos são um dos territórios mais desafiadores da engenharia de software. Você cobriu os padrões essenciais que aparecem em qualquer discussão de arquitetura de grande escala. Isso é conhecimento de nível sênior/staff."
+}

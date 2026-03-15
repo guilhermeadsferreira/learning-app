@@ -5,7 +5,7 @@ import { HeroSection } from '@/components/home/HeroSection'
 import { TagFilterBar } from '@/components/home/TagFilterBar'
 import { CourseGrid } from '@/components/home/CourseGrid'
 import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
-import { getAllProviders, getApiKey } from '@/services/ai-review'
+import { getAllProviders, getApiKey } from '@/services/ai'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 

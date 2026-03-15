@@ -1,0 +1,64 @@
+{
+  "id": "ddd-servicos-repositorios",
+  "courseId": "arquitetura-software",
+  "moduleId": "ddd",
+  "title": "Domain Services, Repositories e Factories",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Domain Service é o cartório: ele valida e processa transações que envolvem múltiplas partes — não é responsabilidade do comprador nem do vendedor individualmente. Repository é o arquivo morto: você pede 'traga o Pedido 123' e ele busca onde estiver armazenado. Factory é o formulário de abertura de conta: encapsula toda a complexidade de criar um objeto válido.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Domain Service: lógica que não cabe em nenhuma entidade"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você tem lógica de domínio que envolve múltiplas entidades ou aggregates e não pertence naturalmente a nenhum deles, ela vai para um Domain Service. Domain Services são stateless — não guardam estado entre chamadas. Exemplos: calcularTransferenciaEntreContas(origem, destino, valor), verificarDisponibilidadeEstoque(produto, quantidade)."
+      },
+      {
+        "type": "heading",
+        "content": "Repository: abstração de persistência"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um Repository abstrai o mecanismo de persistência do domínio. O domínio não sabe se os dados estão em PostgreSQL, MongoDB ou memória — ele simplesmente pede 'encontre o pedido com ID X' ao Repository. Há um Repository por Aggregate Root — não por entidade."
+      },
+      {
+        "type": "list",
+        "content": "Repository salva e busca aggregates completos\nO domínio só interage com a interface do Repository (porta hexagonal)\nA implementação concreta fica fora do domínio (adaptador)\nNão deve ter lógica de negócio — apenas persistência e busca"
+      },
+      {
+        "type": "heading",
+        "content": "Factory: criação complexa encapsulada"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando criar um aggregate ou entidade envolve lógica complexa (validações, composição de múltiplos objetos, busca em repositórios), uma Factory encapsula essa criação. O resultado é sempre um objeto válido — nunca um aggregate em estado inconsistente."
+      },
+      {
+        "type": "paragraph",
+        "content": "Factory pode ser um método estático na própria classe ('Pedido.criarComItens(...)'), uma classe separada, ou um Domain Service quando a criação requer acesso a outros aggregates."
+      },
+      {
+        "type": "callout",
+        "content": "Um erro comum é criar Application Services (orquestradores de casos de uso) e chamá-los de Domain Services. Domain Service contém lógica de negócio do domínio; Application Service orquestra fluxos sem conter lógica de domínio.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Domain Service: lógica de domínio stateless que envolve múltiplos aggregates",
+    "Repository: abstração de persistência — um por Aggregate Root, sem lógica de negócio",
+    "Factory: encapsula a criação complexa garantindo objetos sempre válidos",
+    "Domain Service ≠ Application Service: o primeiro contém regras de domínio, o segundo orquestra"
+  ],
+  "commonMistakes": [
+    "Repositories com lógica de negócio: queries complexas estão ok, mas regras de domínio pertencem ao domínio.",
+    "Domain Services com estado: se um service guarda estado entre chamadas, é um sinal de que deveria ser uma Entidade.",
+    "Factory que retorna objetos em estado inválido: o objetivo da Factory é garantir que objetos nascem válidos."
+  ],
+  "realWorldExample": "Em um sistema de transferências bancárias, TransferenciaService.executar(contaOrigem, contaDestino, valor) é um Domain Service: a lógica de debitar uma conta e creditar outra não pertence a nenhuma das contas individualmente. ContaRepository salva e busca Contas sem saber se usa SQL ou NoSQL.",
+  "encouragement": "Com Entidades, VOs, Aggregates, Services, Repositories e Factories, você tem o kit completo do DDD tático. Agora você pode modelar qualquer domínio complexo com precisão e clareza."
+}

@@ -1,0 +1,68 @@
+{
+  "id": "monolito-vs-microservicos",
+  "courseId": "arquitetura-software",
+  "moduleId": "padroes-arquiteturais",
+  "title": "Monolito vs. Microserviços: quando usar cada um",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Monolito é um supermercado: tudo em um lugar, fácil de gerenciar, eficiente para quem compra de tudo. Microserviços são lojas especializadas em um shopping: cada uma pode crescer e operar de forma independente, mas você precisa coordenar a logística entre elas. Ambos têm lugar — depende do tamanho do negócio.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um monolito?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um monolito é uma aplicação onde todas as funcionalidades são implantadas juntas como uma única unidade. Isso não significa que é desorganizado: um 'monolito bem estruturado' (ou 'modular monolith') pode ter separação clara de domínios internamente, mas ainda ser implantado como um único processo."
+      },
+      {
+        "type": "heading",
+        "content": "O que são microserviços?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Microserviços é uma arquitetura onde a aplicação é dividida em serviços pequenos e independentes, cada um responsável por um domínio específico de negócio. Cada serviço é implantado, escalado e evoluído de forma independente, geralmente com seu próprio banco de dados."
+      },
+      {
+        "type": "heading",
+        "content": "Quando começar com monolito"
+      },
+      {
+        "type": "paragraph",
+        "content": "Na maioria dos casos, comece com um monolito. As razões são práticas: em um produto novo, os limites de domínio não estão claros. Se você dividir em microserviços cedo demais, vai criar as fronteiras erradas — e refatorar serviços distribuídos é muito mais caro do que refatorar um monolito."
+      },
+      {
+        "type": "list",
+        "content": "Time pequeno (< 5 engenheiros): monolito é mais eficiente\nDomínio ainda não consolidado: fronteiras de serviço não estão claras\nProduto em fase de descoberta: mudanças frequentes são mais baratas em monolito\nSem infraestrutura de observabilidade: microserviços precisam de bom tooling"
+      },
+      {
+        "type": "heading",
+        "content": "Quando migrar para microserviços"
+      },
+      {
+        "type": "paragraph",
+        "content": "Microserviços fazem sentido quando o monolito se torna um gargalo real: times bloqueados entre si, partes do sistema com requisitos de escala radicalmente diferentes, ou domínios que precisam de stacks tecnológicas distintas. O gatilho é a fricção organizacional, não a preferência técnica."
+      },
+      {
+        "type": "callout",
+        "content": "Microserviços não são o objetivo — são uma solução para problemas específicos de escala organizacional e técnica. 'Microserviços porque é moderno' é um dos anti-padrões mais caros da engenharia de software.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Monolito primeiro: mais simples de desenvolver, testar e operar para produtos novos",
+    "Microserviços resolvem problemas de escala de times e de sistemas — não de preferência técnica",
+    "Migrar cedo demais cria as fronteiras erradas e custa caro para corrigir",
+    "Não é 'tudo ou nada': monolito modular é uma posição viável e saudável"
+  ],
+  "commonMistakes": [
+    "Começar com microserviços porque 'Netflix faz assim': o Netflix tem milhares de engenheiros. Você provavelmente tem um time pequeno com problemas diferentes.",
+    "Dividir por funcionalidade técnica em vez de domínio de negócio: um serviço de 'autenticação' que conhece todos os domínios é um acoplamento disfarçado.",
+    "Ignorar o overhead operacional: cada microserviço precisa de CI/CD próprio, monitoramento, versionamento de API, e estratégia de deployment."
+  ],
+  "realWorldExample": "O Stack Overflow roda em um único monolito .NET que serve bilhões de requisições por mês com menos de 10 servidores. É um dos sistemas mais eficientes da web — e não usa microserviços. A escolha certa depende do contexto, não da hype.",
+  "encouragement": "Entender quando NÃO usar microserviços é tão valioso quanto saber implementá-los. Essa clareza te protege de adicionar complexidade desnecessária ao produto."
+}

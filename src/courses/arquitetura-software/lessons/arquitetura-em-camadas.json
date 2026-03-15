@@ -1,0 +1,68 @@
+{
+  "id": "arquitetura-em-camadas",
+  "courseId": "arquitetura-software",
+  "moduleId": "padroes-arquiteturais",
+  "title": "Arquitetura em Camadas (N-Tier)",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Camadas são como os andares de um prédio: o térreo é a recepção (apresentação), o primeiro andar é onde o trabalho acontece (negócio), e o subsolo guarda os arquivos (dados). Cada andar tem uma função clara, e você não pula do térreo direto para o subsolo sem passar pelo meio.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é arquitetura em camadas?"
+      },
+      {
+        "type": "paragraph",
+        "content": "A arquitetura em camadas (ou N-Tier) organiza o sistema em grupos horizontais de responsabilidade, onde cada camada serve apenas à camada acima dela. A estrutura clássica tem três camadas: apresentação, lógica de negócio e dados — mas variações com 4 ou mais camadas são comuns."
+      },
+      {
+        "type": "list",
+        "content": "Camada de Apresentação (UI): recebe requisições, renderiza respostas, nenhuma lógica de negócio\nCamada de Negócio (Application/Domain): regras de negócio, orquestração, validações\nCamada de Dados (Persistence): acesso ao banco de dados, queries, mapeamento ORM"
+      },
+      {
+        "type": "heading",
+        "content": "Dependências unidirecionais"
+      },
+      {
+        "type": "paragraph",
+        "content": "A regra fundamental: as dependências fluem de cima para baixo. A camada de apresentação conhece a camada de negócio, mas não a de dados. A camada de dados não conhece nenhuma camada acima dela. Isso garante que uma mudança no banco de dados não quebre a lógica de negócio."
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar"
+      },
+      {
+        "type": "paragraph",
+        "content": "A arquitetura em camadas é excelente para aplicações de negócio tradicionais (CRUDs, ERPs, sistemas internos), especialmente quando o time é pequeno e o domínio não é extremamente complexo. É o ponto de partida natural para monolitos bem organizados."
+      },
+      {
+        "type": "heading",
+        "content": "Limites e cuidados"
+      },
+      {
+        "type": "paragraph",
+        "content": "O principal risco é a 'architecture sinkhole': requests passam por todas as camadas sem fazer nada em cada uma — a camada de negócio simplesmente delega tudo para a camada de dados sem adicionar valor. Quando isso acontece, você tem complexidade sem benefício."
+      },
+      {
+        "type": "callout",
+        "content": "Arquitetura em camadas não é igual a monolito, e monolito não é necessariamente ruim. Um monolito bem organizado em camadas é muito mais fácil de manter do que microserviços mal estruturados.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Camadas separam responsabilidades: apresentação, negócio, dados",
+    "Dependências fluem de cima para baixo — nunca o contrário",
+    "Excelente para sistemas de negócio tradicionais e times pequenos",
+    "Evitar 'architecture sinkhole': cada camada deve adicionar valor real"
+  ],
+  "commonMistakes": [
+    "Colocar lógica de negócio na camada de apresentação (controllers gordos) ou na camada de dados (stored procedures com regras complexas).",
+    "Criar camadas demais sem necessidade: cada camada adiciona indireção — justifique cada uma.",
+    "Confundir arquitetura em camadas com arquitetura física: as camadas são lógicas e podem estar no mesmo processo."
+  ],
+  "realWorldExample": "A maioria dos backends Django e Rails seguem arquitetura em camadas: Models (dados), Views (lógica) e Templates (apresentação). A separação permite que você troque o banco de dados ou a camada de UI sem reescrever as regras de negócio.",
+  "encouragement": "A arquitetura em camadas é o ponto de partida de muitas carreiras de backend. Se você já usou MVC, já praticou esse padrão. Agora você tem o vocabulário para falar sobre ele com precisão."
+}

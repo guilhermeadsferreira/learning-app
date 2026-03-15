@@ -1,0 +1,60 @@
+{
+  "id": "modernizacao-migracao",
+  "courseId": "arquitetura-software",
+  "moduleId": "lideranca-carreira",
+  "title": "Modernização: Strangler Fig, Reescritas e Build vs. Buy",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Strangler Fig é uma planta que cresce ao redor de uma árvore antiga: gradualmente a substitui sem que a árvore caia abruptamente. É a metáfora perfeita para modernização de sistemas legados — você cresce o novo sistema ao redor do antigo, transferindo responsabilidades incrementalmente até poder remover o legado.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Strangler Fig: substituição gradual"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão Strangler Fig (Martin Fowler) permite modernizar um sistema legado sem uma reescrita completa. Você cria um novo sistema que 'abraça' o legado: o tráfego passa pelo novo sistema, que delega para o legado o que ainda não foi migrado, e vai gradualmente assumindo funcionalidades até que o legado pode ser descontinuado."
+      },
+      {
+        "type": "list",
+        "content": "Implante um proxy/façade na frente do legado\nNovas features vão para o novo sistema\nMigre funcionalidades do legado para o novo incrementalmente\nRoteie progressivamente o tráfego para o novo\nDescomissione o legado quando o novo cobre 100% dos casos de uso"
+      },
+      {
+        "type": "heading",
+        "content": "Reescrita vs. Refatoração"
+      },
+      {
+        "type": "paragraph",
+        "content": "Reescritas completas são raras vezes a resposta certa. O 'segundo sistema' frequentemente reproduz os problemas do primeiro porque o time subestima a complexidade acumulada do legado. A refatoração incremental — guiada por testes — é mais segura. Se a reescrita for inevitável, use Strangler Fig para fazer a transição de forma controlada."
+      },
+      {
+        "type": "heading",
+        "content": "Build vs. Buy"
+      },
+      {
+        "type": "paragraph",
+        "content": "Construir internamente dá controle total, mas tem custo contínuo de desenvolvimento e manutenção. Comprar (SaaS, plataformas) permite focar no diferencial competitivo, mas cria dependência de vendor e pode ter limitações para casos de uso específicos. A regra geral: compre commodities (autenticação, e-mail, monitoramento), construa diferenciais competitivos."
+      },
+      {
+        "type": "callout",
+        "content": "O maior risco de 'Build' é o que não é calculado: o custo de oportunidade. Cada hora de engenharia em infraestrutura commodity é uma hora a menos em features que diferenciam o produto. Muitas startups fracassam construindo o que deveriam ter comprado.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Strangler Fig: substitua o legado gradualmente sem big-bang — cresça o novo ao redor do antigo",
+    "Reescritas são raras vezes a melhor opção — o time subestima a complexidade do legado",
+    "Build para diferenciais competitivos; Buy para commodities",
+    "O maior custo do Build não é o desenvolvimento — é o custo de oportunidade"
+  ],
+  "commonMistakes": [
+    "Reescrever 'do zero porque é mais fácil': invariavelmente o novo sistema reproduz os problemas do antigo que eram implícitos.",
+    "Build para tudo como questão de orgulho técnico: construir autenticação do zero quando Auth0 existe é custo sem diferencial.",
+    "Strangler Fig sem proxy central: sem um ponto de controle de tráfego, é difícil gerenciar a transição gradual."
+  ],
+  "realWorldExample": "O Uber migrou seu sistema de despacho de corridas de um monolito para microserviços usando exatamente o padrão Strangler Fig: um trip dispatch service gradualmente assumiu responsabilidades do monolito original ao longo de dois anos, sem que o sistema de produção parasse.",
+  "encouragement": "Modernização é um dos desafios mais comuns e complexos que arquitetos enfrentam. Com Strangler Fig e a mentalidade 'incremental sobre big-bang', você tem o framework para navegar essas migrações com confiança."
+}

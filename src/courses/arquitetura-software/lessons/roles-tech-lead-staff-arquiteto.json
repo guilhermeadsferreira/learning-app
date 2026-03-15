@@ -1,0 +1,68 @@
+{
+  "id": "roles-tech-lead-staff-arquiteto",
+  "courseId": "arquitetura-software",
+  "moduleId": "papel-arquiteto",
+  "title": "Tech Lead, Staff Engineer e Arquiteto: quem faz o quê?",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Tech Lead é o capitão do barco: navega junto com a tripulação, toma decisões táticas no dia a dia. Staff Engineer é o navegador que traça rotas entre múltiplos barcos. Arquiteto é quem desenha o porto — a infraestrutura que todos os barcos vão usar.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Três papéis, escopos diferentes"
+      },
+      {
+        "type": "paragraph",
+        "content": "À medida que um engenheiro sênior cresce, surgem caminhos de carreira que combinam profundidade técnica com amplitude de impacto. Tech Lead, Staff Engineer e Arquiteto são os mais comuns — e cada um opera em um escopo diferente."
+      },
+      {
+        "type": "heading",
+        "content": "Tech Lead: liderança no time"
+      },
+      {
+        "type": "paragraph",
+        "content": "O Tech Lead (TL) é o responsável técnico de um único time. Ele ainda escreve código — tipicamente 30% a 70% do tempo — mas também revisa PRs, guia decisões técnicas locais, remove impedimentos técnicos e mentora engenheiros júniores. O escopo é o time, não a organização."
+      },
+      {
+        "type": "list",
+        "content": "Define padrões técnicos dentro do time\nRevisa e aprova decisões de design local\nInterface técnica com o Product Manager\nResponsável pela saúde do código do time"
+      },
+      {
+        "type": "heading",
+        "content": "Staff Engineer: impacto além do time"
+      },
+      {
+        "type": "paragraph",
+        "content": "O Staff Engineer opera em 2 a 4 times simultaneamente (ou em toda uma área de produto), com um grupo de 50 a 100 engenheiros como raio de ação típico. Ele escreve menos código, mas define padrões, identifica problemas sistêmicos, lidera projetos de alta complexidade e faz mentoria de Tech Leads."
+      },
+      {
+        "type": "heading",
+        "content": "Arquiteto / Principal Engineer: escopo organizacional"
+      },
+      {
+        "type": "paragraph",
+        "content": "O Arquiteto (ou Principal/Distinguished Engineer) define a direção técnica de toda a organização ou de um domínio crítico. Ele raramente escreve código de produção, mas produz ADRs, lidera architecture reviews, define roadmaps técnicos e se alinha com CTOs e VPs. O código que ele escreve são provas de conceito e padrões de referência."
+      },
+      {
+        "type": "callout",
+        "content": "Nem toda empresa usa esses títulos da mesma forma. Em startups, o CTO pode acumular todos os três papéis. O que importa são as responsabilidades, não o nome no crachá.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Escopo cresce do time para a organização: TL → Staff → Arquiteto",
+    "Quanto maior o escopo, menos tempo em código e mais em influência, documentação e estratégia",
+    "Todos os papéis exigem profundidade técnica — sem isso, a credibilidade se perde",
+    "Em pequenas empresas, uma pessoa pode acumular múltiplos papéis"
+  ],
+  "commonMistakes": [
+    "Achar que arquiteto é um cargo puramente gerencial: a profundidade técnica é o que dá credibilidade para influenciar decisões.",
+    "Tornar-se Tech Lead sem delegar: o TL que faz tudo sozinho vira gargalo e impede o crescimento do time.",
+    "Confundir Staff com senior: Staff não é 'sênior mais experiente' — é um papel com responsabilidades estruturalmente diferentes."
+  ],
+  "realWorldExample": "No Nubank, Staff Engineers definem padrões de como serviços Clojure devem se comunicar via Kafka. Um Tech Lead aplica esses padrões no time de cartão de crédito. O arquiteto garante que a plataforma de dados e a de pagamentos evoluam de forma coerente.",
+  "encouragement": "Se você está mirando esse caminho, saiba que a transição não é sobre saber mais tecnologias — é sobre aprender a ter impacto além do código que você mesmo escreve."
+}

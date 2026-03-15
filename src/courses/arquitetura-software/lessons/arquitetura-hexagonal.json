@@ -1,0 +1,64 @@
+{
+  "id": "arquitetura-hexagonal",
+  "courseId": "arquitetura-software",
+  "moduleId": "padroes-arquiteturais",
+  "title": "Arquitetura Hexagonal (Ports & Adapters)",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Imagine o domínio da sua aplicação como o núcleo de um hexágono. As portas são as tomadas padronizadas — definem como o mundo externo pode se conectar. Os adaptadores são os cabos e conectores — implementam a conexão com bancos de dados, APIs, filas, UI. Você pode trocar o cabo (adaptador) sem mudar a tomada (porta) ou o que está dentro.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O problema que a arquitetura hexagonal resolve"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em arquiteturas tradicionais, o domínio de negócio fica acoplado à infraestrutura: a lógica de negócio chama diretamente o banco de dados, o framework web, as APIs externas. Isso torna o domínio difícil de testar (precisa do banco rodando), difícil de evoluir (trocar o banco requer mudar o domínio) e difícil de reutilizar."
+      },
+      {
+        "type": "heading",
+        "content": "Domínio no centro, infraestrutura na borda"
+      },
+      {
+        "type": "paragraph",
+        "content": "Na arquitetura hexagonal, o domínio (regras de negócio) fica no centro e não conhece nenhuma infraestrutura. O domínio define interfaces (portas) que descrevem o que ele precisa — 'quero salvar um pedido', 'quero enviar um e-mail'. A implementação dessas interfaces (adaptadores) fica na borda."
+      },
+      {
+        "type": "list",
+        "content": "Porta primária (driving): como o mundo externo aciona o domínio (HTTP, CLI, mensageria)\nPorta secundária (driven): o que o domínio precisa da infraestrutura (banco, e-mail, cache)\nAdaptador: implementação concreta de uma porta (PostgresOrderRepository, SendGridEmailAdapter)"
+      },
+      {
+        "type": "heading",
+        "content": "Benefícios práticos"
+      },
+      {
+        "type": "paragraph",
+        "content": "Com o domínio isolado, você pode testar toda a lógica de negócio sem banco de dados, sem HTTP, sem dependências externas — apenas injetando implementações in-memory das portas. Isso torna os testes extremamente rápidos e confiáveis."
+      },
+      {
+        "type": "paragraph",
+        "content": "Trocar o banco de dados (de MySQL para PostgreSQL, ou de SQL para NoSQL) requer implementar um novo adaptador — sem tocar no domínio. O mesmo vale para trocar o provedor de e-mail, o message broker, ou qualquer outra infraestrutura."
+      },
+      {
+        "type": "callout",
+        "content": "Arquitetura hexagonal não é sobre criar muitas camadas — é sobre proteger o domínio de negócio das mudanças de infraestrutura. O princípio central é inversão de dependência: o domínio define o contrato, a infraestrutura o implementa.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "O domínio fica no centro e não conhece a infraestrutura — apenas define contratos (portas)",
+    "Adaptadores implementam as portas: banco, API, mensageria, e-mail",
+    "Testes de domínio ficam extremamente rápidos: sem banco, sem HTTP, sem dependências externas",
+    "Trocar infraestrutura (banco, cloud provider) requer novo adaptador, não mudança no domínio"
+  ],
+  "commonMistakes": [
+    "Criar portas para tudo: se uma dependência externa não vai mudar e não precisa ser testada isoladamente, uma porta pode ser overhead desnecessário.",
+    "Vazar infraestrutura no domínio: entidades do domínio que herdam de classes do ORM rompem o isolamento.",
+    "Confundir com Clean Architecture: Hexagonal, Clean Architecture e Onion Architecture resolvem o mesmo problema com nomenclaturas ligeiramente diferentes — o princípio é o mesmo."
+  ],
+  "realWorldExample": "No desenvolvimento de um sistema de pagamentos, a lógica de autorização pode ser testada completamente em memória. O adaptador de banco real é usado apenas em testes de integração. Em produção, trocar de Postgres para Aurora requer apenas um novo adaptador — o domínio não sabe nem que aconteceu.",
+  "encouragement": "Quando você entender hexagonal, vai olhar para código acoplado à infraestrutura e sentir um desconforto produtivo. Esse desconforto é o sinal de que você desenvolveu um olhar arquitetural."
+}

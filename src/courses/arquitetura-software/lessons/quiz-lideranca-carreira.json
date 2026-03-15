@@ -1,0 +1,100 @@
+{
+  "id": "quiz-lideranca-carreira",
+  "courseId": "arquitetura-software",
+  "moduleId": "lideranca-carreira",
+  "title": "Quiz: Decisões de Liderança e Estratégia",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Este quiz final é como a prova de habilitação do arquiteto: os cenários são complexos, as decisões têm trade-offs reais, e não há resposta única certa — mas há respostas que demonstram maturidade arquitetural.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Liderança e estratégia técnica"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você cobriu arquitetura evolutiva, liderança por influência, comunicação com stakeholders e modernização de sistemas. Vamos aplicar esses conceitos em cenários de decisão estratégica."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que é o padrão Strangler Fig na modernização de sistemas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Uma reescrita completa do sistema legado em nova tecnologia",
+          "isCorrect": false,
+          "explanation": "Reescrita completa ('big bang') é justamente o oposto de Strangler Fig. Strangler Fig é uma abordagem incremental: o novo sistema cresce ao redor do legado, substituindo funcionalidades gradualmente até o legado ser descontinuado."
+        },
+        {
+          "id": "b",
+          "text": "Uma estratégia de substituição gradual onde o novo sistema cresce ao redor do legado, assumindo responsabilidades incrementalmente",
+          "isCorrect": true,
+          "explanation": "Correto! Strangler Fig (Martin Fowler) permite modernizar sem parar o sistema: você implanta um proxy na frente, novas features vão para o novo sistema, e gradualmente migra o legado até poder desativá-lo. Reduz risco drasticamente comparado a reescritas completas."
+        },
+        {
+          "id": "c",
+          "text": "Uma técnica para eliminar dívida técnica através de refatoração contínua",
+          "isCorrect": false,
+          "explanation": "Refatoração contínua é outra técnica válida, mas não é Strangler Fig. O Strangler Fig é específico para substituição de sistemas legados — o novo sistema literalmente 'estrangula' o antigo ao longo do tempo."
+        }
+      ]
+    },
+    {
+      "question": "Como um arquiteto influencia sem autoridade formal sobre outros times?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Escalando para gestão quando os times não seguem as diretrizes arquiteturais",
+          "isCorrect": false,
+          "explanation": "Escalar constantemente para gestão destrói relacionamentos e credibilidade. Influência de longo prazo é construída através de confiança, não de autoridade formal. Escalar deve ser um último recurso para casos críticos."
+        },
+        {
+          "id": "b",
+          "text": "Criando credibilidade técnica, documentando raciocínio em RFCs/ADRs, mentorando e construindo confiança ao longo do tempo",
+          "isCorrect": true,
+          "explanation": "Exatamente! Influência sem autoridade é construída com: histórico de boas decisões, documentação clara que convida participação, mentoria que beneficia o time, e confiança acumulada. O time segue suas recomendações porque confia no seu julgamento — não porque você tem um título."
+        },
+        {
+          "id": "c",
+          "text": "Assumindo a liderança formal de todos os times para ter autoridade de decisão",
+          "isCorrect": false,
+          "explanation": "Assumir autoridade formal contradiz o conceito de influência sem autoridade. Além disso, um arquiteto que lidera formalmente todos os times perde a independência de perspectiva e escala muito menos do que influenciando múltiplos times de fora."
+        }
+      ]
+    },
+    {
+      "question": "Quando faz mais sentido Buy (comprar/usar SaaS) em vez de Build (construir internamente)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nunca — construir internamente garante controle total e independência de vendor",
+          "isCorrect": false,
+          "explanation": "Construir tudo internamente tem custo alto de desenvolvimento e manutenção. O custo de oportunidade — tempo de engenharia não dedicado ao diferencial competitivo — frequentemente supera o benefício do controle total."
+        },
+        {
+          "id": "b",
+          "text": "Para commodities (autenticação, e-mail, monitoramento) onde a diferenciação competitiva é baixa",
+          "isCorrect": true,
+          "explanation": "Correto! Compre o que é commodity e construa o que é diferencial competitivo. Autenticação, e-mail transacional, monitoramento, pagamentos — existem soluções maduras. Engenharia deve focar no que só você sabe fazer: seu domínio de negócio."
+        },
+        {
+          "id": "c",
+          "text": "Apenas para startups sem time de engenharia suficiente",
+          "isCorrect": false,
+          "explanation": "A decisão Build vs. Buy não é sobre tamanho do time — é sobre onde está o diferencial competitivo. Empresas grandes como Airbnb e Stripe usam SaaS para commodities e constroem o que é core. O tamanho do time pode influenciar a capacidade de construir, mas não é o critério principal."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Strangler Fig: substituição gradual — novo cresce ao redor do legado, sem big-bang",
+    "Influência = credibilidade + documentação + confiança — não cargo ou autoridade formal",
+    "Build para diferenciais competitivos; Buy para commodities — calcule o custo de oportunidade",
+    "Comunicação eficaz multiplica impacto técnico — adapte para cada audiência"
+  ],
+  "encouragement": "Parabéns! Você completou os 11 módulos do curso de Arquitetura de Software. De papéis e responsabilidades a liderança técnica, você tem agora uma visão completa da disciplina. O próximo passo é a prática: aplique um conceito por semana no seu trabalho atual — e observe como sua perspectiva arquitetural transforma o que você entrega."
+}

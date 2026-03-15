@@ -1,0 +1,64 @@
+{
+  "id": "estrategias-cache",
+  "courseId": "arquitetura-software",
+  "moduleId": "dados-cloud",
+  "title": "Estratégias de Cache: onde e como aplicar",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Cache é como ter uma cópia do cardápio na mesa em vez de perguntar ao garçom toda vez. Na primeira vez, o garçom vai buscar. Mas se o cardápio muda, você pode ficar com a versão errada — o problema clássico de invalidação de cache.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Por que cache existe"
+      },
+      {
+        "type": "paragraph",
+        "content": "Cache existe para reduzir latência e diminuir a carga em sistemas mais lentos (banco de dados, APIs externas). A lógica: se um dado é solicitado frequentemente e muda pouco, guardar uma cópia mais perto do solicitante é muito mais eficiente do que buscá-lo novamente toda vez."
+      },
+      {
+        "type": "heading",
+        "content": "Estratégias de leitura"
+      },
+      {
+        "type": "list",
+        "content": "Cache-aside (Lazy Loading): aplicação busca no cache; se não tem (miss), busca no banco e escreve no cache. Simples e eficiente, mas tem cache miss na primeira leitura.\nRead-through: cache fica entre aplicação e banco. No miss, o cache busca automaticamente no banco. Transparente para a aplicação.\nRefresh-ahead: cache pré-carrega dados antes de expirarem, com base em padrões de acesso. Menor latência, mais complexo de implementar."
+      },
+      {
+        "type": "heading",
+        "content": "Estratégias de escrita"
+      },
+      {
+        "type": "list",
+        "content": "Write-through: escreve no cache e no banco simultaneamente. Consistência forte, maior latência de escrita.\nWrite-behind (Write-back): escreve no cache imediatamente; banco é atualizado de forma assíncrona. Menor latência de escrita, risco de perda se o cache cair antes de persistir.\nWrite-around: ignora o cache na escrita — útil quando dados escritos raramente são lidos logo em seguida."
+      },
+      {
+        "type": "heading",
+        "content": "Invalidação e TTL"
+      },
+      {
+        "type": "paragraph",
+        "content": "Phil Karlton disse que existem apenas dois problemas difíceis em ciência da computação: invalidação de cache e naming things. TTL (Time-To-Live) é o fallback: o dado expira após um tempo definido, garantindo que eventualmente os dados fiquem frescos. Invalidação explícita (remover a entrada quando o dado muda) é mais precisa, mas requer coordenação."
+      },
+      {
+        "type": "callout",
+        "content": "Cache adiciona complexidade — o sistema passa a ter dois lugares onde um dado pode estar, e eles podem divergir. Sempre pergunte: quão sério é servir dados levemente desatualizados para este caso de uso?",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Cache-aside é a estratégia mais comum: a aplicação gerencia o cache explicitamente",
+    "Write-through garante consistência; write-behind garante performance de escrita",
+    "TTL é o fallback de invalidação — é melhor ter um TTL curto do que dados obsoletos indefinidamente",
+    "Cache aumenta complexidade: dois lugares para o dado divergir, invalidação é o problema central"
+  ],
+  "commonMistakes": [
+    "Cache sem TTL: dados nunca expiram e ficam desatualizados indefinidamente.",
+    "Cache muito granular: cachear cada campo individual em vez de objetos completos multiplica a complexidade de invalidação.",
+    "Não medir hit rate: cache ineficiente (baixo hit rate) adiciona complexidade sem benefício — monitore hit/miss rates."
+  ],
+  "realWorldExample": "O Stack Overflow usa Redis como cache de segundo nível para queries de banco de dados frequentes. A home page de um desenvolvedor popular (muitos votos, muitas respostas) é cacheada por segundos — o database não precisa recalcular a cada pageview.",
+  "encouragement": "Cache é uma das otimizações de maior impacto em sistemas de alta escala. Entender as estratégias te prepara para projetar sistemas que são rápidos sem sacrificar a confiabilidade dos dados."
+}

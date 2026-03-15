@@ -1,0 +1,60 @@
+{
+  "id": "nfr-o-que-sao",
+  "courseId": "arquitetura-software",
+  "moduleId": "nfr-tradeoffs",
+  "title": "Requisitos Não-Funcionais: o que são e por que importam",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "NFRs são como as especificações de um carro: potência, consumo, segurança, capacidade do porta-malas. Ter 4 rodas e motor é o requisito funcional — 'o carro anda'. Mas o que diferencia um carro de corrida de um SUV familiar são as características não-funcionais: velocidade, robustez, conforto.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Requisitos Funcionais vs. Não-Funcionais"
+      },
+      {
+        "type": "paragraph",
+        "content": "Requisitos funcionais descrevem o que o sistema faz: 'o usuário pode fazer login', 'o sistema envia e-mail de confirmação'. Requisitos não-funcionais (NFRs) descrevem como o sistema se comporta: 'o login deve responder em menos de 500ms', 'o sistema deve estar disponível 99,9% do tempo'."
+      },
+      {
+        "type": "paragraph",
+        "content": "NFRs são frequentemente chamados de 'atributos de qualidade' ou 'ilities' (scalability, reliability, maintainability). Eles determinam a arquitetura do sistema muito mais do que os requisitos funcionais — dois sistemas com as mesmas funcionalidades podem ter arquiteturas radicalmente diferentes dependendo dos seus NFRs."
+      },
+      {
+        "type": "heading",
+        "content": "Principais categorias de NFRs"
+      },
+      {
+        "type": "list",
+        "content": "Performance: latência, throughput, tempo de resposta\nEscalabilidade: capacidade de crescer (vertical e horizontal)\nDisponibilidade: percentual de tempo que o sistema está operacional\nResiliência: capacidade de se recuperar de falhas\nSegurança: confidencialidade, integridade, autenticação\nManutenibilidade: facilidade de mudar, testar e entender o código\nObservabilidade: capacidade de entender o estado interno do sistema"
+      },
+      {
+        "type": "heading",
+        "content": "Por que NFRs vêm antes dos padrões"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um erro clássico é escolher a arquitetura (microserviços, event-driven, etc.) antes de definir os NFRs. Os padrões arquiteturais são respostas para NFRs específicos. Microserviços existem para resolver escalabilidade e autonomia de times — se você não tem esse problema, os microserviços só trazem complexidade."
+      },
+      {
+        "type": "callout",
+        "content": "Antes de escolher uma tecnologia ou padrão, pergunte: qual NFR estou tentando satisfazer? Se a resposta não for clara, você pode estar escolhendo solução para um problema que não existe.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "NFRs descrevem como o sistema se comporta, não o que ele faz",
+    "Os NFRs determinam a arquitetura — dois sistemas com as mesmas funções podem ter arquiteturas opostas",
+    "Ignorar NFRs gera retrabalho caro: migrar de sync para async depois de um ano é muito mais difícil do que decidir isso antes",
+    "Priorize os NFRs conforme o contexto do produto — não tente maximizar todos ao mesmo tempo"
+  ],
+  "commonMistakes": [
+    "Definir NFRs genéricos demais: 'o sistema deve ser rápido' não é mensurável. 'P99 de latência < 200ms' é.",
+    "Ignorar NFRs no início e tentar adicioná-los depois: segurança, observabilidade e manutenibilidade são muito mais fáceis de construir desde o início.",
+    "Tentar maximizar todos os NFRs: eles estão em tensão uns com os outros. Maximizar disponibilidade pode reduzir consistência. Escolhas são inevitáveis."
+  ],
+  "realWorldExample": "O sistema de pagamentos do Mercado Pago tem NFRs críticos de disponibilidade (> 99,99%) e segurança. Esses NFRs moldaram uma arquitetura com redundância geográfica, circuit breakers, auditoria de todas as transações e criptografia fim-a-fim — nada disso seria necessário em um blog pessoal.",
+  "encouragement": "Pensar em NFRs antes de codificar é um salto de maturidade técnica. Você vai começar a olhar para um problema e perguntar não apenas 'o que precisa funcionar?' mas 'como precisa funcionar?' — e isso muda tudo."
+}

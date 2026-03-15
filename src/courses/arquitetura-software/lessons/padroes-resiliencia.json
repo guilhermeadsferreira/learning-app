@@ -1,0 +1,68 @@
+{
+  "id": "padroes-resiliencia",
+  "courseId": "arquitetura-software",
+  "moduleId": "sistemas-distribuidos",
+  "title": "Circuit Breaker, Retry e Bulkhead",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Circuit Breaker é como o disjuntor da sua casa: quando a rede elétrica fica instável, ele corta o circuito antes de queimar os aparelhos. Retry é tentar ligar o aparelho novamente depois que a energia voltou. Bulkhead é como os compartimentos estanques de um navio: se um vazar, os outros não afundam.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Circuit Breaker: evitar cascata de falhas"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão Circuit Breaker monitora chamadas a serviços externos. Quando a taxa de falhas excede um threshold, o circuit 'abre': novas chamadas falham imediatamente sem tentar contato com o serviço degradado. Após um timeout, o circuit tenta novamente em modo 'half-open'. Se a chamada de teste funcionar, o circuit 'fecha' e volta ao normal."
+      },
+      {
+        "type": "list",
+        "content": "Closed: tudo normal, chamadas fluem normalmente\nOpen: serviço degradado, chamadas falham imediatamente (fail fast)\nHalf-Open: período de teste — uma chamada passa para verificar recuperação"
+      },
+      {
+        "type": "heading",
+        "content": "Retry: persistência com cuidado"
+      },
+      {
+        "type": "paragraph",
+        "content": "Retry é tentar uma operação novamente após falha. O ponto crítico é a estratégia de backoff: não tente imediatamente (vai sobrecarregar o serviço ainda mais), use backoff exponencial com jitter (delay crescente com aleatoriedade). E sempre verifique idempotência: retry em operações não-idempotentes pode criar duplicatas."
+      },
+      {
+        "type": "heading",
+        "content": "Bulkhead: isolar falhas"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão Bulkhead isola partes do sistema para que a falha de um componente não consuma recursos de outros. Implementado como thread pools separados ou semáforos por serviço: se o serviço de recomendações está lento e esgota seu pool de threads, o serviço de checkout não é afetado — tem seu próprio pool."
+      },
+      {
+        "type": "heading",
+        "content": "Timeout: o padrão esquecido"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sempre defina timeouts em chamadas externas. Sem timeout, uma chamada lenta bloqueia uma thread indefinidamente. Com timeout, a falha é rápida e previsível. Defina timeouts conservadores (menores do que o timeout do chamador) para evitar cascatas."
+      },
+      {
+        "type": "callout",
+        "content": "Esses padrões são complementares, não alternativos. Um sistema resiliente usa Timeout + Retry (com backoff) + Circuit Breaker + Bulkhead em conjunto. Bibliotecas como Resilience4j (Java) e Polly (.NET) implementam todos eles.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Circuit Breaker: detecta serviços degradados e para de chamá-los para proteger o sistema",
+    "Retry: tente novamente com backoff exponencial — nunca imediatamente, sempre com idempotência",
+    "Bulkhead: isola recursos por serviço para que falhas não se propaguem",
+    "Timeout: sempre defina — sem timeout, falhas lentas bloqueiam recursos indefinidamente"
+  ],
+  "commonMistakes": [
+    "Retry sem backoff: sobrecarregar um serviço já degradado com retries imediatos piora a situação.",
+    "Circuit Breaker sem monitoramento: o valor do pattern está em saber quando o circuito abre — sem alertas, você fica cego.",
+    "Bulkhead muito granular: um pool de threads por operação pode ser overhead excessivo — agrupe por serviço ou tipo de recurso."
+  ],
+  "realWorldExample": "A Netflix desenvolveu o Hystrix (hoje em manutenção) exatamente para implementar esses padrões em escala. Quando o serviço de recomendações fica fora do ar, o circuit breaker abre e o sistema serve um fallback (filmes populares) — em vez de mostrar uma tela de erro para o usuário.",
+  "encouragement": "Resiliência não é um bônus — é um requisito de produção. Sistemas que implementam esses padrões sobrevivem a falhas que derrubam sistemas não preparados."
+}

@@ -1,0 +1,127 @@
+{
+  "id": "arquitetura-software",
+  "title": "Arquitetura de Software: Do Dev ao Arquiteto",
+  "description": "Curso completo de arquitetura de software: papéis (Tech Lead, Staff, Arquiteto), NFRs, padrões arquiteturais, DDD, sistemas distribuídos, integração, avaliação, segurança, documentação e liderança técnica. Do iniciante ao avançado.",
+  "icon": "🏛️",
+  "tags": ["arquitetura", "sistema", "tech lead", "staff engineer", "avançado", "carreira"],
+  "aiReviewContext": {
+    "subject": "Arquitetura de Software",
+    "expertise": "padrões arquiteturais, DDD, sistemas distribuídos, NFRs, trade-offs, ADRs, liderança técnica",
+    "codeLanguage": "text",
+    "challengeStyle": "scenario"
+  },
+  "modules": [
+    {
+      "id": "papel-arquiteto",
+      "title": "O Papel do Arquiteto",
+      "lessons": [
+        "o-que-e-arquitetura",
+        "roles-tech-lead-staff-arquiteto",
+        "pensamento-sistemico",
+        "quiz-roles-e-responsabilidades"
+      ]
+    },
+    {
+      "id": "nfr-tradeoffs",
+      "title": "Qualidades de Sistema (NFRs e Trade-offs)",
+      "lessons": [
+        "nfr-o-que-sao",
+        "escalabilidade-disponibilidade",
+        "performance-seguranca-manutencao",
+        "trade-offs-arquiteturais",
+        "quiz-nfrs-trade-offs"
+      ]
+    },
+    {
+      "id": "padroes-arquiteturais",
+      "title": "Padrões Arquiteturais",
+      "lessons": [
+        "arquitetura-em-camadas",
+        "monolito-vs-microservicos",
+        "arquitetura-hexagonal",
+        "event-driven-architecture",
+        "quiz-padroes-arquiteturais"
+      ]
+    },
+    {
+      "id": "arquitetura-integracao",
+      "title": "Arquitetura de Integração",
+      "lessons": [
+        "api-gateway",
+        "message-broker-event-bus",
+        "anti-corruption-layer",
+        "quiz-arquitetura-integracao"
+      ]
+    },
+    {
+      "id": "ddd",
+      "title": "Domain-Driven Design (DDD)",
+      "lessons": [
+        "ddd-introducao",
+        "ddd-bounded-context",
+        "ddd-taticos-entidades-vo",
+        "ddd-servicos-repositorios",
+        "quiz-ddd"
+      ]
+    },
+    {
+      "id": "sistemas-distribuidos",
+      "title": "Sistemas Distribuídos",
+      "lessons": [
+        "cap-theorem",
+        "comunicacao-sync-async",
+        "padroes-resiliencia",
+        "cqrs-event-sourcing",
+        "saga-pattern",
+        "quiz-sistemas-distribuidos"
+      ]
+    },
+    {
+      "id": "dados-cloud",
+      "title": "Arquitetura de Dados e Cloud",
+      "lessons": [
+        "sql-vs-nosql",
+        "estrategias-cache",
+        "cloud-native-12factor",
+        "observabilidade",
+        "quiz-dados-cloud"
+      ]
+    },
+    {
+      "id": "avaliacao-arquitetura",
+      "title": "Avaliação de Arquitetura",
+      "lessons": ["architecture-reviews", "atam-risk-analysis", "quiz-avaliacao-arquitetura"]
+    },
+    {
+      "id": "arquitetura-seguranca",
+      "title": "Arquitetura de Segurança",
+      "lessons": [
+        "threat-modeling",
+        "zero-trust",
+        "seguranca-microservices",
+        "quiz-arquitetura-seguranca"
+      ]
+    },
+    {
+      "id": "documentacao-governanca",
+      "title": "Documentação e Governança Arquitetural",
+      "lessons": [
+        "adr-architecture-decision-records",
+        "c4-model",
+        "divida-tecnica",
+        "quiz-documentacao-governanca"
+      ]
+    },
+    {
+      "id": "lideranca-carreira",
+      "title": "Liderança Técnica e Carreira",
+      "lessons": [
+        "arquitetura-evolutiva",
+        "lideranca-tecnica-influencia",
+        "comunicacao-stakeholders",
+        "modernizacao-migracao",
+        "quiz-lideranca-carreira"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Integração OpenRouter como Provider de IA
 
-**Status:** pendente
+**Status:** concluído
 
 ---
 

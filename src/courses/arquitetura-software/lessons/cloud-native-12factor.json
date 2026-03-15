@@ -1,0 +1,56 @@
+{
+  "id": "cloud-native-12factor",
+  "courseId": "arquitetura-software",
+  "moduleId": "dados-cloud",
+  "title": "Cloud-Native e os 12 Fatores",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Os 12 fatores são como as boas práticas de construção de um prédio modular: cada módulo é independente, pode ser substituído, não compartilha encanamento com o vizinho e tem seus próprios disjuntores. Siga esses princípios e seu 'prédio' pode ser montado em qualquer terreno (cloud).",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Cloud-Native?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Cloud-native é uma abordagem para construir e executar aplicações que exploram as vantagens da computação em cloud: elasticidade, resiliência, observabilidade e escalabilidade horizontal. Não é apenas sobre rodar em cloud — é sobre projetar para cloud desde o início."
+      },
+      {
+        "type": "heading",
+        "content": "Os 12 Fatores (seleção dos mais críticos)"
+      },
+      {
+        "type": "list",
+        "content": "1. Codebase: um repositório por serviço, múltiplos deployments (dev, staging, prod)\n2. Dependências: declaradas explicitamente (package.json, requirements.txt) — sem assumir o que está no sistema\n3. Config: configurações em variáveis de ambiente — nunca hardcoded ou em arquivos commitados\n4. Backing Services: bancos, filas, e-mail como recursos anexáveis — troque sem mudar código\n5. Build, Release, Run: estágios separados e imutáveis — o que sobe para prod não muda\n6. Processos: stateless — cada processo pode ser reiniciado sem impacto\n7. Port Binding: a aplicação expõe serviços via porta — sem depender de container externo\n8. Concorrência: escale horizontalmente adicionando processos\n9. Disposability: inicialização rápida, desligamento gracioso — containers podem ser mortos a qualquer hora\n10. Dev/Prod Parity: ambientes de dev e prod o mais parecidos possível\n11. Logs: trate como streams de eventos — não gerencie arquivos de log, escreva para stdout\n12. Admin Processes: tarefas de administração como processos pontuais"
+      },
+      {
+        "type": "heading",
+        "content": "Por que importam"
+      },
+      {
+        "type": "paragraph",
+        "content": "Aplicações que seguem os 12 fatores são mais fáceis de escalar, mais fáceis de operar, mais portáveis entre ambientes e mais resilientes. São premissas para sistemas que rodam bem em Kubernetes, AWS ECS, Heroku ou qualquer plataforma cloud moderna."
+      },
+      {
+        "type": "callout",
+        "content": "O fator 3 (Config em variáveis de ambiente) é o mais frequentemente violado e o mais perigoso: credenciais no código-fonte são um risco de segurança crítico. Use gerenciadores de secrets (AWS Secrets Manager, HashiCorp Vault) para produção.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Config em variáveis de ambiente: nunca hardcoded, nunca em arquivos commitados",
+    "Processos stateless: qualquer instância pode ser reiniciada sem afetar o sistema",
+    "Logs como streams: escreva para stdout, deixe a infraestrutura gerenciar",
+    "Dev/Prod parity: diferenças entre ambientes são fonte de bugs difíceis de reproduzir"
+  ],
+  "commonMistakes": [
+    "Secrets no código-fonte: uma vez commitado, o segredo está comprometido — mesmo após remoção, o histórico permanece.",
+    "Estado local em instâncias: arquivos temporários, sessões em memória — instâncias são efêmeras em cloud.",
+    "Dependências implícitas do sistema operacional: se não está declarado como dependência, pode não estar no container de produção."
+  ],
+  "realWorldExample": "O Heroku criou os 12 fatores com base em anos de operando aplicações em sua plataforma. A metodologia é usada hoje como referência para aplicações em Kubernetes, Docker e qualquer PaaS. Aplicações que seguem esses princípios fazem deploy sem surpresas.",
+  "encouragement": "Os 12 fatores são uma leitura obrigatória para qualquer desenvolvedor que trabalha com cloud. Agora que você os conhece, vai começar a identificar violações — e saber como corrigi-las."
+}

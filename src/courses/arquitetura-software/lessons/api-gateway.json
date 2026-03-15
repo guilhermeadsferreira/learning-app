@@ -1,0 +1,64 @@
+{
+  "id": "api-gateway",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-integracao",
+  "title": "API Gateway: ponto único de entrada",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "API Gateway é a recepção de um grande hotel: um único ponto de entrada que verifica sua identidade, te direciona ao andar certo, registra sua visita e garante que você não exceda o limite de pedidos ao serviço de quarto. Os hóspedes (clientes) não precisam saber quantos andares o hotel tem.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um API Gateway?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um API Gateway é um componente que atua como ponto único de entrada para clientes externos acessarem os serviços internos de um sistema. Em vez de cada cliente conhecer o endereço de cada microserviço, todos acessam o gateway — que roteia, autentica, controla e observa o tráfego."
+      },
+      {
+        "type": "heading",
+        "content": "Responsabilidades do Gateway"
+      },
+      {
+        "type": "list",
+        "content": "Autenticação e autorização: valida tokens JWT/OAuth antes de encaminhar\nRate limiting: protege os serviços de abuso ou sobrecarga\nRoteamento: direciona requisições para o serviço correto\nObservabilidade: logs, métricas e traces centralizados\nTransformação: adapta request/response entre formato do cliente e do serviço\nSSL termination: gerencia HTTPS centralmente"
+      },
+      {
+        "type": "heading",
+        "content": "Backend for Frontend (BFF)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um padrão derivado do API Gateway é o BFF (Backend for Frontend): em vez de um único gateway para todos os clientes, você cria um gateway específico para cada tipo de cliente (mobile, web, parceiros). O BFF para mobile pode fazer menos chamadas e retornar dados compactados; o BFF web pode retornar mais detalhes."
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar e cuidados"
+      },
+      {
+        "type": "paragraph",
+        "content": "API Gateway faz sentido quando você tem múltiplos serviços e clientes externos. O risco é criar um 'fat gateway': lógica de negócio no gateway o torna um gargalo e um ponto de acoplamento. O gateway deve ser fino — apenas cross-cutting concerns, sem lógica de domínio."
+      },
+      {
+        "type": "callout",
+        "content": "O API Gateway pode se tornar um single point of failure. Implante-o com redundância, circuit breakers e health checks — e garanta que ele possa lidar com o volume máximo esperado de tráfego.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "API Gateway centraliza autenticação, rate limiting, roteamento e observabilidade",
+    "BFF cria gateways especializados por tipo de cliente (mobile, web, parceiros)",
+    "Gateway deve ser fino: cross-cutting concerns apenas, sem lógica de domínio",
+    "Redundância é obrigatória: gateway é single point of failure se não for resiliente"
+  ],
+  "commonMistakes": [
+    "Adicionar lógica de negócio ao gateway: isso cria um novo monolito no ponto de entrada.",
+    "Um único gateway para casos de uso radicalmente diferentes: mobile e web frequentemente precisam de contratos diferentes — considere BFF.",
+    "Não monitorar o gateway: é o ponto de maior tráfego e o primeiro lugar onde problemas aparecem."
+  ],
+  "realWorldExample": "A AWS usa API Gateway em combinação com Lambda para criar APIs serverless. O gateway gerencia autenticação, throttling e roteamento; as Lambdas contêm a lógica de negócio. Separação clara de responsabilidades.",
+  "encouragement": "API Gateway é um dos padrões mais usados em arquiteturas modernas. Entender suas responsabilidades e seus limites te prepara para projetar sistemas que são seguros e observáveis por padrão."
+}

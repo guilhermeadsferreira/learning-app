@@ -1,0 +1,64 @@
+{
+  "id": "adr-architecture-decision-records",
+  "courseId": "arquitetura-software",
+  "moduleId": "documentacao-governanca",
+  "title": "ADRs: Registrando Decisões Arquiteturais",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "ADR é como o diário de bordo de um navio: registra não apenas onde o navio está, mas por que o capitão escolheu essa rota — quais tempestades foram evitadas, quais rotas alternativas foram descartadas. Sem o diário, o próximo capitão não sabe por que o navio está passando por aqui e pode mudar de rota achando que está melhorando, mas reinstalando um problema antigo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um ADR?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Architecture Decision Record (ADR) é um documento curto que registra uma decisão arquitetural significativa: o contexto que levou à decisão, as alternativas consideradas, a decisão tomada e as consequências (vantagens e desvantagens). ADRs são imutáveis — uma vez registrado, o status muda, mas o conteúdo não."
+      },
+      {
+        "type": "heading",
+        "content": "Estrutura de um ADR"
+      },
+      {
+        "type": "list",
+        "content": "Título: ADR-001: Usar PostgreSQL como banco principal\nStatus: Proposta | Aceita | Depreciada | Substituída por ADR-XXX\nContexto: o problema que motivou a decisão e as restrições relevantes\nDecisão: a escolha feita, em linguagem clara e direta\nAlternativas Consideradas: o que foi avaliado e por que foi descartado\nConsequências: trade-offs aceitos — tanto positivos quanto negativos"
+      },
+      {
+        "type": "heading",
+        "content": "Quando escrever um ADR"
+      },
+      {
+        "type": "paragraph",
+        "content": "Escreva um ADR para decisões que: (1) são difíceis de reverter, (2) afetam múltiplos times ou sistemas, (3) são não óbvias para alguém que chegou depois, ou (4) foram debatidas antes de chegar a um consenso. Se alguém pode fazer a pergunta 'por que fizemos X?', um ADR evita que a resposta seja perdida."
+      },
+      {
+        "type": "heading",
+        "content": "Onde armazenar ADRs"
+      },
+      {
+        "type": "paragraph",
+        "content": "ADRs vivem junto ao código — normalmente em um diretório `docs/decisions/` ou `adr/` no repositório. Isso garante que evoluem com o sistema e que todo desenvolvedor tem acesso sem precisar buscar em outra ferramenta. Ferramentas como ADR-tools automatizam a criação e numeração."
+      },
+      {
+        "type": "callout",
+        "content": "Um ADR de uma página, escrito em 30 minutos, pode salvar semanas de trabalho no futuro quando alguém questionar uma decisão ou tentar 'corrigir' algo que já foi debatido.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "ADR registra contexto, alternativas, decisão e consequências — não apenas a decisão",
+    "ADRs são imutáveis: o contexto histórico não pode ser reescrito",
+    "Vive junto ao código: controle de versão garante histórico e acessibilidade",
+    "Escreva quando a decisão é difícil de reverter, afeta múltiplos times ou é não óbvia"
+  ],
+  "commonMistakes": [
+    "ADR apenas com a decisão, sem contexto: sem o 'por que', o documento tem pouco valor para quem veio depois.",
+    "ADRs como documentos separados do código: quando estão em wikis ou Confluence, perdem sincronismo com o sistema.",
+    "Escrever ADRs apenas para decisões erradas: ADRs documentam decisões deliberadas — especialmente as boas, para que não sejam desfeitas por engano."
+  ],
+  "realWorldExample": "O time de engenharia da Thoughtworks popularizou o uso de ADRs. Projetos open-source como Rust, Swift e muitos outros usam ADRs (às vezes chamados de RFCs) para documentar decisões de design. Empresas como Spotify e GitHub mantêm centenas de ADRs ativos.",
+  "encouragement": "Começar a escrever ADRs é uma das mudanças de hábito mais impactantes que um time pode adotar. A primeira vez leva 30 minutos — e economiza horas de debate futuro."
+}

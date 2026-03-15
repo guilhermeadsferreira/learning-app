@@ -1,0 +1,68 @@
+{
+  "id": "pensamento-sistemico",
+  "courseId": "arquitetura-software",
+  "moduleId": "papel-arquiteto",
+  "title": "Pensamento Sistêmico e Visão de Produto",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Pensar em sistemas é como ser médico: um bom médico não trata apenas o sintoma — ele entende o corpo inteiro. Dor de cabeça pode ser pressão alta, pode ser estresse, pode ser desidratação. O arquiteto faz o mesmo: antes de prescrever uma solução técnica, ele diagnostica o sistema todo.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é pensamento sistêmico?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Pensamento sistêmico é a capacidade de enxergar como partes se interconectam e como uma decisão em um ponto afeta o sistema como um todo. Um engenheiro sem essa visão resolve problemas locais e cria problemas globais. Um arquiteto pensa em cascatas, ciclos de feedback e emergências inesperadas."
+      },
+      {
+        "type": "heading",
+        "content": "Impacto em cascata"
+      },
+      {
+        "type": "paragraph",
+        "content": "Quando você adiciona um índice a uma tabela para acelerar leituras, pode desacelerar escritas. Quando migra um serviço para async, o sistema fica mais resiliente mas mais difícil de debugar. Cada decisão arquitetural tem efeitos colaterais — o pensamento sistêmico os antecipa."
+      },
+      {
+        "type": "list",
+        "content": "Toda otimização local pode piorar o sistema global\nDesacoplamento reduz coordenação, mas aumenta complexidade de debug\nEscalar um serviço pode sobrecarregar seus dependentes\nAumentar disponibilidade geralmente reduz consistência"
+      },
+      {
+        "type": "heading",
+        "content": "Alinhamento com negócio"
+      },
+      {
+        "type": "paragraph",
+        "content": "Pensamento sistêmico não para no código — ele alcança o negócio. Um arquiteto entende que a plataforma existe para criar valor para clientes e receita para a empresa. Isso significa priorizar decisões técnicas pelo impacto de negócio, não apenas pela elegância técnica."
+      },
+      {
+        "type": "heading",
+        "content": "Perguntas que o arquiteto faz"
+      },
+      {
+        "type": "list",
+        "content": "Quais são os casos de falha e como o sistema se recupera?\nSe esse componente cair, o que mais para junto?\nQual é o custo de mudar essa decisão daqui a 1 ano?\nComo isso afeta a equipe que vai manter?\nQual NFR está sendo sacrificado por essa escolha?"
+      },
+      {
+        "type": "callout",
+        "content": "A perguntar 'e se?' antes de implementar é a habilidade mais valiosa de um arquiteto. Não para paralisar, mas para antecipar riscos e tomar decisões conscientes.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Decisões técnicas têm efeitos colaterais — o arquiteto os antecipa antes de implementar",
+    "O contexto de negócio importa: valor para o cliente deve guiar prioridades técnicas",
+    "Pensar em cascatas e pontos de falha é parte do trabalho arquitetural",
+    "Fazer as perguntas certas ('e se?', 'quem depende disso?') vale mais do que ter todas as respostas"
+  ],
+  "commonMistakes": [
+    "Otimizar uma parte do sistema sem medir o impacto nas demais partes.",
+    "Ignorar o contexto de negócio e tomar decisões puramente técnicas — arquitetura existe a serviço do produto.",
+    "Paralisar por tentar antecipar todo e qualquer problema: o objetivo é reduzir riscos críticos, não eliminar toda incerteza."
+  ],
+  "realWorldExample": "O Amazon Prime migrou de serviços distribuídos para um monolito em uma parte específica do sistema para reduzir latência. A decisão pareceu 'retrógrada' mas fazia sentido sistêmico: o custo de rede entre microserviços era maior que o benefício do desacoplamento naquele contexto.",
+  "encouragement": "Pensamento sistêmico é uma habilidade que se treina com tempo e exposição. Cada bug que você rastreia até a causa raiz, cada incidente que você analisa até o fundo — você está desenvolvendo essa visão."
+}

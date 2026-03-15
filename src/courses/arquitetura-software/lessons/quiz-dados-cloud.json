@@ -1,0 +1,123 @@
+{
+  "id": "quiz-dados-cloud",
+  "courseId": "arquitetura-software",
+  "moduleId": "dados-cloud",
+  "title": "Quiz: Dados e Cloud na Prática",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Dados e cloud são a base de qualquer sistema moderno. Este quiz verifica se você sabe escolher as ferramentas certas para cada problema.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Aplicando conceitos de dados e cloud"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você cobriu SQL vs. NoSQL, estratégias de cache, os 12 fatores e observabilidade. Vamos testar a aplicação prática desses conceitos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Um sistema de catálogo de produtos tem esquema variável (produtos com atributos diferentes por categoria) e precisa de flexibilidade para adicionar novos tipos de produto sem migrar o schema. Qual tipo de banco seria mais adequado?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SQL relacional (PostgreSQL), pois oferece ACID e joins eficientes",
+          "isCorrect": false,
+          "explanation": "SQL é excelente para schemas bem definidos e relacionamentos. Para schemas variáveis com atributos diferentes por tipo, um banco documental evita a necessidade de migrações frequentes."
+        },
+        {
+          "id": "b",
+          "text": "Banco documental (MongoDB), pois suporta schemas flexíveis por documento",
+          "isCorrect": true,
+          "explanation": "Correto! Para dados com schema variável (cada produto tem atributos diferentes), um banco documental como MongoDB ou Firestore permite que cada documento tenha sua própria estrutura — sem a necessidade de adicionar colunas nullable para cada tipo de produto."
+        },
+        {
+          "id": "c",
+          "text": "Banco de grafos (Neo4j), pois permite relacionamentos flexíveis",
+          "isCorrect": false,
+          "explanation": "Banco de grafos é otimizado para relacionamentos complexos entre entidades (redes sociais, detecção de fraude). Para catálogo de produtos com schema variável, a solução documental é mais adequada."
+        }
+      ]
+    },
+    {
+      "question": "O que é cache-aside (lazy loading)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "O cache é atualizado automaticamente pelo banco sempre que um dado muda",
+          "isCorrect": false,
+          "explanation": "Isso descreveria uma estratégia onde o banco proativamente atualiza o cache — não é cache-aside. No cache-aside, a aplicação é responsável por gerenciar explicitamente o cache."
+        },
+        {
+          "id": "b",
+          "text": "A aplicação busca no cache; no miss, busca no banco e escreve no cache",
+          "isCorrect": true,
+          "explanation": "Exato! Cache-aside (lazy loading) é a estratégia mais comum: 1) busca no cache, 2) se miss, busca no banco, 3) escreve resultado no cache. A aplicação gerencia explicitamente o cache."
+        },
+        {
+          "id": "c",
+          "text": "O cache é pré-carregado com todos os dados do banco na inicialização",
+          "isCorrect": false,
+          "explanation": "Isso seria um warm-up de cache, não cache-aside. Cache-aside é lazy: os dados só vão para o cache quando são requisitados pela primeira vez."
+        }
+      ]
+    },
+    {
+      "question": "Qual dos 12 fatores recomenda configurações como variáveis de ambiente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fator 2 (Dependências)",
+          "isCorrect": false,
+          "explanation": "O Fator 2 trata de declarar dependências explicitamente (package.json, requirements.txt). Config em variáveis de ambiente é o Fator 3."
+        },
+        {
+          "id": "b",
+          "text": "Fator 3 (Config)",
+          "isCorrect": true,
+          "explanation": "Correto! O Fator 3 diz: 'store config in the environment'. Tudo que varia entre ambientes (dev, staging, prod) — URLs de banco, API keys, credenciais — deve estar em variáveis de ambiente, nunca hardcoded ou em arquivos commitados."
+        },
+        {
+          "id": "c",
+          "text": "Fator 10 (Dev/Prod Parity)",
+          "isCorrect": false,
+          "explanation": "Dev/Prod Parity (Fator 10) trata de manter ambientes similares. O Fator 3 (Config) é específico sobre onde a configuração deve ser armazenada: variáveis de ambiente."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a diferença entre logs e traces em observabilidade?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Logs são para produção; traces são apenas para debugging em desenvolvimento",
+          "isCorrect": false,
+          "explanation": "Traces são essenciais em produção — são eles que permitem diagnosticar problemas de latência e falhas em sistemas distribuídos. Ambos são usados em todos os ambientes."
+        },
+        {
+          "id": "b",
+          "text": "Logs registram eventos discretos; traces rastreiam o fluxo de uma requisição através de múltiplos serviços",
+          "isCorrect": true,
+          "explanation": "Exatamente! Logs são registros de eventos individuais ('usuário fez login às 10h'). Traces mostram o caminho completo de uma requisição: serviço A → serviço B → banco → serviço C, com o tempo gasto em cada etapa."
+        },
+        {
+          "id": "c",
+          "text": "Logs são numéricos; traces são textuais",
+          "isCorrect": false,
+          "explanation": "Na verdade é quase o contrário em termos de formato usual: logs tendem a ser textuais (com dados estruturados), enquanto traces incluem dados de timing e relacionamentos. A diferença fundamental é conceitual: eventos vs. fluxo de requisição."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Banco documental para schema variável; SQL para relacionamentos complexos e ACID",
+    "Cache-aside: aplicação gerencia — busca no cache, miss → banco → escreve no cache",
+    "12 fatores, Fator 3: config em variáveis de ambiente, nunca no código",
+    "Logs: eventos discretos; Traces: fluxo completo através de serviços"
+  ],
+  "encouragement": "Sete módulos concluídos! Você agora tem uma visão completa de dados e cloud — fundamentos críticos para qualquer sistema moderno. Os próximos módulos vão consolidar com avaliação, segurança, documentação e liderança."
+}

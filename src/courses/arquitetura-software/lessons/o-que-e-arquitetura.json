@@ -1,0 +1,64 @@
+{
+  "id": "o-que-e-arquitetura",
+  "courseId": "arquitetura-software",
+  "moduleId": "papel-arquiteto",
+  "title": "O que é Arquitetura de Software?",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Arquitetura de software é como a planta de um prédio: define estrutura, fluxos, onde cada coisa fica — sem detalhar cada tijolo. O arquiteto não assenta paredes, mas sem a planta dele, os pedreiros constroem em direções diferentes e o prédio desaba.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Arquitetura de Software?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Arquitetura de software é o conjunto de decisões estruturais que moldam um sistema: como os módulos se organizam, como eles se comunicam, quais tecnologias sustentam cada parte e quais princípios guiam o crescimento. Essas decisões são difíceis — ou caras — de mudar depois."
+      },
+      {
+        "type": "paragraph",
+        "content": "Pense na diferença entre escolher o banco de dados de um produto versus escolher o nome de uma variável. Trocar o banco afeta performance, custo, equipes, contratos e até compliance. Já renomear uma variável é trivial. Arquitetura trata das escolhas que têm alto custo de reversão."
+      },
+      {
+        "type": "heading",
+        "content": "Arquitetura vs. Design"
+      },
+      {
+        "type": "paragraph",
+        "content": "A linha não é sempre clara, mas uma boa heurística: design é local (como uma classe ou módulo é estruturado internamente), arquitetura é global (como os módulos se relacionam entre si e com o mundo externo). Design pode mudar a qualquer momento; arquitetura muda com custo."
+      },
+      {
+        "type": "list",
+        "content": "Arquitetura: escolher entre monolito e microserviços\nArquitetura: definir como serviços se comunicam (REST, mensageria)\nDesign: estrutura interna de um serviço\nDesign: padrões como Factory ou Strategy dentro de um módulo"
+      },
+      {
+        "type": "heading",
+        "content": "Por que arquitetura importa?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um sistema sem arquitetura explícita ainda tem arquitetura — ela foi tomada por acidente, no calor do momento, por quem entregou o primeiro PR. O resultado é um sistema que cresce de forma incoerente, difícil de testar, impossível de escalar e caro de manter."
+      },
+      {
+        "type": "callout",
+        "content": "Arquitetura não é sobre diagramas bonitos — é sobre tomar decisões conscientes, comunicá-las e revisá-las quando o contexto muda.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Arquitetura = decisões estruturais difíceis de reverter que moldam o sistema como um todo",
+    "A diferença entre arquitetura e design está no custo de mudança e no escopo de impacto",
+    "Todo sistema tem arquitetura — a questão é se ela foi pensada ou apenas aconteceu",
+    "Arquitetura evolui com o produto, mas mudanças têm custo alto"
+  ],
+  "commonMistakes": [
+    "Confundir arquitetura com tecnologia: escolher Kubernetes não é arquitetura, mas como os serviços se comunicam dentro dele sim.",
+    "Achar que arquitetura é responsabilidade apenas de um 'arquiteto de TI': toda decisão estrutural tomada por um dev é uma decisão arquitetural.",
+    "Tratar arquitetura como algo que se define apenas no início e nunca revisita: sistemas evoluem e a arquitetura precisa acompanhar."
+  ],
+  "realWorldExample": "O Twitter começou como um monolito Ruby. Com o crescimento, o time precisou repensar a arquitetura para suportar escala global — migração custou anos e dezenas de engenheiros. Ter pensado nisso mais cedo teria reduzido esse custo.",
+  "encouragement": "Você não precisa saber tudo de arquitetura para começar a pensar como um arquiteto. Cada decisão técnica que você justifica com 'por quê' em vez de 'porque sempre foi assim' já é pensamento arquitetural."
+}

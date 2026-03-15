@@ -1,0 +1,68 @@
+{
+  "id": "cap-theorem",
+  "courseId": "arquitetura-software",
+  "moduleId": "sistemas-distribuidos",
+  "title": "CAP Theorem e Consistência Eventual",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Imagine três amigos (C, A, P) em um grupo de WhatsApp. C (Consistência) quer que todo mundo veja a mesma mensagem ao mesmo tempo. A (Disponibilidade) quer que o grupo sempre responda, mesmo sem sinal. P (Tolerância a Partição) aceita que às vezes um amigo fica sem sinal. Você pode ter dois dos três — mas garantir os três simultaneamente é impossível.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O Teorema CAP"
+      },
+      {
+        "type": "paragraph",
+        "content": "O Teorema CAP (Brewer, 2000) afirma que em um sistema distribuído, é impossível garantir simultaneamente: Consistência (todos os nós veem os mesmos dados ao mesmo tempo), Disponibilidade (todo request recebe uma resposta), e Tolerância a Partição (o sistema funciona mesmo quando partes da rede ficam inacessíveis)."
+      },
+      {
+        "type": "heading",
+        "content": "Na prática: P é inevitável"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em sistemas distribuídos reais, redes falham. Partições de rede acontecem — um datacenter fica inacessível por alguns segundos, um cabo é cortado. Tolerância a Partição (P) não é opcional: todo sistema distribuído precisa lidar com partições. Portanto, a escolha real é entre Consistência (C) e Disponibilidade (A)."
+      },
+      {
+        "type": "list",
+        "content": "CP (Consistência + Tolerância a Partição): quando há partição, o sistema para de responder em vez de dar dados desatualizados. Ex: HBase, ZooKeeper\nAP (Disponibilidade + Tolerância a Partição): quando há partição, o sistema responde com dados potencialmente desatualizados. Ex: DynamoDB, Cassandra, CouchDB"
+      },
+      {
+        "type": "heading",
+        "content": "Consistência Eventual"
+      },
+      {
+        "type": "paragraph",
+        "content": "Consistência eventual é o modelo adotado por sistemas AP: os dados vão eventualmente ficar consistentes em todos os nós, mas pode haver um período em que diferentes nós retornam valores diferentes. Para muitos casos de uso (carrinho de compras, feed de redes sociais, likes), isso é aceitável."
+      },
+      {
+        "type": "heading",
+        "content": "PACELC: além do CAP"
+      },
+      {
+        "type": "paragraph",
+        "content": "O modelo PACELC estende o CAP: mesmo sem partição (E = else), há um trade-off entre Latência (L) e Consistência (C). Um sistema pode escolher consistência forte com latência maior, ou consistência eventual com latência menor. Essa extensão captura melhor os trade-offs do mundo real."
+      },
+      {
+        "type": "callout",
+        "content": "Antes de decidir entre CP e AP, entenda o impacto de dados desatualizados para o seu caso de uso. Para saldo bancário, inconsistência pode causar fraude. Para número de likes, inconsistência por milissegundos é aceitável.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "CAP: impossível ter Consistência, Disponibilidade e Tolerância a Partição ao mesmo tempo",
+    "Em sistemas distribuídos, P é inevitável — a escolha real é entre C e A",
+    "Consistência eventual: dados ficam consistentes 'eventualmente' — aceitável para muitos casos de uso",
+    "PACELC estende o CAP: mesmo sem partição, há trade-off entre latência e consistência"
+  ],
+  "commonMistakes": [
+    "Tratar CAP como 'escolha no banco de dados': muitos sistemas permitem configurar o nível de consistência por operação.",
+    "Assumir que AP significa dados sempre errados: consistência eventual pode significar atraso de milissegundos na prática.",
+    "Ignorar o contexto de negócio: a escolha entre CP e AP deve ser guiada pelo impacto de negócio de dados inconsistentes."
+  ],
+  "realWorldExample": "O DynamoDB da Amazon foi projetado como AP: durante o famoso incident de 2017, alguns serviços ficaram degradados mas continuaram respondendo — mostrando consistência eventual em ação. Para o carrinho de compras (caso original do Amazon), mostrar um item adicionado com 100ms de atraso é preferível ao site ficar down.",
+  "encouragement": "O CAP Theorem é uma das poucas verdades matemáticas em engenharia de software. Entendê-lo te dá superpoderes em qualquer discussão sobre banco de dados e sistemas distribuídos."
+}

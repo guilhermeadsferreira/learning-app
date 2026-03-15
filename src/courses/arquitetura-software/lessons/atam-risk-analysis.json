@@ -1,0 +1,64 @@
+{
+  "id": "atam-risk-analysis",
+  "courseId": "arquitetura-software",
+  "moduleId": "avaliacao-arquitetura",
+  "title": "ATAM e análise de riscos arquiteturais",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "ATAM é como um teste de estresse financeiro: você pega a arquitetura e a submete a cenários extremos — 'e se o tráfego triplicar?', 'e se o banco ficar fora 1 hora?', 'e se precisarmos adicionar multi-tenancy?' — para descobrir onde ela vai ceder antes de chegarem os problemas reais.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é ATAM?"
+      },
+      {
+        "type": "paragraph",
+        "content": "ATAM (Architecture Tradeoff Analysis Method) é um método estruturado de avaliação de arquitetura desenvolvido pelo SEI (Software Engineering Institute). O objetivo é identificar os trade-offs e riscos de uma arquitetura em relação aos requisitos de qualidade (NFRs) do sistema, antes da implementação."
+      },
+      {
+        "type": "heading",
+        "content": "O processo em linhas gerais"
+      },
+      {
+        "type": "list",
+        "content": "1. Apresentação: o time apresenta a arquitetura proposta e os drivers de negócio\n2. Levantamento de cenários: stakeholders propõem cenários de qualidade ('o sistema deve responder em 200ms com 10k usuários simultâneos')\n3. Análise: cada abordagem arquitetural é avaliada contra os cenários\n4. Identificação de riscos: onde a arquitetura pode falhar nos cenários\n5. Análise de sensibilidade: quais decisões têm grande impacto nos atributos de qualidade\n6. Identificação de trade-offs: onde satisfazer um NFR prejudica outro"
+      },
+      {
+        "type": "heading",
+        "content": "Riscos vs. Pontos de Sensibilidade vs. Trade-offs"
+      },
+      {
+        "type": "paragraph",
+        "content": "ATAM distingue: Riscos (decisões que podem criar problemas futuros — 'usar um único banco sem read replica é um risco para disponibilidade'), Pontos de Sensibilidade (decisões que têm grande impacto sobre um atributo de qualidade — 'escolha do banco impacta fortemente a escalabilidade'), e Trade-offs (decisões que afetam positivamente um atributo e negativamente outro)."
+      },
+      {
+        "type": "heading",
+        "content": "Quando e como usar"
+      },
+      {
+        "type": "paragraph",
+        "content": "ATAM completo é pesado — pode levar dias com facilitadores externos. Na prática, muitas organizações adotam versões simplificadas ('ATAM lite') para reviews internas: elicitar cenários de qualidade, mapear decisões arquiteturais e identificar os principais riscos e trade-offs. O valor está na estrutura, não na cerimônia."
+      },
+      {
+        "type": "callout",
+        "content": "Você não precisa implementar ATAM na íntegra para se beneficiar do seu raciocínio. Perguntar sistematicamente 'quais são os riscos desta decisão?' e 'que trade-offs estamos aceitando?' é ATAM no espírito.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "ATAM avalia arquiteturas contra cenários concretos de qualidade — antes da implementação",
+    "Distingue riscos (problemas futuros potenciais), sensibilidades (impacto alto) e trade-offs (benefício x custo)",
+    "Pode ser adaptado para uso interno como 'ATAM lite' sem a cerimônia completa",
+    "Cenários concretos são essenciais: 'sistema deve ser escalável' é vago; '200ms com 10k usuários' é testável"
+  ],
+  "commonMistakes": [
+    "Avaliar contra NFRs vagos: 'deve ser rápido' não permite avaliação objetiva — quantifique os cenários.",
+    "ATAM apenas para sistemas novos: é igualmente valioso para avaliar se uma arquitetura existente ainda suporta novos requisitos.",
+    "Focar apenas em riscos técnicos: riscos organizacionais (equipe sem expertise em X, dependência de vendor) também são riscos arquiteturais."
+  ],
+  "realWorldExample": "Antes de uma migração de banco de dados monolítico para sharding, um time pode usar ATAM para analisar: quão sensível é a latência de leitura à estratégia de sharding? Quais são os riscos de inconsistência durante a migração? Quais trade-offs entre consistência e disponibilidade são aceitáveis? Cada pergunta é um elemento do ATAM.",
+  "encouragement": "ATAM é o nível de rigor que separa 'arquitetura intuitiva' de 'arquitetura fundamentada'. Mesmo usando apenas os princípios, você vai tomar decisões muito mais sólidas e defensáveis."
+}

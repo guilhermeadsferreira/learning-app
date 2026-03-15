@@ -1,0 +1,64 @@
+{
+  "id": "ddd-introducao",
+  "courseId": "arquitetura-software",
+  "moduleId": "ddd",
+  "title": "Introdução ao DDD e Linguagem Ubíqua",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "DDD é falar a língua do negócio no código. Quando o vendedor diz 'pedido', o financeiro diz 'fatura', e o desenvolvedor diz 'Order', todos estão falando de coisas relacionadas mas usando termos diferentes — e isso causa bugs. DDD propõe que código, time e domínio usem exatamente os mesmos termos.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Domain-Driven Design?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Domain-Driven Design (DDD), introduzido por Eric Evans em 2003, é uma abordagem para desenvolver software complexo colocando o domínio de negócio no centro. A premissa: a maior fonte de complexidade em sistemas não é técnica — é a complexidade do próprio domínio de negócio. O código deve refletir esse domínio com fidelidade."
+      },
+      {
+        "type": "heading",
+        "content": "Linguagem Ubíqua (Ubiquitous Language)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Linguagem ubíqua é um vocabulário compartilhado entre desenvolvedores e especialistas de domínio. Cada termo tem uma definição precisa e única, usada consistentemente em conversas, documentos e — crucialmente — no código. Classes, métodos, variáveis usam os mesmos termos que o negócio usa."
+      },
+      {
+        "type": "paragraph",
+        "content": "O impacto é direto: quando o especialista de domínio lê o código (ou pseudocódigo), ele deve reconhecer os termos. Quando há bug, a conversa é fluida: 'o Pedido não está sendo confirmado corretamente' — não 'o objeto Order na linha 247 não está disparando o método processTransaction'."
+      },
+      {
+        "type": "heading",
+        "content": "DDD Estratégico vs. Tático"
+      },
+      {
+        "type": "list",
+        "content": "DDD Estratégico: como dividir o sistema em domínios (Bounded Contexts, Context Maps, padrões de relacionamento)\nDDD Tático: como modelar dentro de um domínio (Entidades, Value Objects, Aggregates, Repositories, Domain Services)"
+      },
+      {
+        "type": "paragraph",
+        "content": "DDD estratégico é mais impactante para arquitetura — define as fronteiras do sistema. DDD tático é mais relevante para o design interno de um serviço ou módulo. Você pode aplicar DDD tático sem adotar DDD estratégico — mas o contrário é incomum."
+      },
+      {
+        "type": "callout",
+        "content": "DDD não é para todo projeto. Em sistemas simples de CRUD, o overhead de DDD supera os benefícios. DDD brilha em domínios de alta complexidade de negócio: finanças, saúde, logística, e-commerce complexo.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "DDD coloca o domínio de negócio no centro do design de software",
+    "Linguagem ubíqua: mesmo vocabulário no código, documentação e nas conversas com o negócio",
+    "DDD estratégico define fronteiras (Bounded Contexts); tático define o modelo interno",
+    "DDD tem maior valor em domínios com alta complexidade de negócio"
+  ],
+  "commonMistakes": [
+    "Aplicar DDD em sistemas CRUD simples: o overhead não se justifica sem complexidade real de domínio.",
+    "Linguagem ubíqua apenas no código: o vocabulário precisa estar nos testes, nos docs, nas reuniões — não só nas classes.",
+    "Achar que DDD é sobre padrões táticos: Aggregate, Repository, etc. são ferramentas. DDD é sobre entender profundamente o domínio."
+  ],
+  "realWorldExample": "No sistema bancário do Nubank, 'Conta', 'Transação', 'Limite', 'Fatura' são termos precisos do domínio. O time de engenharia usa exatamente esses termos no código — quando um analista de negócio reporta um bug em 'fatura', o desenvolvedor sabe exatamente qual classe abrir.",
+  "encouragement": "DDD é uma das ferramentas mais poderosas para sistemas complexos. Se você trabalha com domínios ricos de negócio, DDD vai transformar como você conversa com stakeholders e como você projeta software."
+}

@@ -1,0 +1,100 @@
+{
+  "id": "quiz-avaliacao-arquitetura",
+  "courseId": "arquitetura-software",
+  "moduleId": "avaliacao-arquitetura",
+  "title": "Quiz: Avaliando uma Arquitetura",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Avaliar arquitetura é como a auditoria de uma empresa: não é punição — é garantir que as decisões tomadas ainda fazem sentido dado o contexto atual.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Avaliação em cenários reais"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu sobre Architecture Reviews e ATAM. Vamos testar sua capacidade de aplicar esses conceitos em situações concretas."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é o objetivo principal de uma Architecture Review?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Aprovar formalmente a arquitetura para fins de compliance e auditoria",
+          "isCorrect": false,
+          "explanation": "Embora documentação possa servir para compliance, o objetivo principal é técnico: identificar riscos que o time pode ter perdido e garantir alinhamento com padrões. Review burocrática sem questionamento real não agrega valor."
+        },
+        {
+          "id": "b",
+          "text": "Identificar riscos não percebidos pelo time e enriquecer as decisões arquiteturais antes da implementação",
+          "isCorrect": true,
+          "explanation": "Correto! O valor da review está nos riscos identificados antes da implementação — momento em que mudar é mais barato. Revisores externos trazem perspectiva que o time, imerso no problema, pode ter perdido."
+        },
+        {
+          "id": "c",
+          "text": "Documentar o que foi construído para referência futura",
+          "isCorrect": false,
+          "explanation": "Documentar o que já foi construído é valioso, mas não é uma Architecture Review. Review acontece antes da implementação — quando ainda é possível mudar as decisões sem alto custo."
+        }
+      ]
+    },
+    {
+      "question": "O que o ATAM analisa ao avaliar uma arquitetura?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A qualidade do código e o cumprimento de padrões de codificação",
+          "isCorrect": false,
+          "explanation": "Qualidade de código é avaliada em code reviews, não em Architecture Reviews. ATAM avalia decisões estruturais (escolhas de tecnologia, padrões de comunicação, estratégias de dados) contra cenários de qualidade."
+        },
+        {
+          "id": "b",
+          "text": "Os trade-offs e riscos da arquitetura em relação a cenários concretos de qualidade",
+          "isCorrect": true,
+          "explanation": "Exatamente! ATAM avalia se a arquitetura proposta satisfaz os NFRs do sistema através de cenários concretos. O resultado são riscos identificados, pontos de sensibilidade e trade-offs explícitos."
+        },
+        {
+          "id": "c",
+          "text": "Apenas o desempenho e a escalabilidade do sistema",
+          "isCorrect": false,
+          "explanation": "ATAM não se limita a performance e escalabilidade. Avalia todos os atributos de qualidade relevantes para o sistema: disponibilidade, segurança, manutenibilidade, modificabilidade — e os trade-offs entre eles."
+        }
+      ]
+    },
+    {
+      "question": "Quando é o momento mais adequado para conduzir uma Architecture Review?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Após a implementação, para validar se o que foi construído está correto",
+          "isCorrect": false,
+          "explanation": "Revisar após a implementação é possível, mas tem custo muito maior. Problemas encontrados depois requerem refatoração de código existente — potencialmente meses de trabalho. O momento ideal é antes de implementar."
+        },
+        {
+          "id": "b",
+          "text": "Antes de iniciar a implementação de um projeto ou decisão de alto impacto",
+          "isCorrect": true,
+          "explanation": "Correto! O custo de mudar uma decisão arquitetural cai exponencialmente quanto mais cedo for feito. Antes da implementação, você muda um documento. Durante a implementação, você muda código em desenvolvimento. Depois, você muda código em produção."
+        },
+        {
+          "id": "c",
+          "text": "Apenas quando houver incidentes de produção recorrentes",
+          "isCorrect": false,
+          "explanation": "Reviews após incidentes são valiosas, mas são remediais — o problema já causou impacto. Reviews preventivas (antes de projetos de alto risco) evitam os incidentes. Ambas têm seu lugar, mas a preventiva é mais valiosa."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Architecture Review: identificar riscos antes de implementar — muito mais barato do que depois",
+    "ATAM: avaliar trade-offs e riscos contra cenários concretos de qualidade",
+    "Momento certo: antes da implementação, quando mudar ainda é barato",
+    "Revisores questionam e enriquecem — não aprovam por burocracia"
+  ],
+  "encouragement": "Módulo 8 concluído! Você agora sabe como avaliar arquiteturas sistematicamente. Esses skills são o que te diferenciam como arquiteto: não apenas projetar, mas verificar que o projeto resiste ao escrutínio."
+}

@@ -8,7 +8,7 @@ import { useProgress } from '@/hooks/useProgress'
 import { useCourse } from '@/hooks/useCourse'
 import { getCourse } from '@/courses'
 import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
-import { getAllProviders, getApiKey } from '@/services/ai-review'
+import { getAllProviders, getApiKey } from '@/services/ai'
 import { cn } from '@/lib/utils'
 
 interface HeaderProps {

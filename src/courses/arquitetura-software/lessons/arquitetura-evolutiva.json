@@ -1,0 +1,64 @@
+{
+  "id": "arquitetura-evolutiva",
+  "courseId": "arquitetura-software",
+  "moduleId": "lideranca-carreira",
+  "title": "Arquitetura Evolutiva: sistemas que mudam no tempo",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Arquitetura evolutiva é como projetar uma cidade, não um castelo. Um castelo é construído para durar séculos sem mudar. Uma cidade foi planejada para crescer, se adaptar, ter novas avenidas sem demolir os bairros antigos. O segredo está nos planos urbanísticos que permitem crescimento sem caos.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Arquitetura não é estática"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um dos maiores erros em arquitetura é tentar projetar o sistema final e perfeito desde o início. O negócio muda, os requisitos evoluem, tecnologias surgem e somem. Arquitetura evolutiva aceita essa realidade e projetam sistemas que podem se adaptar sem reescritas completas."
+      },
+      {
+        "type": "heading",
+        "content": "Design para mudança"
+      },
+      {
+        "type": "paragraph",
+        "content": "Projetar para mudança significa: preferir decisões reversíveis quando o custo de reversão e o custo de decidir agora são similares (last responsible moment); criar módulos com acoplamento baixo para que mudanças sejam localizadas; e usar abstrações que permitem trocar implementações sem mudar o contrato."
+      },
+      {
+        "type": "heading",
+        "content": "Fitness Functions"
+      },
+      {
+        "type": "paragraph",
+        "content": "Fitness functions são métricas automatizadas que verificam se a arquitetura está cumprindo seus objetivos. Exemplos: testes que verificam que dependências circulares não existem, que a latência p99 está abaixo do threshold, que coverage está acima de 80%, ou que nenhum serviço ultrapassa um tamanho máximo de deployment. São a 'suíte de testes da arquitetura'."
+      },
+      {
+        "type": "heading",
+        "content": "Evitar over-engineering"
+      },
+      {
+        "type": "paragraph",
+        "content": "Arquitetura evolutiva não significa projetar para todo futuro imaginável. YAGNI (You Aren't Gonna Need It) se aplica à arquitetura: não crie extensibilidade que você não sabe que vai precisar. O custo de adicionar uma abstração desnecessária hoje é pequeno, mas o custo de conviver com ela por anos é alto."
+      },
+      {
+        "type": "callout",
+        "content": "Last responsible moment: tome decisões arquiteturais no último momento responsável — quando você tem informação suficiente para decidir bem, mas antes que a janela de oportunidade feche. Nem cedo demais (com informação insuficiente), nem tarde demais (quando mudar é proibitivo).",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Arquitetura evolui inevitavelmente — projete para facilitar a mudança, não para evitá-la",
+    "Last responsible moment: decida quando você tem informação suficiente, não antes nem depois",
+    "Fitness functions: métricas automatizadas que verificam integridade arquitetural continuamente",
+    "YAGNI: não antecipe extensibilidade que você não sabe que vai precisar"
+  ],
+  "commonMistakes": [
+    "Big Design Up Front: tentar resolver todos os problemas futuros no design inicial — resultado é complexidade desnecessária.",
+    "Não criar fitness functions: sem verificação automatizada, a arquitetura se deteriora silenciosamente.",
+    "Reescrever em vez de evoluir: reescritas completas raramente entregam o que prometem — prefira substituição incremental."
+  ],
+  "realWorldExample": "O Spotify começou como um monolito e foi decompondo gradualmente em squads autônomos com serviços independentes. A transição levou anos e foi feita incrementalmente — sem 'big bang'. O resultado: times que evoluem seus serviços sem depender dos outros.",
+  "encouragement": "Arquitetura evolutiva é o caminho para sistemas que duram anos sem se tornar legados. Abraçar a mudança como requisito, não como surpresa, é a mentalidade que separa sistemas sustentáveis dos que precisam ser reescritos."
+}

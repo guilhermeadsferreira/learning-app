@@ -1,0 +1,60 @@
+{
+  "id": "comunicacao-stakeholders",
+  "courseId": "arquitetura-software",
+  "moduleId": "lideranca-carreira",
+  "title": "Comunicando Arquitetura para Stakeholders",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Comunicar arquitetura é como ser um guia turístico multilíngue: você conhece cada detalhe técnico do monumento, mas precisa adaptar a explicação para cada audiência. Para o engenheiro: como os pilares estão conectados. Para o turista comum: por que o design é impressionante. Para o prefeito: quanto custa manter e qual o retorno para a cidade.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Audiências diferentes, linguagens diferentes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um arquiteto eficaz adapta a comunicação para cada audiência. CEO e investidores precisam de impacto em negócio e risco. Gerentes de produto precisam de trade-offs de velocidade e qualidade. Times de engenharia precisam de clareza técnica e raciocínio. Cada audiência tem perguntas diferentes — e o arquiteto precisa respondê-las no idioma certo."
+      },
+      {
+        "type": "heading",
+        "content": "Trade-offs em termos de negócio"
+      },
+      {
+        "type": "paragraph",
+        "content": "Decisões técnicas sempre têm implicações de negócio — tempo de desenvolvimento, custo operacional, velocidade de entrega futura, risco. Traduzir o trade-off técnico para linguagem de negócio é essencial para obter aprovação e apoio. Em vez de 'precisamos de event sourcing', tente 'podemos ter auditoria completa de todas as transações com um investimento de 2 sprints agora'."
+      },
+      {
+        "type": "heading",
+        "content": "Quando dizer não (com alternativas)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Arquitetos frequentemente precisam recusar pedidos que comprometem a integridade técnica. 'Não' sem alternativa cria conflito. 'Não, porque X, mas podemos fazer Y que atinge 80% do objetivo com 20% do risco' é construtivo. Apresentar alternativas junto com o 'não' transforma recusa em colaboração."
+      },
+      {
+        "type": "list",
+        "content": "Evite jargão: 'event-driven' vira 'processamento em segundo plano'\nFoco em valor: o que o stakeholder ganha, não como funciona\nVisualize: diagramas C4 são aliados em apresentações\nSeja honesto sobre incertezas: 'estou estimando X, pode ser Y dependendo de...'\nPrepare para perguntas difíceis: 'e se isso falhar?', 'quanto custa?', 'quando fica pronto?'"
+      },
+      {
+        "type": "callout",
+        "content": "A pergunta mais temida — 'quanto tempo vai levar?' — merece uma resposta honesta com intervalos de confiança, não uma promessa pontual. 'Entre 3 e 6 semanas dependendo de X' é mais honesto e mais útil do que '4 semanas' sem ressalvas.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Adapte a linguagem para a audiência: impacto de negócio para executivos, clareza técnica para engenheiros",
+    "Traduza trade-offs técnicos em implicações de tempo, custo e risco de negócio",
+    "Diga 'não' com alternativas — transforma recusa em colaboração",
+    "Seja honesto sobre incertezas: intervalos de confiança são mais úteis que precisão falsa"
+  ],
+  "commonMistakes": [
+    "Usar jargão técnico com stakeholders de negócio: eles desligam ou tomam decisões baseadas em mal-entendidos.",
+    "Apresentar apenas a solução técnica sem o contexto de negócio: stakeholders precisam entender o 'por que mudar', não apenas o 'como'.",
+    "Omitir riscos para não parecer pessimista: esconder riscos cria expectativas irreais e erode confiança quando os problemas aparecem."
+  ],
+  "realWorldExample": "A Thoughtworks tem uma prática de 'Technology Radar': uma comunicação visual de decisões tecnológicas em quatro quadrantes (Adopt, Trial, Assess, Hold). É acessível para todos — de CTOs a desenvolvedores. A clareza visual elimina a necessidade de jargão.",
+  "encouragement": "Comunicação é a alavanca que multiplica impacto técnico. O arquiteto que sabe comunicar para qualquer audiência consegue patrocínio, alinhamento e execução muito mais facilmente do que aquele que fala apenas com engenheiros."
+}

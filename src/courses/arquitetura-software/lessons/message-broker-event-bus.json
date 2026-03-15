@@ -1,0 +1,68 @@
+{
+  "id": "message-broker-event-bus",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-integracao",
+  "title": "Message Broker e Event Bus",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Message Broker é a agência de correios da empresa: recebe pacotes, garante entrega, persiste se o destinatário não estiver disponível. Event Bus é o sistema de alto-falantes: anuncia algo para quem quiser ouvir, mas não garante que alguém escutou.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é um Message Broker?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um message broker é um intermediário que recebe mensagens de produtores e as entrega a consumidores, com garantias de entrega. O broker persiste as mensagens (em disco ou memória), gerencia filas e tópicos, e lida com falhas de consumidores — se um consumidor cair, a mensagem fica na fila até ele voltar."
+      },
+      {
+        "type": "paragraph",
+        "content": "Exemplos: Apache Kafka (log distribuído, alta retenção, alta performance), RabbitMQ (AMQP, roteamento flexível, mais simples de operar), AWS SQS (gerenciado, fácil integração AWS), Azure Service Bus."
+      },
+      {
+        "type": "heading",
+        "content": "O que é um Event Bus?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Um event bus implementa o padrão pub/sub de forma mais leve. Produtores publicam eventos; consumidores se inscrevem em tipos de eventos que lhes interessam. O bus não necessariamente persiste os eventos — se não há consumidor registrado no momento da publicação, o evento pode ser perdido."
+      },
+      {
+        "type": "heading",
+        "content": "Garantias de entrega"
+      },
+      {
+        "type": "list",
+        "content": "At-most-once: entregue no máximo uma vez — pode perder mensagens\nAt-least-once: entregue pelo menos uma vez — pode duplicar mensagens\nExactly-once: entregue exatamente uma vez — mais caro e complexo de garantir"
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar cada um"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use broker quando: a mensagem não pode ser perdida, a ordem importa, o consumidor pode estar temporariamente fora do ar, ou você precisa de replay de mensagens. Use event bus para: notificações que podem ser perdidas, comunicação dentro do mesmo processo, ou quando a simplicidade é prioritária."
+      },
+      {
+        "type": "callout",
+        "content": "Idempotência é fundamental com at-least-once delivery: processar a mesma mensagem duas vezes deve produzir o mesmo resultado. Projete seus consumidores para serem idempotentes.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Broker persiste mensagens e garante entrega — ideal para comunicação crítica entre serviços",
+    "Event bus é mais leve e pode ser efêmero — adequado para notificações não críticas",
+    "Escolha a garantia de entrega (at-most, at-least, exactly-once) conforme o caso de uso",
+    "Consumidores devem ser idempotentes quando a garantia é at-least-once"
+  ],
+  "commonMistakes": [
+    "Usar broker como banco de dados: brokers são feitos para processar mensagens, não para queries complexas.",
+    "Ignorar idempotência: com at-least-once delivery, duplicatas são possíveis — processar duas vezes deve ser seguro.",
+    "Não versionar o schema das mensagens: mudanças no formato de uma mensagem quebram consumidores que não foram atualizados."
+  ],
+  "realWorldExample": "O Kafka é usado pelo LinkedIn (que o criou), Uber, Airbnb e centenas de empresas para streaming de eventos. O Kafka permite replay de eventos históricos — você pode reprocessar 30 dias de eventos para construir um novo índice de busca sem reprocessar dados do banco.",
+  "encouragement": "Entender brokers e buses te coloca no centro das discussões de arquitetura assíncrona. Essa é uma das skills mais valorizadas em arquitetos de sistemas distribuídos."
+}

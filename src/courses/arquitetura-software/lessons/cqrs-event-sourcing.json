@@ -1,0 +1,64 @@
+{
+  "id": "cqrs-event-sourcing",
+  "courseId": "arquitetura-software",
+  "moduleId": "sistemas-distribuidos",
+  "title": "CQRS e Event Sourcing",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "CQRS é como separar o balcão de pedidos do balcão de consultas em um banco: fila para pedir (comandos, escrita) e fila para consultar extrato (queries, leitura) — cada uma otimizada para sua função. Event Sourcing é guardar cada transação bancária em vez de apenas o saldo atual: o histórico completo é a fonte da verdade.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "CQRS: separar leitura de escrita"
+      },
+      {
+        "type": "paragraph",
+        "content": "CQRS (Command Query Responsibility Segregation) separa as operações de escrita (Commands) das de leitura (Queries) em modelos distintos. O modelo de escrita garante consistência e invariantes do domínio. O modelo de leitura é otimizado para queries — pode ser desnormalizado, em cache, ou em um banco diferente."
+      },
+      {
+        "type": "paragraph",
+        "content": "A motivação: leitura e escrita têm perfis radicalmente diferentes. Uma escrita de pedido envolve validações, locks e transações. Uma leitura de dashboard envolve joins complexos e alta frequência. Com CQRS, você escala e otimiza cada lado independentemente."
+      },
+      {
+        "type": "heading",
+        "content": "Event Sourcing: estado como sequência de eventos"
+      },
+      {
+        "type": "paragraph",
+        "content": "No Event Sourcing, em vez de persistir o estado atual do aggregate, você persiste a sequência de eventos que levou a esse estado. O estado atual é derivado replaying os eventos. 'Pedido Criado', 'Item Adicionado', 'Pagamento Aprovado', 'Pedido Enviado' — a sequência é a fonte da verdade."
+      },
+      {
+        "type": "list",
+        "content": "Auditoria completa: todo o histórico está disponível — quem fez o quê e quando\nReplay: reprocesse eventos para construir novas projeções ou corrigir bugs\nDebug: reproduza qualquer estado passado do sistema\nEventual consistency: projeções são atualizadas de forma assíncrona"
+      },
+      {
+        "type": "heading",
+        "content": "Quando combinar CQRS + Event Sourcing"
+      },
+      {
+        "type": "paragraph",
+        "content": "CQRS e Event Sourcing se complementam naturalmente: os eventos do Event Sourcing são publicados como eventos de domínio e usados para atualizar as projeções de leitura do CQRS. O custo é alto: complexidade operacional, eventual consistency nas leituras, e necessidade de lidar com versioning de eventos."
+      },
+      {
+        "type": "callout",
+        "content": "CQRS e Event Sourcing não são um conjunto inseparável. CQRS sem Event Sourcing é comum e simples. Event Sourcing sem CQRS é raro. Adote somente quando os benefícios (auditoria, replay, escalabilidade de leitura/escrita) justificam a complexidade.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "CQRS: modelo de escrita separado do de leitura — cada um otimizado para seu caso de uso",
+    "Event Sourcing: estado como sequência imutável de eventos — o histórico é a fonte da verdade",
+    "Event Sourcing habilita auditoria completa, replay e reprodução de estados passados",
+    "A combinação CQRS+ES tem alta complexidade — justifique com requisitos concretos"
+  ],
+  "commonMistakes": [
+    "Usar CQRS em sistemas simples: para CRUDs sem perfis diferentes de leitura/escrita, CQRS é overhead sem benefício.",
+    "Não versionar eventos em Event Sourcing: eventos são imutáveis — quando o schema muda, você precisa de uma estratégia de upcasting.",
+    "Ignorar a complexidade operacional: manter consistência entre o write model e as projeções de leitura requer cuidado e tooling."
+  ],
+  "realWorldExample": "Bancos digitais usam Event Sourcing para ledgers: cada transação financeira é um evento imutável. O saldo é derivado da soma dos eventos. Isso garante auditoria perfeita (requerida por regulação), permite corrigir bugs recalculando o saldo a partir dos eventos, e permite construir novas análises sobre dados históricos.",
+  "encouragement": "CQRS e Event Sourcing são ferramentas poderosas para os problemas certos. Entender quando usá-los — e quando não — é o sinal de maturidade arquitetural."
+}

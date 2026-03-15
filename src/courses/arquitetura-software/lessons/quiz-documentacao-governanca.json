@@ -1,0 +1,100 @@
+{
+  "id": "quiz-documentacao-governanca",
+  "courseId": "arquitetura-software",
+  "moduleId": "documentacao-governanca",
+  "title": "Quiz: Documentação e Governança",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Documentação é a memória institucional da engenharia. Este quiz verifica se você sabe o que documentar, como e para quem.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "Documentação que serve ao time"
+      },
+      {
+        "type": "paragraph",
+        "content": "Você aprendeu ADRs, o Modelo C4 e gestão de dívida técnica. Vamos testar a aplicação desses conceitos em cenários práticos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que um ADR (Architecture Decision Record) deve conter para ser útil?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apenas a decisão tomada, para ser conciso e fácil de ler",
+          "isCorrect": false,
+          "explanation": "Uma decisão sem contexto tem pouco valor. Quem lê meses depois não sabe por que essa decisão foi tomada, quais alternativas existiam e quais trade-offs foram aceitos. O contexto é tão importante quanto a decisão."
+        },
+        {
+          "id": "b",
+          "text": "Contexto que motivou, alternativas consideradas, decisão tomada e consequências (positivas e negativas)",
+          "isCorrect": true,
+          "explanation": "Correto! Um ADR útil responde: por que precisávamos decidir? O que avaliamos? O que escolhemos? Quais são os trade-offs? Sem essas respostas, o documento documenta fatos sem capturar o raciocínio — o que é perdido quando a pessoa que decidiu sai do time."
+        },
+        {
+          "id": "c",
+          "text": "Um diagrama detalhado da arquitetura resultante da decisão",
+          "isCorrect": false,
+          "explanation": "Diagramas podem ser complementares a um ADR, mas não são o conteúdo essencial. O ADR captura o raciocínio por trás da decisão — texto e estrutura, não diagramação técnica."
+        }
+      ]
+    },
+    {
+      "question": "Qual nível do Modelo C4 é mais adequado para apresentar a arquitetura a stakeholders de negócio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C3 (Component) — mostra os detalhes internos de cada serviço",
+          "isCorrect": false,
+          "explanation": "C3 é muito detalhado para stakeholders de negócio — mostra componentes técnicos internos de um container. Stakeholders de negócio precisam de contexto de alto nível, não de detalhes de implementação."
+        },
+        {
+          "id": "b",
+          "text": "C1 (Context) — mostra como o sistema se relaciona com usuários e sistemas externos",
+          "isCorrect": true,
+          "explanation": "Correto! O diagrama de Context (C1) mostra o sistema como uma caixa e suas interações com atores externos (usuários, sistemas parceiros). É o nível mais alto e mais acessível — perfeito para stakeholders de negócio que precisam entender o que o sistema faz, não como funciona internamente."
+        },
+        {
+          "id": "c",
+          "text": "C4 (Code) — mostra o código-fonte de forma visual",
+          "isCorrect": false,
+          "explanation": "C4 (Code) é o nível mais detalhado — diagramas de classe para componentes específicos. É relevante para desenvolvedores que trabalham naquele componente, não para stakeholders de negócio."
+        }
+      ]
+    },
+    {
+      "question": "Quando a dívida técnica deliberada faz sentido estratégico?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nunca — dívida técnica sempre prejudica o produto no longo prazo",
+          "isCorrect": false,
+          "explanation": "Dívida técnica deliberada, documentada e com plano de pagamento é uma ferramenta estratégica válida. Lançar um MVP com atalhos deliberados para validar o mercado antes de investir em qualidade é uma decisão de negócio legítima."
+        },
+        {
+          "id": "b",
+          "text": "Quando a velocidade de entrega no curto prazo supera o custo de pagar a dívida depois, e ela é documentada",
+          "isCorrect": true,
+          "explanation": "Exato! Dívida técnica deliberada consciente é aceitável quando: o benefício de entregar rápido é maior que o custo de pagar depois, o time documenta a dívida explicitamente, e existe um plano para pagá-la. O erro é assumir dívida sem visibilidade ou sem plano."
+        },
+        {
+          "id": "c",
+          "text": "Apenas em startups — empresas maduras nunca devem assumir dívida técnica",
+          "isCorrect": false,
+          "explanation": "Dívida técnica deliberada é uma realidade em qualquer empresa, de qualquer tamanho. O que muda é o contexto e a capacidade de gerenciá-la. Empresas maduras também assumem dívidas estratégicas — a diferença é que gerenciam melhor."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "ADR: contexto + alternativas + decisão + consequências — o 'por que' é tão importante quanto o 'o quê'",
+    "C1 (Context) para stakeholders; C2 (Container) para devs de todos os times",
+    "Dívida técnica deliberada documentada é uma ferramenta estratégica válida",
+    "Documentação que não é mantida vira desinformação — prefira menos, mas atualizado"
+  ],
+  "encouragement": "Módulo 10 concluído! Você agora sabe como documentar decisões, comunicar arquitetura visualmente e gerenciar dívida técnica. São as ferramentas que fazem um arquiteto eficaz no longo prazo."
+}

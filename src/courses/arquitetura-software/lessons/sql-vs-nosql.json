@@ -1,0 +1,60 @@
+{
+  "id": "sql-vs-nosql",
+  "courseId": "arquitetura-software",
+  "moduleId": "dados-cloud",
+  "title": "SQL vs. NoSQL: quando usar cada um",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "SQL é como um arquivo com pastas e gavetas bem organizadas: tudo tem seu lugar definido, e encontrar qualquer coisa por relacionamento é rápido. NoSQL é como uma caixa onde você joga documentos: difícil de fazer joins, mas ótimo para guardar e recuperar um documento específico muito rapidamente.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "SQL: estrutura, relações e ACID"
+      },
+      {
+        "type": "paragraph",
+        "content": "Bancos relacionais (SQL) organizam dados em tabelas com schema rígido e suportam relacionamentos via chaves estrangeiras. São otimizados para queries complexas com joins, e garantem propriedades ACID (Atomicidade, Consistência, Isolamento, Durabilidade). Excelentes para dados financeiros, dados com relacionamentos complexos e queries ad-hoc."
+      },
+      {
+        "type": "heading",
+        "content": "NoSQL: flexibilidade e escala horizontal"
+      },
+      {
+        "type": "paragraph",
+        "content": "Bancos NoSQL sacrificam consistência forte e relacionamentos em favor de flexibilidade de schema e escala horizontal. Existem várias categorias, cada uma otimizada para um caso de uso:"
+      },
+      {
+        "type": "list",
+        "content": "Documental (MongoDB, Firestore): documentos JSON semi-estruturados — ótimo para dados variáveis\nChave-Valor (Redis, DynamoDB): acesso ultra-rápido por chave — cache, sessões, leaderboards\nGrafo (Neo4j): relacionamentos complexos — redes sociais, recomendações, detecção de fraude\nColuna Larga (Cassandra, HBase): escrita massiva com leitura por range — IoT, time-series, logs\nBusca (Elasticsearch): full-text search, facetas, relevância — buscas de produtos, logs"
+      },
+      {
+        "type": "heading",
+        "content": "Polyglot Persistence"
+      },
+      {
+        "type": "paragraph",
+        "content": "Sistemas modernos frequentemente usam múltiplos bancos de dados — cada um escolhido para o caso de uso que melhor serve. Isso é chamado de polyglot persistence. Um e-commerce pode usar PostgreSQL para pedidos, Redis para cache de sessão, Elasticsearch para busca de produtos e MongoDB para catálogo de produtos."
+      },
+      {
+        "type": "callout",
+        "content": "Schema flexível do NoSQL não é gratuito: você transfere a responsabilidade da consistência do banco para a aplicação. Dados desorganizados em NoSQL são muito mais difíceis de corrigir do que em SQL.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "SQL: schema rígido, ACID, joins eficientes — dados financeiros, relacionamentos complexos",
+    "NoSQL: flexibilidade, escala horizontal, cada tipo otimizado para um caso de uso específico",
+    "Polyglot persistence: usar o banco certo para cada necessidade no mesmo sistema",
+    "Schema flexível em NoSQL transfere responsabilidade de consistência para a aplicação"
+  ],
+  "commonMistakes": [
+    "Usar NoSQL 'porque escala': sem o caso de uso certo, NoSQL torna queries simples mais complexas.",
+    "Migrar de SQL para NoSQL por performance sem medir: muitas vezes um índice no PostgreSQL resolve o problema de performance.",
+    "Ignorar o custo operacional de múltiplos bancos: polyglot persistence requer expertise em cada tecnologia usada."
+  ],
+  "realWorldExample": "O Instagram usa PostgreSQL para dados de usuário e relacionamentos, Cassandra para o feed e notificações (escrita massiva), e Redis para cache. Cada banco foi escolhido para o padrão de acesso específico — nenhum atende todos os casos igualmente bem.",
+  "encouragement": "Conhecer o trade-off entre SQL e NoSQL — e dentro de NoSQL, entre os diferentes tipos — é uma das habilidades mais práticas de um arquiteto de dados. Você agora tem o mapa para navegar essas escolhas."
+}

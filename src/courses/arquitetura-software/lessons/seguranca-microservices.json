@@ -1,0 +1,64 @@
+{
+  "id": "seguranca-microservices",
+  "courseId": "arquitetura-software",
+  "moduleId": "arquitetura-seguranca",
+  "title": "Segurança em Microserviços",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Em um monolito, segurança é como um castelo com paredes grossas — um ponto de entrada, um conjunto de defesas. Em microserviços, é como um conjunto de casas em um bairro: cada casa precisa de sua própria tranca, mesmo que haja um portão na entrada do condomínio.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "A superfície de ataque em microserviços"
+      },
+      {
+        "type": "paragraph",
+        "content": "Microserviços aumentam a superfície de ataque: cada serviço expõe uma API, cada comunicação entre serviços é um canal potencial. Em um monolito, comunicação entre módulos é uma chamada de função. Em microserviços, é uma requisição de rede — que pode ser interceptada, modificada ou forjada."
+      },
+      {
+        "type": "heading",
+        "content": "Autenticação entre serviços: mTLS e JWT"
+      },
+      {
+        "type": "paragraph",
+        "content": "mTLS (mutual TLS) é o padrão para autenticação serviço-a-serviço: ambos os lados da comunicação apresentam certificados e se autenticam mutuamente. Alternativa: service account tokens (JWT) que identificam o serviço chamador. Service meshes como Istio ou Linkerd automatizam o mTLS sem modificar o código da aplicação."
+      },
+      {
+        "type": "heading",
+        "content": "Gestão de Secrets"
+      },
+      {
+        "type": "paragraph",
+        "content": "Secrets (senhas, API keys, certificados, tokens) nunca devem estar no código-fonte ou em variáveis de ambiente não criptografadas em containers. Use ferramentas de gestão de secrets: HashiCorp Vault, AWS Secrets Manager, GCP Secret Manager, Azure Key Vault. Implemente rotação automática de secrets e auditoria de acesso."
+      },
+      {
+        "type": "heading",
+        "content": "API Security e OWASP"
+      },
+      {
+        "type": "list",
+        "content": "Autenticação e autorização em todas as APIs — nunca apenas no gateway\nValidação de input em todos os endpoints (não apenas no frontend)\nRate limiting por cliente e por endpoint\nOWASP API Security Top 10: Broken Object Level Authorization, Excessive Data Exposure, Broken Authentication — os mais comuns\nAuditoria de todas as operações sensíveis (quem fez o quê e quando)"
+      },
+      {
+        "type": "callout",
+        "content": "Defense in depth: não confie apenas no API Gateway para segurança. Cada serviço deve implementar suas próprias validações de autenticação e autorização. Um atacante que contorna o gateway não deve ter acesso livre ao resto do sistema.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Cada microserviço é um vetor de ataque — a superfície aumenta com o número de serviços",
+    "mTLS para autenticação serviço-a-serviço; service meshes automatizam sem código",
+    "Secrets nunca no código-fonte — use gerenciadores de secrets com rotação automática",
+    "Defense in depth: segurança em cada camada, não apenas no perímetro externo"
+  ],
+  "commonMistakes": [
+    "Confiar apenas no API Gateway para autenticação: se um serviço interno for comprometido, ele pode chamar outros serviços sem restrição.",
+    "Secrets em variáveis de ambiente não criptografadas: env vars de containers podem ser expostas em logs ou via exec no container.",
+    "Comunicação interna HTTP sem TLS: mesmo comunicação interna entre serviços deve ser criptografada em trânsito."
+  ],
+  "realWorldExample": "Em 2021, um erro de configuração expôs secrets de serviços internos da Twitch via backup comprometido. A lição: secrets em variáveis de ambiente podem ser expostos de formas inesperadas. Ferramentas como Vault com rotação automática teriam limitado o impacto.",
+  "encouragement": "Segurança em microserviços é complexa, mas os princípios são claros. Começando com mTLS, gestão adequada de secrets e autorização por serviço, você já cobre a maioria dos vetores críticos."
+}

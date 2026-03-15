@@ -1,0 +1,64 @@
+{
+  "id": "event-driven-architecture",
+  "courseId": "arquitetura-software",
+  "moduleId": "padroes-arquiteturais",
+  "title": "Event-Driven Architecture: sistemas orientados a eventos",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Eventos são como cartas no correio: você escreve, envia, e segue sua vida — não espera o destinatário abrir na sua frente. Quem precisa reagir, reage quando conveniente. Diferente de uma ligação (síncrono), onde você espera a resposta antes de continuar.",
+  "content": {
+    "sections": [
+      {
+        "type": "heading",
+        "content": "O que é Event-Driven Architecture?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Em Event-Driven Architecture (EDA), componentes se comunicam por meio de eventos: registros imutáveis de algo que aconteceu no domínio. 'PedidoCriado', 'PagamentoAprovado', 'EstoqueAtualizado' são eventos. O produtor publica o evento; os consumidores interessados reagem de forma independente."
+      },
+      {
+        "type": "heading",
+        "content": "Publicar/Assinar (Pub/Sub)"
+      },
+      {
+        "type": "paragraph",
+        "content": "O padrão central de EDA é o Pub/Sub: produtores publicam eventos em canais (tópicos) sem saber quem vai consumir. Consumidores se inscrevem nos tópicos que lhes interessam. Isso desacopla produtores de consumidores — você pode adicionar novos consumidores sem alterar o produtor."
+      },
+      {
+        "type": "heading",
+        "content": "Desacoplamento e consistência eventual"
+      },
+      {
+        "type": "paragraph",
+        "content": "EDA promove forte desacoplamento: quando um pedido é criado, o serviço de estoque, o serviço de notificação e o serviço de analytics podem todos reagir — e nenhum deles precisa ser chamado explicitamente pelo serviço de pedidos. O custo é que o sistema passa a ter consistência eventual: haverá uma janela de tempo entre o evento publicado e o consumidor processando."
+      },
+      {
+        "type": "heading",
+        "content": "Quando usar EDA"
+      },
+      {
+        "type": "list",
+        "content": "Múltiplos consumidores precisam reagir ao mesmo evento\nDesacoplamento entre domínios é uma prioridade\nProcessamento pode ser assíncrono e eventual é aceitável\nAuditoria: o log de eventos é o histórico completo do sistema\nEscalabilidade: consumidores podem escalar independentemente"
+      },
+      {
+        "type": "callout",
+        "content": "EDA torna o debugging mais complexo: rastrear o fluxo de uma requisição através de múltiplos eventos e consumidores requer observabilidade robusta (correlation IDs, distributed tracing). Não adote EDA sem investir em observabilidade.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Eventos são registros imutáveis de algo que aconteceu — produtores não conhecem consumidores",
+    "Pub/Sub desacopla produtores de consumidores: novos consumidores não exigem mudança no produtor",
+    "Consistência eventual é o trade-off: o sistema não é imediatamente consistente após um evento",
+    "Debugging requer ferramentas de observabilidade (distributed tracing, correlation IDs)"
+  ],
+  "commonMistakes": [
+    "Usar EDA para tudo: fluxos simples e síncronos ficam desnecessariamente complexos quando forçados em EDA.",
+    "Não versionar eventos: eventos são contratos — mudá-los retroativamente quebra todos os consumidores existentes.",
+    "Ignorar a ordem dos eventos: em sistemas distribuídos, eventos podem chegar fora de ordem e o sistema precisa lidar com isso."
+  ],
+  "realWorldExample": "No iFood, quando um pedido é confirmado, dezenas de reações acontecem via eventos: o restaurante é notificado, o entregador é acionado, o estoque é reservado, o pagamento é processado, o cliente recebe push notification. Cada um desses é um consumidor independente do evento 'PedidoConfirmado'.",
+  "encouragement": "EDA é um dos padrões mais poderosos para sistemas de grande escala. Compreender seus trade-offs te prepara para arquitetar sistemas que crescem sem aumentar o acoplamento."
+}
