@@ -46,10 +46,14 @@ Exemplos:
 - `fix(editor): corrige preview que não atualizava`
 - `docs(content-generation): generaliza para gestão e ferramentas`
 
-## 4. Executar commit
+## 4. Mover tasks concluídas
+
+Antes de commitar, verifique se há tasks em `tasks/` com **Status: done** ou **Status: concluído** que ainda não foram movidas para `tasks/done/`. Se houver, mova com `git mv`.
+
+## 5. Executar commit
 
 Com a mensagem gerada, execute diretamente (sem perguntar): `git add . && git commit -m "mensagem"`
 
-## 5. Push
+## 6. Push
 
 Após o commit, execute `git push` para enviar as alterações ao remoto.
