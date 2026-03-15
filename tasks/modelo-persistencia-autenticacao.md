@@ -62,10 +62,27 @@ Antes de escolher provider, mapear o que precisamos persistir:
 
 ### 5. Analisar impacto arquitetural
 
-- O projeto hoje é 100% client-side (Vite SPA). Para usar DB com segurança, precisamos de uma camada backend — Vercel Functions / API Routes são a opção natural
-- Qual a mudança mínima na arquitetura atual para suportar auth + DB?
+O projeto hoje é 100% client-side (Vite SPA). Para usar DB com segurança, precisamos de uma camada backend. Antes de escolher DB e auth, é preciso decidir a estratégia de stack:
+
+**Opção A — Manter Vite + adicionar Vercel Functions**
+- Preserva o stack atual (sem migração de framework)
+- Vercel Functions via `api/` funcionam como endpoints HTTP independentes
+- Não há App Router, Server Actions nem middleware nativo — tudo manual
+- Auth com Clerk ou Auth.js funciona neste modelo
+- Mais fricção para integrar com Supabase SDK do lado servidor
+
+**Opção B — Migrar para Next.js**
+- Stack nativo da Vercel: App Router, Server Actions, API Routes, middleware
+- Clerk, Supabase Auth e Auth.js têm integrações first-class com Next.js
+- Componentes React existentes migram sem reescrita (são apenas `.tsx`)
+- Roteamento muda (de React Router para App Router) — impacto real a avaliar
+- Elimina a necessidade de manter Vite + configurar Vercel Functions manualmente
+
+**Questões a responder nesta seção:**
+- Qual o custo real da migração React Router → Next.js App Router neste projeto?
 - Queremos manter guest mode (localStorage) para quem não criar conta?
 - Como migrar dados existentes do `localStorage` para o backend no primeiro login?
+- A decisão de stack (Vite vs Next.js) deve preceder a escolha de DB/auth
 
 ### 6. Decisão e schema mínimo viável
 
