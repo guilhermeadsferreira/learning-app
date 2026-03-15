@@ -118,6 +118,7 @@ Após qualquer alteração, verifique se a documentação precisa ser atualizada
 | Novo componente/página/serviço           | `prd.md` §12 (Arquitetura)                                       |
 | Alteração no fluxo pedagógico            | `pedagogy.md`                                                    |
 | Alteração em `src/services/ai/`          | `AI_SYSTEM.md`                                                   |
+| Nova feature entregue ou curso publicado | `product-status.md`                                              |
 
 **Regra central:** quando há divergência entre código e doc, corrija o documento (não o código), salvo decisão arquitetural explícita. Funcionalidades planejadas mas não implementadas devem ser marcadas como `*(aspiracional — não implementado ainda)*`.
 
@@ -138,3 +139,4 @@ Docs atualizados:
 | `/new-task [contexto]`      | Criar task de projeto em `tasks/`              |
 | `/plan-task [nome da task]` | Planejar execução de uma task existente        |
 | `/review-course [courseId]` | Auditar e melhorar curso existente             |
+| `/product-review`           | Ativar persona de PM para análise do produto   |

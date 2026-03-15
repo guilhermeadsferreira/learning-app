@@ -1,6 +1,7 @@
 # Gestão de Produto — Status Document e Persona de PM
 
-**Status:** pendente
+**Status:** concluído
+**Concluído em:** 2026-03-15
 
 ---
 
@@ -87,14 +88,14 @@ Registrar o novo comando na tabela "Slash commands disponíveis".
 
 ---
 
-## Questões a responder
+## Questões respondidas
 
-- O `/product-review` deve sempre atualizar o `product-status.md` automaticamente, ou só quando o usuário pedir explicitamente?
-- A persona de PM deve ter um "tom" específico (ex: mais crítico, mais estratégico, mais focado em usuário)?
-- Queremos que o comando também consulte as tasks pendentes para priorizar o backlog?
+- **Atualização automática vs. manual:** o `/product-review` pergunta ao usuário antes de atualizar `product-status.md` — nunca sobrescreve automaticamente.
+- **Tom da persona de PM:** estratégico + focado no usuário. Pensa em impacto × esforço, experiência do usuário e coerência com a proposta de valor.
+- **Consulta às tasks pendentes:** sim — o comando lê `tasks/` (excluindo `done/`) para cruzar com a análise e sugerir priorização de backlog.
 
 ## Entregável
 
-1. `documents/product/product-status.md` — snapshot atual do produto preenchido
-2. `.claude/commands/product-review.md` — slash command `/product-review` funcional
-3. `CLAUDE.md` atualizado com gatilho e novo comando na tabela
+1. ✅ `documents/product/product-status.md` — snapshot atual do produto preenchido
+2. ✅ `.claude/commands/product-review.md` — slash command `/product-review` funcional
+3. ✅ `CLAUDE.md` atualizado com gatilho e novo comando na tabela
