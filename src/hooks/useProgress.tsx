@@ -13,6 +13,28 @@ import {
   saveProgress,
   completeLesson as completeLessonStorage,
 } from '@/engine/progress'
+import { migrateProgressXp } from '@/engine/progress-migration'
+import { getAllCourses, getLesson } from '@/courses'
+
+function findLessonForMigration(
+  lessonId: string
+): { courseId: string; type: 'explanation' | 'challenge' | 'quiz' } | null {
+  for (const course of getAllCourses()) {
+    for (const module of course.modules) {
+      if (module.lessons.includes(lessonId)) {
+        const lesson = getLesson(course.id, lessonId)
+        if (lesson) return { courseId: course.id, type: lesson.type }
+        return { courseId: course.id, type: 'explanation' }
+      }
+    }
+  }
+  return null
+}
+
+function loadProgressWithMigration(): UserProgress {
+  const loaded = loadProgress()
+  return migrateProgressXp(loaded, findLessonForMigration)
+}
 
 interface ProgressContextValue {
   progress: UserProgress
@@ -24,7 +46,7 @@ interface ProgressContextValue {
 const ProgressContext = createContext<ProgressContextValue | null>(null)
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
-  const [progress, setProgress] = useState<UserProgress>(loadProgress)
+  const [progress, setProgress] = useState<UserProgress>(loadProgressWithMigration)
 
   useEffect(() => {
     saveProgress(progress)

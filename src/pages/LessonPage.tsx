@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { Link, Navigate } from 'react-router'
 import { useLesson } from '@/hooks/useLesson'
 import { useProgress } from '@/hooks/useProgress'
@@ -27,6 +27,11 @@ export function LessonPage() {
     message: string
     xpGained?: number
   } | null>(null)
+
+  useEffect(() => {
+    setFeedback(null)
+    setShowHint(false)
+  }, [lessonId])
 
   const currentCodeRef = useRef<string>('')
   const handleCodeChange = useCallback((code: string) => {
@@ -159,16 +164,6 @@ export function LessonPage() {
               dependencies={lesson.challenge.sandpackDependencies}
             />
 
-            <div className="flex gap-2">
-              <Button
-                onClick={handleCheckSolution}
-                className="flex-1"
-                disabled={isLessonCompleted(lessonId)}
-              >
-                {isLessonCompleted(lessonId) ? 'Concluído' : 'Marcar como concluído'}
-              </Button>
-            </div>
-
             {aiReview.showApiKeyDialog && (
               <APIKeyDialog
                 onOpenSettings={() => {
@@ -187,25 +182,44 @@ export function LessonPage() {
               onAskQuestion={aiReview.handleAskQuestion}
               isLessonCompleted={isLessonCompleted(lessonId)}
             />
+
+            <div className="flex gap-2">
+              <Button
+                onClick={handleCheckSolution}
+                className="flex-1"
+                disabled={isLessonCompleted(lessonId)}
+              >
+                {isLessonCompleted(lessonId) ? 'Concluído' : 'Marcar como concluído'}
+              </Button>
+            </div>
+
+            {feedback && (
+              <FeedbackCard
+                type={feedback.type}
+                message={feedback.message}
+                xpGained={feedback.xpGained}
+              />
+            )}
           </>
         )}
 
-        {feedback && (
-          <FeedbackCard
-            type={feedback.type}
-            message={feedback.message}
-            xpGained={feedback.xpGained}
-          />
-        )}
-
         {!isChallenge && (
-          <Button
-            onClick={handleComplete}
-            disabled={isLessonCompleted(lessonId)}
-            className="w-full"
-          >
-            {isLessonCompleted(lessonId) ? 'Concluído' : 'Marcar como concluído'}
-          </Button>
+          <div className={cn('space-y-3', feedback && 'mt-4')}>
+            {feedback && (
+              <FeedbackCard
+                type={feedback.type}
+                message={feedback.message}
+                xpGained={feedback.xpGained}
+              />
+            )}
+            <Button
+              onClick={handleComplete}
+              disabled={isLessonCompleted(lessonId)}
+              className="w-full"
+            >
+              {isLessonCompleted(lessonId) ? 'Concluído' : 'Marcar como concluído'}
+            </Button>
+          </div>
         )}
       </div>
     </LessonLayout>

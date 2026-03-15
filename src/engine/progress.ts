@@ -6,7 +6,15 @@ export function loadProgress(): UserProgress {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
-      return JSON.parse(stored) as UserProgress
+      const parsed = JSON.parse(stored) as UserProgress
+      const xp = typeof parsed.xp === 'number' && !Number.isNaN(parsed.xp) ? parsed.xp : 0
+      return {
+        completedLessonIds: Array.isArray(parsed.completedLessonIds)
+          ? parsed.completedLessonIds
+          : [],
+        currentLessonId: typeof parsed.currentLessonId === 'string' ? parsed.currentLessonId : '',
+        xp,
+      }
     }
   } catch {
     // ignore parse errors

@@ -19,7 +19,7 @@ export function FeedbackCard({ type, message, xpGained, className }: FeedbackCar
         className
       )}
     >
-      <CardContent className="flex items-center gap-3 pt-4">
+      <CardContent className="flex items-center gap-3">
         {isSuccess ? (
           <CheckCircle className="size-6 shrink-0 text-emerald-500" />
         ) : (
