@@ -1,6 +1,6 @@
 # New Content — Criação de Conteúdo Pedagógico
 
-Execute o fluxo abaixo. Consulte **documents/content_generation.md** e **documents/lesson_schema.md** como fonte de verdade.
+Execute o fluxo abaixo. Consulte **documents/product/content_generation.md** e **documents/product/lesson_schema.md** como fonte de verdade.
 
 ## 1. Coletar informações
 
@@ -21,7 +21,7 @@ Pergunte ao usuário (ou infira do contexto):
 
 ## 2. Gerar JSON da lição
 
-Siga o schema em **lesson_schema.md** e as diretrizes em **content_generation.md**:
+Siga o schema em **documents/product/lesson_schema.md** e as diretrizes em **documents/product/content_generation.md**:
 
 - Campos obrigatórios: `id`, `courseId`, `moduleId`, `title`, `type`, `xp`, `content`
 - `content.sections`: heading, paragraph, code, list, callout

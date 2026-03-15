@@ -327,11 +327,18 @@ Progresso persistido em localStorage.
 
 # 16. Próximos passos
 
-1. Criar scaffold inicial do projeto
-2. Implementar layout base da aplicação
-3. Criar estrutura declarativa de cursos
-4. Implementar primeira tela de lição
-5. Criar primeiras lições do curso React
-6. Implementar sistema básico de progresso
-7. Testar experiência de estudo
-8. Iterar no design e na pedagogia
+O projeto está além do MVP. Os itens abaixo representam melhorias pedagógicas e técnicas identificadas como prioritárias:
+
+### Pedagógico
+1. Criar lições do tipo `quiz` intercaladas no curso React (retrieval practice)
+2. Adicionar mini projetos ao final dos módulos principais
+3. Adicionar campo `hook` às lições (pergunta provocativa antes da analogia)
+4. Converter algumas lições `explanation` em `challenge` (aumentar % de prática ativa)
+5. Popular o campo `tests[]` nos challenges para validação automática
+
+### Técnico
+6. Implementar desbloqueio progressivo de lições (Mastery Learning)
+7. Implementar sistema de revisão com spaced repetition
+8. Adicionar classificação de tipo de desafio (`challengeType`) ao schema
+9. Novos cursos (Python, TypeScript, Next.js, Node.js, Docker)
+10. Analytics de progresso e aprendizado

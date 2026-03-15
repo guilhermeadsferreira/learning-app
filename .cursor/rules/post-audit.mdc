@@ -1,49 +1,120 @@
 ---
-description: Validação pós-implementação — garantir alinhamento entre código e documentação
+description: Curadoria contínua de alinhamento entre código e documentação
 alwaysApply: true
 ---
 
-# Pós-Auditoria de Implementação
+# Curadoria Contínua — Código × Documentação
 
-Após qualquer implementação ou alteração significativa, valide se a documentação está alinhada.
+Esta regra se aplica automaticamente a qualquer alteração no projeto.
 
-## Checklist de validação
+O objetivo é garantir que **documentação e implementação nunca divirjam** — sem precisar de uma auditoria formal explícita.
 
-### 1. Alterações em `src/engine/types.ts`
+---
 
-- Novos campos ou tipos em `Lesson`, `Challenge`, `Course`, `Module`?
-- **Ação**: Atualizar `documents/lesson_schema.md` ou `documents/course_schema.md`
+## Princípio central
 
-### 2. Novas lições JSON (`src/courses/*/lessons/*.json`)
+A documentação deve refletir a implementação real — não o que foi planejado originalmente.
 
-- Campos obrigatórios presentes? (`id`, `courseId`, `moduleId`, `title`, `type`, `xp`, `content`)
-- `content.sections` com tipos válidos? (`heading`, `paragraph`, `code`, `list`, `callout`)
-- Lições `challenge` têm `instructions`, `starterCode`, `solution`, `tests`?
-- Presença de `analogy`, `keyTakeaways` (recomendado)?
+Quando há divergência, **corrija o documento** (não o código), salvo decisão arquitetural explícita.
 
-### 3. Novos componentes ou páginas
+Exceção: funcionalidades aspiracionais (planejadas mas não implementadas) devem ser **marcadas como tal** nos documentos — nunca descritas como implementadas.
 
-- A arquitetura em `documents/prd.md` (seção 12) reflete a estrutura atual?
+---
 
-### 4. Alterações na metodologia pedagógica
+## Gatilhos de curadoria
 
-- `documents/pedagogy.md` foi atualizado?
+Qualquer uma das situações abaixo exige verificação e, se necessário, atualização imediata dos documentos:
 
-### 5. Uso do prompt de geração de lições
+### 1. Alteração em `src/engine/types.ts`
 
-- `documents/content_generation.md` está alinhado com o schema em `lesson_schema.md`?
+Novos campos, tipos renomeados ou removidos em `Lesson`, `Challenge`, `Course`, `Module`, `QuizQuestion`, etc.
 
-## Formato de validação
+**Verificar e corrigir:**
+- `documents/product/lesson_schema.md` — campos, tipos, tabelas de referência
+- `documents/product/course_schema.md` — estrutura de curso e módulo
+- `documents/product/content_generation.md` — exemplos JSON no prompt de geração
 
-Ao final de alterações que possam gerar divergência, liste brevemente:
+### 2. Nova lição JSON (`src/courses/*/lessons/*.json`)
+
+**Verificar antes de criar:**
+- Campos obrigatórios: `id`, `courseId`, `moduleId`, `title`, `type`, `xp`, `content.sections`
+- `content.sections` com tipos válidos: `heading`, `paragraph`, `code`, `list`, `callout`
+- Lição `challenge`: precisa de `instructions`, `starterCode`, `solution`, `tests`
+- Lição `quiz`: precisa de `quiz[]` com `question`, `options[]` com `isCorrect`
+- Recomendados: `analogy`, `keyTakeaways`, `encouragement`
+
+**Verificar no `course.json`:**
+- O ID da lição está referenciado no módulo correto?
+- O módulo existe no `course.json`?
+
+### 3. Novo componente, página ou serviço
+
+**Verificar e corrigir:**
+- `documents/product/prd.md` §12 (Arquitetura) — reflete a estrutura de `src/` atual?
+- Se a feature estava listada como "fora de escopo" no PRD, mover para seção implementada
+
+### 4. Alteração no fluxo pedagógico
+
+Mudanças em como lições são exibidas, tipos de exercício, sistema de XP, progresso, revisão.
+
+**Verificar e corrigir:**
+- `documents/product/pedagogy.md` — estrutura de lições, tipos de exercício, campos pedagógicos
+- Aspiracional vs. implementado: se remover ou adiar uma feature pedagógica, marcar como aspiracional
+
+### 5. Alteração em `src/services/ai-review.ts`
+
+Novos providers, modelos, campos da resposta, sistema prompt, `ChallengeStyle`.
+
+**Verificar e corrigir:**
+- `documents/product/AI_SYSTEM.md` — providers, modelos, interfaces, prompts, fluxo
+
+### 6. Alteração no `course.json` (novo campo de curso)
+
+**Verificar e corrigir:**
+- `documents/product/course_schema.md` — tabela de campos do curso e AIReviewContext
+
+---
+
+## Divergências que devem ser corrigidas imediatamente
+
+| Sinal | Ação |
+|-------|------|
+| Campo no código não existe na documentação | Adicionar ao schema ou curso_schema |
+| Campo na documentação não existe no código | Marcar como removido ou aspiracional |
+| Feature listada como "fora de escopo" mas implementada | Mover para seção de features implementadas no PRD |
+| Exemplo JSON no content_generation usa campo obsoleto | Corrigir o exemplo |
+| Estrutura de diretórios documentada difere da real | Corrigir no PRD §12 e course_schema |
+| Tipo de lição no código difere do documentado | Corrigir em lesson_schema e pedagogy |
+
+---
+
+## Aspiracional vs. implementado
+
+Funcionalidades planejadas mas não implementadas devem ser explicitamente marcadas nos documentos.
+
+Use o padrão:
+
+> *(aspiracional — não implementado ainda)*
+
+Exemplos no estado atual do projeto:
+- Mini projetos ao final de módulos
+- Bloqueio de progresso (Mastery Learning)
+- Quizzes intercalados
+- Classificação de tipo de desafio (`challengeType`)
+- Spaced repetition
+
+Nunca descrever funcionalidades aspiracionais como se fossem implementadas.
+
+---
+
+## Formato de reporte ao final de alterações
+
+Quando houver divergência detectada e corrigida, informe brevemente:
 
 ```
-Docs a revisar (se houver):
-- [nome do doc]: [o que verificar]
+Docs atualizados:
+- lesson_schema.md: adicionado campo `challengeType` em Challenge
+- pedagogy.md: marcado mini projetos como aspiracional
 ```
 
-Se não houver divergência, não é necessário listar.
-
-## Regra de ouro
-
-**Documentação e código devem evoluir juntos.** Nenhuma feature nova sem doc atualizada.
+Se não houver divergência, não é necessário listar nada.

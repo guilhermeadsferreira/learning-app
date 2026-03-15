@@ -85,7 +85,7 @@ Evite implementar mudanças cegamente quando perceber problemas estruturais.
 
 # Documentação como fonte de verdade
 
-Antes de tomar decisões estruturais, consulte `documents/`:
+Antes de tomar decisões estruturais, consulte `documents/product/`:
 
 - `prd.md` — visão e escopo
 - `pedagogy.md` — metodologia educacional
@@ -101,7 +101,7 @@ Se a implementação evoluir além da documentação, **proponha atualização d
 
 A plataforma é um produto educacional.
 
-Sempre preserve os princípios definidos em `pedagogy.md`:
+Sempre preserve os princípios definidos em `documents/product/pedagogy.md`:
 
 - microlearning
 - active learning
