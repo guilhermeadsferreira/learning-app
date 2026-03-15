@@ -1,0 +1,80 @@
+{
+  "id": "plugins-ecosystem",
+  "courseId": "claude-code",
+  "moduleId": "mcp-plugins",
+  "title": "Ecossistema de Plugins",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Se o MCP é como instalar uma extensão individual, plugins são como lojas de aplicativos. Você acessa um marketplace, navega pelas opções e instala pacotes completos que combinam commands, skills, MCP servers e mais — tudo em um clique.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são plugins?" },
+      {
+        "type": "paragraph",
+        "content": "Plugins são pacotes instaláveis que combinam múltiplos componentes do Claude Code em uma única unidade. Um plugin pode incluir slash commands, skills, subagents, servidores MCP e LSP servers — tudo bundled junto."
+      },
+      {
+        "type": "callout",
+        "content": "O ecossistema já tem 9.000+ plugins em 43 community marketplaces (março 2026). O sistema não requer aprovação — qualquer pessoa pode criar e distribuir.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Marketplace system" },
+      {
+        "type": "paragraph",
+        "content": "Plugins são organizados em marketplaces. O marketplace oficial da Anthropic (claude-plugins-official) já vem configurado. Marketplaces adicionais podem ser adicionados."
+      },
+      {
+        "type": "code",
+        "content": "# Navegar plugins disponíveis\n/plugin browse\n\n# Instalar um plugin do marketplace oficial\n/plugin install code-python@claude-plugins-official\n\n# Adicionar um marketplace de terceiros\n/plugin marketplace add https://github.com/org/meu-marketplace",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Escopos de instalação" },
+      {
+        "type": "list",
+        "content": "user — disponível em todos os seus projetos\nproject — compartilhado com o time (salvo na config do projeto)\nlocal — apenas no repositório atual"
+      },
+      { "type": "heading", "content": "O que plugins incluem" },
+      {
+        "type": "list",
+        "content": "Slash commands — comandos /plugin-name:comando com namespace\nSkills — knowledge automático que carrega por relevância\nSubagents — agentes especializados para tarefas específicas\nMCP servers — conexões a serviços externos\nLSP servers — inteligência de linguagem (autocomplete, go-to-definition)"
+      },
+      { "type": "heading", "content": "Plugins oficiais populares" },
+      {
+        "type": "paragraph",
+        "content": "O marketplace oficial inclui plugins de code intelligence para 10+ linguagens, cada um integrando um LSP server."
+      },
+      {
+        "type": "list",
+        "content": "code-python — inteligência Python (Pyright LSP)\ncode-typescript — inteligência TypeScript (ts-server)\ncode-rust — inteligência Rust (rust-analyzer)\ncode-go — inteligência Go (gopls)"
+      },
+      {
+        "type": "callout",
+        "content": "Plugins de code intelligence requerem o binary do language server instalado no sistema (ex: pyright para Python). O plugin avisa se faltar.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "Namespacing" },
+      {
+        "type": "paragraph",
+        "content": "Plugins usam namespace para evitar conflitos. Comandos de plugin usam a sintaxe /plugin-name:command."
+      },
+      {
+        "type": "code",
+        "content": "# Comando do plugin code-python\n/code-python:analyze\n\n# Comando do plugin sentry\n/sentry:errors",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Plugins combinam commands, skills, subagents, MCP servers e LSP servers em um pacote",
+    "9.000+ plugins disponíveis; instale via /plugin install nome@marketplace",
+    "Comandos de plugins usam namespace: /plugin-name:command"
+  ],
+  "commonMistakes": [
+    "Instalar muitos plugins de uma vez — cada plugin consome contexto e pode causar lentidão",
+    "Não verificar dependências — plugins de code intelligence precisam de language servers instalados",
+    "Confundir plugins com MCP — MCP é protocolo de conexão, plugins são pacotes instaláveis"
+  ],
+  "realWorldExample": "Um dev Python instala code-python para inteligência de linguagem, sentry para monitoramento de erros, e github para gerenciar PRs. Três plugins que transformam o Claude Code em uma IDE completa no terminal.",
+  "encouragement": "O ecossistema de plugins está explodindo. Encontre os que se encaixam no seu workflow e sua produtividade vai para outro nível."
+}

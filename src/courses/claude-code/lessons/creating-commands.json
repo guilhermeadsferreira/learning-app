@@ -1,0 +1,72 @@
+{
+  "id": "creating-commands",
+  "courseId": "claude-code",
+  "moduleId": "commands",
+  "title": "Criando Comandos Customizados",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Custom commands são como macros no Excel ou snippets no VS Code — workflows que você repete toda semana empacotados em um atalho. Em vez de explicar o processo toda vez, você digita /nome-do-comando e pronto.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são Custom Commands?" },
+      {
+        "type": "paragraph",
+        "content": "Custom commands são arquivos Markdown que definem prompts reutilizáveis. Quando você digita /nome-do-comando no Claude Code, ele carrega o conteúdo do arquivo como instrução. São perfeitos para workflows que o time repete frequentemente."
+      },
+      { "type": "heading", "content": "Onde ficam os comandos" },
+      {
+        "type": "list",
+        "content": "Projeto (compartilhado com o time): .claude/commands/\nPessoal (só você, todos os projetos): ~/.claude/commands/"
+      },
+      { "type": "heading", "content": "Criando seu primeiro comando" },
+      {
+        "type": "paragraph",
+        "content": "Cada comando é um arquivo .md dentro da pasta de commands. O nome do arquivo vira o nome do comando slash."
+      },
+      {
+        "type": "code",
+        "content": "# Criar o diretório de commands do projeto\nmkdir -p .claude/commands\n\n# Criar um comando de code review\n# O arquivo review.md será acessível via /review",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "# .claude/commands/review.md\n\nFaça uma revisão de código completa do diff atual.\n\nVerifique:\n- Bugs potenciais e edge cases\n- Violações de padrões do projeto\n- Oportunidades de simplificação\n- Segurança (SQL injection, XSS, auth)\n- Testes faltando\n\nFormato da resposta:\n1. Resumo (1-2 frases)\n2. Issues encontradas (severidade: crítica/média/baixa)\n3. Sugestões de melhoria\n4. Veredicto: aprovar, solicitar mudanças, ou bloquear",
+        "language": "markdown"
+      },
+      {
+        "type": "callout",
+        "content": "O nome do arquivo (sem .md) vira o comando slash. 'review.md' → /review. 'deploy-check.md' → /deploy-check.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Subdiretórios como namespace" },
+      {
+        "type": "paragraph",
+        "content": "Você pode organizar comandos em subpastas. O caminho vira parte do nome do comando."
+      },
+      {
+        "type": "code",
+        "content": ".claude/commands/\n  review.md          → /review\n  git/\n    commit.md        → /git:commit\n    pr.md            → /git:pr\n  test/\n    unit.md          → /test:unit\n    integration.md   → /test:integration",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Exemplos práticos de commands" },
+      {
+        "type": "code",
+        "content": "# .claude/commands/git/commit.md\nAnalise as alterações atuais (git diff --staged).\nCrie uma mensagem de commit seguindo Conventional Commits.\nFormato: tipo(escopo): descrição\nTipos: feat, fix, refactor, docs, test, chore\nDescrição em inglês, imperativo, max 72 chars.\n\n# .claude/commands/explain.md\nExplique o código do arquivo atual de forma didática.\nComece pelo propósito geral, depois detalhe as partes.\nUse analogias quando possível.\nDestaque decisões de design não-óbvias.",
+        "language": "markdown"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Custom commands são arquivos .md em .claude/commands/ — o nome do arquivo vira o /comando",
+    "Use projeto (.claude/commands/) para compartilhar e pessoal (~/.claude/commands/) para seus workflows",
+    "Subdiretórios viram namespaces: git/commit.md → /git:commit"
+  ],
+  "commonMistakes": [
+    "Criar comandos muito genéricos — 'faça algo bom' não ajuda. Seja específico no prompt",
+    "Não compartilhar com o time — commands em .claude/commands/ vão para o git e beneficiam todos",
+    "Colocar preferências pessoais em commands do projeto — use ~/.claude/commands/ para isso"
+  ],
+  "realWorldExample": "Um time de frontend cria /review para code review padronizado, /test:component para scaffolding de testes, e /a11y para auditoria de acessibilidade. Todo dev usa os mesmos workflows consistentes.",
+  "encouragement": "Custom commands são a forma mais rápida de multiplicar produtividade em equipe. Um bom comando salva horas toda semana."
+}

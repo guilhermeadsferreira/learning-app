@@ -1,0 +1,59 @@
+{
+  "id": "headless-mode",
+  "courseId": "claude-code",
+  "moduleId": "git-cicd",
+  "title": "Modo Headless",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "O modo headless é como um servidor web sem tela. Assim como você roda um backend sem interface gráfica, o modo headless roda o Claude Code sem sessão interativa — perfeito para scripts e automação.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é modo headless?" },
+      {
+        "type": "paragraph",
+        "content": "O modo headless permite rodar o Claude Code programaticamente — sem sessão interativa. Você envia um prompt, recebe o resultado, e o processo termina. Ideal para scripts, CI/CD e automação."
+      },
+      { "type": "heading", "content": "Uso básico com -p" },
+      {
+        "type": "code",
+        "content": "# Enviar prompt e receber resultado\nclaude -p \"analise o arquivo src/auth.ts e liste os problemas\"\n\n# Com output em JSON estruturado\nclaude -p \"liste os TODOs no código\" --output-format json\n\n# Com modelo específico\nclaude -p \"gere changelog da última semana\" --model haiku\n\n# Com limite de turnos\nclaude -p \"corrija os erros de lint\" --max-turns 5",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Uso em scripts bash" },
+      {
+        "type": "code",
+        "content": "#!/bin/bash\n# Script: daily-report.sh\n\n# Gerar relatório diário de alterações\nREPORT=$(claude -p \"analise os commits de hoje e gere um resumo em markdown\" --output-format json)\n\n# Postar no Slack (exemplo)\ncurl -X POST \"$SLACK_WEBHOOK\" -d \"{\\\"text\\\": \\\"$REPORT\\\"}\"",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O flag --output-format json é essencial para automação. Retorna um JSON estruturado que pode ser processado por outros scripts.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Flags úteis para automação" },
+      {
+        "type": "list",
+        "content": "-p \"prompt\" — modo não-interativo, query and exit\n--output-format json — output em JSON estruturado\n--max-turns N — limita o número de interações\n--model nome — seleciona o modelo\n--permission-mode bypassPermissions — aceita tudo (só em sandbox!)\n--allowedTools lista — pré-aprova ferramentas específicas\n--append-system-prompt — adiciona instruções ao system prompt\n--add-dir caminho — adiciona diretórios ao contexto"
+      },
+      { "type": "heading", "content": "Exemplos práticos de automação" },
+      {
+        "type": "code",
+        "content": "# Traduzir strings para francês e abrir PR\nclaude -p \"translate new strings into French and raise a PR for review\"\n\n# Gerar documentação da API\nclaude -p \"gere documentação OpenAPI para todas as rotas em src/routes/\"\n\n# Migração automatizada\nclaude -p \"migre todos os imports de lodash para lodash-es\" --max-turns 10\n\n# Análise de segurança em batch\nfor file in src/**/*.ts; do\n  claude -p \"analise $file por vulnerabilidades de segurança\" --model haiku\ndone",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "claude -p executa em modo headless — envia prompt, recebe resultado, encerra",
+    "--output-format json retorna output estruturado para processamento programático",
+    "Combine com --max-turns e --model para controle de custo e escopo"
+  ],
+  "commonMistakes": [
+    "Usar bypassPermissions fora de sandbox — dá carta branca sem proteção",
+    "Não usar --max-turns — sem limite, o Claude pode rodar indefinidamente",
+    "Esquecer --output-format json — sem ele, o output é texto livre difícil de parsear"
+  ],
+  "realWorldExample": "Um time roda claude -p 'analise os commits da sprint e gere release notes' como passo do pipeline de release. Toda segunda-feira, release notes automáticas são geradas e postadas no Slack.",
+  "encouragement": "Modo headless é onde o Claude Code vira infraestrutura. Automação real, não apenas assistência."
+}

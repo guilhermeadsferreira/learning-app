@@ -1,0 +1,67 @@
+{
+  "id": "mcp-skills-practice",
+  "courseId": "claude-code",
+  "moduleId": "mcp-plugins",
+  "title": "MCP + Skills na Prática",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "MCP + Skills juntos são como ter uma cozinha profissional equipada (MCP) com um chef que tem receitas testadas (Skills). Separados, são úteis. Juntos, produzem resultados consistentes e de alta qualidade.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O poder da combinação" },
+      {
+        "type": "paragraph",
+        "content": "MCP dá ao Claude acesso a ferramentas. Skills ensinam como usar essas ferramentas de forma eficaz. Sem skills, o usuário precisa explicar o workflow toda vez. Com skills, o Claude já sabe a melhor forma de usar cada ferramenta."
+      },
+      { "type": "heading", "content": "Padrão 1: Workflow sequencial" },
+      {
+        "type": "paragraph",
+        "content": "Processos que seguem uma ordem específica — cada passo depende do anterior."
+      },
+      {
+        "type": "code",
+        "content": "# SKILL.md para onboarding de cliente\n---\nname: customer-onboarding\ndescription: Onboarding de clientes no PayFlow. Use quando usuário diz \"onboard\", \"novo cliente\", \"setup account\".\n---\n\n## Workflow: Onboard New Customer\n\n### Passo 1: Criar conta\nChame MCP tool: `payflow__create_customer`\nParâmetros: name, email, company\n\n### Passo 2: Setup pagamento\nChame MCP tool: `payflow__setup_payment`\nAguarde verificação do método de pagamento\n\n### Passo 3: Criar assinatura\nChame MCP tool: `payflow__create_subscription`\nUse customer_id do Passo 1\n\n### Passo 4: Notificar\nChame MCP tool: `slack__send_message`\nCanal: #new-customers",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Padrão 2: Coordenação multi-MCP" },
+      {
+        "type": "paragraph",
+        "content": "Workflows que cruzam múltiplos serviços — design + storage + tasks + comunicação."
+      },
+      {
+        "type": "code",
+        "content": "# SKILL.md para handoff design-to-dev\n---\nname: design-handoff\ndescription: Handoff de design para desenvolvimento. Use quando usuário diz \"handoff\", \"passar para dev\", \"design specs\".\n---\n\n## Fase 1: Export de design (Figma MCP)\nExporte assets e gere specs\n\n## Fase 2: Armazenamento (Drive MCP)\nCrie pasta, faça upload, gere links\n\n## Fase 3: Tasks (Linear MCP)\nCrie tasks de dev com links dos assets\n\n## Fase 4: Notificação (Slack MCP)\nPoste resumo no #engineering",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Padrão 3: Seleção contextual de ferramentas" },
+      {
+        "type": "code",
+        "content": "# SKILL.md para smart storage\n---\nname: smart-storage\ndescription: Armazena arquivos no local ideal. Use quando usuário pede \"salvar\", \"guardar\", \"upload\".\n---\n\n## Árvore de decisão\n- Arquivo > 10MB → Cloud Storage MCP\n- Documento colaborativo → Google Docs MCP\n- Código → GitHub MCP\n- Temporário → armazenamento local\n\nExplique ao usuário por que aquele local foi escolhido.",
+        "language": "markdown"
+      },
+      {
+        "type": "callout",
+        "content": "Skills que coordenam múltiplos MCPs são as mais valiosas — elas automatizam workflows que antes exigiam alternar entre 4-5 ferramentas diferentes.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Dicas para MCP + Skills" },
+      {
+        "type": "list",
+        "content": "Comece com 1-2 workflows críticos — não tente automatizar tudo de uma vez\nValide cada passo antes de avançar — include verificação entre fases\nInclua error handling — o que fazer quando um MCP falha?\nDocumente em references/ — detalhes de API, rate limits, edge cases"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "MCP dá acesso; Skills ensinam o workflow — juntos automatizam processos complexos",
+    "Padrão sequencial para processos em ordem; multi-MCP para workflows entre serviços",
+    "Inclua verificação entre passos e error handling para robustez"
+  ],
+  "commonMistakes": [
+    "Criar skills sem testar o MCP — confirme que o servidor MCP funciona antes de criar a skill",
+    "Não incluir error handling — MCPs falham (timeout, auth expirada) e a skill deve tratar isso",
+    "Tentar automatizar tudo — comece com 1-2 workflows críticos e expanda"
+  ],
+  "realWorldExample": "Um time de suporte cria uma skill que: 1) busca o erro no Sentry (MCP), 2) encontra o PR relacionado no GitHub (MCP), 3) cria um fix e abre um PR, 4) notifica o time no Slack (MCP). Um workflow de 30 minutos vira 2 minutos.",
+  "encouragement": "MCP + Skills é onde automação encontra inteligência. Você está criando workflows que escalam."
+}

@@ -1,0 +1,95 @@
+{
+  "id": "quiz-commands",
+  "courseId": "claude-code",
+  "moduleId": "commands",
+  "title": "Quiz: Custom Commands",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre custom commands, frontmatter e argumentos dinâmicos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Onde devem ficar os custom commands para serem compartilhados com o time via git?",
+      "options": [
+        {
+          "id": "a",
+          "text": "~/.claude/commands/",
+          "isCorrect": false,
+          "explanation": "~/.claude/commands/ é para comandos pessoais (todos os seus projetos). Para compartilhar, use .claude/commands/ no projeto."
+        },
+        {
+          "id": "b",
+          "text": ".claude/commands/ (na raiz do projeto)",
+          "isCorrect": true,
+          "explanation": "Correto! Comandos em .claude/commands/ ficam no repositório e são compartilhados com todo o time via git."
+        },
+        {
+          "id": "c",
+          "text": "src/commands/",
+          "isCorrect": false,
+          "explanation": "O Claude Code não reconhece src/commands/. Os comandos devem ficar em .claude/commands/."
+        }
+      ]
+    },
+    {
+      "question": "O que a sintaxe !`git diff` faz dentro de um custom command?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Exibe o texto 'git diff' literalmente no prompt",
+          "isCorrect": false,
+          "explanation": "!`...` não exibe texto literal. Ele executa o comando e injeta o output."
+        },
+        {
+          "id": "b",
+          "text": "Executa o comando bash e injeta o output no prompt",
+          "isCorrect": true,
+          "explanation": "Correto! !`comando` é bash inline — executa e substitui pelo resultado. Ideal para injetar contexto dinâmico."
+        },
+        {
+          "id": "c",
+          "text": "Cria um link para a documentação do git diff",
+          "isCorrect": false,
+          "explanation": "!`...` não cria links. Ele executa o comando no terminal e injeta o output no prompt do comando."
+        }
+      ]
+    },
+    {
+      "question": "Qual campo do YAML frontmatter restringe quais ferramentas o Claude Code pode usar ao executar um comando?",
+      "options": [
+        {
+          "id": "a",
+          "text": "model",
+          "isCorrect": false,
+          "explanation": "model define qual modelo de IA usar (haiku, sonnet, opus), não as ferramentas permitidas."
+        },
+        {
+          "id": "b",
+          "text": "allowed-tools",
+          "isCorrect": true,
+          "explanation": "Correto! allowed-tools define exatamente quais ferramentas o Claude pode usar, como Read, Grep, Bash(git:*)."
+        },
+        {
+          "id": "c",
+          "text": "description",
+          "isCorrect": false,
+          "explanation": "description é apenas a descrição exibida na listagem. Para restringir ferramentas, use allowed-tools."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Comandos do projeto ficam em .claude/commands/ e são compartilhados via git",
+    "!`comando` executa bash inline e injeta o output no prompt",
+    "allowed-tools no frontmatter restringe as ferramentas disponíveis para o comando"
+  ],
+  "encouragement": "Commands dominados! Agora vamos para Skills — o sistema de knowledge que funciona em todas as plataformas Claude."
+}

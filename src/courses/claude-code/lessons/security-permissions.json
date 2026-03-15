@@ -1,0 +1,78 @@
+{
+  "id": "security-permissions",
+  "courseId": "claude-code",
+  "moduleId": "productivity-enterprise",
+  "title": "Segurança e Permissões Avançadas",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "O sistema de permissões do Claude Code é como um firewall com regras ordenadas. As regras deny sempre ganham, depois ask, depois allow. Se algo não casa com nenhuma regra, o padrão é perguntar. Simples, previsível e seguro.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Hierarquia de regras: deny > ask > allow" },
+      {
+        "type": "paragraph",
+        "content": "Regras de permissão são avaliadas em ordem: deny sempre tem precedência sobre ask, que tem precedência sobre allow. Isso garante que bloqueios de segurança nunca sejam sobrescritos acidentalmente."
+      },
+      { "type": "heading", "content": "Padrões de regras" },
+      {
+        "type": "code",
+        "content": "// Em .claude/settings.json\n{\n  \"permissions\": {\n    \"deny\": [\n      \"Bash(rm -rf:*)\",\n      \"Bash(*production*)\",\n      \"Edit(.env*)\",\n      \"Read(.env*)\"\n    ],\n    \"allow\": [\n      \"Read\",\n      \"Grep\",\n      \"Glob\",\n      \"Bash(npm run *)\",\n      \"Bash(git *)\"\n    ]\n  }\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Glob patterns" },
+      {
+        "type": "paragraph",
+        "content": "Regras suportam glob patterns para matching flexível."
+      },
+      {
+        "type": "code",
+        "content": "// Match exato\n\"Bash(npm run build)\"\n\n// Wildcard\n\"Bash(npm run *)\"     // qualquer npm run\n\"Bash(git * main)\"    // git push main, git merge main, etc.\n\n// Match por domínio\n\"WebFetch(domain:example.com)\"\n\n// Match por path\n\"Read(./.env)\"",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Tiers de aprovação por ferramenta" },
+      {
+        "type": "list",
+        "content": "Somente leitura (Read, Grep, Glob) — não precisa aprovação\nBash commands — requer aprovação (pode ser destrutivo)\nEdição de arquivos (Edit, Write) — requer aprovação\nWebFetch — requer aprovação (acesso à rede)"
+      },
+      { "type": "heading", "content": "Sandboxing OS-level" },
+      {
+        "type": "paragraph",
+        "content": "Além das permissões do Claude Code, você pode ativar sandboxing no nível do sistema operacional. O sandbox restringe escrita ao diretório de trabalho e /tmp, e limita acesso à rede a domínios permitidos."
+      },
+      {
+        "type": "callout",
+        "content": "Para ambientes de produção, combine permissões do Claude Code com sandboxing do SO. Defesa em profundidade é a melhor estratégia.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": ".claudeignore para segurança" },
+      {
+        "type": "paragraph",
+        "content": "Além de economizar tokens, .claudeignore impede que o Claude leia arquivos sensíveis."
+      },
+      {
+        "type": "code",
+        "content": "# .claudeignore - segurança\n.env*\ncredentials/\nsecrets/\n*.pem\n*.key\nconfig/production.json",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Gerenciando permissões em sessão" },
+      {
+        "type": "code",
+        "content": "# Gerenciar permissões no modo interativo\n/permissions\n\n# Trocar modo de permissão\nShift+Tab  # alterna entre modos",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Hierarquia deny > ask > allow — deny sempre tem precedência",
+    "Use glob patterns para regras flexíveis: Bash(npm run *), Edit(.env*)",
+    "Combine .claudeignore + permissões + sandboxing para defesa em profundidade"
+  ],
+  "commonMistakes": [
+    "Não bloquear comandos destrutivos — 'Bash(rm -rf:*)' deve estar em deny sempre",
+    "Esquecer de proteger .env — credenciais podem ser lidas sem deny/claudeignore",
+    "Confiar apenas em permissões sem sandboxing — defesa em profundidade é mais segura"
+  ],
+  "realWorldExample": "Uma empresa configura: deny para comandos com 'production', allow para npm e git, .claudeignore para .env e secrets, e sandboxing no SO. Resultado: zero incidentes de segurança em 6 meses de uso intensivo.",
+  "encouragement": "Segurança não é obstáculo — é a fundação que permite usar o Claude Code com confiança em qualquer ambiente."
+}

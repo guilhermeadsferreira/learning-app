@@ -1,0 +1,65 @@
+{
+  "id": "what-are-skills",
+  "courseId": "claude-code",
+  "moduleId": "skills",
+  "title": "O que são Skills",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Se custom commands são atalhos para prompts, skills são manuais completos de operação. Um command diz 'faça um review'. Uma skill ensina o Claude a fazer reviews da forma certa para o seu projeto — com checklist, padrões e exemplos.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Skills vs. Commands" },
+      {
+        "type": "paragraph",
+        "content": "Skills são pacotes de instruções — empacotados como uma pasta — que ensinam ao Claude como lidar com tarefas ou workflows específicos. A diferença fundamental: commands são atalhos que você invoca; skills são conhecimento que o Claude carrega automaticamente quando detecta relevância."
+      },
+      {
+        "type": "list",
+        "content": "Commands — você digita /review para ativar\nSkills — o Claude detecta que você está fazendo review e carrega sozinho\nCommands — um arquivo .md com um prompt\nSkills — uma pasta com SKILL.md + scripts + referências + assets\nCommands — funcionam no Claude Code\nSkills — funcionam no Claude Code, Claude.ai e API"
+      },
+      { "type": "heading", "content": "Estrutura de uma skill" },
+      {
+        "type": "code",
+        "content": "minha-skill/\n├── SKILL.md          # Obrigatório — instruções principais\n├── scripts/          # Opcional — código executável\n│   ├── validate.py\n│   └── format.sh\n├── references/       # Opcional — documentação de apoio\n│   ├── api-guide.md\n│   └── examples/\n└── assets/           # Opcional — templates, fontes, ícones\n    └── report-template.md",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O arquivo DEVE ser exatamente SKILL.md (case-sensitive). SKILL.MD, skill.md, ou README.md não funcionam.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "Progressive Disclosure (3 níveis)" },
+      {
+        "type": "paragraph",
+        "content": "Skills usam um sistema inteligente de carregamento em 3 níveis para economizar tokens e manter a eficiência."
+      },
+      {
+        "type": "list",
+        "content": "Nível 1 — YAML frontmatter: sempre carregado no system prompt. Diz ao Claude quando a skill é relevante\nNível 2 — Corpo do SKILL.md: carregado quando o Claude acha que a skill é relevante para a tarefa\nNível 3 — Arquivos linkados: scripts, referências e assets — carregados sob demanda"
+      },
+      { "type": "heading", "content": "3 categorias de skills" },
+      {
+        "type": "list",
+        "content": "Document & Asset Creation — criar documentos, designs, código com padrões consistentes\nWorkflow Automation — processos multi-step com metodologia consistente\nMCP Enhancement — guiar o uso de ferramentas MCP com melhores práticas"
+      },
+      { "type": "heading", "content": "A analogia da cozinha (Skills + MCP)" },
+      {
+        "type": "paragraph",
+        "content": "MCP fornece a cozinha profissional: acesso a ferramentas, ingredientes e equipamentos. Skills fornecem as receitas: instruções passo a passo de como criar algo valioso. Juntos, permitem que o Claude execute tarefas complexas sem que o usuário precise explicar cada passo."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Skills são pacotes de knowledge que o Claude carrega automaticamente quando detecta relevância",
+    "Estrutura: pasta com SKILL.md (obrigatório) + scripts/, references/, assets/ (opcionais)",
+    "Progressive disclosure em 3 níveis minimiza tokens mantendo expertise especializada"
+  ],
+  "commonMistakes": [
+    "Confundir skills com commands — commands são atalhos manuais, skills são knowledge automático",
+    "Nomear o arquivo errado — deve ser exatamente SKILL.md (case-sensitive)",
+    "Incluir README.md dentro da skill — toda documentação vai no SKILL.md ou references/"
+  ],
+  "realWorldExample": "A Sentry criou uma skill que automaticamente analisa e corrige bugs detectados em Pull Requests usando dados do seu MCP server. O Claude detecta que o dev está fazendo review, carrega a skill, e executa análise com base em dados reais de erros.",
+  "encouragement": "Skills são a fronteira do Claude Code. Dominar elas é o que separa quem usa a ferramenta de quem realmente a customiza."
+}

@@ -1,0 +1,62 @@
+{
+  "id": "what-are-hooks",
+  "courseId": "claude-code",
+  "moduleId": "hooks",
+  "title": "O que são Hooks",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Hooks no Claude Code são como os hooks de CI/CD (pre-commit, post-deploy). Você define: 'antes de cada edição de arquivo, rode o formatter' ou 'depois de cada commit, rode o lint'. São gatilhos automáticos que conectam ações do Claude a processos reais.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são hooks?" },
+      {
+        "type": "paragraph",
+        "content": "Hooks são comandos shell que rodam automaticamente antes ou depois de ações do Claude Code. Eles adicionam automação determinística — diferente de instruções em linguagem natural, hooks são código que roda de forma previsível toda vez."
+      },
+      {
+        "type": "callout",
+        "content": "A diferença chave: instruções em CLAUDE.md são probabilísticas (o Claude pode não seguir). Hooks são determinísticos — rodam sempre, sem exceção.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Casos de uso comuns" },
+      {
+        "type": "list",
+        "content": "Auto-formatar código após cada edição de arquivo\nRodar lint antes de cada commit\nValidar arquivos antes de salvar\nLogar todas as chamadas a ferramentas para auditoria\nBloquear ações perigosas automaticamente\nNotificar sistemas externos após conclusão de tarefas"
+      },
+      { "type": "heading", "content": "Onde configurar" },
+      {
+        "type": "paragraph",
+        "content": "Hooks são configurados no settings.json — no nível do projeto ou do usuário."
+      },
+      {
+        "type": "code",
+        "content": "# No settings do projeto\n.claude/settings.json\n\n# Ou no settings pessoal\n~/.claude/settings.json",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Estrutura básica" },
+      {
+        "type": "code",
+        "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"echo 'Arquivo será editado' >&2\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Hooks vs. CLAUDE.md vs. Commands" },
+      {
+        "type": "list",
+        "content": "CLAUDE.md — instruções em linguagem natural (probabilísticas)\nCommands — prompts reutilizáveis ativados manualmente\nSkills — knowledge carregado automaticamente\nHooks — código executado automaticamente (determinístico)"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Hooks são comandos shell que rodam automaticamente antes/depois de ações do Claude",
+    "Diferente de instruções, hooks são determinísticos — rodam sempre, sem exceção",
+    "Configurados em .claude/settings.json ou ~/.claude/settings.json"
+  ],
+  "commonMistakes": [
+    "Confundir hooks com instruções no CLAUDE.md — hooks são código, CLAUDE.md é linguagem natural",
+    "Não usar hooks para formatação — rodar prettier via hook é 100% confiável, via instrução não",
+    "Esquecer que hooks rodam em toda ação — um hook pesado pode tornar o Claude lento"
+  ],
+  "realWorldExample": "Um time configura um hook PreToolUse no Edit que roda 'prettier --write' após cada edição. Todo código gerado pelo Claude sai formatado automaticamente, sem depender de instrução no CLAUDE.md.",
+  "encouragement": "Hooks são a ponte entre o mundo probabilístico da IA e a precisão do código. É onde automação de verdade acontece."
+}

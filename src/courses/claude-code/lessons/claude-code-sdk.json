@@ -1,0 +1,77 @@
+{
+  "id": "claude-code-sdk",
+  "courseId": "claude-code",
+  "moduleId": "productivity-enterprise",
+  "title": "Claude Code SDK",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "O SDK é como ter acesso à API interna de um produto SaaS. Ao invés de usar a interface gráfica (terminal), você programa diretamente contra o motor — criando aplicações, agentes e pipelines customizados.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é o Claude Agent SDK?" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Agent SDK (anteriormente Claude Code SDK) é um pacote TypeScript que permite usar o Claude Code programaticamente. Em vez de interagir pelo terminal, você escreve código que conversa com o Claude, executa tarefas e processa resultados."
+      },
+      { "type": "heading", "content": "Instalação" },
+      {
+        "type": "code",
+        "content": "npm install @anthropic-ai/claude-agent-sdk",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Uso básico: query()" },
+      {
+        "type": "paragraph",
+        "content": "A função principal é query() — ela cria um async generator que streama mensagens do Claude."
+      },
+      {
+        "type": "code",
+        "content": "import { query } from '@anthropic-ai/claude-agent-sdk';\n\nconst conversation = query({\n  prompt: 'Analise src/auth.ts e liste os problemas de segurança',\n  options: {\n    model: 'sonnet',\n    maxTurns: 5,\n    permissionMode: 'plan'\n  }\n});\n\nfor await (const message of conversation) {\n  console.log(message.type, message.content);\n}",
+        "language": "typescript"
+      },
+      { "type": "heading", "content": "Funções principais" },
+      {
+        "type": "list",
+        "content": "query() — envia prompt e recebe stream de mensagens\ntool() — cria definições de ferramentas MCP com schemas Zod\ncreateSdkMcpServer() — cria um servidor MCP in-process\nlistSessions() — lista sessões anteriores com metadados"
+      },
+      { "type": "heading", "content": "Habilitando features do Claude Code" },
+      {
+        "type": "paragraph",
+        "content": "O SDK pode usar as mesmas features do Claude Code interativo — CLAUDE.md, skills, hooks — configurando settingSources."
+      },
+      {
+        "type": "code",
+        "content": "const conversation = query({\n  prompt: 'Crie um componente de login',\n  options: {\n    settingSources: ['user', 'project'],  // carrega CLAUDE.md e skills\n    permissionMode: 'acceptEdits',\n    allowedTools: ['Read', 'Edit', 'Bash(npm:*)']  // pré-aprova ferramentas\n  }\n});",
+        "language": "typescript"
+      },
+      {
+        "type": "callout",
+        "content": "O SDK está em evolução rápida (v0.2.76 em março 2026). Uma interface V2 com send() e stream() simplificados está em preview.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Casos de uso do SDK" },
+      {
+        "type": "list",
+        "content": "Aplicações que usam Claude Code como backend — IDEs, ferramentas de dev\nPipelines de automação — análise de código, geração de docs, migração\nAgentes customizados — agentes especializados com tools e prompts específicos\nIntegração com produtos — embedding Claude Code em plataformas existentes"
+      },
+      { "type": "heading", "content": "SDK vs. CLI headless" },
+      {
+        "type": "list",
+        "content": "CLI headless (claude -p) — simples, para scripts bash e CI/CD\nSDK — controle total, para aplicações TypeScript complexas\nCLI — output como texto ou JSON simples\nSDK — streaming de mensagens tipadas, controle granular de tools"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Claude Agent SDK permite usar o Claude Code programaticamente via TypeScript",
+    "query() é a função principal — retorna async generator com stream de mensagens",
+    "settingSources ativa CLAUDE.md e skills; allowedTools pré-aprova ferramentas"
+  ],
+  "commonMistakes": [
+    "Usar o SDK para tarefas simples que claude -p resolve — overhead desnecessário",
+    "Esquecer de configurar settingSources — sem elas, CLAUDE.md e skills não carregam",
+    "Não tratar o SDK como beta — a API pode mudar entre versões"
+  ],
+  "realWorldExample": "Uma plataforma de code review usa o SDK para criar um agente que analisa PRs automaticamente, aplica as regras do CLAUDE.md do projeto, e posta comments estruturados no GitHub — tudo sem interação humana.",
+  "encouragement": "O SDK é a porta de entrada para criar seus próprios produtos com Claude Code. De usuário a criador."
+}

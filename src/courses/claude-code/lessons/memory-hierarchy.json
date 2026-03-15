@@ -1,0 +1,61 @@
+{
+  "id": "memory-hierarchy",
+  "courseId": "claude-code",
+  "moduleId": "memory",
+  "title": "Hierarquia de Memória",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "A hierarquia de memória do Claude Code funciona como variáveis CSS — há valores globais, do projeto e locais. Valores mais específicos sobrescrevem os mais gerais, e cada nível tem seu propósito.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "5 níveis de memória" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code suporta uma hierarquia de 5 níveis de memória. Locais mais específicos têm precedência sobre locais mais gerais."
+      },
+      {
+        "type": "list",
+        "content": "Nível 1 — Organização: /Library/Application Support/ClaudeCode/CLAUDE.md (todos os usuários da org)\nNível 2 — Projeto (compartilhado): ./CLAUDE.md ou ./.claude/CLAUDE.md (time via git)\nNível 3 — Regras modulares: ./.claude/rules/*.md (time via git)\nNível 4 — Usuário pessoal: ~/.claude/CLAUDE.md (todos os seus projetos)\nNível 5 — Projeto pessoal: ./CLAUDE.local.md (só você, auto-gitignored)"
+      },
+      { "type": "heading", "content": "Quando usar cada nível" },
+      {
+        "type": "code",
+        "content": "# Organização — padrões da empresa inteira\n# /Library/Application Support/ClaudeCode/CLAUDE.md\n- Use TypeScript strict mode\n- Todas as APIs devem ter rate limiting\n- Siga o design system interno\n\n# Projeto (compartilhado) — padrões do projeto\n# ./CLAUDE.md\n- Este projeto usa Next.js 15 + Prisma\n- Build: npm run build\n- Test: npm test\n\n# Usuário pessoal — suas preferências\n# ~/.claude/CLAUDE.md\n- Prefiro respostas em português\n- Use emojis nos commits\n\n# Projeto pessoal — configs pessoais do projeto\n# ./CLAUDE.local.md\n- Meu banco local roda na porta 5433\n- Não rodar seeds automaticamente",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Regras modulares (.claude/rules/)" },
+      {
+        "type": "paragraph",
+        "content": "Para projetos maiores, em vez de um CLAUDE.md gigante, você pode dividir as instruções em arquivos temáticos dentro de .claude/rules/. Cada arquivo pode ter YAML frontmatter para escopo específico."
+      },
+      {
+        "type": "code",
+        "content": "# .claude/rules/testing.md\n---\nglobs: \"**/*.test.ts\"\n---\n- Use Vitest, não Jest\n- Prefira test.each para variações\n- Mock externo em __mocks__/\n\n# .claude/rules/api.md\n---\nglobs: \"src/routes/**/*.ts\"\n---\n- Validação com Zod em todo endpoint\n- Retorne errors consistentes via AppError\n- Sempre documente com JSDoc",
+        "language": "markdown"
+      },
+      {
+        "type": "callout",
+        "content": "Regras em .claude/rules/ com globs só são carregadas quando o Claude trabalha em arquivos que casam com o padrão. Isso economiza contexto e torna as instruções mais relevantes.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "CLAUDE.local.md" },
+      {
+        "type": "paragraph",
+        "content": "O CLAUDE.local.md é seu espaço pessoal dentro do projeto. Ele é automaticamente adicionado ao .gitignore — perfeito para configurações que só fazem sentido para você."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "São 5 níveis: organização → projeto → regras modulares → usuário → projeto pessoal",
+    "Use .claude/rules/ com globs para instruções por tipo de arquivo",
+    "CLAUDE.local.md é pessoal e auto-gitignored — use para configs locais"
+  ],
+  "commonMistakes": [
+    "Colocar preferências pessoais no CLAUDE.md do projeto — afeta todo o time",
+    "Não usar .claude/rules/ — um CLAUDE.md monolítico fica difícil de manter",
+    "Esquecer que existe ~/.claude/CLAUDE.md — ideal para preferências que valem em todos os projetos"
+  ],
+  "realWorldExample": "Uma empresa define no nível de organização que todo código deve ter type safety. O time do projeto define stack e comandos no CLAUDE.md do repo. Cada dev tem suas preferências em CLAUDE.local.md. Resultado: consistência sem rigidez.",
+  "encouragement": "A hierarquia de memória é o que torna o Claude Code escalável — do desenvolvedor solo ao time de 100 pessoas."
+}

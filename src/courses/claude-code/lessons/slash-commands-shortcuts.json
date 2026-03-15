@@ -1,0 +1,73 @@
+{
+  "id": "slash-commands-shortcuts",
+  "courseId": "claude-code",
+  "moduleId": "interface",
+  "title": "Comandos Slash e Atalhos",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Os comandos slash são como os atalhos do teclado de um editor de texto profissional. No início você não sabe nenhum, mas conforme aprende os principais, sua produtividade multiplica.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Comandos slash essenciais" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code tem mais de 40 comandos slash built-in. Você não precisa memorizar todos — comece pelos essenciais e expanda conforme a necessidade."
+      },
+      { "type": "heading", "content": "Gerenciamento de sessão" },
+      {
+        "type": "code",
+        "content": "/clear          # limpa a conversa e começa do zero\n/compact        # comprime a conversa mantendo info importante\n/fork nome      # cria uma ramificação da conversa\n/rewind         # volta ao estado anterior\n/checkpoint     # marca um ponto de restauração\n/export log.md  # exporta a conversa para arquivo\n/exit           # encerra a sessão",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Informação e diagnóstico" },
+      {
+        "type": "code",
+        "content": "/cost           # mostra uso de tokens e custos da sessão\n/context        # visualiza uso da janela de contexto\n/status         # versão, modelo, conta\n/doctor         # roda diagnósticos\n/diff           # visualizador interativo de diffs\n/stats          # visualização de uso diário\n/help           # documentação completa",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Configuração em sessão" },
+      {
+        "type": "code",
+        "content": "/model sonnet   # troca o modelo\n/vim            # ativa modo vim no input\n/permissions    # gerencia permissões\n/memory         # visualiza memória do projeto\n/compact        # compacta a conversa para economizar tokens",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O /btw permite fazer perguntas laterais enquanto o Claude processa — sem afetar o histórico da conversa! Ideal para tirar dúvidas rápidas durante uma tarefa longa.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Atalhos de teclado" },
+      {
+        "type": "paragraph",
+        "content": "Os atalhos de teclado aceleram drasticamente seu workflow. Os mais importantes estão no seu teclado, sem precisar de comandos slash."
+      },
+      {
+        "type": "list",
+        "content": "Ctrl+C — cancela a geração atual\nCtrl+D — encerra a sessão\nCtrl+L — limpa a tela\nCtrl+B — move tarefa para background\nCtrl+T — mostra/esconde lista de tarefas\nCtrl+O — toggle output detalhado\nCtrl+R — busca no histórico de comandos\nAlt+P — troca modelo (Option+P no macOS)\nAlt+T — toggle Extended Thinking\nShift+Tab — alterna modo de permissão\nEsc, Esc — rewind (volta ao estado anterior)\nCtrl+V — cola imagem do clipboard"
+      },
+      { "type": "heading", "content": "Keybindings customizáveis" },
+      {
+        "type": "paragraph",
+        "content": "A partir da versão 2.1.18, você pode personalizar todos os atalhos de teclado. A configuração fica em ~/.claude/keybindings.json com hot-reload automático."
+      },
+      {
+        "type": "code",
+        "content": "# Abrir editor de keybindings\n/keybindings",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Use /compact para economizar tokens e /cost para monitorar gastos",
+    "Ctrl+B move tarefas longas para background — continue trabalhando",
+    "/btw permite perguntas laterais sem poluir o contexto da conversa"
+  ],
+  "commonMistakes": [
+    "Não usar /compact quando a conversa fica longa — o contexto cresce e a qualidade cai",
+    "Esquecer do Ctrl+B — ficar parado esperando tarefas longas quando podia trabalhar em paralelo",
+    "Não checar /cost — custos podem acumular sem perceber"
+  ],
+  "realWorldExample": "Durante uma sessão de refatoração longa, você usa /compact quando sente que as respostas perdem qualidade. Depois cola uma screenshot do erro com Ctrl+V e usa /btw para perguntar algo rápido sem perder o fio da tarefa principal.",
+  "encouragement": "Não precisa decorar tudo — aprenda os 5 atalhos que mais fazem sentido no seu workflow e o resto vem naturalmente."
+}

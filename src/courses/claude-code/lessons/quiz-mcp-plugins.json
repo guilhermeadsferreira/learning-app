@@ -1,0 +1,95 @@
+{
+  "id": "quiz-mcp-plugins",
+  "courseId": "claude-code",
+  "moduleId": "mcp-plugins",
+  "title": "Quiz: MCP e Plugins",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre MCP, servidores, plugins e integração com skills."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual escopo de configuração MCP permite compartilhar a configuração com o time via git?",
+      "options": [
+        {
+          "id": "a",
+          "text": "user",
+          "isCorrect": false,
+          "explanation": "Escopo user é pessoal — fica na config do usuário, não no repositório."
+        },
+        {
+          "id": "b",
+          "text": "project",
+          "isCorrect": true,
+          "explanation": "Correto! Escopo project salva em .mcp.json na raiz do projeto, que pode ser commitado e compartilhado via git."
+        },
+        {
+          "id": "c",
+          "text": "local",
+          "isCorrect": false,
+          "explanation": "Escopo local é apenas para a máquina atual — não é compartilhável."
+        }
+      ]
+    },
+    {
+      "question": "O que diferencia um plugin de um servidor MCP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "São a mesma coisa com nomes diferentes",
+          "isCorrect": false,
+          "explanation": "São conceitos diferentes: MCP é protocolo de conexão, plugins são pacotes que podem incluir MCP + commands + skills + mais."
+        },
+        {
+          "id": "b",
+          "text": "Um plugin pode incluir MCP servers, commands, skills e mais em um único pacote instalável",
+          "isCorrect": true,
+          "explanation": "Correto! Plugins são bundles que combinam múltiplos componentes do ecossistema Claude Code."
+        },
+        {
+          "id": "c",
+          "text": "MCP é mais poderoso que plugins",
+          "isCorrect": false,
+          "explanation": "Não é questão de poder — são conceitos complementares. Plugins podem incluir MCPs como um dos seus componentes."
+        }
+      ]
+    },
+    {
+      "question": "Na analogia 'cozinha + receitas', o que cada parte representa?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cozinha = Skills, Receitas = MCP",
+          "isCorrect": false,
+          "explanation": "É o inverso: MCP fornece a cozinha (ferramentas), Skills fornecem as receitas (conhecimento de como usar)."
+        },
+        {
+          "id": "b",
+          "text": "Cozinha = MCP (ferramentas), Receitas = Skills (conhecimento de como usar)",
+          "isCorrect": true,
+          "explanation": "Exatamente! MCP dá acesso às ferramentas e serviços. Skills ensinam o Claude a usá-los de forma eficaz."
+        },
+        {
+          "id": "c",
+          "text": "Cozinha = Claude Code, Receitas = CLAUDE.md",
+          "isCorrect": false,
+          "explanation": "A analogia especificamente descreve MCP (cozinha/ferramentas) e Skills (receitas/workflows)."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Escopo project compartilha config MCP via .mcp.json no git",
+    "Plugins são bundles que combinam MCP + commands + skills + LSP",
+    "MCP = ferramentas (cozinha), Skills = knowledge de como usar (receitas)"
+  ],
+  "encouragement": "MCP e Plugins dominados! Agora vamos para o próximo nível: delegar tarefas para múltiplos agentes."
+}

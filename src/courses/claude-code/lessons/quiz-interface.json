@@ -1,0 +1,118 @@
+{
+  "id": "quiz-interface",
+  "courseId": "claude-code",
+  "moduleId": "interface",
+  "title": "Quiz: Interface e Interação",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre a interface, comandos e gerenciamento de contexto do Claude Code."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual modo de permissão permite que o Claude Code apenas analise o código sem fazer modificações?",
+      "options": [
+        {
+          "id": "a",
+          "text": "default",
+          "isCorrect": false,
+          "explanation": "O modo default pede permissão, mas pode modificar. O modo de apenas análise é o 'plan'."
+        },
+        {
+          "id": "b",
+          "text": "plan",
+          "isCorrect": true,
+          "explanation": "Correto! O modo 'plan' é somente leitura — o Claude analisa e sugere sem tocar em nenhum arquivo."
+        },
+        {
+          "id": "c",
+          "text": "acceptEdits",
+          "isCorrect": false,
+          "explanation": "O acceptEdits faz o oposto — aceita edições automaticamente. Para apenas analisar, use 'plan'."
+        }
+      ]
+    },
+    {
+      "question": "Qual comando comprime a conversa para economizar tokens sem perder contexto importante?",
+      "options": [
+        {
+          "id": "a",
+          "text": "/clear",
+          "isCorrect": false,
+          "explanation": "/clear apaga tudo e começa do zero. Para comprimir mantendo contexto, use /compact."
+        },
+        {
+          "id": "b",
+          "text": "/compact",
+          "isCorrect": true,
+          "explanation": "Correto! /compact comprime a conversa preservando informações importantes, ideal para sessões longas."
+        },
+        {
+          "id": "c",
+          "text": "/reset",
+          "isCorrect": false,
+          "explanation": "/reset reinicia a sessão. Para comprimir sem perder contexto, use /compact."
+        }
+      ]
+    },
+    {
+      "question": "Qual atalho move a tarefa atual para background, permitindo que você continue trabalhando?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ctrl+B",
+          "isCorrect": true,
+          "explanation": "Correto! Ctrl+B move a tarefa atual para background. Você pode monitorar com /tasks."
+        },
+        {
+          "id": "b",
+          "text": "Ctrl+T",
+          "isCorrect": false,
+          "explanation": "Ctrl+T mostra/esconde a lista de tarefas. Para mover para background, use Ctrl+B."
+        },
+        {
+          "id": "c",
+          "text": "Ctrl+Z",
+          "isCorrect": false,
+          "explanation": "Ctrl+Z não é um atalho do Claude Code. Para background, use Ctrl+B."
+        }
+      ]
+    },
+    {
+      "question": "Por que 99.4% do custo do Claude Code é input (leitura)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Porque o Claude Code gera muito pouco código",
+          "isCorrect": false,
+          "explanation": "O Claude Code gera bastante código. O custo alto de input vem da releitura do contexto a cada mensagem."
+        },
+        {
+          "id": "b",
+          "text": "Porque a cada mensagem ele relê todo o histórico, arquivos, CLAUDE.md e instruções do sistema",
+          "isCorrect": true,
+          "explanation": "Exatamente! O loop de releitura é o maior consumidor de tokens. Por isso otimizar o contexto é tão impactante."
+        },
+        {
+          "id": "c",
+          "text": "Porque a Anthropic cobra mais pelo input do que pelo output",
+          "isCorrect": false,
+          "explanation": "Os preços são parte do quadro, mas a causa real é o volume: cada mensagem relê todo o contexto acumulado."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Modo 'plan' é para análise sem modificação",
+    "/compact economiza tokens preservando contexto importante",
+    "Ctrl+B libera o terminal movendo tarefas para background"
+  ],
+  "encouragement": "Você já domina a interface! Agora vamos para o próximo nível: personalizar o Claude Code para o seu projeto."
+}

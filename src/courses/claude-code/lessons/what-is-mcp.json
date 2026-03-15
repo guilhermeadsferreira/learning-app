@@ -1,0 +1,64 @@
+{
+  "id": "what-is-mcp",
+  "courseId": "claude-code",
+  "moduleId": "mcp-plugins",
+  "title": "O que é MCP",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "MCP é como um adaptador universal de tomada. Assim como um adaptador permite conectar qualquer aparelho em qualquer tomada, o MCP permite conectar o Claude Code a qualquer serviço externo — GitHub, Sentry, bancos de dados, Slack — usando um protocolo padronizado.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Model Context Protocol" },
+      {
+        "type": "paragraph",
+        "content": "MCP (Model Context Protocol) é um protocolo aberto que permite ao Claude Code se conectar a serviços e ferramentas externas. Com MCP, o Claude pode interagir com GitHub, Sentry, bancos de dados, Slack e centenas de outros serviços — tudo de dentro do terminal."
+      },
+      { "type": "heading", "content": "Como funciona" },
+      {
+        "type": "paragraph",
+        "content": "O MCP segue uma arquitetura cliente-servidor. O Claude Code é o cliente, e cada serviço expõe um servidor MCP com ferramentas que o Claude pode chamar."
+      },
+      {
+        "type": "list",
+        "content": "Servidor MCP — expõe ferramentas (tools) e recursos (resources) de um serviço\nCliente MCP — o Claude Code, que descobre e chama essas ferramentas\nProtocolo — formato padronizado de comunicação entre cliente e servidor"
+      },
+      {
+        "type": "callout",
+        "content": "Existem 300+ servidores MCP disponíveis — GitHub, Sentry, Notion, Linear, Slack, PostgreSQL, e muito mais. O ecossistema cresce rapidamente.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Transportes" },
+      {
+        "type": "paragraph",
+        "content": "Servidores MCP se comunicam via dois tipos de transporte:"
+      },
+      {
+        "type": "list",
+        "content": "stdio — o servidor roda como processo local (mais comum para dev)\nHTTP — o servidor é remoto, acessado via URL (mais comum para serviços cloud)"
+      },
+      { "type": "heading", "content": "O que MCP desbloqueia" },
+      {
+        "type": "list",
+        "content": "Ler e criar issues no GitHub sem sair do terminal\nConsultar erros do Sentry para debug contextualizado\nBuscar documentação atualizada de bibliotecas\nManipular dados em bancos de dados\nEnviar notificações no Slack\nGerenciar tarefas no Linear, Asana ou Jira"
+      },
+      { "type": "heading", "content": "MCP vs. integração manual" },
+      {
+        "type": "paragraph",
+        "content": "Sem MCP, você copiaria e colaria dados entre o terminal e o navegador. Com MCP, o Claude acessa diretamente — sem troca de contexto, sem perda de informação."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "MCP é um protocolo aberto que conecta o Claude Code a serviços externos",
+    "300+ servidores disponíveis — GitHub, Sentry, Slack, bancos de dados e mais",
+    "Transportes: stdio (local) ou HTTP (remoto)"
+  ],
+  "commonMistakes": [
+    "Confundir MCP com API direta — MCP é um protocolo padronizado, não uma API específica",
+    "Não saber que servidores MCP existem para o serviço que você usa — pesquise antes de implementar do zero",
+    "Ignorar MCP e fazer tudo manualmente — copiar/colar entre terminal e browser é ineficiente"
+  ],
+  "realWorldExample": "Um dev debugga um bug: pede ao Claude para consultar os últimos erros no Sentry via MCP, correlacionar com o commit recente via GitHub MCP, e propor um fix baseado nos dados reais — tudo sem abrir o navegador.",
+  "encouragement": "MCP é o que transforma o Claude Code de ferramenta local em hub de produtividade conectado a todo o seu ecossistema."
+}

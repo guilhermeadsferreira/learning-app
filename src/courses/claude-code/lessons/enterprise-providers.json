@@ -1,0 +1,76 @@
+{
+  "id": "enterprise-providers",
+  "courseId": "claude-code",
+  "moduleId": "productivity-enterprise",
+  "title": "Configuração Enterprise",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Provedores enterprise são como diferentes operadoras de telecomunicação. O telefone (Claude Code) é o mesmo, mas a rede por trás pode ser Anthropic direta, AWS (Bedrock), Google Cloud (Vertex) ou Azure (Foundry). Você escolhe conforme sua infraestrutura.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Opções de deployment" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code suporta múltiplos provedores de infraestrutura. Para uso pessoal, Claude.ai é o mais simples. Para empresas, existem opções que se integram com a infraestrutura cloud existente."
+      },
+      {
+        "type": "list",
+        "content": "Claude for Teams/Enterprise — SSO, RBAC, billing centralizado (recomendado)\nAmazon Bedrock — para quem já está na AWS\nGoogle Vertex AI — para quem já está no GCP\nMicrosoft Foundry — para quem já está no Azure\nAnthropic Console — API key direta"
+      },
+      { "type": "heading", "content": "Configurando Amazon Bedrock" },
+      {
+        "type": "code",
+        "content": "# Ativar Bedrock\nexport CLAUDE_CODE_USE_BEDROCK=1\n\n# Credenciais AWS (via CLI, env vars, SSO ou API keys)\naws configure\n\n# Permissões IAM necessárias:\n# - bedrock:InvokeModel\n# - bedrock:InvokeModelWithResponseStream",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Configurando Google Vertex AI" },
+      {
+        "type": "code",
+        "content": "# Ativar Vertex\nexport CLAUDE_CODE_USE_VERTEX=1\n\n# Credenciais GCP\ngcloud auth application-default login\n\n# Role necessária: Vertex AI User",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "LLM Gateway (Proxy)" },
+      {
+        "type": "paragraph",
+        "content": "Para organizações que precisam de controle adicional — audit logging, cost controls, rate limiting — um LLM Gateway atua como proxy entre o Claude Code e o provedor."
+      },
+      {
+        "type": "code",
+        "content": "# Configurar proxy via variável de ambiente\nexport ANTHROPIC_BASE_URL=https://gateway.empresa.com/v1\n\n# Opções populares:\n# - LiteLLM — proxy open-source com dashboard\n# - Kong / Apigee — API gateways corporativos\n# - AWS API Gateway — para ambientes AWS",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "LLM Gateways permitem: audit logging de todas as chamadas, rate limiting por usuário, cost controls centralizados e compliance com políticas corporativas.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Gerenciamento centralizado" },
+      {
+        "type": "paragraph",
+        "content": "Em ambientes enterprise, admins podem configurar políticas que se aplicam a todos os usuários da organização."
+      },
+      {
+        "type": "list",
+        "content": "Modelos disponíveis — restringir quais modelos os devs podem usar\nPermissões globais — deny rules que valem para toda a organização\nSkills organizacionais — deploy de skills para todo o workspace\nMonitoramento — tracking de uso e custos por time"
+      },
+      {
+        "type": "code",
+        "content": "// Configuração gerenciada (managed settings)\n// Tem a mais alta prioridade — não pode ser sobrescrita\n{\n  \"availableModels\": [\"sonnet\", \"haiku\"],\n  \"permissions\": {\n    \"deny\": [\"Bash(*production*)\"]\n  }\n}",
+        "language": "json"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "5 provedores: Claude Teams/Enterprise, Bedrock, Vertex AI, Foundry, Console",
+    "LLM Gateway (LiteLLM, Kong) adiciona audit logging, rate limiting e cost controls",
+    "Managed settings têm prioridade máxima — admins controlam modelos e permissões"
+  ],
+  "commonMistakes": [
+    "Usar API key pessoal em projeto de equipe — use Claude for Teams com SSO",
+    "Não configurar LLM Gateway quando compliance exige audit trail",
+    "Esquecer de restringir modelos — sem controle, devs podem usar Opus para tudo"
+  ],
+  "realWorldExample": "Uma empresa configura Bedrock com LiteLLM como gateway. O gateway limita gastos a $50/dev/dia, logga todas as chamadas para compliance, e restringe os modelos a Sonnet e Haiku. Opus disponível apenas com aprovação do tech lead.",
+  "encouragement": "Enterprise não é burocracia — é estrutura que permite 100 devs usarem Claude Code com segurança e previsibilidade de custos."
+}

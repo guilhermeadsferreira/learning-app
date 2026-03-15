@@ -1,0 +1,81 @@
+{
+  "id": "best-practices",
+  "courseId": "claude-code",
+  "moduleId": "productivity-enterprise",
+  "title": "Boas Práticas de Uso",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Boas práticas com Claude Code são como boas práticas de direção. Você pode dirigir sem elas, mas com elas você economiza combustível, evita acidentes e chega mais rápido ao destino.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Mentalidade fundamental" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code não é um chatbot que responde perguntas — é um agente que resolve problemas. A mudança de mentalidade mais importante: descreva o QUE você quer, não o COMO fazer. Deixe o Claude explorar, planejar e implementar."
+      },
+      { "type": "heading", "content": "1. Comece amplo, refine depois" },
+      {
+        "type": "paragraph",
+        "content": "Peça uma análise geral antes de implementar. Isso alinha expectativas e evita retrabalho."
+      },
+      {
+        "type": "code",
+        "content": "# Passo 1: análise\n> como você implementaria autenticação OAuth neste projeto? Não implemente ainda.\n\n# Passo 2: após validar a abordagem\n> ótimo, implemente a opção 2 (Google OAuth com passport.js)",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "2. Uma tarefa por sessão" },
+      {
+        "type": "paragraph",
+        "content": "Sessões longas com muitas tarefas degradam a qualidade. Use /clear entre tarefas diferentes para manter o contexto limpo e as respostas focadas."
+      },
+      { "type": "heading", "content": "3. Invista no CLAUDE.md" },
+      {
+        "type": "paragraph",
+        "content": "15 minutos escrevendo um bom CLAUDE.md economizam horas toda semana. Inclua comandos de build, padrões de código e gotchas do projeto."
+      },
+      { "type": "heading", "content": "4. Revise antes de aprovar" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code pede permissão antes de agir. Sempre leia o que ele propõe — especialmente comandos shell e edições em arquivos críticos."
+      },
+      {
+        "type": "callout",
+        "content": "Use 'plan' para análises, 'default' para trabalho normal, e 'acceptEdits' quando confia na qualidade. Nunca use 'bypassPermissions' em ambientes reais.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "5. Use o modelo certo" },
+      {
+        "type": "list",
+        "content": "Haiku para tarefas mecânicas (rename, format, boilerplate)\nSonnet para o dia a dia (implement, debug, refactor)\nOpus para decisões complexas (arquitetura, análise de trade-offs)"
+      },
+      { "type": "heading", "content": "6. Aproveite imagens" },
+      {
+        "type": "paragraph",
+        "content": "Cole screenshots de erros, mockups de design ou diagramas com Ctrl+V. O Claude Code entende imagens e usa como contexto."
+      },
+      { "type": "heading", "content": "7. Crie custom commands para workflows repetitivos" },
+      {
+        "type": "paragraph",
+        "content": "Se você faz algo mais de 3 vezes, crie um command. /review, /test, /deploy — workflows padronizados que o time inteiro usa."
+      },
+      { "type": "heading", "content": "8. Monitore custos" },
+      {
+        "type": "paragraph",
+        "content": "Use /cost regularmente. Configure .claudeignore. Use /compact em sessões longas. Pequenos hábitos que reduzem 30-50% do custo."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Descreva o QUE quer, não o COMO — deixe o Claude explorar e planejar",
+    "Uma tarefa por sessão + /clear entre tarefas = contexto limpo e respostas focadas",
+    "Invista no CLAUDE.md, use o modelo certo, e monitore custos com /cost"
+  ],
+  "commonMistakes": [
+    "Ditar cada passo ao invés de descrever o objetivo — você perde o poder agêntico",
+    "Sessões infinitas sem /clear — a qualidade degrada conforme o contexto cresce",
+    "Não investir tempo no CLAUDE.md — sem contexto, o Claude precisa redescobrir tudo a cada sessão"
+  ],
+  "realWorldExample": "Um dev sênior na Anthropic começa cada dia com /clear, usa Sonnet para implementação, troca para Opus quando precisa de raciocínio profundo, e mantém o CLAUDE.md atualizado. Resultado: produtividade 3x maior que sem Claude Code.",
+  "encouragement": "Boas práticas são multiplicadores. Um dev com bons hábitos no Claude Code produz mais que uma equipe sem eles."
+}

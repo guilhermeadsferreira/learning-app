@@ -1,0 +1,75 @@
+{
+  "id": "hook-events",
+  "courseId": "claude-code",
+  "moduleId": "hooks",
+  "title": "Eventos e Matchers",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Eventos e matchers de hooks são como regras de firewall. Cada regra diz: 'quando ESTE tipo de tráfego (evento) passar por ESTA porta (matcher), faça ISTO (ação)'. Você combina eventos e matchers para automação precisa.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Tipos de evento" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code emite eventos em momentos específicos do seu fluxo de trabalho. Cada hook se conecta a um desses eventos."
+      },
+      {
+        "type": "list",
+        "content": "PreToolUse — antes de executar qualquer ferramenta (Edit, Bash, Read, etc.)\nPostToolUse — depois de executar uma ferramenta\nStop — quando o Claude decide que terminou a tarefa\nSubagentStop — quando um subagent decide que terminou sua parte"
+      },
+      { "type": "heading", "content": "Matchers" },
+      {
+        "type": "paragraph",
+        "content": "Matchers filtram em QUAIS ferramentas o hook deve ativar. Você pode usar nomes exatos, wildcards ou regex."
+      },
+      {
+        "type": "code",
+        "content": "// Matcher exato — só ativa para Edit\n\"matcher\": \"Edit\"\n\n// Wildcard — ativa para qualquer ferramenta\n\"matcher\": \"*\"\n\n// Regex — ativa para ferramentas MCP do GitHub\n\"matcher\": \"mcp__github__.*\"\n\n// Matcher específico — apenas Bash\n\"matcher\": \"Bash\"",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Tipos de hook" },
+      {
+        "type": "paragraph",
+        "content": "Hooks podem ser de dois tipos: command (executa shell) ou prompt (adiciona contexto ao Claude)."
+      },
+      {
+        "type": "code",
+        "content": "// Tipo command — executa um comando shell\n{\n  \"type\": \"command\",\n  \"command\": \"npx prettier --write $FILE_PATH\"\n}\n\n// Tipo prompt — injeta uma instrução no Claude\n{\n  \"type\": \"prompt\",\n  \"prompt\": \"Verifique se a tarefa está completa. Retorne 'approve' para parar ou 'block' com motivo.\"\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Decisões de hook (PreToolUse)" },
+      {
+        "type": "paragraph",
+        "content": "Hooks PreToolUse podem bloquear ações. O hook retorna uma decisão que o Claude Code respeita."
+      },
+      {
+        "type": "code",
+        "content": "// O hook pode retornar:\n{\n  \"decision\": \"approve\",    // permite a ação\n  \"reason\": \"Validação OK\"\n}\n\n// ou\n{\n  \"decision\": \"block\",       // bloqueia a ação\n  \"reason\": \"Arquivo protegido\",\n  \"systemMessage\": \"Este arquivo não pode ser editado.\"\n}",
+        "language": "json"
+      },
+      {
+        "type": "callout",
+        "content": "Use PreToolUse com decisão 'block' para impedir ações perigosas — como editar arquivos de produção ou rodar comandos destrutivos.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "SubagentStop" },
+      {
+        "type": "paragraph",
+        "content": "O evento SubagentStop permite validar se um subagent realmente completou sua tarefa antes de parar. Ideal para garantir qualidade em delegações."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "4 eventos: PreToolUse, PostToolUse, Stop, SubagentStop",
+    "Matchers filtram por ferramenta — exato, wildcard (*) ou regex",
+    "PreToolUse pode bloquear ações com decisão 'block' — proteção determinística"
+  ],
+  "commonMistakes": [
+    "Usar matcher '*' sem necessidade — o hook roda em TODAS as ferramentas, incluindo Read",
+    "Não usar SubagentStop — subagents podem parar antes de completar a tarefa",
+    "Esquecer que hooks de command devem ser rápidos — hooks lentos travam o Claude"
+  ],
+  "realWorldExample": "Um time configura um hook PreToolUse com matcher 'Bash' que bloqueia qualquer comando com 'rm -rf' ou 'DROP TABLE'. O Claude nunca executa esses comandos, independente do prompt do usuário.",
+  "encouragement": "Eventos e matchers dão controle cirúrgico sobre o comportamento do Claude. É automação com precisão."
+}

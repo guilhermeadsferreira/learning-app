@@ -1,0 +1,95 @@
+{
+  "id": "quiz-git-cicd",
+  "courseId": "claude-code",
+  "moduleId": "git-cicd",
+  "title": "Quiz: Git e CI/CD",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre Git workflows, modo headless e GitHub Actions com Claude Code."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual flag executa o Claude Code em modo headless (não-interativo)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "claude --headless",
+          "isCorrect": false,
+          "explanation": "O flag correto é -p (print), não --headless. claude -p \"prompt\" executa e encerra."
+        },
+        {
+          "id": "b",
+          "text": "claude -p \"prompt\"",
+          "isCorrect": true,
+          "explanation": "Correto! O flag -p envia um prompt, recebe o resultado e encerra — perfeito para scripts e automação."
+        },
+        {
+          "id": "c",
+          "text": "claude --script \"prompt\"",
+          "isCorrect": false,
+          "explanation": "Esse flag não existe. Use claude -p \"prompt\" para modo não-interativo."
+        }
+      ]
+    },
+    {
+      "question": "Por que é importante usar --max-turns em GitHub Actions?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Para melhorar a qualidade das respostas",
+          "isCorrect": false,
+          "explanation": "--max-turns não melhora qualidade, ele limita o número de interações para evitar loops e custos excessivos."
+        },
+        {
+          "id": "b",
+          "text": "Para evitar loops infinitos e controlar custos em CI/CD",
+          "isCorrect": true,
+          "explanation": "Correto! Sem limite, o Claude pode rodar muitas iterações em CI, consumindo tokens e tempo desnecessários."
+        },
+        {
+          "id": "c",
+          "text": "É obrigatório — sem ele o Action não funciona",
+          "isCorrect": false,
+          "explanation": "Não é obrigatório tecnicamente, mas é uma boa prática essencial para controle de custos."
+        }
+      ]
+    },
+    {
+      "question": "Qual GitHub Action oficial integra o Claude Code em workflows de CI/CD?",
+      "options": [
+        {
+          "id": "a",
+          "text": "anthropics/claude-code-action@v1",
+          "isCorrect": true,
+          "explanation": "Correto! anthropics/claude-code-action@v1 é a Action oficial da Anthropic para integração com GitHub."
+        },
+        {
+          "id": "b",
+          "text": "actions/claude-review@latest",
+          "isCorrect": false,
+          "explanation": "Essa action não existe. A oficial é anthropics/claude-code-action@v1."
+        },
+        {
+          "id": "c",
+          "text": "claude/github-action@main",
+          "isCorrect": false,
+          "explanation": "Essa action não existe. A oficial é anthropics/claude-code-action@v1."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "claude -p para modo headless não-interativo",
+    "--max-turns é essencial em CI/CD para evitar loops e custos",
+    "anthropics/claude-code-action@v1 é a Action oficial"
+  ],
+  "encouragement": "Git e CI/CD dominados! Último módulo: boas práticas e configuração enterprise."
+}

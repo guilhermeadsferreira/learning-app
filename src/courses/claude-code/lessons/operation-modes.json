@@ -1,0 +1,75 @@
+{
+  "id": "operation-modes",
+  "courseId": "claude-code",
+  "moduleId": "interface",
+  "title": "Modos de Operação e Permissão",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Os modos de permissão são como os níveis de acesso de um funcionário em uma empresa. O estagiário (plan) só pode observar, o analista (default) precisa de aprovação para cada ação, e o diretor (bypassPermissions) tem carta branca para agir.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são modos de permissão?" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code tem um sistema de permissões que controla o que ele pode fazer sem pedir aprovação. Isso é fundamental para equilibrar autonomia e segurança. Você escolhe o nível de confiança adequado ao seu contexto."
+      },
+      { "type": "heading", "content": "Os 5 modos disponíveis" },
+      {
+        "type": "list",
+        "content": "default — pede permissão na primeira vez que usa cada ferramenta\nacceptEdits — aceita edições em arquivos automaticamente, mas pede permissão para comandos no terminal\nplan — modo somente leitura, analisa mas não modifica nada\ndontAsk — nega tudo que não foi pré-aprovado nas regras\nbypassPermissions — aceita tudo sem perguntar (apenas para ambientes isolados/sandboxed)"
+      },
+      {
+        "type": "callout",
+        "content": "Use 'plan' quando quiser que o Claude Code apenas analise e planeje sem tocar em nada. É ótimo para entender um codebase novo.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Trocando de modo" },
+      {
+        "type": "paragraph",
+        "content": "Você pode trocar de modo a qualquer momento durante uma sessão, sem precisar reiniciar."
+      },
+      {
+        "type": "code",
+        "content": "# Via atalho de teclado (durante sessão)\nShift+Tab  # ou Alt+M — alterna entre modos\n\n# Via CLI ao iniciar\nclaude --permission-mode plan\n\n# Via configuração persistente em settings.json\n{\n  \"permissions\": {\n    \"defaultMode\": \"acceptEdits\"\n  }\n}",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Seleção de modelo" },
+      {
+        "type": "paragraph",
+        "content": "Além do modo de permissão, você pode escolher qual modelo usar. Cada modelo tem um equilíbrio diferente entre velocidade, custo e capacidade."
+      },
+      {
+        "type": "list",
+        "content": "Haiku — rápido e barato, ideal para tarefas simples\nSonnet — equilíbrio entre velocidade e qualidade (padrão)\nOpus — o mais poderoso, ideal para tarefas complexas de arquitetura"
+      },
+      {
+        "type": "code",
+        "content": "# Iniciar com um modelo específico\nclaude --model opus\n\n# Trocar modelo durante sessão\n/model sonnet\n\n# Via atalho de teclado\nAlt+P  # (Option+P no macOS)",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Extended Thinking" },
+      {
+        "type": "paragraph",
+        "content": "O Extended Thinking permite que o Claude pense mais profundamente antes de responder. Ele cria blocos internos de raciocínio que informam a resposta final — ideal para problemas complexos."
+      },
+      {
+        "type": "code",
+        "content": "# Ativar/desativar durante sessão\nAlt+T  # (Option+T no macOS)\n\n# Via configuração\n{\n  \"thinking\": true\n}",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Use 'plan' para analisar sem modificar, 'acceptEdits' para fluxo rápido de edição",
+    "Troque de modelo com Alt+P — Haiku para velocidade, Opus para complexidade",
+    "Extended Thinking (Alt+T) melhora respostas para problemas difíceis"
+  ],
+  "commonMistakes": [
+    "Usar 'bypassPermissions' em ambientes de produção — ele só é seguro em sandboxes isoladas",
+    "Ficar no modelo Opus para tarefas simples — o custo é ~19x maior que Haiku",
+    "Não usar 'plan' para análise — acidentalmente deixar o Claude editar quando você só queria entender"
+  ],
+  "realWorldExample": "Você está explorando um codebase open-source pela primeira vez. Inicia com 'claude --permission-mode plan' para entender a arquitetura sem risco de alterar nada, depois muda para 'acceptEdits' quando decide implementar uma contribuição.",
+  "encouragement": "Dominar os modos de permissão é o que separa quem usa o Claude Code com segurança de quem corre riscos desnecessários."
+}

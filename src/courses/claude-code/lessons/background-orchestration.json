@@ -1,0 +1,72 @@
+{
+  "id": "background-orchestration",
+  "courseId": "claude-code",
+  "moduleId": "agents",
+  "title": "Background Tasks e Orquestração",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Background tasks são como colocar roupa na máquina de lavar. Você inicia o processo, vai fazer outra coisa, e volta quando está pronto. Não precisa ficar parado esperando.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Tarefas em background" },
+      {
+        "type": "paragraph",
+        "content": "Quando uma tarefa do Claude Code está demorando, você pode movê-la para background e continuar trabalhando. O agente continua executando enquanto você faz outras coisas."
+      },
+      {
+        "type": "code",
+        "content": "# Durante uma tarefa longa, pressione:\nCtrl+B\n\n# A tarefa move para background\n# Você pode continuar conversando ou iniciar outra tarefa\n\n# Monitorar tarefas em background:\n/tasks\n\n# Matar agentes em background:\nCtrl+F (pressione duas vezes para confirmar)",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Quando usar background" },
+      {
+        "type": "list",
+        "content": "Refatorações longas que tocam muitos arquivos\nRodando suites de teste que demoram\nGerando documentação extensa\nAnalises profundas de codebase\nQualquer tarefa que leva mais de 30 segundos"
+      },
+      { "type": "heading", "content": "Orquestração com subagents" },
+      {
+        "type": "paragraph",
+        "content": "A verdadeira orquestração acontece quando você combina background tasks com subagents. O Claude Code pode estar rodando 10 subagents em paralelo, cada um em background."
+      },
+      {
+        "type": "code",
+        "content": "# Você pede uma tarefa complexa:\n> Refatore todo o módulo de autenticação:\n> - atualize para bcrypt v5\n> - migre de JWT para session tokens\n> - atualize todos os testes\n> - atualize a documentação\n\n# O Claude Code:\n# 1. Cria subagents para cada sub-tarefa\n# 2. Executa em paralelo\n# 3. Você pode Ctrl+B para background\n# 4. Monitora com /tasks",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "State files para coordenação" },
+      {
+        "type": "paragraph",
+        "content": "Para orquestração mais complexa (como swarm patterns), agentes podem usar state files — arquivos Markdown que definem a tarefa, dependências e critérios de sucesso."
+      },
+      {
+        "type": "code",
+        "content": "---\nagent_name: database-migration\ntask_number: 4.2\ndependencies: [\"Task 3.5\", \"Task 4.1\"]\n---\n\n# Task: Database Schema Migration\n\n## Requirements\n- Create migration files for new auth schema\n- Add indexes for performance\n- Write tests for constraints\n\n## Success Criteria\n- Migrations run successfully\n- All tests pass\n- Schema documented in README",
+        "language": "markdown"
+      },
+      {
+        "type": "callout",
+        "content": "State files são o padrão avançado para orquestração multi-agente. Cada agente lê seu state file, executa, e reporta status. É como um kanban automatizado.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Listando agentes configurados" },
+      {
+        "type": "code",
+        "content": "# Ver subagents configurados no projeto\nclaude agents\n\n# Ver tarefas ativas em background\n/tasks",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Ctrl+B move tarefas para background — continue trabalhando enquanto o Claude executa",
+    "/tasks monitora todas as tarefas em background",
+    "State files permitem orquestração avançada com dependências e critérios de sucesso"
+  ],
+  "commonMistakes": [
+    "Ficar parado esperando tarefas longas — use Ctrl+B e vá fazer outra coisa",
+    "Não monitorar com /tasks — tarefas em background podem falhar silenciosamente",
+    "Tentar orquestração avançada sem dominar subagents básicos — aprenda o simples primeiro"
+  ],
+  "realWorldExample": "Um dev pede uma refatoração grande. O Claude cria 5 subagents paralelos. O dev pressiona Ctrl+B, abre outra sessão Claude Code para uma feature diferente, e volta em 10 minutos — tudo pronto com testes passando.",
+  "encouragement": "Background tasks + subagents = multiplicador de produtividade. Você trabalha enquanto o Claude trabalha."
+}

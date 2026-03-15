@@ -1,0 +1,95 @@
+{
+  "id": "quiz-skills",
+  "courseId": "claude-code",
+  "moduleId": "skills",
+  "title": "Quiz: Skills",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre Skills — estrutura, criação, testes e distribuição."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a diferença fundamental entre Custom Commands e Skills?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Commands são mais poderosos que Skills",
+          "isCorrect": false,
+          "explanation": "Na verdade, Skills são mais poderosas — incluem scripts, referências, assets e carregam automaticamente."
+        },
+        {
+          "id": "b",
+          "text": "Commands são ativados manualmente com /; Skills são carregadas automaticamente quando o Claude detecta relevância",
+          "isCorrect": true,
+          "explanation": "Exatamente! Commands exigem /comando explícito. Skills usam progressive disclosure e carregam quando a tarefa é relevante."
+        },
+        {
+          "id": "c",
+          "text": "Skills só funcionam no Claude.ai, não no Claude Code",
+          "isCorrect": false,
+          "explanation": "Skills funcionam em todas as plataformas: Claude.ai, Claude Code e API."
+        }
+      ]
+    },
+    {
+      "question": "O que é Progressive Disclosure no contexto de Skills?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Um sistema de 3 níveis que carrega conteúdo sob demanda para economizar tokens",
+          "isCorrect": true,
+          "explanation": "Correto! Nível 1 (frontmatter) sempre carregado, Nível 2 (SKILL.md) quando relevante, Nível 3 (arquivos linkados) sob demanda."
+        },
+        {
+          "id": "b",
+          "text": "Uma técnica para revelar gradualmente a solução ao usuário",
+          "isCorrect": false,
+          "explanation": "Progressive disclosure em skills refere-se ao carregamento em 3 níveis, não à revelação de soluções."
+        },
+        {
+          "id": "c",
+          "text": "Um formato de documentação progressiva",
+          "isCorrect": false,
+          "explanation": "É sobre carregamento inteligente de conteúdo em 3 níveis para otimizar uso de tokens."
+        }
+      ]
+    },
+    {
+      "question": "O que a description do frontmatter DEVE incluir para que a skill seja ativada automaticamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apenas o nome da skill",
+          "isCorrect": false,
+          "explanation": "O nome fica no campo 'name'. A description precisa de O QUE faz e QUANDO usar."
+        },
+        {
+          "id": "b",
+          "text": "O que a skill faz E frases de gatilho de quando usar",
+          "isCorrect": true,
+          "explanation": "Correto! A description precisa ter O QUE faz + QUANDO usar (com frases específicas que o usuário diria)."
+        },
+        {
+          "id": "c",
+          "text": "Apenas uma explicação técnica detalhada",
+          "isCorrect": false,
+          "explanation": "Explicações técnicas sem frases de gatilho fazem a skill nunca ser ativada automaticamente."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Skills carregam automaticamente; commands precisam de /invocação manual",
+    "Progressive disclosure: 3 níveis de carregamento para economizar tokens",
+    "Description deve ter O QUE faz + QUANDO usar com frases de gatilho"
+  ],
+  "encouragement": "Skills dominadas! Agora vamos para Hooks — o sistema que conecta ações do Claude a automações reais."
+}

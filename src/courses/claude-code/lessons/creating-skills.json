@@ -1,0 +1,67 @@
+{
+  "id": "creating-skills",
+  "courseId": "claude-code",
+  "moduleId": "skills",
+  "title": "Criando Skills Eficazes",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Criar uma skill é como escrever uma receita de culinária profissional. Não basta listar ingredientes — você precisa de contexto (pra quem é), instruções claras, dicas de execução, e como saber se deu certo.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O YAML Frontmatter da skill" },
+      {
+        "type": "paragraph",
+        "content": "O frontmatter é a parte mais importante da skill. É como o Claude decide se deve carregá-la. Um frontmatter ruim = skill que nunca ativa ou que ativa o tempo todo."
+      },
+      {
+        "type": "code",
+        "content": "---\nname: code-review-security\ndescription: Analisa código por vulnerabilidades de segurança. Use quando o usuário pede \"review de segurança\", \"auditoria\", \"vulnerability scan\", ou menciona \"OWASP\", \"SQL injection\", \"XSS\".\n---",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Regras do frontmatter" },
+      {
+        "type": "list",
+        "content": "name (obrigatório) — kebab-case, sem espaços ou maiúsculas, deve coincidir com o nome da pasta\ndescription (obrigatório) — O QUE faz + QUANDO usar. Máximo 1024 caracteres\nlicense (opcional) — MIT, Apache-2.0 etc.\nmetadata (opcional) — author, version, mcp-server"
+      },
+      {
+        "type": "callout",
+        "content": "A description DEVE incluir frases de gatilho — palavras que o usuário diria e que devem ativar a skill. Sem gatilhos, a skill nunca carrega automaticamente.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "Escrevendo boas descriptions" },
+      {
+        "type": "code",
+        "content": "# ✅ Bom — específico com gatilhos\ndescription: Gerencia workflows do Linear incluindo sprint planning, criação de tasks e tracking. Use quando o usuário menciona \"sprint\", \"Linear tasks\", \"project planning\", ou pede para \"criar tickets\".\n\n# ❌ Ruim — vago demais\ndescription: Ajuda com projetos.\n\n# ❌ Ruim — sem gatilhos\ndescription: Cria documentação sofisticada multi-página.",
+        "language": "yaml"
+      },
+      { "type": "heading", "content": "Corpo do SKILL.md" },
+      {
+        "type": "paragraph",
+        "content": "Após o frontmatter, escreva as instruções em Markdown. A estrutura recomendada:"
+      },
+      {
+        "type": "code",
+        "content": "---\nname: project-setup\ndescription: Configura workspace de projeto. Use quando usuário diz \"setup\", \"inicializar projeto\", \"criar workspace\".\n---\n\n# Project Setup\n\n## Instruções\n\n### Passo 1: Verificar Requisitos\nVerifique se Node.js e Git estão instalados.\n\n### Passo 2: Criar Estrutura\nCrie as pastas seguindo o padrão em `references/structure.md`.\n\n### Passo 3: Configurar Dependencies\nInstale dependências listadas em `references/deps.md`.\n\n## Exemplos\n\nUsuário diz: \"configure o projeto para React + TypeScript\"\nAções: criar vite config, tsconfig, instalar deps.\n\n## Troubleshooting\n\nErro: \"EACCES permission denied\"\nSolução: Use `sudo` ou configure npm para não precisar de root.",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Boas práticas" },
+      {
+        "type": "list",
+        "content": "Seja específico — instruções claras com exemplos, não genéricas\nInclua error handling — liste erros comuns e como resolver\nUse progressive disclosure — mantenha SKILL.md focado, mova detalhes para references/\nMantenha SKILL.md abaixo de 5.000 palavras — move detalhes para references/\nInclua scripts para validações críticas — código é determinístico, linguagem não"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "A description DEVE ter O QUE faz + QUANDO usar (com frases de gatilho específicas)",
+    "name em kebab-case, sem XML tags, sem 'claude' ou 'anthropic' no nome",
+    "SKILL.md focado em instruções + exemplos + troubleshooting; detalhes em references/"
+  ],
+  "commonMistakes": [
+    "Description sem frases de gatilho — a skill nunca é carregada automaticamente",
+    "Instruções vagas como 'valide os dados corretamente' — seja específico sobre o que validar",
+    "SKILL.md com todo o conteúdo inline — mova documentação detalhada para references/"
+  ],
+  "realWorldExample": "Um time de pagamentos cria uma skill 'payment-compliance' que verifica compliance antes de processar transações. A description inclui gatilhos como 'processar pagamento', 'compliance check', 'sanctions'. O Claude carrega automaticamente quando o dev trabalha no módulo de pagamentos.",
+  "encouragement": "Criar uma skill eficaz leva 15-30 minutos. O retorno? Centenas de horas economizadas pelo time inteiro."
+}

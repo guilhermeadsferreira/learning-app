@@ -1,0 +1,95 @@
+{
+  "id": "quiz-agents",
+  "courseId": "claude-code",
+  "moduleId": "agents",
+  "title": "Quiz: Subagents e Agent Teams",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre subagents, Agent Teams e orquestração de tarefas."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a diferença principal entre subagents e Agent Teams?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Subagents são mais rápidos que Agent Teams",
+          "isCorrect": false,
+          "explanation": "Velocidade depende da tarefa. A diferença principal é a comunicação: subagents são isolados, Agent Teams se comunicam."
+        },
+        {
+          "id": "b",
+          "text": "Subagents são isolados e reportam ao principal; Agent Teams podem se comunicar diretamente entre si",
+          "isCorrect": true,
+          "explanation": "Exatamente! Subagents trabalham isolados. Agent Teams trocam mensagens e compartilham achados em tempo real."
+        },
+        {
+          "id": "c",
+          "text": "Subagents só executam código, Agent Teams só analisam",
+          "isCorrect": false,
+          "explanation": "Ambos podem executar qualquer tipo de tarefa. A diferença é o modelo de comunicação."
+        }
+      ]
+    },
+    {
+      "question": "Qual atalho move uma tarefa em execução para background?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ctrl+B",
+          "isCorrect": true,
+          "explanation": "Correto! Ctrl+B move a tarefa atual para background. Monitore com /tasks."
+        },
+        {
+          "id": "b",
+          "text": "Ctrl+D",
+          "isCorrect": false,
+          "explanation": "Ctrl+D encerra a sessão. Para background, use Ctrl+B."
+        },
+        {
+          "id": "c",
+          "text": "Ctrl+Z",
+          "isCorrect": false,
+          "explanation": "Ctrl+Z não é um atalho do Claude Code. Para background, use Ctrl+B."
+        }
+      ]
+    },
+    {
+      "question": "Quando NÃO é recomendado usar Agent Teams?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Para features que envolvem frontend, backend e testes",
+          "isCorrect": false,
+          "explanation": "Esse é justamente um bom caso de uso — coordenação cross-layer."
+        },
+        {
+          "id": "b",
+          "text": "Para tarefas simples ou quando múltiplos agentes editariam o mesmo arquivo",
+          "isCorrect": true,
+          "explanation": "Correto! O overhead de coordenação não compensa para tarefas simples, e múltiplos agentes no mesmo arquivo causa conflitos."
+        },
+        {
+          "id": "c",
+          "text": "Para debugging com múltiplas hipóteses",
+          "isCorrect": false,
+          "explanation": "Debugging com hipóteses concorrentes é um excelente caso de uso para Agent Teams."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Subagents: isolados, reportam ao principal. Agent Teams: comunicação direta",
+    "Ctrl+B para background, /tasks para monitorar",
+    "Agent Teams: bom para cross-layer, evitar para tarefas simples ou mesmo arquivo"
+  ],
+  "encouragement": "Agentes dominados! Agora vamos automatizar com Git, CI/CD e GitHub Actions."
+}

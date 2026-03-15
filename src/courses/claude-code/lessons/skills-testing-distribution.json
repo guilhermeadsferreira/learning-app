@@ -1,0 +1,81 @@
+{
+  "id": "skills-testing-distribution",
+  "courseId": "claude-code",
+  "moduleId": "skills",
+  "title": "Testes e Distribuição",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Testar uma skill é como testar uma automação de marketing. Você verifica se o gatilho dispara no momento certo, se o workflow funciona, e se o resultado é melhor do que sem a automação.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "3 dimensões de teste" },
+      {
+        "type": "paragraph",
+        "content": "Testes eficazes de skills cobrem três áreas: triggering (quando ativa), funcional (se funciona) e comparativo (se melhora)."
+      },
+      { "type": "heading", "content": "1. Testes de triggering" },
+      {
+        "type": "paragraph",
+        "content": "A skill deve carregar quando relevante e NÃO carregar quando irrelevante."
+      },
+      {
+        "type": "code",
+        "content": "# Deve ativar ✅\n\"ajude-me a planejar o sprint\"\n\"crie tarefas no Linear\"\n\"inicialize o projeto no Linear\"\n\n# Não deve ativar ❌\n\"qual a previsão do tempo?\"\n\"ajude-me a escrever Python\"\n\"crie uma planilha\"",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Dica: pergunte ao Claude 'quando você usaria a skill [nome]?'. Ele vai citar a description. Ajuste baseado no que falta.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "2. Testes funcionais" },
+      {
+        "type": "list",
+        "content": "Outputs válidos são gerados?\nChamadas a APIs/MCP funcionam?\nError handling cobre os cenários comuns?\nEdge cases são tratados?"
+      },
+      { "type": "heading", "content": "3. Comparação com baseline" },
+      {
+        "type": "paragraph",
+        "content": "Compare a mesma tarefa com e sem a skill. A skill deve reduzir mensagens, erros e tokens."
+      },
+      {
+        "type": "code",
+        "content": "# Baseline (sem skill):\n# - 15 mensagens ida e volta\n# - 3 chamadas de API falharam\n# - 12.000 tokens consumidos\n\n# Com skill:\n# - 2 perguntas de clarificação\n# - 0 falhas de API\n# - 6.000 tokens consumidos",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Usando o skill-creator" },
+      {
+        "type": "paragraph",
+        "content": "O skill-creator é uma skill built-in que ajuda a criar e refinar skills. Disponível no Claude.ai e Claude Code."
+      },
+      {
+        "type": "code",
+        "content": "# No Claude Code ou Claude.ai:\n> Use o skill-creator para me ajudar a criar uma skill para [seu caso de uso]\n\n# Para revisar uma skill existente:\n> Revise esta skill e sugira melhorias",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Distribuição" },
+      {
+        "type": "list",
+        "content": "Claude.ai: Settings > Capabilities > Skills > Upload (zip da pasta)\nClaude Code: coloque na pasta de skills do projeto ou do usuário\nOrganização: admins podem deployar skills para todo o workspace\nAPI: endpoint /v1/skills para gerenciamento programático\nGitHub: hospedar em repo público com README e instruções de instalação"
+      },
+      { "type": "heading", "content": "Corrigindo problemas comuns" },
+      {
+        "type": "list",
+        "content": "Skill não ativa? → Revise a description, adicione gatilhos específicos\nAtiva demais? → Adicione restrições negativas na description ('NÃO use para...')\nInstruções ignoradas? → Mova instruções críticas para o topo, use headers ## Crítico\nRespostas lentas? → Mova conteúdo para references/, mantenha SKILL.md < 5.000 palavras"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Teste em 3 dimensões: triggering (quando ativa), funcional (se funciona), comparativo (se melhora)",
+    "Use o skill-creator para gerar e revisar skills",
+    "Distribua via upload no Claude.ai, API /v1/skills, ou GitHub"
+  ],
+  "commonMistakes": [
+    "Não testar triggering — a skill nunca carrega ou carrega para tudo",
+    "Não comparar com baseline — sem métricas, não sabe se a skill realmente ajuda",
+    "Publicar sem testar edge cases — a skill falha em cenários comuns"
+  ],
+  "realWorldExample": "Uma empresa SaaS cria uma skill para onboarding de clientes. Testa com 20 queries de gatilho, confirma 95% de ativação correta, e compara: sem skill = 15 min por onboarding, com skill = 3 min. Publica no GitHub e documenta no README do MCP.",
+  "encouragement": "Skills bem testadas são confiáveis. Confiança é o que permite o time adotar sem medo."
+}

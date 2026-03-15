@@ -1,0 +1,68 @@
+{
+  "id": "git-workflows",
+  "courseId": "claude-code",
+  "moduleId": "git-cicd",
+  "title": "Workflows com Git",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Usar Git com Claude Code é como ter um assistente que sabe todas as flags do git, nunca esquece de fazer add antes do commit, e escreve mensagens de commit melhores que a maioria dos devs.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Git integrado ao Claude Code" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code entende Git nativamente. Ele pode criar branches, fazer commits, abrir PRs, fazer rebase, resolver conflitos e muito mais — tudo via linguagem natural."
+      },
+      { "type": "heading", "content": "Operações comuns" },
+      {
+        "type": "code",
+        "content": "# Commit com mensagem gerada pelo Claude\n> faça commit das alterações com mensagem descritiva\n\n# Criar branch e implementar feature\n> crie uma branch feature/user-settings e implemente a tela de configurações\n\n# Abrir Pull Request\n> abra um PR para main com título e descrição detalhada\n\n# Resolver conflitos de merge\n> resolva os conflitos de merge mantendo as alterações da branch feature\n\n# Rebase interativo\n> faça squash dos últimos 3 commits em um só",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Code review assistido" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code pode revisar diffs como um reviewer experiente — identificando bugs, sugerindo melhorias e checando padrões."
+      },
+      {
+        "type": "code",
+        "content": "# Review do diff atual\n> revise o diff staged e identifique problemas\n\n# Review de um PR específico (com GitHub MCP)\n> revise o PR #42 — foque em segurança e performance\n\n# Comparar branches\n> compare feature/auth com main e resuma as alterações",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Para reviews padronizados, crie um custom command /review que define checklist, severidade e formato de resposta.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Conventional Commits" },
+      {
+        "type": "paragraph",
+        "content": "Instrua o Claude Code a usar Conventional Commits no CLAUDE.md e ele seguirá o padrão automaticamente."
+      },
+      {
+        "type": "code",
+        "content": "# No CLAUDE.md:\n## Git\n- Use Conventional Commits: tipo(escopo): descrição\n- Tipos: feat, fix, refactor, docs, test, chore\n- Descrição em inglês, imperativo, máx 72 chars\n- Body com contexto quando a mudança é complexa",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Workflow completo de feature" },
+      {
+        "type": "code",
+        "content": "# Um prompt, workflow completo:\n> crie branch feature/dark-mode,\n> implemente toggle de dark mode no settings,\n> escreva testes,\n> faça commit e abra PR para main",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "O Claude Code gerencia todo o workflow Git — branch, commit, PR, merge, rebase",
+    "Defina padrões de commit no CLAUDE.md para consistência automática",
+    "Combine com custom commands para reviews padronizados"
+  ],
+  "commonMistakes": [
+    "Não definir padrão de commit no CLAUDE.md — sem instrução, as mensagens são genéricas",
+    "Fazer commit sem revisar o diff — sempre verifique o que será commitado",
+    "Não usar o Claude para resolver conflitos — ele é excelente em merge conflicts"
+  ],
+  "realWorldExample": "Um dev termina uma feature e diz: 'faça commit, crie PR para main com descrição detalhada, e marque @rafael como reviewer'. O Claude faz tudo: commit com Conventional Commits, PR com resumo das alterações e checklist de review.",
+  "encouragement": "Git com Claude Code é como git turbinado. Nunca mais esqueça o que mudou ou escreva um commit genérico."
+}

@@ -1,0 +1,95 @@
+{
+  "id": "quiz-hooks",
+  "courseId": "claude-code",
+  "moduleId": "hooks",
+  "title": "Quiz: Hooks",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre hooks — eventos, matchers e automações práticas."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a diferença fundamental entre instruções no CLAUDE.md e hooks?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Não há diferença — ambos garantem que o Claude siga as regras",
+          "isCorrect": false,
+          "explanation": "Há uma diferença crítica: CLAUDE.md é probabilístico (pode não seguir), hooks são determinísticos (rodam sempre)."
+        },
+        {
+          "id": "b",
+          "text": "CLAUDE.md é probabilístico (linguagem natural); hooks são determinísticos (código executável)",
+          "isCorrect": true,
+          "explanation": "Exatamente! Hooks são código que roda sem exceção. Instruções em linguagem natural podem ser interpretadas de forma diferente."
+        },
+        {
+          "id": "c",
+          "text": "Hooks só funcionam no modo enterprise",
+          "isCorrect": false,
+          "explanation": "Hooks funcionam em qualquer configuração do Claude Code, não apenas enterprise."
+        }
+      ]
+    },
+    {
+      "question": "Qual evento você usaria para auto-formatar código DEPOIS que o Claude edita um arquivo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PreToolUse com matcher Edit",
+          "isCorrect": false,
+          "explanation": "PreToolUse roda ANTES da ação. Para formatar depois de editar, use PostToolUse."
+        },
+        {
+          "id": "b",
+          "text": "PostToolUse com matcher Edit",
+          "isCorrect": true,
+          "explanation": "Correto! PostToolUse+Edit roda após cada edição de arquivo — perfeito para formatação automática."
+        },
+        {
+          "id": "c",
+          "text": "Stop com matcher Edit",
+          "isCorrect": false,
+          "explanation": "Stop roda quando o Claude decide parar, não após cada edição individual."
+        }
+      ]
+    },
+    {
+      "question": "Como um hook PreToolUse pode impedir o Claude de executar uma ação?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Retornando um JSON com decision: 'block'",
+          "isCorrect": true,
+          "explanation": "Correto! O hook retorna {\"decision\": \"block\", \"reason\": \"motivo\"} e a ação é impedida."
+        },
+        {
+          "id": "b",
+          "text": "Escrevendo 'STOP' na saída do comando",
+          "isCorrect": false,
+          "explanation": "O mecanismo de bloqueio usa JSON com decision: 'block', não texto 'STOP'."
+        },
+        {
+          "id": "c",
+          "text": "Não é possível — hooks só podem observar, não bloquear",
+          "isCorrect": false,
+          "explanation": "Hooks PreToolUse podem sim bloquear ações usando a decisão 'block'."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Hooks são determinísticos (código), CLAUDE.md é probabilístico (linguagem natural)",
+    "PostToolUse + Edit = auto-formatação após edição",
+    "PreToolUse pode bloquear ações com decision: 'block'"
+  ],
+  "encouragement": "Hooks dominados! Agora vamos expandir o ecossistema: MCP e Plugins."
+}

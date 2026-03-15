@@ -1,0 +1,73 @@
+{
+  "id": "yaml-frontmatter",
+  "courseId": "claude-code",
+  "moduleId": "commands",
+  "title": "YAML Frontmatter e Configuração",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O YAML frontmatter é como os metadados de uma música — título, artista, gênero. Não é a música em si, mas diz ao player como tratá-la. No comando, o frontmatter diz ao Claude Code como executar aquele prompt.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é YAML Frontmatter?" },
+      {
+        "type": "paragraph",
+        "content": "O frontmatter é um bloco YAML no topo do arquivo .md que configura metadados do comando. Ele fica entre dois delimitadores '---' e controla aspectos como descrição, ferramentas permitidas e qual modelo usar."
+      },
+      { "type": "heading", "content": "Estrutura básica" },
+      {
+        "type": "code",
+        "content": "---\ndescription: Revisa código por segurança\nallowed-tools: Read, Grep, Bash(git:*)\nmodel: sonnet\n---\n\nRevise este código buscando vulnerabilidades de segurança...",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Campos disponíveis" },
+      {
+        "type": "list",
+        "content": "description — descrição curta exibida na listagem de comandos\nallowed-tools — ferramentas que o comando pode usar (restringe acesso)\nmodel — qual modelo usar (haiku, sonnet, opus)\nargument-hint — dica sobre argumentos esperados"
+      },
+      { "type": "heading", "content": "Restringindo ferramentas" },
+      {
+        "type": "paragraph",
+        "content": "O campo allowed-tools é poderoso para segurança. Você limita exatamente o que o Claude pode fazer quando o comando roda."
+      },
+      {
+        "type": "code",
+        "content": "---\ndescription: Análise de segurança (somente leitura)\nallowed-tools: Read, Grep, Glob\n---\n# Apenas leitura — não pode editar nem rodar bash\n\n---\ndescription: Commit automático\nallowed-tools: Bash(git add:*), Bash(git commit:*), Bash(git diff:*)\n---\n# Só pode usar comandos git específicos\n\n---\ndescription: Deploy para staging\nallowed-tools: Bash(npm run build), Bash(npm run deploy:staging)\n---\n# Só pode rodar build e deploy para staging",
+        "language": "markdown"
+      },
+      {
+        "type": "callout",
+        "content": "Use allowed-tools para criar comandos seguros. Um /deploy que só pode rodar 'npm run deploy:staging' previne acidentes em produção.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Escolhendo o modelo" },
+      {
+        "type": "paragraph",
+        "content": "Use o campo model para otimizar custo por comando. Tarefas simples não precisam do modelo mais caro."
+      },
+      {
+        "type": "code",
+        "content": "---\ndescription: Gera mensagem de commit\nmodel: haiku\n---\n# Haiku é rápido e barato — perfeito para commits\n\n---\ndescription: Revisão arquitetural profunda\nmodel: opus\n---\n# Opus para análises que exigem raciocínio complexo",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Hint de argumentos" },
+      {
+        "type": "code",
+        "content": "---\ndescription: Explica um conceito\nargument-hint: [conceito]\n---\n# Exibe: /explain [conceito]",
+        "language": "markdown"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Frontmatter fica entre --- e --- no topo do arquivo e configura metadados do comando",
+    "allowed-tools restringe o que o Claude pode fazer — fundamental para segurança",
+    "Use model para otimizar custo: haiku para tarefas simples, opus para análises complexas"
+  ],
+  "commonMistakes": [
+    "Esquecer os delimitadores --- — sem eles, o YAML é tratado como texto normal",
+    "Não restringir ferramentas em comandos sensíveis — um /deploy sem allowed-tools pode causar estragos",
+    "Usar opus em todo comando — desperdício de custo para tarefas que sonnet ou haiku resolvem"
+  ],
+  "realWorldExample": "Um lead cria /security-audit com allowed-tools: Read, Grep (somente leitura) e model: opus (raciocínio profundo). O comando analisa sem risco de alterar código e usa o melhor modelo para encontrar vulnerabilidades.",
+  "encouragement": "Frontmatter parece um detalhe, mas é o que separa um comando amador de um comando profissional."
+}

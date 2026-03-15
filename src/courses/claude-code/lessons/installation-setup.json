@@ -1,0 +1,72 @@
+{
+  "id": "installation-setup",
+  "courseId": "claude-code",
+  "moduleId": "intro",
+  "title": "Instalação e Configuração",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Instalar o Claude Code é como instalar qualquer ferramenta de linha de comando — como o Git ou o Node.js. Você roda um comando, autentica e está pronto para usar.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Requisitos" },
+      {
+        "type": "list",
+        "content": "Sistema operacional: macOS, Linux ou Windows (via WSL ou PowerShell)\nNode.js 18+ (apenas se usar instalação via npm)\nUma conta Anthropic, Claude for Teams/Enterprise, Amazon Bedrock ou Google Vertex AI"
+      },
+      { "type": "heading", "content": "Instalação" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code oferece múltiplos métodos de instalação. Escolha o mais adequado ao seu sistema operacional."
+      },
+      {
+        "type": "code",
+        "content": "# macOS / Linux (recomendado)\ncurl -fsSL https://claude.ai/install.sh | bash\n\n# macOS via Homebrew\nbrew install --cask claude-code\n\n# Windows via WinGet\nwinget install Anthropic.ClaudeCode\n\n# Windows via PowerShell\nirm https://claude.ai/install.ps1 | iex\n\n# Qualquer SO via npm (requer Node.js 18+)\nnpm install -g @anthropic-ai/claude-code",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "A instalação via curl ou Homebrew é recomendada. O método npm funciona mas é considerado legado.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Autenticação" },
+      {
+        "type": "paragraph",
+        "content": "Após instalar, você precisa autenticar. O Claude Code suporta vários provedores de autenticação."
+      },
+      {
+        "type": "code",
+        "content": "# Autenticar (abre o navegador para login)\nclaude auth login\n\n# Verificar status da autenticação\nclaude auth status\n\n# Logout\nclaude auth logout",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Provedores suportados" },
+      {
+        "type": "list",
+        "content": "Claude.ai (conta pessoal ou Teams/Enterprise) — mais simples, recomendado para começar\nAnthropic Console — via API key direta\nAmazon Bedrock — para ambientes AWS\nGoogle Vertex AI — para ambientes GCP\nMicrosoft Foundry — para ambientes Azure"
+      },
+      {
+        "type": "callout",
+        "content": "Para uso pessoal e aprendizado, a autenticação via Claude.ai é o caminho mais rápido. Provedores enterprise (Bedrock, Vertex) serão abordados no módulo final.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Verificando a instalação" },
+      {
+        "type": "code",
+        "content": "# Verificar versão instalada\nclaude --version\n\n# Atualizar para a versão mais recente\nclaude update\n\n# Rodar diagnóstico\nclaude /doctor",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Claude Code pode ser instalado via curl, Homebrew, WinGet ou npm",
+    "A autenticação é feita com 'claude auth login' e suporta múltiplos provedores",
+    "Use 'claude update' para manter a ferramenta atualizada"
+  ],
+  "commonMistakes": [
+    "Tentar rodar sem autenticar — sempre rode 'claude auth login' primeiro",
+    "Usar versão antiga do Node.js com npm — requer Node 18+",
+    "Esquecer de atualizar — novas features e correções saem frequentemente"
+  ],
+  "realWorldExample": "Um time de desenvolvedores instala o Claude Code via Homebrew no macOS, autentica via Claude for Teams e em 5 minutos todos estão usando a ferramenta no terminal dos seus projetos.",
+  "encouragement": "Instalação feita? Agora vem a parte divertida — sua primeira conversa com o Claude Code!"
+}

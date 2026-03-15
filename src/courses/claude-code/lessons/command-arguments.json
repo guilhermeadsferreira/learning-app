@@ -1,0 +1,82 @@
+{
+  "id": "command-arguments",
+  "courseId": "claude-code",
+  "moduleId": "commands",
+  "title": "Argumentos e Variáveis Dinâmicas",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Argumentos em comandos são como parâmetros em funções. Em vez de criar um comando diferente para cada situação, você cria um comando flexível que aceita inputs dinâmicos.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Passando argumentos" },
+      {
+        "type": "paragraph",
+        "content": "Comandos podem receber argumentos do usuário. Tudo que vem depois do nome do comando é capturado e pode ser usado no prompt."
+      },
+      {
+        "type": "code",
+        "content": "# Uso:\n/explain useState\n/explain \"padrão observer\"\n/test:create UserService",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Variáveis de argumento" },
+      {
+        "type": "list",
+        "content": "$ARGUMENTS — todo o texto passado após o comando\n$1, $2, $3... — argumentos posicionais separados por espaço"
+      },
+      {
+        "type": "code",
+        "content": "# .claude/commands/explain.md\n---\ndescription: Explica um conceito\nargument-hint: [conceito]\n---\n\nExplique o conceito \"$ARGUMENTS\" de forma didática.\nUse analogias do mundo real.\nDê exemplos práticos de código.\nNão assuma conhecimento prévio.",
+        "language": "markdown"
+      },
+      {
+        "type": "code",
+        "content": "# .claude/commands/compare.md\n---\ndescription: Compara duas abordagens\nargument-hint: [abordagem1] [abordagem2]\n---\n\nCompare \"$1\" com \"$2\".\nCritérios: performance, legibilidade, manutenção.\nRecomende qual usar e quando.\n\n# Uso: /compare \"Context API\" \"Zustand\"",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Referências a arquivos com @" },
+      {
+        "type": "paragraph",
+        "content": "Dentro de comandos, você pode referenciar arquivos específicos do projeto usando @ seguido do caminho."
+      },
+      {
+        "type": "code",
+        "content": "# .claude/commands/test/create.md\n---\ndescription: Cria testes para um módulo\nargument-hint: [módulo]\n---\n\nCrie testes unitários para o módulo $ARGUMENTS.\n\nSiga os padrões em @src/tests/example.test.ts.\nUse Vitest + Testing Library.\nCubra happy path, edge cases e error cases.",
+        "language": "markdown"
+      },
+      {
+        "type": "callout",
+        "content": "A referência @path/to/file faz o Claude ler o arquivo como contexto. Use para fornecer exemplos de padrão que devem ser seguidos.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Comandos bash inline" },
+      {
+        "type": "paragraph",
+        "content": "Você pode executar comandos bash dentro do template usando !`comando`. O output é injetado no prompt."
+      },
+      {
+        "type": "code",
+        "content": "# .claude/commands/git/review-pr.md\n---\ndescription: Revisa o PR atual\nallowed-tools: Read, Grep, Bash(git:*)\n---\n\nRevise o PR atual.\n\nAlterações:\n!`git diff main...HEAD`\n\nCommits:\n!`git log main..HEAD --oneline`\n\nVerifique: bugs, padrões, testes faltando.",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "Exemplo completo: scaffold command" },
+      {
+        "type": "code",
+        "content": "# .claude/commands/scaffold.md\n---\ndescription: Cria estrutura de um novo módulo\nargument-hint: [nome-do-módulo]\nmodel: sonnet\n---\n\nCrie a estrutura completa para o módulo \"$ARGUMENTS\".\n\nSiga o padrão de @src/modules/users/ como referência.\n\nArquivos a criar:\n- src/modules/$ARGUMENTS/routes.ts\n- src/modules/$ARGUMENTS/service.ts\n- src/modules/$ARGUMENTS/repository.ts\n- src/modules/$ARGUMENTS/types.ts\n- src/modules/$ARGUMENTS/__tests__/service.test.ts\n\nStack atual: !`cat package.json | grep -A5 dependencies`",
+        "language": "markdown"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "$ARGUMENTS captura tudo que vem depois do comando; $1, $2 são posicionais",
+    "@path/to/file injeta o conteúdo de um arquivo como contexto",
+    "!`comando` executa bash e injeta o output no prompt"
+  ],
+  "commonMistakes": [
+    "Esquecer de usar $ARGUMENTS quando o comando precisa de input dinâmico",
+    "Não fornecer exemplos via @ — o Claude segue padrões melhor quando vê um exemplo real",
+    "Criar comandos rígidos demais — use argumentos para torná-los flexíveis e reutilizáveis"
+  ],
+  "realWorldExample": "Um time cria /scaffold que recebe o nome de um módulo como argumento, lê o padrão de um módulo existente via @, e injeta as dependências atuais via !`cat package.json`. Com um comando, scaffolda um módulo completo seguindo os padrões do projeto.",
+  "encouragement": "Argumentos e variáveis transformam comandos simples em ferramentas poderosas. É automação de verdade."
+}

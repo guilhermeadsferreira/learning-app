@@ -1,0 +1,71 @@
+{
+  "id": "auto-memory-init",
+  "courseId": "claude-code",
+  "moduleId": "memory",
+  "title": "Memória Automática e /init",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "A memória automática é como um caderno de anotações que o Claude Code mantém sozinho. Quando você corrige um erro ou explica uma preferência, ele anota para não repetir o mesmo engano na próxima sessão.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O comando /init" },
+      {
+        "type": "paragraph",
+        "content": "O /init é o ponto de partida para configurar a memória do projeto. Ele analisa seu codebase e gera um CLAUDE.md inicial com informações que o Claude Code detectou automaticamente."
+      },
+      {
+        "type": "code",
+        "content": "# Dentro do projeto, rode:\n/init\n\n# O Claude Code vai:\n# 1. Analisar a estrutura do projeto\n# 2. Identificar stack, dependências, scripts\n# 3. Gerar um CLAUDE.md bootstrapped",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O /init gera um ponto de partida, não o resultado final. Revise o CLAUDE.md gerado: remova o que é óbvio, adicione gotchas que só você sabe e refine as instruções.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "Memória automática (Auto Memory)" },
+      {
+        "type": "paragraph",
+        "content": "Além do CLAUDE.md que você escreve, o Claude Code mantém uma memória automática. Quando você corrige o Claude ou ele aprende algo novo durante uma sessão — como comandos de build que funcionam, decisões de debug — ele salva essas informações automaticamente."
+      },
+      {
+        "type": "list",
+        "content": "Correções que você faz são salvas como aprendizado\nComandos de build e debug descobertos são memorizados\nInsights sobre o projeto são acumulados entre sessões\nVocê não precisa escrever nada — o Claude aprende sozinho"
+      },
+      { "type": "heading", "content": "Diferença: CLAUDE.md vs. Auto Memory" },
+      {
+        "type": "list",
+        "content": "CLAUDE.md — instruções intencionais que você define (regras, padrões, comandos)\nAuto Memory — aprendizados que o Claude acumula das suas correções e do uso\nCLAUDE.md — você controla o conteúdo diretamente\nAuto Memory — o Claude gerencia automaticamente"
+      },
+      {
+        "type": "callout",
+        "content": "Use CLAUDE.md para regras que você quer garantir desde o início. Deixe o Auto Memory capturar padrões que surgem durante o uso.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Gerenciando a memória" },
+      {
+        "type": "code",
+        "content": "# Ver memória atual do projeto\n/memory\n\n# O Claude Code mostrará:\n# - CLAUDE.md do projeto\n# - Regras em .claude/rules/\n# - Memórias automáticas salvas\n# - CLAUDE.local.md (se existir)",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Fluxo recomendado" },
+      {
+        "type": "list",
+        "content": "1. Rode /init ao começar um projeto novo\n2. Revise e refine o CLAUDE.md gerado\n3. Adicione .claude/rules/ conforme o projeto cresce\n4. Deixe o Auto Memory capturar aprendizados do uso diário\n5. Periodicamente, promova aprendizados do Auto Memory para o CLAUDE.md"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "/init gera um CLAUDE.md inicial — revise e refine, não use como está",
+    "Auto Memory salva aprendizados das suas correções automaticamente",
+    "CLAUDE.md é para regras intencionais; Auto Memory é para aprendizados orgânicos"
+  ],
+  "commonMistakes": [
+    "Aceitar o CLAUDE.md do /init sem revisar — ele contém informações genéricas demais",
+    "Não saber que o Auto Memory existe — e re-corrigir o Claude toda sessão",
+    "Não promover aprendizados do Auto Memory para o CLAUDE.md — perde insights valiosos"
+  ],
+  "realWorldExample": "Um dev corrige o Claude Code: 'não use o ORM diretamente nas rotas, chame o service layer'. O Claude salva isso na memória automática. Na próxima sessão, ele já segue o padrão sem precisar de lembrete.",
+  "encouragement": "A combinação de CLAUDE.md + Auto Memory é o que torna o Claude Code cada vez melhor conforme você usa. É aprendizado contínuo."
+}

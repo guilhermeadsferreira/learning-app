@@ -1,0 +1,75 @@
+{
+  "id": "first-interaction",
+  "courseId": "claude-code",
+  "moduleId": "intro",
+  "title": "Sua Primeira Interação",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Começar a usar o Claude Code é como conversar com um colega de trabalho que acabou de chegar no projeto. Você explica o que precisa, ele olha o código, faz perguntas e começa a trabalhar.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Iniciando uma sessão" },
+      {
+        "type": "paragraph",
+        "content": "Para começar, navegue até o diretório do seu projeto e digite 'claude'. Isso abre o modo interativo — uma conversa contínua onde você digita instruções e o Claude Code age."
+      },
+      {
+        "type": "code",
+        "content": "# Navegue até seu projeto\ncd ~/meu-projeto\n\n# Inicie o Claude Code\nclaude\n\n# Ou já comece com uma instrução\nclaude \"explique a estrutura deste projeto\"",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "O modo interativo" },
+      {
+        "type": "paragraph",
+        "content": "No modo interativo, você conversa com o Claude Code em linguagem natural. Ele analisa seu projeto, lê arquivos, executa comandos e edita código. Cada ação pede sua permissão antes de ser executada."
+      },
+      {
+        "type": "list",
+        "content": "Digite sua instrução e pressione Enter para enviar\nO Claude Code analisa, planeja e executa\nVocê aprova ou rejeita cada ação proposta\nA conversa mantém contexto — ele lembra do que já foi discutido"
+      },
+      { "type": "heading", "content": "Exemplos de instruções" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code entende instruções em linguagem natural. Você não precisa saber comandos especiais — apenas descreva o que quer."
+      },
+      {
+        "type": "code",
+        "content": "# Explorar o projeto\n> explique a arquitetura deste projeto\n\n# Corrigir um bug\n> o login está retornando 401 mesmo com credenciais válidas. Investigue e corrija\n\n# Criar uma feature\n> adicione um endpoint REST para listar usuários com paginação\n\n# Refatorar\n> extraia a lógica de validação em um módulo separado\n\n# Git\n> faça commit das alterações com uma mensagem descritiva",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Quanto mais contexto você der na instrução, melhor o resultado. Em vez de 'arrume o bug', diga 'o formulário de cadastro não valida o email — investigue e corrija'.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Controles essenciais" },
+      {
+        "type": "list",
+        "content": "Ctrl+C — cancela a geração atual\nCtrl+D — encerra a sessão\nCtrl+L — limpa a tela\nEsc, Esc — volta ao estado anterior (rewind)"
+      },
+      { "type": "heading", "content": "Continuando conversas" },
+      {
+        "type": "paragraph",
+        "content": "Sessões ficam salvas. Você pode retomar de onde parou usando flags específicas."
+      },
+      {
+        "type": "code",
+        "content": "# Continuar a última conversa\nclaude -c\n\n# Retomar uma sessão específica por nome\nclaude -r \"refactor-auth\" \"continue de onde paramos\"",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Use 'claude' no terminal para iniciar o modo interativo dentro do seu projeto",
+    "Escreva instruções em linguagem natural — quanto mais contexto, melhor",
+    "Use 'claude -c' para continuar a última conversa de onde parou"
+  ],
+  "commonMistakes": [
+    "Rodar 'claude' fora de um diretório de projeto — ele funciona melhor dentro de um projeto real",
+    "Dar instruções vagas como 'arrume isso' sem contexto do problema",
+    "Não revisar as ações propostas antes de aprovar — sempre leia o que ele quer fazer"
+  ],
+  "realWorldExample": "Você abre o terminal no diretório do seu app, digita 'claude', e pede: 'adicione dark mode ao componente de settings usando Tailwind'. O Claude Code lê seus componentes, encontra o arquivo certo, implementa o toggle e testa.",
+  "encouragement": "Sua primeira conversa com o Claude Code vai mudar como você pensa sobre programação. É como ter um pair programmer disponível 24/7."
+}

@@ -1,0 +1,67 @@
+{
+  "id": "agent-teams",
+  "courseId": "claude-code",
+  "moduleId": "agents",
+  "title": "Agent Teams",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Se subagents são assistentes que reportam ao gerente, Agent Teams são uma equipe de devs seniores em um war room. Eles se comunicam diretamente, compartilham descobertas em tempo real e coordenam sem precisar passar tudo pelo líder.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são Agent Teams?" },
+      {
+        "type": "paragraph",
+        "content": "Agent Teams é um sistema experimental nativo para orquestrar múltiplas sessões do Claude Code em paralelo com comunicação direta entre agentes. Diferente de subagents (que são isolados), teammates podem trocar mensagens e compartilhar achados durante a execução."
+      },
+      {
+        "type": "callout",
+        "content": "Agent Teams é experimental e requer ativação manual. Disponível a partir do Claude Code v2.1.32 com Opus 4.6.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "Subagents vs. Agent Teams" },
+      {
+        "type": "list",
+        "content": "Subagents — isolados, reportam só ao principal, sem comunicação entre si\nAgent Teams — cada membro tem seu contexto, podem mensagear entre si, compartilham achados\nSubagents — menor overhead, bom para tarefas independentes\nAgent Teams — maior overhead e custo, melhor para coordenação cross-layer"
+      },
+      { "type": "heading", "content": "Habilitando Agent Teams" },
+      {
+        "type": "code",
+        "content": "# Via variável de ambiente\nexport CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1\n\n# Inicie o Claude Code normalmente\nclaude",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Quando usar Agent Teams" },
+      {
+        "type": "list",
+        "content": "Coordenação cross-layer — frontend, backend e testes tratados por teammates diferentes\nDebugging com hipóteses concorrentes — cada teammate testa uma hipótese diferente\nMódulos novos com ownership claro — cada teammate é dono de uma parte\nPesquisa simultânea — investigar múltiplas áreas do codebase"
+      },
+      { "type": "heading", "content": "Quando NÃO usar" },
+      {
+        "type": "list",
+        "content": "Tarefas sequenciais — um agente único é mais eficiente\nEdições no mesmo arquivo — teammates não coordenam conflitos de edição\nTarefas simples — o overhead de coordenação não compensa\nQuando custo é prioridade — Agent Teams consomem mais tokens"
+      },
+      { "type": "heading", "content": "Estrutura de um Agent Team" },
+      {
+        "type": "paragraph",
+        "content": "Uma sessão age como team lead, coordenando o trabalho e sintetizando resultados. Teammates trabalham independentemente mas podem se comunicar via task list compartilhada."
+      },
+      {
+        "type": "code",
+        "content": "# O team lead distribui:\n# Teammate 1 (frontend): implementar componentes React\n# Teammate 2 (backend): criar API endpoints\n# Teammate 3 (tests): escrever testes de integração\n\n# Os teammates podem:\n# - Compartilhar achados: \"a API retorna formato X\"\n# - Pedir info: \"qual o schema do endpoint /users?\"\n# - Coordenar: \"aguardando o endpoint para testar\"",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Agent Teams permite comunicação direta entre agentes — diferente de subagents isolados",
+    "Experimental: ativar com CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1",
+    "Melhor para coordenação cross-layer; evite para tarefas simples ou sequenciais"
+  ],
+  "commonMistakes": [
+    "Usar Agent Teams para tudo — o overhead de coordenação não compensa para tarefas simples",
+    "Múltiplos teammates editando o mesmo arquivo — causa conflitos",
+    "Esquecer que é experimental — comportamento pode mudar entre versões"
+  ],
+  "realWorldExample": "Uma feature complexa de e-commerce: teammate 1 constrói o carrinho (React), teammate 2 cria a API de pagamento (Express), teammate 3 escreve testes E2E. O teammate 3 pergunta ao 2: 'qual a rota de checkout?' e recebe a resposta sem passar pelo team lead.",
+  "encouragement": "Agent Teams é o futuro da programação assistida por IA. Você está aprendendo antes da maioria."
+}

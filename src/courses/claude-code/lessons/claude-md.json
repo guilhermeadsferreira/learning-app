@@ -1,0 +1,57 @@
+{
+  "id": "claude-md",
+  "courseId": "claude-code",
+  "moduleId": "memory",
+  "title": "O Arquivo CLAUDE.md",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O CLAUDE.md é como o briefing que você entrega a um novo membro do time no primeiro dia. Em vez de explicar as convenções, padrões e decisões toda vez, você escreve uma vez e ele consulta sempre que precisa.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é CLAUDE.md?" },
+      {
+        "type": "paragraph",
+        "content": "CLAUDE.md é um arquivo Markdown que o Claude Code lê automaticamente no início de cada sessão. Nele você define padrões de código, decisões de arquitetura, bibliotecas preferidas e comandos de build. É a forma mais poderosa de personalizar o comportamento do Claude Code para o seu projeto."
+      },
+      {
+        "type": "callout",
+        "content": "O CLAUDE.md é lido a cada sessão e a cada mensagem. Mantenha-o conciso — menos de 300 linhas é o ideal. Pesquisas mostram que LLMs seguem de forma confiável ~150-200 instruções.",
+        "variant": "warning"
+      },
+      { "type": "heading", "content": "O que incluir" },
+      {
+        "type": "list",
+        "content": "Contexto do projeto — uma frase descrevendo o que o projeto faz\nComandos de build/test/lint — como rodar o projeto\nPadrões de código — convenções, formatação, nomenclatura\nArquitetura — decisões importantes e seus motivos\nGotchas — armadilhas específicas do projeto que o Claude deve saber"
+      },
+      { "type": "heading", "content": "Exemplo de CLAUDE.md" },
+      {
+        "type": "code",
+        "content": "# Projeto: API de E-commerce\n\nAPI REST em Node.js + Express + TypeScript + Prisma.\n\n## Comandos\n- Build: `npm run build`\n- Test: `npm test`\n- Lint: `npm run lint`\n- Dev: `npm run dev`\n\n## Padrões\n- Functional style, evitar classes\n- Errors: usar custom error classes em src/errors/\n- Validação: Zod em todos os endpoints\n- Testes: Vitest + supertest\n\n## Arquitetura\n- src/routes/ — rotas Express\n- src/services/ — lógica de negócio\n- src/repositories/ — acesso a dados via Prisma\n- src/middleware/ — auth, validation, error handling\n\n## Gotchas\n- Prisma requer `npx prisma generate` após alterar schema\n- Variáveis de ambiente em .env.local (não comitar)\n- O banco de staging usa SSL — testar com DATABASE_URL correto",
+        "language": "markdown"
+      },
+      { "type": "heading", "content": "O que NÃO incluir" },
+      {
+        "type": "list",
+        "content": "Diretrizes genéricas que o Claude já sabe (ex: 'escreva código limpo')\nListagem exaustiva de todos os arquivos do projeto\nDocumentação que pode ser inferida do código\nPreferências pessoais que só se aplicam a você (use CLAUDE.local.md)"
+      },
+      {
+        "type": "callout",
+        "content": "Regra de ouro: se remover uma linha do CLAUDE.md e o Claude ainda fizer a coisa certa, aquela linha era desnecessária.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "CLAUDE.md é lido automaticamente a cada sessão — é a forma principal de personalizar o Claude Code",
+    "Mantenha conciso (< 300 linhas): contexto do projeto, comandos, padrões e gotchas",
+    "Não inclua informações genéricas ou que o Claude pode inferir do código"
+  ],
+  "commonMistakes": [
+    "CLAUDE.md muito longo — mais de 300 linhas dilui a atenção e aumenta custo de tokens",
+    "Incluir regras óbvias como 'use TypeScript' quando o projeto já é TypeScript",
+    "Não incluir comandos de build/test — o Claude precisa saber como rodar o projeto"
+  ],
+  "realWorldExample": "Um time open-source adiciona CLAUDE.md ao repositório. Novos contribuidores usam Claude Code e ele já sabe: as convenções do projeto, como rodar os testes, quais patterns seguir e quais bibliotecas usar. Sem explicação manual.",
+  "encouragement": "Um bom CLAUDE.md é investimento que paga toda sessão. Gaste 15 minutos escrevendo um e ganhe horas toda semana."
+}

@@ -1,0 +1,87 @@
+{
+  "id": "context-cost-management",
+  "courseId": "claude-code",
+  "moduleId": "interface",
+  "title": "Gerenciamento de Contexto e Custos",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O contexto do Claude Code é como a memória RAM de um computador. Quanto mais abas você abre, mais lento fica. Gerenciar contexto é como fechar abas desnecessárias — mantém tudo rápido e eficiente.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O problema: 99.4% é input" },
+      {
+        "type": "paragraph",
+        "content": "A cada mensagem, o Claude Code relê todo o histórico da conversa, arquivos abertos, CLAUDE.md e instruções do sistema. Isso significa que 99.4% do consumo de tokens é leitura (input), não geração (output). Otimizar o input é a chave para reduzir custos."
+      },
+      {
+        "type": "callout",
+        "content": "O custo médio é ~$6/dev/dia, com 90% dos usuários gastando menos de $12/dia. Mas sem otimização, é fácil ultrapassar.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Estratégias de otimização" },
+      { "type": "heading", "content": "1. Use /clear entre tarefas" },
+      {
+        "type": "paragraph",
+        "content": "Quando terminar uma tarefa e começar outra, use /clear para limpar o contexto. Carregar contexto de uma tarefa anterior prejudica a qualidade e aumenta custo da nova tarefa."
+      },
+      {
+        "type": "code",
+        "content": "# Após terminar uma tarefa\n/clear\n\n# Iniciar a próxima tarefa limpo\n> agora vamos trabalhar no módulo de pagamentos",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "2. Use /compact quando a conversa cresce" },
+      {
+        "type": "paragraph",
+        "content": "O /compact comprime a conversa preservando informações importantes. Use quando sentir que as respostas estão perdendo qualidade ou ficando mais lentas."
+      },
+      {
+        "type": "code",
+        "content": "# Comprimir mantendo foco\n/compact\n\n# Comprimir com instrução específica\n/compact mantenha foco na refatoração do auth module",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "3. Configure .claudeignore" },
+      {
+        "type": "paragraph",
+        "content": "O .claudeignore funciona como .gitignore — exclui arquivos que o Claude não precisa ler. Isso pode reduzir o contexto por request em até 60%."
+      },
+      {
+        "type": "code",
+        "content": "# .claudeignore\nnode_modules/\ndist/\nbuild/\n.next/\ncoverage/\n*.lock\n*.log\n*.min.js\n*.map",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "4. Selecione o modelo certo" },
+      {
+        "type": "paragraph",
+        "content": "Não use Opus para tarefas simples. O custo de output do Opus é ~19x maior que o Haiku."
+      },
+      {
+        "type": "list",
+        "content": "Haiku — renomear variáveis, formatação, tarefas mecânicas\nSonnet — implementação padrão, debug, refatoração\nOpus — arquitetura complexa, raciocínio profundo, multi-step"
+      },
+      { "type": "heading", "content": "5. Monitore com /cost e /context" },
+      {
+        "type": "code",
+        "content": "# Ver gastos da sessão atual\n/cost\n\n# Visualizar uso da janela de contexto\n/context\n\n# Estatísticas de uso diário\n/stats",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Seguindo essas 5 práticas, é possível reduzir o consumo de tokens em 30-50% sem perder produtividade.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "99.4% do custo é input (leitura) — otimize o que entra no contexto",
+    "Use /clear entre tarefas e /compact quando a conversa cresce",
+    ".claudeignore pode reduzir contexto por request em até 60%"
+  ],
+  "commonMistakes": [
+    "Manter conversas infinitas sem /clear — o contexto cresce e a qualidade cai",
+    "Não usar .claudeignore — o Claude lê node_modules e build desnecessariamente",
+    "Usar Opus para tudo — custa 19x mais que Haiku para tarefas que Haiku resolve bem"
+  ],
+  "realWorldExample": "Um desenvolvedor gastava $15/dia com Claude Code. Após adicionar .claudeignore, usar /clear entre tarefas e trocar para Sonnet no dia a dia (reservando Opus para arquitetura), reduziu para $5/dia com a mesma produtividade.",
+  "encouragement": "Gerenciar custo não é ser pão-duro — é ser inteligente. Os melhores desenvolvedores com IA sabem exatamente quando investir em capacidade e quando economizar."
+}

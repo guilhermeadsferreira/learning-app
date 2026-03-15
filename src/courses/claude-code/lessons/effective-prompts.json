@@ -1,0 +1,71 @@
+{
+  "id": "effective-prompts",
+  "courseId": "claude-code",
+  "moduleId": "interface",
+  "title": "Prompts Eficazes",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Dar instruções ao Claude Code é como delegar uma tarefa para um desenvolvedor remoto. Quanto mais contexto, restrições e critérios de sucesso você fornecer, mais provável que o resultado seja exatamente o que você quer — sem retrabalho.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "A diferença fundamental" },
+      {
+        "type": "paragraph",
+        "content": "No Claude Code, você não está 'perguntando' — está delegando. Ao invés de escrever código e pedir revisão, você descreve o que quer e o Claude descobre como construir. Essa mudança de mentalidade é a chave para usar a ferramenta bem."
+      },
+      { "type": "heading", "content": "Anatomia de um bom prompt" },
+      {
+        "type": "list",
+        "content": "O que — descreva o objetivo claramente\nOnde — indique arquivos, módulos ou áreas relevantes\nComo — mencione padrões, libs ou abordagens preferidas\nRestrições — o que NÃO fazer é tão importante quanto o que fazer\nCritério de sucesso — como você vai saber que ficou bom"
+      },
+      { "type": "heading", "content": "Exemplos comparados" },
+      {
+        "type": "code",
+        "content": "# ❌ Vago — resultado imprevisível\n> adicione autenticação\n\n# ✅ Específico — resultado previsível\n> adicione autenticação JWT ao servidor Express em src/server/.\n> Use bcrypt para hash de senha e jsonwebtoken para tokens.\n> Crie middleware de auth em src/middleware/auth.ts.\n> Tokens expiram em 24h. Não altere as rotas existentes,\n> apenas proteja as que começam com /api/admin.",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "A regra de ouro: se você contratasse um freelancer, o que escreveria no briefing? Escreva isso para o Claude Code.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Padrões eficazes da Anthropic" },
+      {
+        "type": "paragraph",
+        "content": "Baseado nas boas práticas documentadas pela própria Anthropic e times internos, alguns padrões se destacam."
+      },
+      {
+        "type": "list",
+        "content": "Comece amplo, refine depois — peça uma análise geral antes de implementar\nUse imagens — cole screenshots de erros ou designs com Ctrl+V\nReferencie arquivos com @ — 'olhe @src/auth/middleware.ts' direciona o Claude\nSeja explícito sobre testes — 'escreva testes unitários' garante cobertura\nPerunte antes de implementar — 'como você faria X? não implemente ainda' evita retrabalho"
+      },
+      { "type": "heading", "content": "O poder do 'não'" },
+      {
+        "type": "paragraph",
+        "content": "Restrições negativas são surpreendentemente eficazes. Dizer o que NÃO fazer reduz ambiguidade."
+      },
+      {
+        "type": "code",
+        "content": "# Restrições negativas que ajudam\n> refatore o componente UserList.\n> NÃO mude a API pública (props).\n> NÃO adicione dependências novas.\n> NÃO altere os testes existentes.\n> Apenas extraia a lógica de filtro para um custom hook.",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Iteração é normal" },
+      {
+        "type": "paragraph",
+        "content": "Não espere resultados perfeitos na primeira tentativa. O Claude Code mantém contexto da conversa — corrija e refine. 'Quase, mas troque o map por reduce' é um prompt perfeitamente válido."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Pense em 'delegar', não em 'perguntar' — descreva objetivos, não passos",
+    "Inclua contexto, restrições e critérios de sucesso no prompt",
+    "Restrições negativas ('NÃO faça X') reduzem ambiguidade significativamente"
+  ],
+  "commonMistakes": [
+    "Prompts vagos como 'arrume isso' — sem contexto, o resultado é imprevisível",
+    "Descrever cada passo em vez do objetivo — deixe o Claude descobrir o como",
+    "Não iterar — esperar perfeição na primeira tentativa em vez de refinar"
+  ],
+  "realWorldExample": "Ao invés de 'crie um formulário', um dev escreve: 'crie um formulário de cadastro em src/components/SignupForm.tsx usando React Hook Form + Zod. Campos: nome, email, senha com confirmação. Validação inline. Estilo com Tailwind seguindo o padrão dos outros formulários em src/components/forms/'. Resultado na primeira tentativa: 95% correto.",
+  "encouragement": "Escrever bons prompts é uma habilidade — e como toda habilidade, melhora com a prática. Cada prompt é uma chance de ficar melhor."
+}

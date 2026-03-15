@@ -1,0 +1,70 @@
+{
+  "id": "hooks-in-practice",
+  "courseId": "claude-code",
+  "moduleId": "hooks",
+  "title": "Hooks na Prática",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Configurar hooks na prática é como montar uma linha de montagem em uma fábrica. Cada estação (hook) faz uma verificação ou transformação automática, e o produto (código) sai com qualidade garantida no final.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Receita 1: Auto-format após edição" },
+      {
+        "type": "code",
+        "content": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"npx prettier --write $(jq -r '.tool_input.file_path')\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "language": "json"
+      },
+      {
+        "type": "paragraph",
+        "content": "Este hook roda prettier automaticamente em cada arquivo editado pelo Claude. O formato é sempre consistente, sem depender de instrução no CLAUDE.md."
+      },
+      { "type": "heading", "content": "Receita 2: Lint antes de commit" },
+      {
+        "type": "code",
+        "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Bash\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"if echo $(jq -r '.tool_input.command') | grep -q 'git commit'; then npm run lint; fi\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Receita 3: Bloquear edição em arquivos protegidos" },
+      {
+        "type": "code",
+        "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Edit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"FILE=$(jq -r '.tool_input.file_path'); if echo $FILE | grep -qE '(\\\\.env|config/production)'; then echo '{\\\"decision\\\": \\\"block\\\", \\\"reason\\\": \\\"Arquivo protegido\\\"}'; fi\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Receita 4: Log de ferramentas MCP" },
+      {
+        "type": "code",
+        "content": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"mcp__github__.*\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"echo \\\"GitHub tool called: $(jq -r '.tool_name')\\\" >&2\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Receita 5: Validação de completude (Stop)" },
+      {
+        "type": "code",
+        "content": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"matcher\": \"*\",\n        \"hooks\": [\n          {\n            \"type\": \"prompt\",\n            \"prompt\": \"Antes de parar, verifique: todos os testes passam? Há arquivos sem salvar? O código compila? Retorne 'approve' ou 'block' com motivo.\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+        "language": "json"
+      },
+      {
+        "type": "callout",
+        "content": "Hooks de tipo 'prompt' no evento Stop são poderosos: forçam o Claude a fazer uma auto-verificação antes de declarar que terminou.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Dicas de implementação" },
+      {
+        "type": "list",
+        "content": "Mantenha hooks rápidos — hooks lentos travam o fluxo\nUse jq para extrair dados do input da ferramenta\nRedirecione logs para stderr (>&2) para não interferir no output\nTeste hooks em tarefas pequenas antes de aplicar no projeto\nCombine hooks: PostToolUse para formatação + Stop para validação"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "PostToolUse + Edit = auto-formatação; PreToolUse + Bash = validação pré-commit",
+    "Use decisão 'block' para impedir ações em arquivos sensíveis",
+    "Hooks de tipo 'prompt' no Stop forçam auto-verificação antes de concluir"
+  ],
+  "commonMistakes": [
+    "Hooks muito pesados — rodar test suite inteira a cada edição trava o fluxo",
+    "Não testar em isolamento — um hook quebrado pode bloquear o Claude inteiro",
+    "Esquecer do jq — os dados da ferramenta vêm em JSON, precisa de jq para extrair"
+  ],
+  "realWorldExample": "Uma fintech configura: PostToolUse+Edit roda prettier, PreToolUse+Bash bloqueia 'rm -rf' e comandos com 'production', Stop verifica se testes passam. Resultado: código sempre formatado, sem acidentes em prod, e tarefas realmente completas.",
+  "encouragement": "Hooks transformam o Claude Code de uma ferramenta poderosa em um pipeline de qualidade automatizado."
+}

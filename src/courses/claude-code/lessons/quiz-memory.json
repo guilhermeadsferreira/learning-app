@@ -1,0 +1,95 @@
+{
+  "id": "quiz-memory",
+  "courseId": "claude-code",
+  "moduleId": "memory",
+  "title": "Quiz: Memória e Contexto",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre CLAUDE.md, hierarquia de memória e memória automática."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é o tamanho ideal recomendado para o CLAUDE.md do projeto?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sem limite — quanto mais detalhado melhor",
+          "isCorrect": false,
+          "explanation": "CLAUDE.md muito longo dilui a atenção do modelo e aumenta o custo de tokens a cada mensagem."
+        },
+        {
+          "id": "b",
+          "text": "Menos de 300 linhas",
+          "isCorrect": true,
+          "explanation": "Correto! Pesquisas indicam que LLMs seguem ~150-200 instruções de forma confiável. Menos de 300 linhas é o ideal."
+        },
+        {
+          "id": "c",
+          "text": "Exatamente 50 linhas",
+          "isCorrect": false,
+          "explanation": "50 linhas pode ser curto demais para projetos complexos. O ideal é menos de 300 linhas — conciso mas completo."
+        }
+      ]
+    },
+    {
+      "question": "Para que serve o arquivo CLAUDE.local.md?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Para definir padrões do projeto compartilhados com o time",
+          "isCorrect": false,
+          "explanation": "Padrões compartilhados ficam no CLAUDE.md do projeto. O CLAUDE.local.md é para configurações pessoais."
+        },
+        {
+          "id": "b",
+          "text": "Para configurações pessoais do projeto que não devem ser commitadas",
+          "isCorrect": true,
+          "explanation": "Correto! CLAUDE.local.md é auto-gitignored e serve para configs que só fazem sentido para você (ex: porta do banco local)."
+        },
+        {
+          "id": "c",
+          "text": "Para armazenar a memória automática do Claude",
+          "isCorrect": false,
+          "explanation": "A memória automática é gerenciada internamente pelo Claude Code. CLAUDE.local.md é para suas configs pessoais."
+        }
+      ]
+    },
+    {
+      "question": "Qual a diferença entre CLAUDE.md e Auto Memory?",
+      "options": [
+        {
+          "id": "a",
+          "text": "São a mesma coisa — ambos salvam instruções automaticamente",
+          "isCorrect": false,
+          "explanation": "São diferentes: CLAUDE.md é escrito por você; Auto Memory é salvo pelo Claude a partir das suas correções."
+        },
+        {
+          "id": "b",
+          "text": "CLAUDE.md são regras intencionais que você define; Auto Memory são aprendizados que o Claude acumula das suas correções",
+          "isCorrect": true,
+          "explanation": "Exatamente! CLAUDE.md é intencional e controlado por você. Auto Memory captura padrões do uso diário automaticamente."
+        },
+        {
+          "id": "c",
+          "text": "CLAUDE.md é para projetos pessoais e Auto Memory é para times",
+          "isCorrect": false,
+          "explanation": "Ambos funcionam em qualquer contexto. A diferença é quem escreve: você (CLAUDE.md) ou o Claude (Auto Memory)."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "CLAUDE.md deve ter menos de 300 linhas para máxima eficácia",
+    "CLAUDE.local.md é pessoal e auto-gitignored",
+    "CLAUDE.md = regras intencionais; Auto Memory = aprendizados automáticos"
+  ],
+  "encouragement": "Memória dominada! Agora você vai aprender a criar comandos personalizados — o poder real de automação."
+}

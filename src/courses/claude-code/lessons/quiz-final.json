@@ -1,0 +1,119 @@
+{
+  "id": "quiz-final",
+  "courseId": "claude-code",
+  "moduleId": "productivity-enterprise",
+  "title": "Quiz Final",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Quiz Final — Claude Code" },
+      {
+        "type": "paragraph",
+        "content": "Este é o quiz final do curso. Ele cobre tópicos de todos os módulos — dos fundamentos até enterprise e SDK."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual combinação de customização oferece a maior confiabilidade para garantir formatação de código?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Instrução no CLAUDE.md: 'sempre formate o código com prettier'",
+          "isCorrect": false,
+          "explanation": "Instruções no CLAUDE.md são probabilísticas — o Claude pode não seguir. Hooks são determinísticos."
+        },
+        {
+          "id": "b",
+          "text": "Hook PostToolUse no Edit que roda 'prettier --write' automaticamente",
+          "isCorrect": true,
+          "explanation": "Correto! Hooks são determinísticos — rodam sempre, sem exceção. É a forma mais confiável de garantir formatação."
+        },
+        {
+          "id": "c",
+          "text": "Custom command /format que pede ao Claude para formatar",
+          "isCorrect": false,
+          "explanation": "Commands são manuais — só rodam quando você invoca. Hooks rodam automaticamente a cada edição."
+        }
+      ]
+    },
+    {
+      "question": "Em uma organização, qual configuração NÃO pode ser sobrescrita pelo desenvolvedor?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Configurações em .claude/settings.json do projeto",
+          "isCorrect": false,
+          "explanation": "Settings do projeto podem ser sobrescritas por settings locais ou de linha de comando."
+        },
+        {
+          "id": "b",
+          "text": "Managed settings (configuração gerenciada pelo admin)",
+          "isCorrect": true,
+          "explanation": "Correto! Managed settings têm a mais alta prioridade e não podem ser sobrescritas — ideal para políticas de segurança."
+        },
+        {
+          "id": "c",
+          "text": "Configurações em ~/.claude/settings.json do usuário",
+          "isCorrect": false,
+          "explanation": "Settings do usuário podem ser sobrescritas por managed settings e por flags de linha de comando."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a principal vantagem de Skills sobre Custom Commands?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Skills são mais rápidas de executar",
+          "isCorrect": false,
+          "explanation": "Velocidade de execução não é a diferença. A vantagem é que skills carregam automaticamente quando relevantes."
+        },
+        {
+          "id": "b",
+          "text": "Skills carregam automaticamente quando o Claude detecta relevância — sem precisar de /comando",
+          "isCorrect": true,
+          "explanation": "Correto! Skills usam progressive disclosure e são ativadas pelo Claude quando detecta que a tarefa é relevante."
+        },
+        {
+          "id": "c",
+          "text": "Skills funcionam apenas com MCP",
+          "isCorrect": false,
+          "explanation": "Skills funcionam com ou sem MCP. Skills + MCP é uma combinação poderosa, mas não é obrigatória."
+        }
+      ]
+    },
+    {
+      "question": "Para reduzir custos em 30-50%, qual combinação de práticas é mais eficaz?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Usar sempre o modelo Haiku para tudo",
+          "isCorrect": false,
+          "explanation": "Haiku não resolve bem tarefas complexas. A melhor abordagem é combinar múltiplas otimizações."
+        },
+        {
+          "id": "b",
+          "text": "/clear entre tarefas + .claudeignore + /compact em sessões longas + modelo certo por tarefa",
+          "isCorrect": true,
+          "explanation": "Correto! A combinação dessas 4 práticas reduz o consumo de tokens em 30-50% sem sacrificar produtividade."
+        },
+        {
+          "id": "c",
+          "text": "Desativar Extended Thinking",
+          "isCorrect": false,
+          "explanation": "Extended Thinking consome tokens extras, mas sozinho não representa 30-50% do custo total."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Hooks são determinísticos — a forma mais confiável de automação",
+    "Managed settings têm prioridade máxima em ambientes enterprise",
+    "Skills carregam automaticamente; commands exigem invocação manual",
+    "Otimização de custo = /clear + .claudeignore + /compact + modelo certo"
+  ],
+  "encouragement": "Parabéns! Você completou o curso mais completo sobre Claude Code. Agora você domina desde os fundamentos até recursos avançados que a maioria dos desenvolvedores nem conhece. Use esse conhecimento para transformar seu workflow!"
+}

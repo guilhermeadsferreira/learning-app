@@ -1,0 +1,77 @@
+{
+  "id": "configuring-mcp",
+  "courseId": "claude-code",
+  "moduleId": "mcp-plugins",
+  "title": "Configurando Servidores MCP",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Configurar um servidor MCP é como instalar uma extensão no navegador. Você adiciona, autentica e está pronto para usar. A diferença é que aqui a extensão dá superpoderes ao Claude Code.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Adicionando um servidor MCP" },
+      {
+        "type": "paragraph",
+        "content": "Use o comando 'claude mcp add' para conectar um servidor MCP. O formato varia conforme o tipo de transporte."
+      },
+      {
+        "type": "code",
+        "content": "# Servidor HTTP (ex: GitHub)\nclaude mcp add --transport http github https://api.githubcopilot.com/mcp/\n\n# Servidor stdio (ex: servidor local Node.js)\nclaude mcp add --transport stdio meu-server node /caminho/para/server.js\n\n# Servidor stdio com argumentos\nclaude mcp add --transport stdio postgres npx @mcp/postgres --connection-string postgresql://...",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Escopos de configuração" },
+      {
+        "type": "paragraph",
+        "content": "Servidores MCP podem ser configurados em escopos diferentes, controlando quem tem acesso."
+      },
+      {
+        "type": "code",
+        "content": "# Escopo user — disponível em todos os seus projetos\nclaude mcp add --transport http github https://api.githubcopilot.com/mcp/\n\n# Escopo project — compartilhado com o time via .mcp.json\nclaude mcp add --transport http paypal --scope project https://mcp.paypal.com/mcp\n\n# Escopo local — só nesta máquina\nclaude mcp add --transport stdio db --scope local npx @mcp/postgres",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O escopo 'project' salva a configuração em .mcp.json na raiz do projeto — ideal para compartilhar com o time via git.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Gerenciando servidores" },
+      {
+        "type": "code",
+        "content": "# Listar servidores configurados\nclaude mcp list\n\n# Remover um servidor\nclaude mcp remove github\n\n# No modo interativo — gerenciar MCP\n/mcp",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Autenticação" },
+      {
+        "type": "paragraph",
+        "content": "Muitos servidores MCP requerem autenticação. O Claude Code gerencia isso via /mcp na sessão interativa."
+      },
+      {
+        "type": "code",
+        "content": "# 1. Adicione o servidor\nclaude mcp add --transport http github https://api.githubcopilot.com/mcp/\n\n# 2. Na sessão interativa, autentique\n> /mcp\n# Selecione \"Authenticate\" para GitHub\n\n# 3. Use normalmente\n> \"Mostre os PRs abertos atribuídos a mim\"",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Arquivo .mcp.json" },
+      {
+        "type": "paragraph",
+        "content": "Quando você usa escopo project, a configuração é salva em .mcp.json na raiz do projeto."
+      },
+      {
+        "type": "code",
+        "content": "// .mcp.json (gerado automaticamente)\n{\n  \"mcpServers\": {\n    \"github\": {\n      \"transport\": \"http\",\n      \"url\": \"https://api.githubcopilot.com/mcp/\"\n    },\n    \"sentry\": {\n      \"transport\": \"stdio\",\n      \"command\": \"npx\",\n      \"args\": [\"@sentry/mcp-server\"]\n    }\n  }\n}",
+        "language": "json"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Use 'claude mcp add' com --transport http ou stdio para conectar servidores",
+    "Escopo project salva em .mcp.json — compartilhável via git",
+    "Autentique servidores via /mcp na sessão interativa"
+  ],
+  "commonMistakes": [
+    "Esquecer de autenticar — adicionar o servidor não basta, muitos precisam de login",
+    "Não usar escopo project — cada dev do time configura manualmente em vez de compartilhar .mcp.json",
+    "Confundir transportes — HTTP para serviços cloud, stdio para servidores locais"
+  ],
+  "realWorldExample": "Um time configura GitHub MCP e Sentry MCP no .mcp.json do projeto. Todo dev que clona o repo já tem acesso a PRs, issues e dados de erro sem configuração manual.",
+  "encouragement": "Com MCP configurado, o Claude Code deixa de ser uma ferramenta isolada e vira o centro do seu workflow de desenvolvimento."
+}

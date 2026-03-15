@@ -1,0 +1,55 @@
+{
+  "id": "what-is-claude-code",
+  "courseId": "claude-code",
+  "moduleId": "intro",
+  "title": "O que é o Claude Code",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Imagine que você contratou um programador sênior que senta ao seu lado, lê todo o seu projeto, executa comandos no terminal e faz alterações nos arquivos — tudo isso apenas ouvindo o que você descreve em linguagem natural. O Claude Code é esse programador.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Uma ferramenta agêntica no seu terminal" },
+      {
+        "type": "paragraph",
+        "content": "Claude Code é a ferramenta de codificação agêntica da Anthropic. Diferente de chatbots tradicionais que apenas respondem perguntas, o Claude Code age: ele lê seu código, executa comandos, edita arquivos e resolve problemas de forma autônoma — tudo direto no terminal."
+      },
+      {
+        "type": "callout",
+        "content": "Agêntico significa que o Claude Code não espera instruções passo a passo. Você descreve o que quer e ele descobre como fazer, explorando, planejando e implementando por conta própria.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Arquitetura em 3 camadas" },
+      {
+        "type": "paragraph",
+        "content": "O Claude Code opera em três camadas que trabalham juntas para resolver tarefas complexas. Entender essa arquitetura ajuda a usar a ferramenta de forma mais eficiente."
+      },
+      {
+        "type": "list",
+        "content": "Core Layer — a conversa principal com o modelo, com contexto de até 200K tokens (1M com plano premium)\nDelegation Layer — até 10 subagents paralelos com contextos isolados para trabalho focado\nExtension Layer — MCP, hooks, skills e plugins para conectar serviços externos"
+      },
+      { "type": "heading", "content": "O que o Claude Code pode fazer" },
+      {
+        "type": "list",
+        "content": "Ler e entender todo o seu codebase\nExecutar comandos no terminal (build, test, lint, git)\nEditar múltiplos arquivos simultaneamente\nGerenciar workflows de git (commit, PR, merge)\nConectar-se a serviços externos via MCP (GitHub, Sentry, bancos de dados)\nDelegar tarefas complexas a subagents paralelos\nAutomatizar processos em CI/CD"
+      },
+      { "type": "heading", "content": "Claude Code vs. Chatbots tradicionais" },
+      {
+        "type": "paragraph",
+        "content": "Em um chatbot, você pergunta e recebe uma resposta. No Claude Code, você descreve um objetivo e ele age: navega pelos arquivos, entende o contexto, executa comandos e implementa a solução. É a diferença entre pedir uma receita e ter um chef cozinhando para você."
+      },
+      {
+        "type": "callout",
+        "content": "Em março de 2026, o Claude Code já é responsável por ~4% dos commits públicos no GitHub — cerca de 135.000 por dia. 90% do código da própria Anthropic é escrito com IA.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Claude Code é uma ferramenta agêntica que age no terminal, não apenas responde perguntas",
+    "Opera em 3 camadas: Core (conversa), Delegation (subagents) e Extension (MCP, hooks, plugins)",
+    "Pode ler código, executar comandos, editar arquivos e gerenciar git de forma autônoma"
+  ],
+  "realWorldExample": "Um desenvolvedor descreve 'adicione autenticação JWT ao meu servidor Express' e o Claude Code lê o projeto, cria os arquivos necessários, instala dependências, implementa o middleware e roda os testes — tudo em uma única interação.",
+  "encouragement": "Você está prestes a aprender a ferramenta que está mudando a forma como desenvolvedores trabalham. Vamos começar!"
+}

@@ -1,0 +1,95 @@
+{
+  "id": "quiz-fundamentals",
+  "courseId": "claude-code",
+  "moduleId": "intro",
+  "title": "Quiz: Fundamentos",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos verificar o que você aprendeu sobre os fundamentos do Claude Code. Responda as perguntas abaixo."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que significa dizer que o Claude Code é 'agêntico'?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ele apenas responde perguntas sobre código",
+          "isCorrect": false,
+          "explanation": "Responder perguntas é o que chatbots tradicionais fazem. O Claude Code vai além — ele age de forma autônoma."
+        },
+        {
+          "id": "b",
+          "text": "Ele age de forma autônoma: lê código, executa comandos e edita arquivos para resolver tarefas",
+          "isCorrect": true,
+          "explanation": "Exatamente! Agêntico significa que ele explora, planeja e implementa por conta própria, pedindo apenas aprovação para as ações."
+        },
+        {
+          "id": "c",
+          "text": "Ele funciona apenas dentro de IDEs como VS Code",
+          "isCorrect": false,
+          "explanation": "O Claude Code funciona primariamente no terminal, embora tenha extensões para IDEs."
+        }
+      ]
+    },
+    {
+      "question": "Quais são as 3 camadas da arquitetura do Claude Code?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Frontend, Backend e Database",
+          "isCorrect": false,
+          "explanation": "Essas são camadas de uma aplicação web, não do Claude Code."
+        },
+        {
+          "id": "b",
+          "text": "Core Layer, Delegation Layer e Extension Layer",
+          "isCorrect": true,
+          "explanation": "Correto! Core (conversa principal), Delegation (subagents paralelos) e Extension (MCP, hooks, skills, plugins)."
+        },
+        {
+          "id": "c",
+          "text": "Input Layer, Processing Layer e Output Layer",
+          "isCorrect": false,
+          "explanation": "Essa é uma descrição genérica de processamento, não da arquitetura específica do Claude Code."
+        }
+      ]
+    },
+    {
+      "question": "Qual comando é usado para continuar a última conversa do Claude Code?",
+      "options": [
+        {
+          "id": "a",
+          "text": "claude --resume",
+          "isCorrect": false,
+          "explanation": "O flag --resume existe mas é para sessões nomeadas. Para a última conversa, use 'claude -c'."
+        },
+        {
+          "id": "b",
+          "text": "claude -c",
+          "isCorrect": true,
+          "explanation": "Correto! O flag -c (continue) retoma a última conversa de onde você parou."
+        },
+        {
+          "id": "c",
+          "text": "claude --last",
+          "isCorrect": false,
+          "explanation": "Esse flag não existe. Use 'claude -c' para continuar a última sessão."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Claude Code é agêntico — age autonomamente para resolver tarefas",
+    "A arquitetura tem 3 camadas: Core, Delegation e Extension",
+    "Use 'claude -c' para retomar a última conversa"
+  ],
+  "encouragement": "Fundamentos dominados! Agora vamos explorar todos os recursos da interface."
+}

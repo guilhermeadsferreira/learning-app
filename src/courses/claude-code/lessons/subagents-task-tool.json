@@ -1,0 +1,71 @@
+{
+  "id": "subagents-task-tool",
+  "courseId": "claude-code",
+  "moduleId": "agents",
+  "title": "Subagents e Task Tool",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Subagents são como assistentes especializados. O Claude Code é o gerente de projeto que delega tarefas: 'você cuida do frontend, você do backend, você dos testes'. Cada assistente trabalha com foco total na sua parte, sem distrações.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são subagents?" },
+      {
+        "type": "paragraph",
+        "content": "Subagents são instâncias independentes do Claude que o agente principal cria via Task tool para executar tarefas específicas. Cada subagent tem seu próprio contexto isolado — ele não vê a conversa principal, só recebe a instrução delegada."
+      },
+      {
+        "type": "callout",
+        "content": "Subagents fazem parte da Delegation Layer — a segunda camada da arquitetura. O Claude Code pode rodar até 10 subagents em paralelo.",
+        "variant": "info"
+      },
+      { "type": "heading", "content": "Task Tool" },
+      {
+        "type": "paragraph",
+        "content": "A Task tool é o mecanismo que o Claude usa para criar subagents. Ela aceita uma descrição da tarefa e um prompt detalhado."
+      },
+      {
+        "type": "code",
+        "content": "# O Claude Code gera internamente algo como:\n{\n  \"subagent_type\": \"generalPurpose\",\n  \"description\": \"Implementar componente de login\",\n  \"prompt\": \"Crie um componente LoginForm em src/components/LoginForm.tsx. Use React Hook Form + Zod para validação. Campos: email e senha. Siga o padrão de @src/components/SignupForm.tsx.\"\n}",
+        "language": "json"
+      },
+      { "type": "heading", "content": "Quando usar subagents" },
+      {
+        "type": "list",
+        "content": "Tarefas paralelas independentes — frontend + backend + testes ao mesmo tempo\nTarefas que precisam de foco — análise profunda de um arquivo específico\nRedução de contexto — cada subagent começa limpo, sem poluição da conversa principal\nPesquisa exploratória — investigar múltiplas hipóteses simultaneamente"
+      },
+      { "type": "heading", "content": "Tipos de subagent" },
+      {
+        "type": "list",
+        "content": "generalPurpose — pesquisa, implementação, tarefas multi-step\nexplore — exploração rápida de codebase (find files, search code)\nshell — execução de comandos no terminal"
+      },
+      { "type": "heading", "content": "Padrão: 7 subagents paralelos" },
+      {
+        "type": "paragraph",
+        "content": "Para features complexas, o Claude Code pode dividir o trabalho em até 7 tarefas paralelas: componente, estilo, teste, tipos, hook, integração e configuração."
+      },
+      {
+        "type": "code",
+        "content": "# Você pede:\n> crie um módulo completo de gerenciamento de usuários\n\n# O Claude Code delega em paralelo:\n# Subagent 1: componente UserList.tsx\n# Subagent 2: componente UserForm.tsx  \n# Subagent 3: hook useUsers.ts\n# Subagent 4: types users.types.ts\n# Subagent 5: testes users.test.ts\n# Subagent 6: API routes /api/users\n# Subagent 7: integração e wiring",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Subagents NÃO se comunicam entre si — cada um reporta apenas ao agente principal. Para comunicação direta entre agentes, use Agent Teams (próxima lição).",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Subagents são instâncias isoladas criadas via Task tool para tarefas focadas",
+    "Até 10 subagents em paralelo — ideal para decompor features complexas",
+    "Subagents não se comunicam entre si — reportam apenas ao agente principal"
+  ],
+  "commonMistakes": [
+    "Usar subagents para tarefas sequenciais dependentes — eles são melhor para trabalho paralelo independente",
+    "Não dar contexto suficiente no prompt — subagents começam limpos, sem a conversa principal",
+    "Esperar comunicação entre subagents — eles são isolados (use Agent Teams para isso)"
+  ],
+  "realWorldExample": "Um dev pede 'crie uma feature de autenticação completa'. O Claude Code delega: um subagent para o componente de login, outro para o middleware de auth, outro para os testes, e outro para a migração do banco. Em 3 minutos, tudo pronto — em vez de 15 minutos sequenciais.",
+  "encouragement": "Subagents são como ter uma equipe inteira trabalhando no seu projeto. Delegue com confiança!"
+}

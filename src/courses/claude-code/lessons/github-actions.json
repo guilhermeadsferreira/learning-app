@@ -1,0 +1,68 @@
+{
+  "id": "github-actions",
+  "courseId": "claude-code",
+  "moduleId": "git-cicd",
+  "title": "GitHub Actions com Claude Code",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "GitHub Actions com Claude Code é como ter um revisor de código que nunca tira férias, nunca esquece o checklist, e responde a PRs em segundos — não em horas.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Claude Code Action" },
+      {
+        "type": "paragraph",
+        "content": "A Anthropic mantém uma GitHub Action oficial — anthropics/claude-code-action — que integra o Claude Code diretamente nos workflows de CI/CD. Ela permite automação de code review, resposta a menções @claude, e muito mais."
+      },
+      { "type": "heading", "content": "Code Review automático" },
+      {
+        "type": "code",
+        "content": "# .github/workflows/code-review.yml\nname: Code Review\non:\n  pull_request:\n    types: [opened, synchronize]\njobs:\n  review:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: anthropics/claude-code-action@v1\n        with:\n          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\n          prompt: \"/review\"\n          claude_args: \"--max-turns 5\"",
+        "language": "yaml"
+      },
+      {
+        "type": "paragraph",
+        "content": "Com essa configuração, toda vez que um PR é aberto ou atualizado, o Claude Code faz review automaticamente."
+      },
+      { "type": "heading", "content": "Respondendo a @claude" },
+      {
+        "type": "code",
+        "content": "# .github/workflows/claude-bot.yml\nname: Claude Code\non:\n  issue_comment:\n    types: [created]\n  pull_request_review_comment:\n    types: [created]\njobs:\n  claude:\n    if: contains(github.event.comment.body, '@claude')\n    runs-on: ubuntu-latest\n    steps:\n      - uses: anthropics/claude-code-action@v1\n        with:\n          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}",
+        "language": "yaml"
+      },
+      {
+        "type": "callout",
+        "content": "Com essa configuração, qualquer pessoa pode mencionar @claude em um comentário de PR ou issue e receber uma resposta contextualizada.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Flags do claude_args" },
+      {
+        "type": "code",
+        "content": "# Customizar modelo e limites\nclaude_args: \"--max-turns 5 --model claude-sonnet-4-6\"\n\n# Com configuração MCP\nclaude_args: \"--max-turns 5 --mcp-config /path/to/config.json\"\n\n# Com permissões restritas\nclaude_args: \"--max-turns 3 --permission-mode plan\"",
+        "language": "yaml"
+      },
+      { "type": "heading", "content": "Outros workflows automatizados" },
+      {
+        "type": "list",
+        "content": "Triage automática de issues — Claude classifica e atribui issues novas\nGeração de release notes — resumo automático dos commits da release\nChecklist de PR — verifica se todos os requisitos foram atendidos\nTradução — traduz novas strings automaticamente e abre PR\nDocumentação — atualiza docs quando código muda"
+      },
+      { "type": "heading", "content": "Boas práticas para CI/CD" },
+      {
+        "type": "list",
+        "content": "Sempre use --max-turns para evitar loops infinitos\nUse --model haiku para tarefas simples (custo menor)\nGuarde a API key em secrets do GitHub — nunca hardcode\nUse --permission-mode plan para ações somente leitura\nTeste o workflow em um fork antes de aplicar ao repo principal"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "anthropics/claude-code-action@v1 integra Claude Code em GitHub Actions",
+    "Automatize code review, @claude em PRs, triage de issues e release notes",
+    "Sempre use --max-turns e guarde a API key em secrets"
+  ],
+  "commonMistakes": [
+    "Não limitar --max-turns — sem limite, o Claude pode consumir muitos tokens em CI",
+    "Hardcodar API key no workflow — use secrets do GitHub",
+    "Usar Opus para review automatizado — Sonnet é suficiente e muito mais barato"
+  ],
+  "realWorldExample": "Uma startup configura: reviews automáticos em todo PR (Sonnet, max 5 turns), @claude para perguntas em issues, e geração de release notes toda sexta. Resultado: reviews 10x mais rápidos, menos bugs em produção.",
+  "encouragement": "CI/CD com Claude Code é automação que escala. O bot que nunca descansa, nunca esquece e melhora a cada atualização."
+}
