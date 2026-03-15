@@ -112,6 +112,7 @@ Evite implementar mudanças cegamente quando perceber problemas estruturais.
 # Rules vs Commands (Cursor)
 
 - **Rules** (`.cursor/rules/`): diretrizes aplicadas automaticamente ou ao @mencionar. Use para convenções, arquitetura, checklist pós-implementação.
+- **`tech-best-practices.mdc`**: carrega ao editar `src/**/*.{ts,tsx}` — traz boas práticas React e React Router para o contexto.
 - **Commands** (`.cursor/commands/`): workflows acionados com `/` no chat. Use para fluxos repetíveis (ex: `/git-commit`, `/new-content`).
 
 ---

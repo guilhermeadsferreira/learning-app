@@ -1,0 +1,61 @@
+---
+description: Boas práticas React e React Router — contexto ao editar código em src/
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Boas Práticas Técnicas — React e React Router
+
+Esta rule carrega automaticamente ao editar arquivos em `src/`. Consulte `documents/tech/` para o conteúdo completo.
+
+---
+
+## React
+
+### Componentes
+- **Single Responsibility**: extraia lógica para custom hooks se >200 linhas
+- **Named exports** para componentes e hooks
+- **Composição** sobre herança (children, slots)
+
+### Hooks
+- **Rules of Hooks**: chamar apenas no nível superior, nunca em condições/loops
+- **Custom hooks** para lógica reutilizável (prefixo `use`)
+- **useCallback/useMemo** apenas quando há re-renders desnecessários
+
+### Anti-patterns a evitar
+| Evitar | Usar |
+|--------|------|
+| `Link` envolvendo `Button` | `Link` com `buttonVariants` ou `Button asChild` |
+| `key={i}` em listas dinâmicas | `key={item.id}` |
+| God component | Extrair `useX` e subcomponentes |
+| `useEffect` para estado derivado | Calcular durante o render |
+
+### Performance
+- Keys estáveis (nunca index em listas dinâmicas)
+- `React.lazy` + `Suspense` para rotas pesadas
+- Error Boundaries em partes que podem falhar (ex: Sandpack)
+
+---
+
+## React Router v7
+
+### Imports
+```tsx
+import { Link, useParams, useMatch, Outlet, Navigate } from 'react-router'
+```
+
+### Estrutura de rotas
+- `createBrowserRouter` + `RouterProvider` (Data Mode)
+- `errorElement` na rota raiz
+- `path: "*"` como último filho para 404
+
+### Navegação
+- `useMatch('/course/:courseId/*')` em vez de `pathname.includes('/course/')`
+- `Navigate` para redirecionamentos condicionais
+- `useNavigate()` para navegação programática
+
+---
+
+## Referência completa
+- `documents/tech/react-best-practices.md`
+- `documents/tech/react-router-best-practices.md`

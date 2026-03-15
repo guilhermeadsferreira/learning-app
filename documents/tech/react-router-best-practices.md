@@ -28,17 +28,33 @@ O Data Mode usa `createBrowserRouter` e `RouterProvider`, com configuração de 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: (
+      <ProgressProvider>
+        <AppShell />
+      </ProgressProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'course/:courseId', element: <CoursePage /> },
-      { path: '*', element: <NotFoundPage /> },
+      { index: true, Component: HomePage },
+      { path: 'course/:courseId', lazy: async () => { ... } },
+      { path: '*', Component: NotFoundPage },
     ],
   },
 ])
 
 ReactDOM.createRoot(root).render(<RouterProvider router={router} />)
+```
+
+### `Component` vs `element`
+
+Prefira `Component` (referência da função) por padrão. Use `element` (JSX) quando precisar envolver o componente com providers ou passar props:
+
+```tsx
+// Padrão — use Component
+{ path: 'about', Component: AboutPage }
+
+// Quando precisa de wrapper — use element
+{ path: '/', element: <ProgressProvider><AppShell /></ProgressProvider> }
 ```
 
 ---
@@ -82,22 +98,19 @@ Use um catch-all `path: "*"` como último filho para rotas não encontradas.
 
 ### Lazy de rotas
 
-Use a propriedade `lazy` do `createBrowserRouter` ou `React.lazy` + `Suspense` para code splitting:
+Use a propriedade `lazy` do `createBrowserRouter` para code splitting. É a abordagem idiomática do Data Mode — não precisa de `React.lazy` nem `Suspense`:
 
 ```tsx
-// Opção 1: lazy no router
 {
   path: 'course/:courseId',
-  lazy: () => import('./pages/CoursePage'),
+  lazy: async () => {
+    const { CoursePage } = await import('./pages/CoursePage')
+    return { Component: CoursePage }
+  },
 }
-
-// Opção 2: React.lazy + Suspense
-const CoursePage = lazy(() => import('./pages/CoursePage'))
-// No element do layout:
-<Suspense fallback={<Loading />}>
-  <Outlet />
-</Suspense>
 ```
+
+O router aguarda o módulo carregar antes de transicionar — a página anterior continua visível durante o carregamento.
 
 ---
 
@@ -206,3 +219,4 @@ Para dados estáticos ou síncronos (ex: JSON bundlado), loaders podem ser dispe
 - [React Router — Start](https://reactrouter.com/start)
 - [React Router — Data Mode](https://reactrouter.com/start/modes)
 - [React Router — Error Handling](https://reactrouter.com/route/error-element)
+- Guia para iniciantes: `documents/tech/react-router-guideline.md`
