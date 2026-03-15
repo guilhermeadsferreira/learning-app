@@ -1,6 +1,6 @@
 # Settings Drawer — Configuração de IA
 
-**Status:** pendente
+**Status:** concluído
 
 ---
 

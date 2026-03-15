@@ -87,11 +87,6 @@ export function useAIReview({
     [lesson, courseId, course, codeRef]
   )
 
-  const handleApiKeySet = useCallback(() => {
-    setShowApiKeyDialog(false)
-    handleAIReview()
-  }, [handleAIReview])
-
   return {
     aiReview,
     aiLoading,
@@ -100,6 +95,5 @@ export function useAIReview({
     handleAIReview,
     handleAskQuestion,
     setShowApiKeyDialog,
-    handleApiKeySet,
   }
 }

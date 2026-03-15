@@ -11,6 +11,7 @@ import { ChallengeCard } from '@/components/lesson/ChallengeCard'
 import { FeedbackCard } from '@/components/lesson/FeedbackCard'
 import { AIReviewCard } from '@/components/lesson/AIReviewCard'
 import { APIKeyDialog } from '@/components/lesson/APIKeyDialog'
+import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
 import { CodeEditorPanel } from '@/components/editor/CodeEditorPanel'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -34,6 +35,7 @@ export function LessonPage() {
 
   const course = courseId ? getCourse(courseId) : null
   const { prevLessonId, nextLessonId } = useLessonNavigation(course, courseId ?? '', lessonId ?? '')
+  const { openSettings } = useSettingsDrawer()
 
   const handleComplete = useCallback(() => {
     if (!lesson || !lessonId) return
@@ -169,7 +171,10 @@ export function LessonPage() {
 
             {aiReview.showApiKeyDialog && (
               <APIKeyDialog
-                onKeySet={aiReview.handleApiKeySet}
+                onOpenSettings={() => {
+                  openSettings()
+                  aiReview.setShowApiKeyDialog(false)
+                }}
                 onCancel={() => aiReview.setShowApiKeyDialog(false)}
               />
             )}

@@ -1,12 +1,14 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router'
-import { Menu } from 'lucide-react'
+import { Menu, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { XPBadge } from '@/components/gamification/XPBadge'
 import { ProgressBar } from '@/components/gamification/ProgressBar'
 import { useProgress } from '@/hooks/useProgress'
 import { useCourse } from '@/hooks/useCourse'
 import { getCourse } from '@/courses'
+import { useSettingsDrawer } from '@/contexts/SettingsDrawerContext'
+import { getAllProviders, getApiKey } from '@/services/ai-review'
 import { cn } from '@/lib/utils'
 
 interface HeaderProps {
@@ -17,6 +19,8 @@ interface HeaderProps {
 export function Header({ className, onMobileMenuClick }: HeaderProps) {
   const { progress } = useProgress()
   const { courseId } = useCourse()
+  const { openSettings } = useSettingsDrawer()
+  const needsApiKeyConfig = !getAllProviders().some((p) => getApiKey(p.id))
   const course = courseId ? getCourse(courseId) : null
 
   const { totalLessons, progressPercent } = useMemo(() => {
@@ -58,6 +62,21 @@ export function Header({ className, onMobileMenuClick }: HeaderProps) {
         {course && <span className="text-slate-400">/ {course.title}</span>}
       </div>
       <div className="flex items-center gap-6">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={openSettings}
+          aria-label="Configurações"
+          className="relative"
+        >
+          <Settings className="size-5" />
+          {needsApiKeyConfig && (
+            <span
+              className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-amber-500"
+              aria-hidden
+            />
+          )}
+        </Button>
         <XPBadge xp={progress.xp} />
         {course && totalLessons > 0 && (
           <div className="hidden w-32 sm:block">
