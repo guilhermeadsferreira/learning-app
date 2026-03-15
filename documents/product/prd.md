@@ -14,19 +14,19 @@ O primeiro curso será **React Fundamentals**, mas a arquitetura deve permitir m
 
 Criar uma experiência de estudo que:
 
-* aumente engajamento
-* reduza frustração ao aprender frameworks novos
-* incentive prática ativa
-* facilite revisão de conceitos
-* permita progresso claro
+- aumente engajamento
+- reduza frustração ao aprender frameworks novos
+- incentive prática ativa
+- facilite revisão de conceitos
+- permita progresso claro
 
 A plataforma deve combinar:
 
-* microlearning
-* prática guiada
-* gamificação leve
-* revisão estruturada
-* progresso visual
+- microlearning
+- prática guiada
+- gamificação leve
+- revisão estruturada
+- progresso visual
 
 ---
 
@@ -40,18 +40,18 @@ Pessoas que querem evoluir na programação. A plataforma apoia os estudos com m
 
 Estudar frameworks novos costuma gerar:
 
-* excesso de teoria
-* pouca prática guiada
-* dificuldade de retenção
-* sensação de complexidade
-* baixa motivação para continuar estudando
+- excesso de teoria
+- pouca prática guiada
+- dificuldade de retenção
+- sensação de complexidade
+- baixa motivação para continuar estudando
 
 A plataforma deve tornar o aprendizado:
 
-* progressivo
-* visual
-* prático
-* motivador
+- progressivo
+- visual
+- prático
+- motivador
 
 ---
 
@@ -59,10 +59,10 @@ A plataforma deve tornar o aprendizado:
 
 O usuário deve sentir que:
 
-* cada lição é pequena e possível
-* está sempre avançando
-* pode revisar facilmente
-* não está “perdido” no conteúdo
+- cada lição é pequena e possível
+- está sempre avançando
+- pode revisar facilmente
+- não está “perdido” no conteúdo
 
 ---
 
@@ -114,22 +114,22 @@ Agrupamento de lições.
 
 Tipos iniciais de lição:
 
-* explicação curta
-* desafio de código
-* quiz simples
+- explicação curta
+- desafio de código
+- quiz simples
 
 ### Progresso
 
 Usuário deve visualizar:
 
-* progresso do curso
-* lição atual
-* próximas lições
+- progresso do curso
+- lição atual
+- próximas lições
 
 ### Gamificação básica
 
-* XP por lição
-* barra de progresso
+- XP por lição
+- barra de progresso
 
 ### Revisão
 
@@ -170,30 +170,30 @@ A tela principal de lição deve conter:
 
 ## Header
 
-* nome do curso
-* XP
-* progresso
+- nome do curso
+- XP
+- progresso
 
 ## Sidebar
 
-* módulos
-* lições
+- módulos
+- lições
 
 ## Área principal
 
-* título da lição
-* analogia
-* explicação
-* desafio
-* editor de código
-* preview
-* feedback
+- título da lição
+- analogia
+- explicação
+- desafio
+- editor de código
+- preview
+- feedback
 
 ## Rodapé
 
-* dica
-* revisar
-* próxima lição
+- dica
+- revisar
+- próxima lição
 
 ---
 
@@ -201,22 +201,22 @@ A tela principal de lição deve conter:
 
 ## Frontend
 
-* React
-* Vite
-* TypeScript
+- React
+- Vite
+- TypeScript
 
 ## UI
 
-* TailwindCSS
-* shadcn/ui
+- TailwindCSS
+- shadcn/ui
 
 ## Editor
 
-* Sandpack
+- Sandpack
 
 ## Persistência
 
-* localStorage (progresso e XP do usuário)
+- localStorage (progresso e XP do usuário)
 
 ---
 
@@ -256,12 +256,12 @@ src/
 
 Descrição:
 
-* **courses** → conteúdo dos cursos em JSON
-* **components** → editor (Sandpack), gamification (XP, progress bar), layout (AppShell, Header, Sidebar), lesson (ChallengeCard, FeedbackCard, AIReviewCard)
-* **engine** → tipos TypeScript, persistência de progresso, sistema de XP
-* **hooks** → acesso a curso, lição e progresso
-* **pages** → rotas da aplicação
-* **services** → integração com APIs de IA (revisão de código, chat)
+- **courses** → conteúdo dos cursos em JSON
+- **components** → editor (Sandpack), gamification (XP, progress bar), layout (AppShell, Header, Sidebar), lesson (ChallengeCard, FeedbackCard, AIReviewCard)
+- **engine** → tipos TypeScript, persistência de progresso, sistema de XP
+- **hooks** → acesso a curso, lição e progresso
+- **pages** → rotas da aplicação
+- **services** → integração com APIs de IA (revisão de código, chat)
 
 ---
 
@@ -269,10 +269,10 @@ Descrição:
 
 Sinais positivos incluem:
 
-* completar um módulo inteiro
-* facilidade em continuar estudando
-* compreensão dos conceitos básicos de React
-* sensação clara de progresso
+- completar um módulo inteiro
+- facilidade em continuar estudando
+- compreensão dos conceitos básicos de React
+- sensação clara de progresso
 
 ---
 
@@ -280,11 +280,11 @@ Sinais positivos incluem:
 
 Não fazem parte do escopo atual:
 
-* multiplayer
-* ranking global
-* marketplace de cursos
-* aplicativo mobile
-* analytics complexos
+- multiplayer
+- ranking global
+- marketplace de cursos
+- aplicativo mobile
+- analytics complexos
 
 ---
 
@@ -292,12 +292,12 @@ Não fazem parte do escopo atual:
 
 Possíveis evoluções da plataforma:
 
-* sistema de revisão automática (spaced repetition)
-* analytics de aprendizado
-* novos cursos (TypeScript, Next.js, Node, Docker)
-* sistema de conquistas e níveis
-* trilhas personalizadas
-* modo multiplayer ou comunidade
+- sistema de revisão automática (spaced repetition)
+- analytics de aprendizado
+- novos cursos (TypeScript, Next.js, Node, Docker)
+- sistema de conquistas e níveis
+- trilhas personalizadas
+- modo multiplayer ou comunidade
 
 **Já implementado:** IA tutor (Professor IA) — revisão de código e chat com Claude/OpenAI.
 
@@ -307,10 +307,10 @@ Possíveis evoluções da plataforma:
 
 Implementado. Permite:
 
-* **Revisão de código**: o aluno envia seu código e recebe feedback estruturado (feedback, isCorrect, encouragement, suggestions, nextStepHint)
-* **Chat**: tirar dúvidas durante desafios
-* **Providers**: Claude (Anthropic) e OpenAI, com troca dinâmica
-* **API Key**: armazenada localmente no navegador
+- **Revisão de código**: o aluno envia seu código e recebe feedback estruturado (feedback, isCorrect, encouragement, suggestions, nextStepHint)
+- **Chat**: tirar dúvidas durante desafios
+- **Providers**: Claude (Anthropic) e OpenAI, com troca dinâmica
+- **API Key**: armazenada localmente no navegador
 
 ---
 
@@ -318,8 +318,8 @@ Implementado. Permite:
 
 Implementado. Valores por tipo de lição:
 
-* **explanation** / **quiz**: 10 XP
-* **challenge**: 25 XP
+- **explanation** / **quiz**: 10 XP
+- **challenge**: 25 XP
 
 Progresso persistido em localStorage.
 
@@ -330,6 +330,7 @@ Progresso persistido em localStorage.
 O projeto está além do MVP. Os itens abaixo representam melhorias pedagógicas e técnicas identificadas como prioritárias:
 
 ### Pedagógico
+
 1. Criar lições do tipo `quiz` intercaladas no curso React (retrieval practice)
 2. Adicionar mini projetos ao final dos módulos principais
 3. Adicionar campo `hook` às lições (pergunta provocativa antes da analogia)
@@ -337,6 +338,7 @@ O projeto está além do MVP. Os itens abaixo representam melhorias pedagógicas
 5. Popular o campo `tests[]` nos challenges para validação automática
 
 ### Técnico
+
 6. Implementar desbloqueio progressivo de lições (Mastery Learning)
 7. Implementar sistema de revisão com spaced repetition
 8. Adicionar classificação de tipo de desafio (`challengeType`) ao schema

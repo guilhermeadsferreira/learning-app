@@ -198,10 +198,7 @@ REGRAS GERAIS:
 - Retorne APENAS o JSON, sem markdown ou texto extra`
 }
 
-function buildQuestionSystemPrompt(
-  context: AIReviewContext,
-  lessonTitle: string
-): string {
+function buildQuestionSystemPrompt(context: AIReviewContext, lessonTitle: string): string {
   const style = context.challengeStyle ?? 'code'
   const hasCode = style === 'code' || style === 'query'
 
@@ -222,9 +219,7 @@ function buildUserMessage(request: AIReviewRequest): string {
   const answerLabel = ANSWER_LABEL[style]
   const hasCode = style === 'code' || style === 'query'
 
-  const solutionBlock = hasCode
-    ? `\`\`\`${lang}\n${request.solution}\n\`\`\``
-    : request.solution
+  const solutionBlock = hasCode ? `\`\`\`${lang}\n${request.solution}\n\`\`\`` : request.solution
 
   const studentBlock = hasCode
     ? `\`\`\`${lang}\n${request.studentCode}\n\`\`\``
@@ -273,8 +268,7 @@ async function callClaude(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}))
-    const msg =
-      error?.error?.message || `Erro na API Anthropic: ${response.status}`
+    const msg = error?.error?.message || `Erro na API Anthropic: ${response.status}`
     throw new Error(msg)
   }
 
@@ -312,8 +306,7 @@ async function callOpenAI(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}))
-    const msg =
-      error?.error?.message || `Erro na API OpenAI: ${response.status}`
+    const msg = error?.error?.message || `Erro na API OpenAI: ${response.status}`
     throw new Error(msg)
   }
 
@@ -326,12 +319,7 @@ async function callOpenAI(
 
 const providerCallers: Record<
   AIProvider,
-  (
-    system: string,
-    user: string,
-    key: string,
-    maxTokens: number
-  ) => Promise<string>
+  (system: string, user: string, key: string, maxTokens: number) => Promise<string>
 > = {
   claude: callClaude,
   openai: callOpenAI,
@@ -362,8 +350,7 @@ function parseReviewResponse(content: string): AIReviewResponse {
     return {
       feedback: content,
       isCorrect: false,
-      encouragement:
-        'Continue tentando! Cada erro é uma oportunidade de aprender.',
+      encouragement: 'Continue tentando! Cada erro é uma oportunidade de aprender.',
       suggestions: [],
     }
   }
@@ -373,10 +360,7 @@ export async function reviewWithAI(
   request: AIReviewRequest,
   apiKey: string
 ): Promise<AIReviewResponse> {
-  const context = resolveAIReviewContext(
-    request.courseId,
-    request.aiReviewContext
-  )
+  const context = resolveAIReviewContext(request.courseId, request.aiReviewContext)
   const content = await callAI(
     buildReviewSystemPrompt(context),
     buildUserMessage(request),
@@ -394,19 +378,8 @@ export interface AskAIQuestionParams {
   aiReviewContext?: AIReviewContext
 }
 
-export async function askAIQuestion(
-  params: AskAIQuestionParams,
-  apiKey: string
-): Promise<string> {
-  const context = resolveAIReviewContext(
-    params.courseId,
-    params.aiReviewContext
-  )
+export async function askAIQuestion(params: AskAIQuestionParams, apiKey: string): Promise<string> {
+  const context = resolveAIReviewContext(params.courseId, params.aiReviewContext)
   const userMsg = `Código atual do aluno:\n\`\`\`jsx\n${params.studentCode}\n\`\`\`\n\nPergunta: ${params.question}`
-  return callAI(
-    buildQuestionSystemPrompt(context, params.lessonTitle),
-    userMsg,
-    apiKey,
-    600
-  )
+  return callAI(buildQuestionSystemPrompt(context, params.lessonTitle), userMsg, apiKey, 600)
 }

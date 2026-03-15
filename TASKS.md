@@ -1,0 +1,2 @@
+- Deploy grátis, seja com vercel ou render, qual é a forma mais fácil ?
+- Criar um PRD de futuras melhorias, para oferecer para outros alunos, ouvir sugestões de novos cursos, novas features, novas metodologias, etc.

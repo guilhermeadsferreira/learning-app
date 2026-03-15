@@ -57,34 +57,34 @@ Exemplo:
 
 ## Campos do curso
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| id | string | Sim | Identificador único do curso |
-| title | string | Sim | Título do curso |
-| description | string | Sim | Descrição do curso |
-| icon | string | Sim | Emoji representativo (ex: ⚛️) |
-| modules | Module[] | Sim | Array de módulos inline |
-| aiReviewContext | AIReviewContext | Não | Contexto para prompts de IA (revisão e perguntas) |
+| Campo           | Tipo            | Obrigatório | Descrição                                         |
+| --------------- | --------------- | ----------- | ------------------------------------------------- |
+| id              | string          | Sim         | Identificador único do curso                      |
+| title           | string          | Sim         | Título do curso                                   |
+| description     | string          | Sim         | Descrição do curso                                |
+| icon            | string          | Sim         | Emoji representativo (ex: ⚛️)                     |
+| modules         | Module[]        | Sim         | Array de módulos inline                           |
+| aiReviewContext | AIReviewContext | Não         | Contexto para prompts de IA (revisão e perguntas) |
 
 ### AIReviewContext (opcional)
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| subject | string | Sim* | Assunto principal (ex: "React", "PostgreSQL", "Gestão de Pessoas") |
-| expertise | string | Não | Áreas de expertise para o prompt (ex: "hooks, componentes, JSX") |
-| codeLanguage | string | Não | Linguagem dos blocos de código (ex: "jsx", "python", "sql", "bash"). Default: "text" |
-| challengeStyle | string | Não | Como a IA avalia a resposta do aluno. Default: "code" |
+| Campo          | Tipo   | Obrigatório | Descrição                                                                            |
+| -------------- | ------ | ----------- | ------------------------------------------------------------------------------------ |
+| subject        | string | Sim\*       | Assunto principal (ex: "React", "PostgreSQL", "Gestão de Pessoas")                   |
+| expertise      | string | Não         | Áreas de expertise para o prompt (ex: "hooks, componentes, JSX")                     |
+| codeLanguage   | string | Não         | Linguagem dos blocos de código (ex: "jsx", "python", "sql", "bash"). Default: "text" |
+| challengeStyle | string | Não         | Como a IA avalia a resposta do aluno. Default: "code"                                |
 
 \* Obrigatório apenas se `aiReviewContext` for definido. Se ausente, o sistema usa fallback por `courseId`.
 
 #### Valores de `challengeStyle`
 
-| Valor | Quando usar | Exemplos de cursos |
-|-------|-------------|-------------------|
-| `code` | Desafio de escrita/correção de código | React, Python, FastAPI, Node.js |
-| `query` | Desafio de query em banco de dados | PostgreSQL, MySQL, MongoDB |
+| Valor      | Quando usar                             | Exemplos de cursos                         |
+| ---------- | --------------------------------------- | ------------------------------------------ |
+| `code`     | Desafio de escrita/correção de código   | React, Python, FastAPI, Node.js            |
+| `query`    | Desafio de query em banco de dados      | PostgreSQL, MySQL, MongoDB                 |
 | `scenario` | Desafio de decisão/cenário (sem código) | Gestão de Pessoas, Gestão de Projetos, AWS |
-| `written` | Resposta textual/análise | Documentação, Arquitetura, Segurança |
+| `written`  | Resposta textual/análise                | Documentação, Arquitetura, Segurança       |
 
 #### Exemplos por tipo de curso
 
@@ -126,11 +126,11 @@ Exemplo:
 
 ## Campos do módulo
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| id | string | Sim | Identificador único do módulo |
-| title | string | Sim | Título do módulo |
-| lessons | string[] | Sim | IDs das lições (nomes dos arquivos JSON sem extensão) |
+| Campo   | Tipo     | Obrigatório | Descrição                                             |
+| ------- | -------- | ----------- | ----------------------------------------------------- |
+| id      | string   | Sim         | Identificador único do módulo                         |
+| title   | string   | Sim         | Título do módulo                                      |
+| lessons | string[] | Sim         | IDs das lições (nomes dos arquivos JSON sem extensão) |
 
 Os IDs em `lessons` devem corresponder aos nomes dos arquivos em `lessons/` (ex: `"use-state"` → `lessons/use-state.json`).
 

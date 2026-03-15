@@ -62,8 +62,7 @@ export function APIKeyDialog({ onKeySet, onCancel }: APIKeyDialogProps) {
           ))}
         </div>
         <p className="mb-3 text-sm text-slate-400">
-          Insira sua API key da {config.name}. Ela fica armazenada apenas
-          no seu navegador.
+          Insira sua API key da {config.name}. Ela fica armazenada apenas no seu navegador.
         </p>
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
@@ -84,12 +83,7 @@ export function APIKeyDialog({ onKeySet, onCancel }: APIKeyDialogProps) {
               <ExternalLink className="size-3" />
             </a>
             <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={onCancel}
-              >
+              <Button type="button" variant="ghost" size="sm" onClick={onCancel}>
                 Cancelar
               </Button>
               <Button

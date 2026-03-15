@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useMemo } from 'react'
+import { Link } from 'react-router'
 import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { XPBadge } from '@/components/gamification/XPBadge'
@@ -18,16 +19,16 @@ export function Header({ className, onMobileMenuClick }: HeaderProps) {
   const { courseId } = useCourse()
   const course = courseId ? getCourse(courseId) : null
 
-  const totalLessons = course?.modules.reduce(
-    (acc, m) => acc + m.lessons.length,
-    0
-  ) ?? 0
-  const completedCount = course
-    ? progress.completedLessonIds.filter((id) =>
-        course.modules.some((m) => m.lessons.includes(id))
-      ).length
-    : 0
-  const progressPercent = totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0
+  const { totalLessons, progressPercent } = useMemo(() => {
+    const total = course?.modules.reduce((acc, m) => acc + m.lessons.length, 0) ?? 0
+    const completed = course
+      ? progress.completedLessonIds.filter((id) =>
+          course.modules.some((m) => m.lessons.includes(id))
+        ).length
+      : 0
+    const percent = total > 0 ? (completed / total) * 100 : 0
+    return { totalLessons: total, progressPercent: percent }
+  }, [course, progress.completedLessonIds])
 
   return (
     <header
@@ -54,9 +55,7 @@ export function Header({ className, onMobileMenuClick }: HeaderProps) {
         >
           Learning Engine
         </Link>
-        {course && (
-          <span className="text-slate-400">/ {course.title}</span>
-        )}
+        {course && <span className="text-slate-400">/ {course.title}</span>}
       </div>
       <div className="flex items-center gap-6">
         <XPBadge xp={progress.xp} />

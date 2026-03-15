@@ -1,20 +1,16 @@
 import { useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useMatch } from 'react-router'
 import { Header } from './Header'
 import { SidebarCourseNavigation } from './SidebarCourseNavigation'
 import { cn } from '@/lib/utils'
 export function AppShell() {
-  const { pathname } = useLocation()
-  const showSidebar = pathname.includes('/course/')
+  const courseMatch = useMatch('/course/:courseId/*')
+  const showSidebar = !!courseMatch
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-950">
-      <Header
-        onMobileMenuClick={
-          showSidebar ? () => setMobileMenuOpen((o) => !o) : undefined
-        }
-      />
+      <Header onMobileMenuClick={showSidebar ? () => setMobileMenuOpen((o) => !o) : undefined} />
       <div className="flex flex-1 overflow-hidden">
         {showSidebar && (
           <>
@@ -37,10 +33,7 @@ export function AppShell() {
           </>
         )}
         <main
-          className={cn(
-            'flex-1 overflow-auto',
-            showSidebar && 'lg:border-l border-slate-800/50'
-          )}
+          className={cn('flex-1 overflow-auto', showSidebar && 'lg:border-l border-slate-800/50')}
         >
           <Outlet />
         </main>

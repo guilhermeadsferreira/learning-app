@@ -13,7 +13,13 @@
     {
       "id": "ecosystem",
       "title": "Ecossistema e Ferramentas",
-      "lessons": ["node-npm-intro", "package-json", "vite-intro", "criando-projeto", "estrutura-pastas"]
+      "lessons": [
+        "node-npm-intro",
+        "package-json",
+        "vite-intro",
+        "criando-projeto",
+        "estrutura-pastas"
+      ]
     },
     {
       "id": "intro",
@@ -23,7 +29,13 @@
     {
       "id": "components",
       "title": "Componentes",
-      "lessons": ["components", "props", "props-children", "component-composition", "component-best-practices"]
+      "lessons": [
+        "components",
+        "props",
+        "props-children",
+        "component-composition",
+        "component-best-practices"
+      ]
     },
     {
       "id": "state",
@@ -43,17 +55,37 @@
     {
       "id": "custom-hooks",
       "title": "Custom Hooks",
-      "lessons": ["custom-hooks-intro", "custom-hooks-criando", "custom-hooks-padroes", "custom-hooks-boas-praticas"]
+      "lessons": [
+        "custom-hooks-intro",
+        "custom-hooks-criando",
+        "custom-hooks-padroes",
+        "custom-hooks-boas-praticas"
+      ]
     },
     {
       "id": "styling",
       "title": "Estilização com Tailwind CSS",
-      "lessons": ["css-react", "tailwind-intro", "tailwind-components", "tailwind-responsive", "tailwind-animacoes", "tailwind-projeto"]
+      "lessons": [
+        "css-react",
+        "tailwind-intro",
+        "tailwind-components",
+        "tailwind-responsive",
+        "tailwind-animacoes",
+        "tailwind-projeto"
+      ]
     },
     {
       "id": "routing",
       "title": "React Router",
-      "lessons": ["react-router-intro", "rotas-basicas", "rotas-dinamicas", "rotas-aninhadas", "layout-routes", "react-router-navegacao", "react-router-pratica"]
+      "lessons": [
+        "react-router-intro",
+        "rotas-basicas",
+        "rotas-dinamicas",
+        "rotas-aninhadas",
+        "layout-routes",
+        "react-router-navegacao",
+        "react-router-pratica"
+      ]
     },
     {
       "id": "state-management",
@@ -73,12 +105,22 @@
     {
       "id": "patterns",
       "title": "Padrões e Boas Práticas",
-      "lessons": ["clean-code-react", "componentes-reutilizaveis", "compound-components", "error-boundaries"]
+      "lessons": [
+        "clean-code-react",
+        "componentes-reutilizaveis",
+        "compound-components",
+        "error-boundaries"
+      ]
     },
     {
       "id": "testing",
       "title": "Testes",
-      "lessons": ["testing-intro", "react-testing-library", "testando-componentes", "testando-hooks"]
+      "lessons": [
+        "testing-intro",
+        "react-testing-library",
+        "testando-componentes",
+        "testando-hooks"
+      ]
     },
     {
       "id": "performance",

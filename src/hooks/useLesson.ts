@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { getLesson } from '@/courses'
 
 export function useLesson() {
@@ -6,7 +6,6 @@ export function useLesson() {
     courseId: string
     lessonId: string
   }>()
-  const lesson =
-    courseId && lessonId ? getLesson(courseId, lessonId) : null
+  const lesson = courseId && lessonId ? getLesson(courseId, lessonId) : null
   return { lesson, courseId, lessonId }
 }

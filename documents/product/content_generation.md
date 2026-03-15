@@ -6,9 +6,9 @@ Este documento define o **prompt padrão para geração de conteúdo educacional
 
 O objetivo é garantir que lições geradas por IA sigam:
 
-* a metodologia pedagógica da plataforma ([pedagogy.md](pedagogy.md))
-* a estrutura definida em [lesson_schema.md](lesson_schema.md)
-* os princípios definidos neste documento
+- a metodologia pedagógica da plataforma ([pedagogy.md](pedagogy.md))
+- a estrutura definida em [lesson_schema.md](lesson_schema.md)
+- os princípios definidos neste documento
 
 Sem esse guia, a IA tende a gerar conteúdo superficial ou incompatível com o sistema.
 
@@ -22,10 +22,10 @@ A IA deve atuar como:
 
 O conteúdo deve ser:
 
-* claro
-* prático
-* progressivo
-* orientado a exercícios
+- claro
+- prático
+- progressivo
+- orientado a exercícios
 
 A área pode ser: **programação**, **gestão**, **ferramentas**, **soft skills** ou qualquer outro domínio de conhecimento.
 
@@ -35,30 +35,30 @@ A área pode ser: **programação**, **gestão**, **ferramentas**, **soft skills
 
 ### Programação
 
-* **Papel**: instrutor de programação (React, Python, SQL, etc.)
-* **Prática ativa**: lições `challenge` com código no Sandpack
-* **Challenge**: obrigatório `starterCode`, `solution`, `tests`
-* **ContentSection**: usar `code` com `language` apropriado (jsx, python, sql, etc.)
+- **Papel**: instrutor de programação (React, Python, SQL, etc.)
+- **Prática ativa**: lições `challenge` com código no Sandpack
+- **Challenge**: obrigatório `starterCode`, `solution`, `tests`
+- **ContentSection**: usar `code` com `language` apropriado (jsx, python, sql, etc.)
 
 ### Gestão / Negócios
 
-* **Papel**: instrutor de gestão, metodologias, frameworks de trabalho
-* **Prática ativa**: lições `explanation` + `quiz` (análise, decisão, conceitos)
-* **Challenge**: não usar — o Sandpack é voltado a código
-* **ContentSection**: priorizar `heading`, `paragraph`, `list`, `callout`; `code` apenas se houver exemplos (ex: fórmulas em planilha)
+- **Papel**: instrutor de gestão, metodologias, frameworks de trabalho
+- **Prática ativa**: lições `explanation` + `quiz` (análise, decisão, conceitos)
+- **Challenge**: não usar — o Sandpack é voltado a código
+- **ContentSection**: priorizar `heading`, `paragraph`, `list`, `callout`; `code` apenas se houver exemplos (ex: fórmulas em planilha)
 
 ### Ferramentas (uso de software)
 
-* **Papel**: instrutor de uso de ferramentas (Figma, Notion, AWS Console, etc.)
-* **Prática ativa**: lições `explanation` + `quiz` (passo-a-passo, checklist)
-* **Challenge**: não usar — o Sandpack é voltado a código
-* **ContentSection**: usar `list` para passos numerados, `callout` para dicas e avisos
+- **Papel**: instrutor de uso de ferramentas (Figma, Notion, AWS Console, etc.)
+- **Prática ativa**: lições `explanation` + `quiz` (passo-a-passo, checklist)
+- **Challenge**: não usar — o Sandpack é voltado a código
+- **ContentSection**: usar `list` para passos numerados, `callout` para dicas e avisos
 
 ### Outros domínios
 
-* Adaptar o papel ao domínio
-* Preferir `explanation` + `quiz` quando não houver código
-* Manter microlearning, analogias e feedback educativo
+- Adaptar o papel ao domínio
+- Preferir `explanation` + `quiz` quando não houver código
+- Manter microlearning, analogias e feedback educativo
 
 ---
 
@@ -70,8 +70,8 @@ Cada lição deve ser curta e focada. Explicações devem ter no máximo **6 lin
 
 ### 2. Prática ativa
 
-* **Programação**: lições `challenge` exigem que o aluno escreva, modifique ou corrija código.
-* **Outras áreas**: lições `quiz` exigem que o aluno analise, escolha ou raciocine sobre o conceito.
+- **Programação**: lições `challenge` exigem que o aluno escreva, modifique ou corrija código.
+- **Outras áreas**: lições `quiz` exigem que o aluno analise, escolha ou raciocine sobre o conceito.
 
 ### 3. Analogias concretas
 
@@ -101,55 +101,55 @@ A saída deve seguir **exatamente** o schema em [lesson_schema.md](lesson_schema
 
 ### Campos obrigatórios em toda lição
 
-| Campo | Descrição |
-|-------|-----------|
-| id | Identificador único (kebab-case, ex: `use-state`, `backlog-priorizacao`) |
-| courseId | ID do curso (ex: `react`, `gestao-agil`) |
-| moduleId | ID do módulo ao qual pertence |
-| title | Título da lição |
-| type | `explanation`, `challenge` ou `quiz` |
-| xp | 10 para explanation/quiz, 25 para challenge |
-| content | Objeto com `sections` (array de ContentSection) |
+| Campo    | Descrição                                                                |
+| -------- | ------------------------------------------------------------------------ |
+| id       | Identificador único (kebab-case, ex: `use-state`, `backlog-priorizacao`) |
+| courseId | ID do curso (ex: `react`, `gestao-agil`)                                 |
+| moduleId | ID do módulo ao qual pertence                                            |
+| title    | Título da lição                                                          |
+| type     | `explanation`, `challenge` ou `quiz`                                     |
+| xp       | 10 para explanation/quiz, 25 para challenge                              |
+| content  | Objeto com `sections` (array de ContentSection)                          |
 
 ### ContentSection — tipos suportados
 
-| type | Campos | Uso |
-|------|--------|-----|
-| heading | content | Título de seção |
-| paragraph | content | Texto corrido |
-| code | content, language? | Bloco de código |
-| list | content | Lista (itens separados por `\n`) |
-| callout | content, variant: tip\|warning\|info | Destaque visual |
+| type      | Campos                               | Uso                              |
+| --------- | ------------------------------------ | -------------------------------- |
+| heading   | content                              | Título de seção                  |
+| paragraph | content                              | Texto corrido                    |
+| code      | content, language?                   | Bloco de código                  |
+| list      | content                              | Lista (itens separados por `\n`) |
+| callout   | content, variant: tip\|warning\|info | Destaque visual                  |
 
 ### Campos recomendados (pedagogicamente ricos)
 
-| Campo | Descrição |
-|-------|-----------|
-| analogy | Analogia concreta para o conceito |
-| keyTakeaways | Array de 2–4 pontos-chave |
-| commonMistakes | Array de erros comuns (especialmente em challenges) |
-| realWorldExample | Exemplo de uso no mundo real |
-| encouragement | Mensagem motivacional curta |
-| difficulty | `beginner`, `intermediate` ou `advanced` |
+| Campo            | Descrição                                           |
+| ---------------- | --------------------------------------------------- |
+| analogy          | Analogia concreta para o conceito                   |
+| keyTakeaways     | Array de 2–4 pontos-chave                           |
+| commonMistakes   | Array de erros comuns (especialmente em challenges) |
+| realWorldExample | Exemplo de uso no mundo real                        |
+| encouragement    | Mensagem motivacional curta                         |
+| difficulty       | `beginner`, `intermediate` ou `advanced`            |
 
 ### Para lições tipo `challenge` (apenas programação)
 
-| Campo | Obrigatório | Descrição |
-|-------|------------|-----------|
-| instructions | Sim | O que o aluno deve fazer |
-| starterCode | Sim | Código inicial completo (incluir imports) |
-| solution | Sim | Solução de referência |
-| tests | Sim | Array (pode ser `[]`) |
-| hint | Recomendado | Dica para o aluno |
-| solutionExplanation | Recomendado | Explicação da solução |
+| Campo               | Obrigatório | Descrição                                 |
+| ------------------- | ----------- | ----------------------------------------- |
+| instructions        | Sim         | O que o aluno deve fazer                  |
+| starterCode         | Sim         | Código inicial completo (incluir imports) |
+| solution            | Sim         | Solução de referência                     |
+| tests               | Sim         | Array (pode ser `[]`)                     |
+| hint                | Recomendado | Dica para o aluno                         |
+| solutionExplanation | Recomendado | Explicação da solução                     |
 
 ### Para lições tipo `quiz` (qualquer área)
 
-| Campo | Obrigatório | Descrição |
-|-------|------------|-----------|
-| quiz | Sim | Array de QuizQuestion |
-| question | Sim | Texto da pergunta |
-| options | Sim | Array com id, text, isCorrect, explanation? |
+| Campo    | Obrigatório | Descrição                                   |
+| -------- | ----------- | ------------------------------------------- |
+| quiz     | Sim         | Array de QuizQuestion                       |
+| question | Sim         | Texto da pergunta                           |
+| options  | Sim         | Array com id, text, isCorrect, explanation? |
 
 ---
 
@@ -170,10 +170,21 @@ A saída deve seguir **exatamente** o schema em [lesson_schema.md](lesson_schema
   "content": {
     "sections": [
       { "type": "heading", "content": "O que é useState?" },
-      { "type": "paragraph", "content": "useState é o Hook mais básico do React. Ele adiciona 'memória' a um componente funcional — um valor que persiste entre renderizações e que, quando muda, faz o React atualizar a tela." },
+      {
+        "type": "paragraph",
+        "content": "useState é o Hook mais básico do React. Ele adiciona 'memória' a um componente funcional — um valor que persiste entre renderizações e que, quando muda, faz o React atualizar a tela."
+      },
       { "type": "heading", "content": "Sintaxe" },
-      { "type": "code", "content": "const [contador, setContador] = useState(0);", "language": "jsx" },
-      { "type": "callout", "content": "O valor inicial do useState é usado APENAS na primeira renderização.", "variant": "info" }
+      {
+        "type": "code",
+        "content": "const [contador, setContador] = useState(0);",
+        "language": "jsx"
+      },
+      {
+        "type": "callout",
+        "content": "O valor inicial do useState é usado APENAS na primeira renderização.",
+        "variant": "info"
+      }
     ]
   },
   "challenge": {
@@ -213,19 +224,44 @@ A saída deve seguir **exatamente** o schema em [lesson_schema.md](lesson_schema
   "content": {
     "sections": [
       { "type": "heading", "content": "O que é priorização?" },
-      { "type": "paragraph", "content": "Priorizar o backlog significa ordenar os itens pela importância e urgência. O Product Owner é responsável por garantir que o time trabalhe no que traz mais valor primeiro." },
+      {
+        "type": "paragraph",
+        "content": "Priorizar o backlog significa ordenar os itens pela importância e urgência. O Product Owner é responsável por garantir que o time trabalhe no que traz mais valor primeiro."
+      },
       { "type": "heading", "content": "Critérios comuns" },
-      { "type": "list", "content": "Valor para o usuário\nEsforço estimado\nRisco e dependências\nAlinhamento com objetivos do produto" },
-      { "type": "callout", "content": "A priorização é revisada a cada sprint. O backlog é um artefato vivo.", "variant": "tip" }
+      {
+        "type": "list",
+        "content": "Valor para o usuário\nEsforço estimado\nRisco e dependências\nAlinhamento com objetivos do produto"
+      },
+      {
+        "type": "callout",
+        "content": "A priorização é revisada a cada sprint. O backlog é um artefato vivo.",
+        "variant": "tip"
+      }
     ]
   },
   "quiz": [
     {
       "question": "Quem é o principal responsável pela priorização do backlog?",
       "options": [
-        { "id": "a", "text": "Scrum Master", "isCorrect": false, "explanation": "O Scrum Master facilita o processo, mas não prioriza." },
-        { "id": "b", "text": "Product Owner", "isCorrect": true, "explanation": "O PO maximiza o valor do produto e decide a ordem dos itens." },
-        { "id": "c", "text": "Time de desenvolvimento", "isCorrect": false, "explanation": "O time estima e implementa, mas não define prioridade." }
+        {
+          "id": "a",
+          "text": "Scrum Master",
+          "isCorrect": false,
+          "explanation": "O Scrum Master facilita o processo, mas não prioriza."
+        },
+        {
+          "id": "b",
+          "text": "Product Owner",
+          "isCorrect": true,
+          "explanation": "O PO maximiza o valor do produto e decide a ordem dos itens."
+        },
+        {
+          "id": "c",
+          "text": "Time de desenvolvimento",
+          "isCorrect": false,
+          "explanation": "O time estima e implementa, mas não define prioridade."
+        }
       ]
     }
   ],
@@ -234,10 +270,7 @@ A saída deve seguir **exatamente** o schema em [lesson_schema.md](lesson_schema
     "Valor e esforço são critérios centrais",
     "O backlog é revisado continuamente"
   ],
-  "commonMistakes": [
-    "Priorizar por quem grita mais alto",
-    "Ignorar dependências técnicas"
-  ],
+  "commonMistakes": ["Priorizar por quem grita mais alto", "Ignorar dependências técnicas"],
   "realWorldExample": "Em um app de delivery, priorizar 'rastreamento em tempo real' antes de 'tema escuro' traz mais valor ao usuário.",
   "encouragement": "Priorizar bem é uma habilidade que se desenvolve com prática e feedback dos usuários."
 }
@@ -259,13 +292,13 @@ Crie uma lição educacional seguindo as regras da plataforma Learning Engine.
 
 A lição deve:
 
-* seguir o formato JSON definido em **lesson_schema.md** (não use campos obsoletos como hook, explanation, example, remember)
-* usar `content.sections` com tipos: heading, paragraph, code, list, callout
-* incluir `courseId`, `moduleId`, `xp` (10 ou 25 conforme o tipo)
-* incluir analogia concreta, keyTakeaways e, quando aplicável, commonMistakes, realWorldExample, encouragement
-* para type=challenge: instructions, starterCode, solution, tests (array), hint, solutionExplanation
-* evitar explicações longas (máx 6 linhas por parágrafo)
-* focar em aprendizado ativo
+- seguir o formato JSON definido em **lesson_schema.md** (não use campos obsoletos como hook, explanation, example, remember)
+- usar `content.sections` com tipos: heading, paragraph, code, list, callout
+- incluir `courseId`, `moduleId`, `xp` (10 ou 25 conforme o tipo)
+- incluir analogia concreta, keyTakeaways e, quando aplicável, commonMistakes, realWorldExample, encouragement
+- para type=challenge: instructions, starterCode, solution, tests (array), hint, solutionExplanation
+- evitar explicações longas (máx 6 linhas por parágrafo)
+- focar em aprendizado ativo
 
 A saída deve ser **apenas** o JSON válido, sem markdown ou texto extra.
 
@@ -279,13 +312,13 @@ Crie uma lição educacional seguindo as regras da plataforma Learning Engine.
 
 A lição deve:
 
-* seguir o formato JSON definido em **lesson_schema.md**
-* usar `content.sections` com tipos: heading, paragraph, list, callout (code apenas se houver exemplos)
-* incluir `courseId`, `moduleId`, `xp` (10 para explanation/quiz)
-* usar type `explanation` ou `quiz` — **não use** type `challenge` (reservado a código)
-* incluir analogia concreta, keyTakeaways, commonMistakes, realWorldExample, encouragement
-* para type=quiz: array `quiz` com question e options (id, text, isCorrect, explanation)
-* evitar explicações longas (máx 6 linhas por parágrafo)
-* focar em aprendizado ativo
+- seguir o formato JSON definido em **lesson_schema.md**
+- usar `content.sections` com tipos: heading, paragraph, list, callout (code apenas se houver exemplos)
+- incluir `courseId`, `moduleId`, `xp` (10 para explanation/quiz)
+- usar type `explanation` ou `quiz` — **não use** type `challenge` (reservado a código)
+- incluir analogia concreta, keyTakeaways, commonMistakes, realWorldExample, encouragement
+- para type=quiz: array `quiz` com question e options (id, text, isCorrect, explanation)
+- evitar explicações longas (máx 6 linhas por parágrafo)
+- focar em aprendizado ativo
 
 A saída deve ser **apenas** o JSON válido, sem markdown ou texto extra.

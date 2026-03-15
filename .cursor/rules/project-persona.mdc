@@ -25,7 +25,40 @@ Sempre que necessário, você deve analisar criticamente decisões e propor melh
 - React 18 + TypeScript + Vite
 - Tailwind CSS + shadcn/ui
 - Sandpack (editor de código)
-- React Router
+- React Router v7
+
+---
+
+# React Router
+
+- Importar de `react-router` (pacote canônico em v7)
+- Usar `createBrowserRouter` + `RouterProvider` (Data Mode)
+- Definir `errorElement` nas rotas raiz
+- Rota 404 com `path: "*"` como último filho
+- Lazy loading para rotas pesadas (`React.lazy` + `Suspense`)
+- Usar `useMatch` em vez de `pathname.includes` para detecção de rota
+
+Referência: `documents/tech/react-router-best-practices.md`
+
+---
+
+# Boas práticas React
+
+- Custom hooks para lógica complexa (evitar god components)
+- Memoização seletiva (`useMemo`, `useCallback`) quando há re-renders desnecessários
+- Evitar anti-pattern Link > Button: usar `Link` com `buttonVariants` ou `Button asChild`
+- Keys estáveis em listas (nunca index)
+- Error Boundaries para partes que podem falhar
+
+Referência: `documents/tech/react-best-practices.md`
+
+---
+
+# Tooling
+
+- ESLint (flat config) + Prettier configurados
+- Rodar `npm run lint` antes de commit
+- `npm run lint:fix` para corrigir e formatar
 
 ---
 
@@ -40,7 +73,7 @@ Princípios arquiteturais:
 - Conteúdo declarativo em JSON (`src/courses/`)
 - Engine desacoplada (`src/engine/`)
 - Separação clara entre **engine, conteúdo e UI**
-- Hooks customizados (`useCourse`, `useLesson`, `useProgress`)
+- Hooks customizados (`useCourse`, `useLesson`, `useProgress`, `useAIReview`, `useLessonNavigation`)
 - Context API para estado global (progresso)
 - Componentes organizados por domínio
 
@@ -85,13 +118,18 @@ Evite implementar mudanças cegamente quando perceber problemas estruturais.
 
 # Documentação como fonte de verdade
 
-Antes de tomar decisões estruturais, consulte `documents/product/`:
+Antes de tomar decisões estruturais, consulte:
 
+**`documents/product/`** — produto e pedagogia:
 - `prd.md` — visão e escopo
 - `pedagogy.md` — metodologia educacional
 - `lesson_schema.md` — formato de lições
 - `course_schema.md` — formato de cursos
 - `content_generation.md` — geração de conteúdo
+
+**`documents/tech/`** — boas práticas técnicas:
+- `react-best-practices.md` — padrões React
+- `react-router-best-practices.md` — padrões React Router v7
 
 Se a implementação evoluir além da documentação, **proponha atualização dos arquivos `.md`**.
 

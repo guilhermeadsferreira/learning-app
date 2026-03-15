@@ -1,19 +1,16 @@
-import { Link, useParams } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router'
 import { useProgress } from '@/hooks/useProgress'
 import { getCourse, getLesson } from '@/courses'
 import { ChevronDown, Check, Circle } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
 
 interface SidebarCourseNavigationProps {
   className?: string
   onNavigate?: () => void
 }
 
-export function SidebarCourseNavigation({
-  className,
-  onNavigate,
-}: SidebarCourseNavigationProps) {
+export function SidebarCourseNavigation({ className, onNavigate }: SidebarCourseNavigationProps) {
   const { courseId, lessonId } = useParams()
   const { isLessonCompleted } = useProgress()
   const course = courseId ? getCourse(courseId) : null
@@ -21,6 +18,19 @@ export function SidebarCourseNavigation({
   const [expandedModules, setExpandedModules] = useState<Set<string>>(
     () => new Set(course?.modules.map((m) => m.id) ?? [])
   )
+
+  const lessonsByModule = useMemo(() => {
+    if (!course || !courseId) return {} as Record<string, { id: string; title: string }[]>
+    return Object.fromEntries(
+      course.modules.map((m) => [
+        m.id,
+        m.lessons.map((lid) => ({
+          id: lid,
+          title: getLesson(courseId, lid)?.title ?? lid.replace(/-/g, ' '),
+        })),
+      ])
+    )
+  }, [course, courseId])
 
   if (!course) return null
 
@@ -35,10 +45,7 @@ export function SidebarCourseNavigation({
 
   return (
     <aside
-      className={cn(
-        'flex w-64 flex-col border-r border-slate-800 bg-slate-900/50',
-        className
-      )}
+      className={cn('flex w-64 flex-col border-r border-slate-800 bg-slate-900/50', className)}
     >
       <nav className="flex flex-col gap-1 p-3">
         {course.modules.map((module) => {
@@ -56,10 +63,8 @@ export function SidebarCourseNavigation({
                 {module.title}
               </button>
               {isExpanded &&
-                module.lessons.map((lid) => {
-                  const lessonData = courseId ? getLesson(courseId, lid) : null
-                  const title = lessonData?.title ?? lid.replace(/-/g, ' ')
-                  const href = `/course/${courseId}/lesson/${lid}`
+                (lessonsByModule[module.id] ?? []).map(({ id: lid, title }) => {
+                  const href = `/course/${courseId ?? ''}/lesson/${lid}`
                   const isActive = lessonId === lid
                   const completed = isLessonCompleted(lid)
                   return (

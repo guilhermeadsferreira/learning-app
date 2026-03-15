@@ -68,14 +68,9 @@ export function CodeEditorPanel({
     },
   }
 
-  const customSetup = dependencies
-    ? { dependencies }
-    : undefined
+  const customSetup = dependencies ? { dependencies } : undefined
 
-  const stableOnCodeChange = useCallback(
-    (code: string) => onCodeChange?.(code),
-    [onCodeChange]
-  )
+  const stableOnCodeChange = useCallback((code: string) => onCodeChange?.(code), [onCodeChange])
 
   return (
     <div
@@ -92,15 +87,8 @@ export function CodeEditorPanel({
       >
         <CodeSync onCodeChange={stableOnCodeChange} />
         <SandpackLayout>
-          <SandpackCodeEditor
-            style={{ minHeight: 550 }}
-            showLineNumbers
-            showTabs={false}
-          />
-          <SandpackPreview
-            style={{ minHeight: 550 }}
-            showOpenInCodeSandbox={false}
-          />
+          <SandpackCodeEditor style={{ minHeight: 550 }} showLineNumbers showTabs={false} />
+          <SandpackPreview style={{ minHeight: 550 }} showOpenInCodeSandbox={false} />
         </SandpackLayout>
       </SandpackProvider>
     </div>

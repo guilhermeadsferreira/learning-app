@@ -1,7 +1,9 @@
 import { useState, useRef, useCallback } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router'
 import { useLesson } from '@/hooks/useLesson'
 import { useProgress } from '@/hooks/useProgress'
+import { useAIReview } from '@/hooks/useAIReview'
+import { useLessonNavigation } from '@/hooks/useLessonNavigation'
 import { getCourse } from '@/courses'
 import { LessonLayout } from '@/components/lesson/LessonLayout'
 import { LessonContent } from '@/components/lesson/LessonContent'
@@ -10,15 +12,10 @@ import { FeedbackCard } from '@/components/lesson/FeedbackCard'
 import { AIReviewCard } from '@/components/lesson/AIReviewCard'
 import { APIKeyDialog } from '@/components/lesson/APIKeyDialog'
 import { CodeEditorPanel } from '@/components/editor/CodeEditorPanel'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { getXpForLesson } from '@/engine/xp'
 import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react'
-import {
-  reviewWithAI,
-  askAIQuestion,
-  getApiKey,
-} from '@/services/ai-review'
-import type { AIReviewResponse } from '@/engine/types'
 
 export function LessonPage() {
   const { lesson, courseId, lessonId } = useLesson()
@@ -30,31 +27,16 @@ export function LessonPage() {
     xpGained?: number
   } | null>(null)
 
-  const [aiReview, setAiReview] = useState<AIReviewResponse | null>(null)
-  const [aiLoading, setAiLoading] = useState(false)
-  const [aiError, setAiError] = useState<string | null>(null)
-  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false)
-
   const currentCodeRef = useRef<string>('')
-
   const handleCodeChange = useCallback((code: string) => {
     currentCodeRef.current = code
   }, [])
 
-  if (!lesson || !courseId || !lessonId) {
-    return <Navigate to="/" replace />
-  }
+  const course = courseId ? getCourse(courseId) : null
+  const { prevLessonId, nextLessonId } = useLessonNavigation(course, courseId ?? '', lessonId ?? '')
 
-  const course = getCourse(courseId)
-  const allLessonIds = course?.modules.flatMap((m) => m.lessons) ?? []
-  const currentIndex = allLessonIds.indexOf(lessonId)
-  const prevLessonId = currentIndex > 0 ? allLessonIds[currentIndex - 1] : null
-  const nextLessonId =
-    currentIndex >= 0 && currentIndex < allLessonIds.length - 1
-      ? allLessonIds[currentIndex + 1]
-      : null
-
-  const handleComplete = () => {
+  const handleComplete = useCallback(() => {
+    if (!lesson || !lessonId) return
     const xp = getXpForLesson(lesson.type)
     completeLesson(lessonId, xp)
     setFeedback({
@@ -62,76 +44,24 @@ export function LessonPage() {
       message: 'Parabéns! Lição concluída.',
       xpGained: xp,
     })
+  }, [lesson, lessonId, completeLesson])
+
+  const aiReview = useAIReview({
+    lesson,
+    courseId: courseId ?? '',
+    course,
+    lessonId: lessonId ?? '',
+    isLessonCompleted,
+    onComplete: handleComplete,
+    codeRef: currentCodeRef,
+  })
+
+  if (!lesson || !courseId || !lessonId) {
+    return <Navigate to="/" replace />
   }
 
   const handleCheckSolution = () => {
     handleComplete()
-  }
-
-  const handleAIReview = async () => {
-    const apiKey = getApiKey()
-    if (!apiKey) {
-      setShowApiKeyDialog(true)
-      return
-    }
-
-    if (!lesson.challenge) return
-
-    setAiLoading(true)
-    setAiError(null)
-    setAiReview(null)
-
-    try {
-      const review = await reviewWithAI(
-        {
-          studentCode: currentCodeRef.current || lesson.challenge.starterCode,
-          lessonTitle: lesson.title,
-          challengeInstructions: lesson.challenge.instructions,
-          solution: lesson.challenge.solution,
-          hint: lesson.challenge.hint,
-          lessonContext: lesson.analogy,
-          courseId,
-          aiReviewContext: course?.aiReviewContext,
-        },
-        apiKey
-      )
-      setAiReview(review)
-
-      if (review.isCorrect && !isLessonCompleted(lessonId)) {
-        handleComplete()
-      }
-    } catch (err) {
-      setAiError(
-        err instanceof Error ? err.message : 'Erro ao conectar com a IA'
-      )
-    } finally {
-      setAiLoading(false)
-    }
-  }
-
-  const handleAskQuestion = async (question: string): Promise<string> => {
-    const apiKey = getApiKey()
-    if (!apiKey) {
-      setShowApiKeyDialog(true)
-      return 'Configure sua API key primeiro.'
-    }
-
-    return askAIQuestion(
-      {
-        question,
-        lessonTitle: lesson.title,
-        studentCode:
-          currentCodeRef.current || lesson.challenge?.starterCode || '',
-        courseId,
-        aiReviewContext: course?.aiReviewContext,
-      },
-      apiKey
-    )
-  }
-
-  const handleApiKeySet = () => {
-    setShowApiKeyDialog(false)
-    handleAIReview()
   }
 
   const isChallenge = lesson.type === 'challenge' && lesson.challenge
@@ -142,39 +72,43 @@ export function LessonPage() {
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4">
           <div className="flex gap-2">
             {prevLessonId ? (
-              <Link to={`/course/${courseId}/lesson/${prevLessonId}`}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-1"
-                >
-                  <ChevronLeft className="size-4" />
-                  Anterior
-                </Button>
+              <Link
+                to={`/course/${courseId}/lesson/${prevLessonId}`}
+                className={cn(
+                  buttonVariants({ variant: 'outline', size: 'sm' }),
+                  'inline-flex items-center gap-1'
+                )}
+              >
+                <ChevronLeft className="size-4" />
+                Anterior
               </Link>
             ) : null}
-            <Link to={`/course/${courseId}`}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex items-center gap-1"
-              >
-                <RotateCcw className="size-4" />
-                Revisar
-              </Button>
+            <Link
+              to={`/course/${courseId}`}
+              className={cn(
+                buttonVariants({ variant: 'ghost', size: 'sm' }),
+                'inline-flex items-center gap-1'
+              )}
+            >
+              <RotateCcw className="size-4" />
+              Revisar
             </Link>
           </div>
           <div>
             {nextLessonId ? (
-              <Link to={`/course/${courseId}/lesson/${nextLessonId}`}>
-                <Button size="sm" className="flex items-center gap-1">
-                  Próxima lição
-                  <ChevronRight className="size-4" />
-                </Button>
+              <Link
+                to={`/course/${courseId}/lesson/${nextLessonId}`}
+                className={cn(buttonVariants({ size: 'sm' }), 'inline-flex items-center gap-1')}
+              >
+                Próxima lição
+                <ChevronRight className="size-4" />
               </Link>
             ) : (
-              <Link to={`/course/${courseId}`}>
-                <Button size="sm">Voltar ao curso</Button>
+              <Link
+                to={`/course/${courseId}`}
+                className={cn(buttonVariants({ size: 'sm' }), 'inline-flex')}
+              >
+                Voltar ao curso
               </Link>
             )}
           </div>
@@ -183,9 +117,7 @@ export function LessonPage() {
     >
       <div className="space-y-8">
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold text-slate-50">
-            {lesson.title}
-          </h1>
+          <h1 className="text-2xl font-bold text-slate-50">{lesson.title}</h1>
           {lesson.difficulty && (
             <span
               className={`rounded-full px-2 py-0.5 text-xs font-medium ${
@@ -211,17 +143,11 @@ export function LessonPage() {
           <>
             <ChallengeCard
               challenge={lesson.challenge}
-              onHintClick={
-                lesson.challenge.hint
-                  ? () => setShowHint((h) => !h)
-                  : undefined
-              }
+              onHintClick={lesson.challenge.hint ? () => setShowHint((h) => !h) : undefined}
             />
             {showHint && lesson.challenge?.hint && (
               <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-4">
-                <p className="text-sm text-amber-400">
-                  {lesson.challenge.hint}
-                </p>
+                <p className="text-sm text-amber-400">{lesson.challenge.hint}</p>
               </div>
             )}
 
@@ -237,25 +163,23 @@ export function LessonPage() {
                 className="flex-1"
                 disabled={isLessonCompleted(lessonId)}
               >
-                {isLessonCompleted(lessonId)
-                  ? 'Concluído'
-                  : 'Marcar como concluído'}
+                {isLessonCompleted(lessonId) ? 'Concluído' : 'Marcar como concluído'}
               </Button>
             </div>
 
-            {showApiKeyDialog && (
+            {aiReview.showApiKeyDialog && (
               <APIKeyDialog
-                onKeySet={handleApiKeySet}
-                onCancel={() => setShowApiKeyDialog(false)}
+                onKeySet={aiReview.handleApiKeySet}
+                onCancel={() => aiReview.setShowApiKeyDialog(false)}
               />
             )}
 
             <AIReviewCard
-              review={aiReview}
-              isLoading={aiLoading}
-              error={aiError}
-              onReview={handleAIReview}
-              onAskQuestion={handleAskQuestion}
+              review={aiReview.aiReview}
+              isLoading={aiReview.aiLoading}
+              error={aiReview.aiError}
+              onReview={aiReview.handleAIReview}
+              onAskQuestion={aiReview.handleAskQuestion}
               isLessonCompleted={isLessonCompleted(lessonId)}
             />
           </>
@@ -275,9 +199,7 @@ export function LessonPage() {
             disabled={isLessonCompleted(lessonId)}
             className="w-full"
           >
-            {isLessonCompleted(lessonId)
-              ? 'Concluído'
-              : 'Marcar como concluído'}
+            {isLessonCompleted(lessonId) ? 'Concluído' : 'Marcar como concluído'}
           </Button>
         )}
       </div>

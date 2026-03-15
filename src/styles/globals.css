@@ -1,6 +1,6 @@
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/nunito";
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/nunito';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -10,55 +10,55 @@
 
 ## 1.1 PRD (prd.md)
 
-| Aspecto | O que define |
-|---------|-------------|
-| **Visão** | Plataforma web de estudo gamificado para programação |
-| **Primeiro curso** | React Fundamentals |
-| **Público** | Pessoas que querem evoluir na programação |
-| **Princípios** | Microlearning, active recall, prática ativa, revisão, progressão gradual, analogias |
-| **MVP** | Cursos, módulos, lições (explicação, desafio, quiz), progresso, XP, barra de progresso |
-| **Módulos planejados** | 3 módulos (Introdução, Componentes, Estado) com ~6 tópicos |
-| **UI** | Header, Sidebar, Área principal, Rodapé |
-| **Stack** | React, Vite, TypeScript, Tailwind, shadcn/ui, Sandpack |
-| **Persistência** | Supabase (planejado) |
-| **Fora de escopo** | Multiplayer, ranking, marketplace, mobile, IA tutor avançado, analytics |
+| Aspecto                | O que define                                                                           |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| **Visão**              | Plataforma web de estudo gamificado para programação                                   |
+| **Primeiro curso**     | React Fundamentals                                                                     |
+| **Público**            | Pessoas que querem evoluir na programação                                              |
+| **Princípios**         | Microlearning, active recall, prática ativa, revisão, progressão gradual, analogias    |
+| **MVP**                | Cursos, módulos, lições (explicação, desafio, quiz), progresso, XP, barra de progresso |
+| **Módulos planejados** | 3 módulos (Introdução, Componentes, Estado) com ~6 tópicos                             |
+| **UI**                 | Header, Sidebar, Área principal, Rodapé                                                |
+| **Stack**              | React, Vite, TypeScript, Tailwind, shadcn/ui, Sandpack                                 |
+| **Persistência**       | Supabase (planejado)                                                                   |
+| **Fora de escopo**     | Multiplayer, ranking, marketplace, mobile, IA tutor avançado, analytics                |
 
 ## 1.2 Pedagogia (pedagogy.md)
 
-| Aspecto | O que define |
-|---------|-------------|
-| **Metodologias** | Active Learning, Mastery Learning, Scaffolding, Retrieval Practice |
-| **Estrutura de lição** | 7 partes obrigatórias: Hook → Analogia → Explicação → Exemplo → Desafio → Feedback → Lembre-se |
-| **Progressão de módulos** | Introdução → Conceitos → Exercícios guiados → Desafios → Mini projeto → Revisão |
-| **Níveis de dificuldade** | 1 (completar) → 2 (editar) → 3 (criar) → 4 (resolver problema) |
-| **Tipos de exercício** | Code Completion, Code Correction, Implementation, Quiz, Debugging |
-| **Regras** | Toda lição deve ter desafio, explicações curtas, analogias concretas, exemplos, mini projetos por módulo |
+| Aspecto                   | O que define                                                                                             |
+| ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Metodologias**          | Active Learning, Mastery Learning, Scaffolding, Retrieval Practice                                       |
+| **Estrutura de lição**    | 7 partes obrigatórias: Hook → Analogia → Explicação → Exemplo → Desafio → Feedback → Lembre-se           |
+| **Progressão de módulos** | Introdução → Conceitos → Exercícios guiados → Desafios → Mini projeto → Revisão                          |
+| **Níveis de dificuldade** | 1 (completar) → 2 (editar) → 3 (criar) → 4 (resolver problema)                                           |
+| **Tipos de exercício**    | Code Completion, Code Correction, Implementation, Quiz, Debugging                                        |
+| **Regras**                | Toda lição deve ter desafio, explicações curtas, analogias concretas, exemplos, mini projetos por módulo |
 
 ## 1.3 Course Schema (course_schema.md)
 
-| Aspecto | O que define |
-|---------|-------------|
+| Aspecto                     | O que define                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------------- |
 | **Estrutura de diretórios** | `courses/course-id/course.json` + `modules/module-id.json` + `lessons/lesson-id.json` |
-| **Campos do curso** | id, title, description, difficulty, estimatedDuration, modules (array de strings) |
-| **Campos do módulo** | id, title, description, lessons (array de strings) |
-| **Módulos como arquivos** | Arquivos separados em `modules/` |
+| **Campos do curso**         | id, title, description, difficulty, estimatedDuration, modules (array de strings)     |
+| **Campos do módulo**        | id, title, description, lessons (array de strings)                                    |
+| **Módulos como arquivos**   | Arquivos separados em `modules/`                                                      |
 
 ## 1.4 Lesson Schema (lesson_schema.md)
 
-| Aspecto | O que define |
-|---------|-------------|
-| **Campos** | id, title, type, hook, analogy, explanation, example ({code}), challenge ({type, description, starterCode}), remember |
-| **Tipos de lição** | concept, challenge, quiz, project |
-| **Tipos de desafio** | completion, correction, implementation, debugging |
+| Aspecto              | O que define                                                                                                          |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Campos**           | id, title, type, hook, analogy, explanation, example ({code}), challenge ({type, description, starterCode}), remember |
+| **Tipos de lição**   | concept, challenge, quiz, project                                                                                     |
+| **Tipos de desafio** | completion, correction, implementation, debugging                                                                     |
 
 ## 1.5 Content Generation (content_generation.md)
 
-| Aspecto | O que define |
-|---------|-------------|
-| **Papel da IA** | Instrutor experiente para iniciantes |
-| **Formato de saída** | JSON seguindo LESSON_SCHEMA.md |
+| Aspecto                   | O que define                                                            |
+| ------------------------- | ----------------------------------------------------------------------- |
+| **Papel da IA**           | Instrutor experiente para iniciantes                                    |
+| **Formato de saída**      | JSON seguindo LESSON_SCHEMA.md                                          |
 | **Estrutura obrigatória** | Hook → Analogia → Explicação → Exemplo → Desafio → Feedback → Lembre-se |
-| **Prompt padrão** | Prompt completo para gerar lições |
+| **Prompt padrão**         | Prompt completo para gerar lições                                       |
 
 ---
 
@@ -97,24 +97,24 @@ src/
 
 **16 módulos, 65 lições:**
 
-| # | Módulo | Lições |
-|---|--------|--------|
-| 1 | Ecossistema e Ferramentas | 5 |
-| 2 | Introdução ao React | 3 |
-| 3 | Componentes | 5 |
-| 4 | Estado e Interatividade | 4 |
-| 5 | useEffect e Efeitos | 3 |
-| 6 | Hooks Avançados | 4 |
-| 7 | Custom Hooks | 4 |
-| 8 | Estilização com Tailwind CSS | 6 |
-| 9 | React Router | 7 |
-| 10 | Gerenciamento de Estado | 3 |
-| 11 | Formulários Avançados | 3 |
-| 12 | Data Fetching | 3 |
-| 13 | Padrões e Boas Práticas | 4 |
-| 14 | Testes | 4 |
-| 15 | Performance | 4 |
-| 16 | Avançado | 3 |
+| #   | Módulo                       | Lições |
+| --- | ---------------------------- | ------ |
+| 1   | Ecossistema e Ferramentas    | 5      |
+| 2   | Introdução ao React          | 3      |
+| 3   | Componentes                  | 5      |
+| 4   | Estado e Interatividade      | 4      |
+| 5   | useEffect e Efeitos          | 3      |
+| 6   | Hooks Avançados              | 4      |
+| 7   | Custom Hooks                 | 4      |
+| 8   | Estilização com Tailwind CSS | 6      |
+| 9   | React Router                 | 7      |
+| 10  | Gerenciamento de Estado      | 3      |
+| 11  | Formulários Avançados        | 3      |
+| 12  | Data Fetching                | 3      |
+| 13  | Padrões e Boas Práticas      | 4      |
+| 14  | Testes                       | 4      |
+| 15  | Performance                  | 4      |
+| 16  | Avançado                     | 3      |
 
 ## 2.3 Interface TypeScript Real da Lição
 
@@ -129,7 +129,7 @@ interface Lesson {
   difficulty?: 'beginner' | 'intermediate' | 'advanced'
   analogy?: string
   content: {
-    sections: ContentSection[]  // paragraph | code | list | heading | callout
+    sections: ContentSection[] // paragraph | code | list | heading | callout
   }
   challenge?: {
     instructions: string
@@ -155,14 +155,14 @@ interface Course {
   id: string
   title: string
   description: string
-  icon: string          // Emoji do curso
-  modules: Module[]     // Inline, NÃO referências a arquivos
+  icon: string // Emoji do curso
+  modules: Module[] // Inline, NÃO referências a arquivos
 }
 
 interface Module {
   id: string
   title: string
-  lessons: string[]     // IDs das lições
+  lessons: string[] // IDs das lições
 }
 ```
 
@@ -170,21 +170,21 @@ interface Module {
 
 As lições usam `content.sections[]` com tipos ricos:
 
-| Tipo | Uso | Variantes |
-|------|-----|-----------|
-| `heading` | Títulos de seções | — |
-| `paragraph` | Texto corrido | — |
-| `code` | Blocos de código | `language` |
-| `list` | Listas (itens separados por `\n`) | — |
-| `callout` | Destaques visuais | `tip`, `warning`, `info` |
+| Tipo        | Uso                               | Variantes                |
+| ----------- | --------------------------------- | ------------------------ |
+| `heading`   | Títulos de seções                 | —                        |
+| `paragraph` | Texto corrido                     | —                        |
+| `code`      | Blocos de código                  | `language`               |
+| `list`      | Listas (itens separados por `\n`) | —                        |
+| `callout`   | Destaques visuais                 | `tip`, `warning`, `info` |
 
 ## 2.6 Sistema de XP
 
-| Tipo de lição | XP |
-|--------------|-----|
-| `explanation` | 10 |
-| `quiz` | 10 |
-| `challenge` | 25 |
+| Tipo de lição | XP  |
+| ------------- | --- |
+| `explanation` | 10  |
+| `quiz`        | 10  |
+| `challenge`   | 25  |
 
 ## 2.7 Sistema de Progresso
 
@@ -206,25 +206,25 @@ Feature completa implementada apesar de listada como "fora de escopo" no PRD:
 
 Dos 65 JSONs analisados:
 
-| Tipo | Quantidade | % |
-|------|-----------|---|
-| `explanation` | ~40 | 62% |
-| `challenge` | ~25 | 38% |
-| `quiz` | 0 | 0% |
+| Tipo          | Quantidade | %   |
+| ------------- | ---------- | --- |
+| `explanation` | ~40        | 62% |
+| `challenge`   | ~25        | 38% |
+| `quiz`        | 0          | 0%  |
 
 **Nenhuma lição do tipo `quiz` foi implementada**, apesar do tipo estar definido nos types e na documentação.
 
 ## 2.10 Campos Pedagógicos Reais nas Lições
 
-| Campo | Presente em | Obrigatório? |
-|-------|------------|--------------|
-| `analogy` | Maioria das lições | Opcional |
-| `keyTakeaways` | Maioria das lições | Opcional |
-| `commonMistakes` | Lições de challenge | Opcional |
-| `realWorldExample` | Lições de conceito | Opcional |
-| `encouragement` | Maioria das lições | Opcional |
-| `hint` (no challenge) | Lições de challenge | Opcional |
-| `solutionExplanation` | Lições de challenge | Opcional |
+| Campo                 | Presente em         | Obrigatório? |
+| --------------------- | ------------------- | ------------ |
+| `analogy`             | Maioria das lições  | Opcional     |
+| `keyTakeaways`        | Maioria das lições  | Opcional     |
+| `commonMistakes`      | Lições de challenge | Opcional     |
+| `realWorldExample`    | Lições de conceito  | Opcional     |
+| `encouragement`       | Maioria das lições  | Opcional     |
+| `hint` (no challenge) | Lições de challenge | Opcional     |
+| `solutionExplanation` | Lições de challenge | Opcional     |
 
 ---
 
@@ -232,64 +232,64 @@ Dos 65 JSONs analisados:
 
 ## 3.1 Tabela Principal
 
-| Feature | Documentação | Implementação | Status |
-|---------|-------------|---------------|--------|
-| **Tipos de lição** | `concept`, `challenge`, `quiz`, `project` | `explanation`, `challenge`, `quiz` | ❌ Divergente — `concept` → `explanation`, `project` não existe |
-| **Estrutura de diretórios** | `courses/id/modules/`, `courses/id/lessons/` | `src/courses/id/lessons/` (sem pasta `modules/`) | ❌ Divergente |
-| **Módulos** | Arquivos JSON separados em `modules/` | Inline dentro de `course.json` | ❌ Divergente |
-| **Campos do curso** | id, title, description, difficulty, estimatedDuration, modules | id, title, description, icon, modules (objetos inline) | ❌ Divergente — faltam `difficulty` e `estimatedDuration`; adicionado `icon` |
-| **Campos do módulo** | id, title, description, lessons | id, title, lessons | ❌ Divergente — sem `description` |
-| **Campo `hook`** | Obrigatório em toda lição | Não existe no schema/tipos | ❌ Não implementado |
-| **Campo `explanation`** | String simples | `content.sections[]` estruturado | ❌ Divergente — evoluiu para sistema rico |
-| **Campo `example`** | Objeto `{code}` separado | Embutido como seção `code` em `content.sections` | ❌ Divergente |
-| **Campo `remember`** | String simples obrigatória | `keyTakeaways[]` (array de strings) | ❌ Divergente — evoluiu para array |
-| **Challenge.description** | Campo `description` | Campo `instructions` | ❌ Divergente (renomeado) |
-| **Challenge.type** | `completion`, `correction`, `implementation`, `debugging` | Não existe — tipo do challenge não é declarado | ❌ Removido |
-| **Challenge.solution** | Não documentado | Implementado com campo `solution` | ⚠️ Não documentado |
-| **Challenge.hint** | Não documentado | Implementado | ⚠️ Não documentado |
-| **Challenge.solutionExplanation** | Não documentado | Implementado | ⚠️ Não documentado |
-| **Challenge.tests** | Não documentado | Implementado (vazio na prática) | ⚠️ Não documentado |
-| **Challenge.sandpackDependencies** | Não documentado | Implementado | ⚠️ Não documentado |
-| **Quiz schema** | `{question, options[], correct}` | `QuizQuestion {question, options: QuizOption[]}` com `isCorrect` por opção e `explanation` | ❌ Divergente |
-| **Campos novos** | Não existem nos docs | `courseId`, `moduleId`, `xp`, `difficulty`, `keyTakeaways`, `commonMistakes`, `realWorldExample`, `encouragement` | ⚠️ Não documentados |
-| **ContentSection** | Não existe nos docs | Tipos: `paragraph`, `code`, `list`, `heading`, `callout` | ⚠️ Não documentado |
-| **Escopo do curso** | 3 módulos, ~6 lições | 16 módulos, 65 lições | ℹ️ Evoluiu significativamente |
-| **IA Tutor** | "Fora de escopo" | Totalmente implementado (Claude + OpenAI, review, chat) | ❌ Doc contradiz implementação |
-| **Persistência** | Supabase (planejado) | localStorage | ℹ️ Decisão arquitetural diferente |
-| **Progressão de módulos** | Intro → Conceitos → Exercícios → Desafios → Mini projeto → Revisão | Não há mini projetos nem lições de revisão por módulo | ❌ Parcialmente implementado |
-| **Mini projetos** | Obrigatórios ao final de cada módulo | Não existem | ❌ Não implementado |
-| **Tipos de exercício** | Completion, Correction, Implementation, Quiz, Debugging | Exercícios existem mas sem classificação de tipo | ⚠️ Parcial |
-| **Quiz** | Definido como tipo de lição e exercício | Tipo definido mas nenhuma lição quiz existe | ❌ Não implementado |
-| **Revisão/Spaced Repetition** | Mencionado como funcionalidade | Apenas botão "Revisar" que volta à lista do curso | ⚠️ Parcial |
-| **Prompt de geração** | Usa schema antigo | Schema evoluiu; prompt está desatualizado | ❌ Desatualizado |
+| Feature                            | Documentação                                                       | Implementação                                                                                                     | Status                                                                       |
+| ---------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| **Tipos de lição**                 | `concept`, `challenge`, `quiz`, `project`                          | `explanation`, `challenge`, `quiz`                                                                                | ❌ Divergente — `concept` → `explanation`, `project` não existe              |
+| **Estrutura de diretórios**        | `courses/id/modules/`, `courses/id/lessons/`                       | `src/courses/id/lessons/` (sem pasta `modules/`)                                                                  | ❌ Divergente                                                                |
+| **Módulos**                        | Arquivos JSON separados em `modules/`                              | Inline dentro de `course.json`                                                                                    | ❌ Divergente                                                                |
+| **Campos do curso**                | id, title, description, difficulty, estimatedDuration, modules     | id, title, description, icon, modules (objetos inline)                                                            | ❌ Divergente — faltam `difficulty` e `estimatedDuration`; adicionado `icon` |
+| **Campos do módulo**               | id, title, description, lessons                                    | id, title, lessons                                                                                                | ❌ Divergente — sem `description`                                            |
+| **Campo `hook`**                   | Obrigatório em toda lição                                          | Não existe no schema/tipos                                                                                        | ❌ Não implementado                                                          |
+| **Campo `explanation`**            | String simples                                                     | `content.sections[]` estruturado                                                                                  | ❌ Divergente — evoluiu para sistema rico                                    |
+| **Campo `example`**                | Objeto `{code}` separado                                           | Embutido como seção `code` em `content.sections`                                                                  | ❌ Divergente                                                                |
+| **Campo `remember`**               | String simples obrigatória                                         | `keyTakeaways[]` (array de strings)                                                                               | ❌ Divergente — evoluiu para array                                           |
+| **Challenge.description**          | Campo `description`                                                | Campo `instructions`                                                                                              | ❌ Divergente (renomeado)                                                    |
+| **Challenge.type**                 | `completion`, `correction`, `implementation`, `debugging`          | Não existe — tipo do challenge não é declarado                                                                    | ❌ Removido                                                                  |
+| **Challenge.solution**             | Não documentado                                                    | Implementado com campo `solution`                                                                                 | ⚠️ Não documentado                                                           |
+| **Challenge.hint**                 | Não documentado                                                    | Implementado                                                                                                      | ⚠️ Não documentado                                                           |
+| **Challenge.solutionExplanation**  | Não documentado                                                    | Implementado                                                                                                      | ⚠️ Não documentado                                                           |
+| **Challenge.tests**                | Não documentado                                                    | Implementado (vazio na prática)                                                                                   | ⚠️ Não documentado                                                           |
+| **Challenge.sandpackDependencies** | Não documentado                                                    | Implementado                                                                                                      | ⚠️ Não documentado                                                           |
+| **Quiz schema**                    | `{question, options[], correct}`                                   | `QuizQuestion {question, options: QuizOption[]}` com `isCorrect` por opção e `explanation`                        | ❌ Divergente                                                                |
+| **Campos novos**                   | Não existem nos docs                                               | `courseId`, `moduleId`, `xp`, `difficulty`, `keyTakeaways`, `commonMistakes`, `realWorldExample`, `encouragement` | ⚠️ Não documentados                                                          |
+| **ContentSection**                 | Não existe nos docs                                                | Tipos: `paragraph`, `code`, `list`, `heading`, `callout`                                                          | ⚠️ Não documentado                                                           |
+| **Escopo do curso**                | 3 módulos, ~6 lições                                               | 16 módulos, 65 lições                                                                                             | ℹ️ Evoluiu significativamente                                                |
+| **IA Tutor**                       | "Fora de escopo"                                                   | Totalmente implementado (Claude + OpenAI, review, chat)                                                           | ❌ Doc contradiz implementação                                               |
+| **Persistência**                   | Supabase (planejado)                                               | localStorage                                                                                                      | ℹ️ Decisão arquitetural diferente                                            |
+| **Progressão de módulos**          | Intro → Conceitos → Exercícios → Desafios → Mini projeto → Revisão | Não há mini projetos nem lições de revisão por módulo                                                             | ❌ Parcialmente implementado                                                 |
+| **Mini projetos**                  | Obrigatórios ao final de cada módulo                               | Não existem                                                                                                       | ❌ Não implementado                                                          |
+| **Tipos de exercício**             | Completion, Correction, Implementation, Quiz, Debugging            | Exercícios existem mas sem classificação de tipo                                                                  | ⚠️ Parcial                                                                   |
+| **Quiz**                           | Definido como tipo de lição e exercício                            | Tipo definido mas nenhuma lição quiz existe                                                                       | ❌ Não implementado                                                          |
+| **Revisão/Spaced Repetition**      | Mencionado como funcionalidade                                     | Apenas botão "Revisar" que volta à lista do curso                                                                 | ⚠️ Parcial                                                                   |
+| **Prompt de geração**              | Usa schema antigo                                                  | Schema evoluiu; prompt está desatualizado                                                                         | ❌ Desatualizado                                                             |
 
 ## 3.2 Features Implementadas Não Documentadas
 
-| Feature | Descrição |
-|---------|-----------|
-| **Sistema de IA multi-provider** | Suporte a Claude e OpenAI com troca dinâmica |
-| **Chat com IA** | Q&A interativo durante desafios |
-| **API Key management** | Dialog de configuração com localStorage |
-| **ContentSection system** | Sistema rico de seções com callouts, headings, listas |
-| **Real World Examples** | Campo com exemplo do mundo real em lições |
-| **Common Mistakes** | Lista de erros comuns por lição |
-| **Encouragement** | Mensagem motivacional por lição |
-| **Difficulty badge** | Indicador visual de nível (beginner/intermediate/advanced) |
-| **Responsive sidebar** | Menu mobile com overlay animado |
-| **Sandpack dependencies** | Suporte a dependências extras por challenge |
-| **XP por tipo** | Valores diferenciados (10 vs 25) |
-| **Módulo Ecossistema** | Módulo inteiro cobrindo Node, npm, Vite antes de React |
-| **Módulos avançados** | Router, Forms, Data Fetching, Testing, Performance, Patterns |
+| Feature                          | Descrição                                                    |
+| -------------------------------- | ------------------------------------------------------------ |
+| **Sistema de IA multi-provider** | Suporte a Claude e OpenAI com troca dinâmica                 |
+| **Chat com IA**                  | Q&A interativo durante desafios                              |
+| **API Key management**           | Dialog de configuração com localStorage                      |
+| **ContentSection system**        | Sistema rico de seções com callouts, headings, listas        |
+| **Real World Examples**          | Campo com exemplo do mundo real em lições                    |
+| **Common Mistakes**              | Lista de erros comuns por lição                              |
+| **Encouragement**                | Mensagem motivacional por lição                              |
+| **Difficulty badge**             | Indicador visual de nível (beginner/intermediate/advanced)   |
+| **Responsive sidebar**           | Menu mobile com overlay animado                              |
+| **Sandpack dependencies**        | Suporte a dependências extras por challenge                  |
+| **XP por tipo**                  | Valores diferenciados (10 vs 25)                             |
+| **Módulo Ecossistema**           | Módulo inteiro cobrindo Node, npm, Vite antes de React       |
+| **Módulos avançados**            | Router, Forms, Data Fetching, Testing, Performance, Patterns |
 
 ## 3.3 Documentação que Contradiz a Implementação
 
-| Documento | Contradição |
-|-----------|-------------|
-| **PRD §14** | Lista "IA tutor avançado" como fora de escopo, mas está implementado |
-| **PRD §8** | Define 3 módulos com 6 tópicos; implementação tem 16 módulos com 65 lições |
-| **LESSON_SCHEMA** | Schema completamente diferente do TypeScript real |
-| **COURSE_SCHEMA** | Estrutura de diretórios e campos não correspondem |
-| **CONTENT_GENERATION** | Prompt gera lições no formato antigo, incompatível com o sistema atual |
+| Documento              | Contradição                                                                |
+| ---------------------- | -------------------------------------------------------------------------- |
+| **PRD §14**            | Lista "IA tutor avançado" como fora de escopo, mas está implementado       |
+| **PRD §8**             | Define 3 módulos com 6 tópicos; implementação tem 16 módulos com 65 lições |
+| **LESSON_SCHEMA**      | Schema completamente diferente do TypeScript real                          |
+| **COURSE_SCHEMA**      | Estrutura de diretórios e campos não correspondem                          |
+| **CONTENT_GENERATION** | Prompt gera lições no formato antigo, incompatível com o sistema atual     |
 
 ---
 
@@ -299,28 +299,28 @@ Dos 65 JSONs analisados:
 
 ### O que está sendo seguido
 
-| Princípio | Avaliação | Evidência |
-|-----------|-----------|-----------|
-| **Microlearning** | ✅ Bom | Lições focadas em um conceito, explicações curtas |
-| **Analogias** | ✅ Bom | Presentes na maioria das lições, concretas e relevantes (LEGO, post-it, lousa mágica, conceitos familiares) |
-| **Progressão gradual** | ✅ Bom | Módulos ordenados de básico a avançado, dentro de cada módulo a complexidade cresce |
-| **Prática ativa** | ⚠️ Parcial | 38% das lições são challenges — pedagogy exige desafio em toda lição |
-| **Active Learning** | ⚠️ Parcial | Challenges com Sandpack são excelentes, mas lições `explanation` não têm exercícios |
-| **Scaffolding** | ✅ Bom | Starter code fornecido, hints disponíveis, solution explanation |
+| Princípio              | Avaliação  | Evidência                                                                                                   |
+| ---------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| **Microlearning**      | ✅ Bom     | Lições focadas em um conceito, explicações curtas                                                           |
+| **Analogias**          | ✅ Bom     | Presentes na maioria das lições, concretas e relevantes (LEGO, post-it, lousa mágica, conceitos familiares) |
+| **Progressão gradual** | ✅ Bom     | Módulos ordenados de básico a avançado, dentro de cada módulo a complexidade cresce                         |
+| **Prática ativa**      | ⚠️ Parcial | 38% das lições são challenges — pedagogy exige desafio em toda lição                                        |
+| **Active Learning**    | ⚠️ Parcial | Challenges com Sandpack são excelentes, mas lições `explanation` não têm exercícios                         |
+| **Scaffolding**        | ✅ Bom     | Starter code fornecido, hints disponíveis, solution explanation                                             |
 
 ### O que NÃO está sendo seguido
 
-| Princípio | Avaliação | Problema |
-|-----------|-----------|----------|
-| **Hook** | ❌ Ausente | Nenhuma lição tem campo `hook` — a pergunta introdutória não existe |
-| **Desafio obrigatório** | ❌ Violado | ~62% das lições são `explanation` sem nenhum desafio |
-| **Feedback educativo** | ⚠️ Parcial | `solutionExplanation` existe mas não segue o formato (porquê funciona + erro comum + dica) |
-| **Lembre-se** | ✅ Evoluiu | `keyTakeaways[]` é uma evolução do campo `remember` — melhor que o original |
-| **Mini projetos** | ❌ Ausente | Nenhum módulo termina com mini projeto |
-| **Revisão por módulo** | ❌ Ausente | Não há lições de revisão ao final de módulos |
-| **Mastery Learning** | ⚠️ Fraco | Não há bloqueio de progresso — o aluno pode avançar sem demonstrar domínio |
-| **Retrieval Practice** | ❌ Ausente | Nenhum quiz implementado, nenhum mecanismo de retrieval |
-| **Tipos de exercício classificados** | ❌ Ausente | Challenges existem mas sem classificação (completion, correction, debugging) |
+| Princípio                            | Avaliação  | Problema                                                                                   |
+| ------------------------------------ | ---------- | ------------------------------------------------------------------------------------------ |
+| **Hook**                             | ❌ Ausente | Nenhuma lição tem campo `hook` — a pergunta introdutória não existe                        |
+| **Desafio obrigatório**              | ❌ Violado | ~62% das lições são `explanation` sem nenhum desafio                                       |
+| **Feedback educativo**               | ⚠️ Parcial | `solutionExplanation` existe mas não segue o formato (porquê funciona + erro comum + dica) |
+| **Lembre-se**                        | ✅ Evoluiu | `keyTakeaways[]` é uma evolução do campo `remember` — melhor que o original                |
+| **Mini projetos**                    | ❌ Ausente | Nenhum módulo termina com mini projeto                                                     |
+| **Revisão por módulo**               | ❌ Ausente | Não há lições de revisão ao final de módulos                                               |
+| **Mastery Learning**                 | ⚠️ Fraco   | Não há bloqueio de progresso — o aluno pode avançar sem demonstrar domínio                 |
+| **Retrieval Practice**               | ❌ Ausente | Nenhum quiz implementado, nenhum mecanismo de retrieval                                    |
+| **Tipos de exercício classificados** | ❌ Ausente | Challenges existem mas sem classificação (completion, correction, debugging)               |
 
 ## 4.2 Pontos Fortes da Implementação
 
@@ -352,79 +352,79 @@ Dos 65 JSONs analisados:
 
 ### PRD (prd.md)
 
-| Seção | Ação | Detalhe |
-|-------|------|---------|
-| §7 (Escopo MVP) | **Reescrever** | O MVP foi superado — o projeto está além do MVP |
-| §8 (Curso inicial) | **Reescrever** | 3 módulos → 16 módulos, 65 lições |
-| §10 (Stack) | **Atualizar** | Remover "Supabase (planejado)", confirmar localStorage |
-| §12 (Arquitetura) | **Atualizar** | Adicionar `hooks/`, `lib/`, `styles/`; detalhar subdivisão de `components/` |
-| §14 (Fora de escopo) | **Atualizar** | Remover "IA tutor avançado" (foi implementado) |
-| §15 (Evoluções futuras) | **Atualizar** | Marcar o que já foi feito (IA tutor) |
-| Nova seção | **Adicionar** | Documentar sistema de IA (providers, review, chat) |
-| Nova seção | **Adicionar** | Documentar sistema de XP (valores por tipo) |
+| Seção                   | Ação           | Detalhe                                                                     |
+| ----------------------- | -------------- | --------------------------------------------------------------------------- |
+| §7 (Escopo MVP)         | **Reescrever** | O MVP foi superado — o projeto está além do MVP                             |
+| §8 (Curso inicial)      | **Reescrever** | 3 módulos → 16 módulos, 65 lições                                           |
+| §10 (Stack)             | **Atualizar**  | Remover "Supabase (planejado)", confirmar localStorage                      |
+| §12 (Arquitetura)       | **Atualizar**  | Adicionar `hooks/`, `lib/`, `styles/`; detalhar subdivisão de `components/` |
+| §14 (Fora de escopo)    | **Atualizar**  | Remover "IA tutor avançado" (foi implementado)                              |
+| §15 (Evoluções futuras) | **Atualizar**  | Marcar o que já foi feito (IA tutor)                                        |
+| Nova seção              | **Adicionar**  | Documentar sistema de IA (providers, review, chat)                          |
+| Nova seção              | **Adicionar**  | Documentar sistema de XP (valores por tipo)                                 |
 
 ### Course Schema (course_schema.md)
 
-| Ação | Detalhe |
-|------|---------|
-| **Reescrever completamente** | Schema não corresponde à implementação |
-| Atualizar estrutura de diretórios | `src/courses/course-id/course.json` + `lessons/*.json` (sem `modules/`) |
-| Atualizar campos do curso | Adicionar `icon`, remover `difficulty` e `estimatedDuration`, módulos inline |
-| Atualizar campos do módulo | Remover `description`, documentar como inline |
+| Ação                              | Detalhe                                                                      |
+| --------------------------------- | ---------------------------------------------------------------------------- |
+| **Reescrever completamente**      | Schema não corresponde à implementação                                       |
+| Atualizar estrutura de diretórios | `src/courses/course-id/course.json` + `lessons/*.json` (sem `modules/`)      |
+| Atualizar campos do curso         | Adicionar `icon`, remover `difficulty` e `estimatedDuration`, módulos inline |
+| Atualizar campos do módulo        | Remover `description`, documentar como inline                                |
 
 ### Lesson Schema (lesson_schema.md)
 
-| Ação | Detalhe |
-|------|---------|
-| **Reescrever completamente** | Schema quase totalmente diferente |
-| Atualizar tipos de lição | `concept` → `explanation`, remover `project` |
-| Documentar `ContentSection` | `paragraph`, `code`, `list`, `heading`, `callout` |
-| Atualizar campos | Adicionar `courseId`, `moduleId`, `xp`, `difficulty`, `keyTakeaways`, `commonMistakes`, `realWorldExample`, `encouragement` |
-| Remover campos | `hook`, `explanation` (string), `example`, `remember` |
-| Atualizar `challenge` | `description` → `instructions`, adicionar `solution`, `hint`, `solutionExplanation`, `tests`, `sandpackDependencies` |
-| Atualizar `quiz` | `QuizOption` com `isCorrect` e `explanation` por opção |
+| Ação                         | Detalhe                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Reescrever completamente** | Schema quase totalmente diferente                                                                                           |
+| Atualizar tipos de lição     | `concept` → `explanation`, remover `project`                                                                                |
+| Documentar `ContentSection`  | `paragraph`, `code`, `list`, `heading`, `callout`                                                                           |
+| Atualizar campos             | Adicionar `courseId`, `moduleId`, `xp`, `difficulty`, `keyTakeaways`, `commonMistakes`, `realWorldExample`, `encouragement` |
+| Remover campos               | `hook`, `explanation` (string), `example`, `remember`                                                                       |
+| Atualizar `challenge`        | `description` → `instructions`, adicionar `solution`, `hint`, `solutionExplanation`, `tests`, `sandpackDependencies`        |
+| Atualizar `quiz`             | `QuizOption` com `isCorrect` e `explanation` por opção                                                                      |
 
 ### Content Generation (content_generation.md)
 
-| Ação | Detalhe |
-|------|---------|
-| **Reescrever prompt** | Usar schema real (não o antigo) |
-| Atualizar formato JSON | Exemplo deve seguir interface `Lesson` real |
-| Adicionar novos campos | `keyTakeaways`, `commonMistakes`, `realWorldExample`, `encouragement` |
-| Remover campos obsoletos | `hook`, `explanation` (string), `example`, `remember` |
-| Atualizar tipos | `concept` → `explanation` |
+| Ação                     | Detalhe                                                               |
+| ------------------------ | --------------------------------------------------------------------- |
+| **Reescrever prompt**    | Usar schema real (não o antigo)                                       |
+| Atualizar formato JSON   | Exemplo deve seguir interface `Lesson` real                           |
+| Adicionar novos campos   | `keyTakeaways`, `commonMistakes`, `realWorldExample`, `encouragement` |
+| Remover campos obsoletos | `hook`, `explanation` (string), `example`, `remember`                 |
+| Atualizar tipos          | `concept` → `explanation`                                             |
 
 ### Pedagogy (pedagogy.md)
 
-| Seção | Ação | Detalhe |
-|-------|------|---------|
-| §3 (Estrutura de lição) | **Atualizar** | Refletir estrutura real: Analogia → Content (sections) → Challenge → Key Takeaways |
-| §3.1 Hook | **Avaliar** | Decidir se será implementado ou removido da metodologia |
-| §3.4 Exemplo | **Atualizar** | Exemplos são seções `code` dentro de `content`, não campo separado |
-| §3.6 Feedback | **Atualizar** | Feedback vem do `solutionExplanation` + `commonMistakes` + IA |
-| §3.7 Lembre-se | **Atualizar** | Renomear para `keyTakeaways` e documentar como array |
-| §6 (Tipos de exercício) | **Atualizar** | Documentar que a classificação não está implementada |
-| §8 (Mini projetos) | **Avaliar** | Decidir se será implementado ou removido |
-| Nova seção | **Adicionar** | Documentar campos pedagógicos novos (`commonMistakes`, `realWorldExample`, `encouragement`) |
-| Nova seção | **Adicionar** | Documentar papel da IA como ferramenta pedagógica |
+| Seção                   | Ação          | Detalhe                                                                                     |
+| ----------------------- | ------------- | ------------------------------------------------------------------------------------------- |
+| §3 (Estrutura de lição) | **Atualizar** | Refletir estrutura real: Analogia → Content (sections) → Challenge → Key Takeaways          |
+| §3.1 Hook               | **Avaliar**   | Decidir se será implementado ou removido da metodologia                                     |
+| §3.4 Exemplo            | **Atualizar** | Exemplos são seções `code` dentro de `content`, não campo separado                          |
+| §3.6 Feedback           | **Atualizar** | Feedback vem do `solutionExplanation` + `commonMistakes` + IA                               |
+| §3.7 Lembre-se          | **Atualizar** | Renomear para `keyTakeaways` e documentar como array                                        |
+| §6 (Tipos de exercício) | **Atualizar** | Documentar que a classificação não está implementada                                        |
+| §8 (Mini projetos)      | **Avaliar**   | Decidir se será implementado ou removido                                                    |
+| Nova seção              | **Adicionar** | Documentar campos pedagógicos novos (`commonMistakes`, `realWorldExample`, `encouragement`) |
+| Nova seção              | **Adicionar** | Documentar papel da IA como ferramenta pedagógica                                           |
 
 ## 5.2 Documentos para CRIAR
 
-| Documento | Conteúdo |
-|-----------|----------|
-| **AI_SYSTEM.md** | Documentar o sistema de IA: providers, prompts, review, chat, API key management |
+| Documento           | Conteúdo                                                                               |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| **AI_SYSTEM.md**    | Documentar o sistema de IA: providers, prompts, review, chat, API key management       |
 | **ARCHITECTURE.md** | Documentar arquitetura real: estrutura de pastas, routing, state management, data flow |
 
 ## 5.3 O que REMOVER ou MARCAR como obsoleto
 
-| Item | Ação |
-|------|------|
-| Referências a `modules/` como diretório | Remover |
-| Campo `hook` como obrigatório | Remover ou implementar |
-| Campo `remember` | Substituir por `keyTakeaways` |
-| Schema antigo de quiz | Substituir pelo real |
-| "Supabase (planejado)" | Remover |
-| "IA tutor avançado" como fora de escopo | Remover |
+| Item                                    | Ação                          |
+| --------------------------------------- | ----------------------------- |
+| Referências a `modules/` como diretório | Remover                       |
+| Campo `hook` como obrigatório           | Remover ou implementar        |
+| Campo `remember`                        | Substituir por `keyTakeaways` |
+| Schema antigo de quiz                   | Substituir pelo real          |
+| "Supabase (planejado)"                  | Remover                       |
+| "IA tutor avançado" como fora de escopo | Remover                       |
 
 ---
 
@@ -464,21 +464,21 @@ Não há pasta modules/ — cada módulo é um objeto dentro do array modules.
 
 ## Campos do Curso
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| id | string | Sim | Identificador único |
-| title | string | Sim | Título do curso |
-| description | string | Sim | Descrição do curso |
-| icon | string | Sim | Emoji representativo |
-| modules | Module[] | Sim | Array de módulos inline |
+| Campo       | Tipo     | Obrigatório | Descrição               |
+| ----------- | -------- | ----------- | ----------------------- |
+| id          | string   | Sim         | Identificador único     |
+| title       | string   | Sim         | Título do curso         |
+| description | string   | Sim         | Descrição do curso      |
+| icon        | string   | Sim         | Emoji representativo    |
+| modules     | Module[] | Sim         | Array de módulos inline |
 
 ## Campos do Módulo
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| id | string | Sim | Identificador único |
-| title | string | Sim | Título do módulo |
-| lessons | string[] | Sim | IDs das lições (nomes dos arquivos JSON sem extensão) |
+| Campo   | Tipo     | Obrigatório | Descrição                                             |
+| ------- | -------- | ----------- | ----------------------------------------------------- |
+| id      | string   | Sim         | Identificador único                                   |
+| title   | string   | Sim         | Título do módulo                                      |
+| lessons | string[] | Sim         | IDs das lições (nomes dos arquivos JSON sem extensão) |
 ```
 
 ## 6.2 LESSON_SCHEMA.md Proposto
@@ -488,11 +488,11 @@ Não há pasta modules/ — cada módulo é um objeto dentro do array modules.
 
 ## Tipos de lição
 
-| Tipo | Descrição |
-|------|-----------|
+| Tipo        | Descrição                                 |
+| ----------- | ----------------------------------------- |
 | explanation | Lição conceitual com conteúdo estruturado |
-| challenge | Lição com desafio prático no Sandpack |
-| quiz | Lição com perguntas de múltipla escolha |
+| challenge   | Lição com desafio prático no Sandpack     |
+| quiz        | Lição com perguntas de múltipla escolha   |
 
 ## Schema completo
 
@@ -540,61 +540,61 @@ Não há pasta modules/ — cada módulo é um objeto dentro do array modules.
 
 ## Campos da Lição
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| id | string | Sim | Identificador único (igual ao nome do arquivo) |
-| courseId | string | Sim | ID do curso ao qual pertence |
-| moduleId | string | Sim | ID do módulo ao qual pertence |
-| title | string | Sim | Título da lição |
-| type | LessonType | Sim | explanation, challenge, ou quiz |
-| xp | number | Sim | Pontos de experiência (10 para explanation/quiz, 25 para challenge) |
-| difficulty | DifficultyLevel | Não | beginner, intermediate, ou advanced |
-| analogy | string | Não | Analogia para facilitar compreensão |
-| content | LessonContent | Sim | Conteúdo estruturado em seções |
-| challenge | Challenge | Não* | Desafio prático (*obrigatório se type=challenge) |
-| quiz | QuizQuestion[] | Não* | Perguntas (*obrigatório se type=quiz) |
-| keyTakeaways | string[] | Não | Pontos-chave para lembrar |
-| commonMistakes | string[] | Não | Erros comuns a evitar |
-| realWorldExample | string | Não | Exemplo do mundo real |
-| encouragement | string | Não | Mensagem motivacional |
+| Campo            | Tipo            | Obrigatório | Descrição                                                           |
+| ---------------- | --------------- | ----------- | ------------------------------------------------------------------- |
+| id               | string          | Sim         | Identificador único (igual ao nome do arquivo)                      |
+| courseId         | string          | Sim         | ID do curso ao qual pertence                                        |
+| moduleId         | string          | Sim         | ID do módulo ao qual pertence                                       |
+| title            | string          | Sim         | Título da lição                                                     |
+| type             | LessonType      | Sim         | explanation, challenge, ou quiz                                     |
+| xp               | number          | Sim         | Pontos de experiência (10 para explanation/quiz, 25 para challenge) |
+| difficulty       | DifficultyLevel | Não         | beginner, intermediate, ou advanced                                 |
+| analogy          | string          | Não         | Analogia para facilitar compreensão                                 |
+| content          | LessonContent   | Sim         | Conteúdo estruturado em seções                                      |
+| challenge        | Challenge       | Não\*       | Desafio prático (\*obrigatório se type=challenge)                   |
+| quiz             | QuizQuestion[]  | Não\*       | Perguntas (\*obrigatório se type=quiz)                              |
+| keyTakeaways     | string[]        | Não         | Pontos-chave para lembrar                                           |
+| commonMistakes   | string[]        | Não         | Erros comuns a evitar                                               |
+| realWorldExample | string          | Não         | Exemplo do mundo real                                               |
+| encouragement    | string          | Não         | Mensagem motivacional                                               |
 
 ## ContentSection
 
-| Tipo | Campos extras | Descrição |
-|------|--------------|-----------|
-| heading | — | Título de seção |
-| paragraph | — | Texto corrido |
-| code | language? | Bloco de código |
-| list | — | Lista (itens separados por \n) |
-| callout | variant: tip\|warning\|info | Destaque visual |
+| Tipo      | Campos extras               | Descrição                      |
+| --------- | --------------------------- | ------------------------------ |
+| heading   | —                           | Título de seção                |
+| paragraph | —                           | Texto corrido                  |
+| code      | language?                   | Bloco de código                |
+| list      | —                           | Lista (itens separados por \n) |
+| callout   | variant: tip\|warning\|info | Destaque visual                |
 
 ## Challenge
 
-| Campo | Tipo | Obrigatório | Descrição |
-|-------|------|-------------|-----------|
-| instructions | string | Sim | O que o aluno deve fazer |
-| starterCode | string | Sim | Código inicial no editor |
-| solution | string | Sim | Solução de referência |
-| tests | TestCase[] | Sim | Array de testes (pode ser vazio) |
-| hint | string | Não | Dica para o aluno |
-| solutionExplanation | string | Não | Explicação da solução |
-| sandpackDependencies | Record<string,string> | Não | Dependências extras do Sandpack |
+| Campo                | Tipo                  | Obrigatório | Descrição                        |
+| -------------------- | --------------------- | ----------- | -------------------------------- |
+| instructions         | string                | Sim         | O que o aluno deve fazer         |
+| starterCode          | string                | Sim         | Código inicial no editor         |
+| solution             | string                | Sim         | Solução de referência            |
+| tests                | TestCase[]            | Sim         | Array de testes (pode ser vazio) |
+| hint                 | string                | Não         | Dica para o aluno                |
+| solutionExplanation  | string                | Não         | Explicação da solução            |
+| sandpackDependencies | Record<string,string> | Não         | Dependências extras do Sandpack  |
 
 ## QuizQuestion
 
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| question | string | Pergunta |
-| options | QuizOption[] | Opções de resposta |
+| Campo    | Tipo         | Descrição          |
+| -------- | ------------ | ------------------ |
+| question | string       | Pergunta           |
+| options  | QuizOption[] | Opções de resposta |
 
 ## QuizOption
 
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| id | string | Identificador |
-| text | string | Texto da opção |
-| isCorrect | boolean | Se é a resposta correta |
-| explanation | string? | Explicação (opcional) |
+| Campo       | Tipo    | Descrição               |
+| ----------- | ------- | ----------------------- |
+| id          | string  | Identificador           |
+| text        | string  | Texto da opção          |
+| isCorrect   | boolean | Se é a resposta correta |
+| explanation | string? | Explicação (opcional)   |
 ```
 
 ---
@@ -622,6 +622,7 @@ Não há pasta modules/ — cada módulo é um objeto dentro do array modules.
 **Impacto:** Engajamento, contextualização, curiosidade.
 
 **Exemplos de hooks para lições existentes:**
+
 - `what-is-react`: "Por que sites modernos como Instagram atualizam sem recarregar a página?"
 - `use-state`: "Como React lembra valores entre renders?"
 - `props`: "Como um mesmo componente pode mostrar dados diferentes?"
@@ -633,6 +634,7 @@ Não há pasta modules/ — cada módulo é um objeto dentro do array modules.
 **Problema:** Módulos terminam abruptamente sem síntese.
 **Solução:** Adicionar 1 lição tipo `project` ao final de cada módulo com um projeto integrando conceitos aprendidos.
 **Exemplos:**
+
 - Módulo Estado: Construir um app de TODO list
 - Módulo Components: Criar um card de perfil com composição
 - Módulo Effects: Timer com start/stop/reset
@@ -671,6 +673,7 @@ Não há pasta modules/ — cada módulo é um objeto dentro do array modules.
 
 **Problema:** Todos os challenges são "implementation" — escrever código do zero.
 **Recomendação de mix ideal por módulo:**
+
 - 40% Implementation (criar código)
 - 25% Completion (completar lacunas)
 - 20% Correction (encontrar e corrigir bugs)
@@ -691,13 +694,13 @@ A implementação **evoluiu significativamente** além da documentação origina
 
 ## Top 5 Ações Imediatas
 
-| # | Ação | Impacto |
-|---|------|---------|
-| 1 | **Reescrever LESSON_SCHEMA.md** com o schema real | Alinhamento crítico |
-| 2 | **Reescrever COURSE_SCHEMA.md** com a estrutura real | Alinhamento crítico |
-| 3 | **Atualizar CONTENT_GENERATION.md** com novo prompt usando schema real | Geração de conteúdo correta |
-| 4 | **Atualizar PRD** removendo contradições (IA fora de escopo, 3 módulos, Supabase) | Documentação fidedigna |
-| 5 | **Adicionar desafios/quizzes a lições explanation** | Melhoria pedagógica fundamental |
+| #   | Ação                                                                              | Impacto                         |
+| --- | --------------------------------------------------------------------------------- | ------------------------------- |
+| 1   | **Reescrever LESSON_SCHEMA.md** com o schema real                                 | Alinhamento crítico             |
+| 2   | **Reescrever COURSE_SCHEMA.md** com a estrutura real                              | Alinhamento crítico             |
+| 3   | **Atualizar CONTENT_GENERATION.md** com novo prompt usando schema real            | Geração de conteúdo correta     |
+| 4   | **Atualizar PRD** removendo contradições (IA fora de escopo, 3 módulos, Supabase) | Documentação fidedigna          |
+| 5   | **Adicionar desafios/quizzes a lições explanation**                               | Melhoria pedagógica fundamental |
 
 ## O que Preservar (boas decisões)
 

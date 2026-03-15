@@ -35,9 +35,7 @@ export function AIReviewCard({
 }: AIReviewCardProps) {
   const [showChat, setShowChat] = useState(false)
   const [question, setQuestion] = useState('')
-  const [chatMessages, setChatMessages] = useState<
-    { role: 'user' | 'ai'; content: string }[]
-  >([])
+  const [chatMessages, setChatMessages] = useState<{ role: 'user' | 'ai'; content: string }[]>([])
   const [isAsking, setIsAsking] = useState(false)
 
   const handleAskQuestion = async () => {
@@ -99,21 +97,12 @@ export function AIReviewCard({
 
   if (isLoading) {
     return (
-      <Card
-        className={cn(
-          'border-violet-500/20 bg-violet-500/5',
-          className
-        )}
-      >
+      <Card className={cn('border-violet-500/20 bg-violet-500/5', className)}>
         <CardContent className="flex items-center gap-3 py-6">
           <Loader2 className="size-5 animate-spin text-violet-400" />
           <div>
-            <p className="font-medium text-violet-400">
-              Professor IA analisando seu código...
-            </p>
-            <p className="mt-1 text-sm text-slate-400">
-              Isso pode levar alguns segundos
-            </p>
+            <p className="font-medium text-violet-400">Professor IA analisando seu código...</p>
+            <p className="mt-1 text-sm text-slate-400">Isso pode levar alguns segundos</p>
           </div>
         </CardContent>
       </Card>
@@ -122,12 +111,7 @@ export function AIReviewCard({
 
   if (error) {
     return (
-      <Card
-        className={cn(
-          'border-rose-500/20 bg-rose-500/5',
-          className
-        )}
-      >
+      <Card className={cn('border-rose-500/20 bg-rose-500/5', className)}>
         <CardContent className="py-4">
           <p className="text-sm text-rose-400">{error}</p>
           <Button
@@ -166,15 +150,10 @@ export function AIReviewCard({
 
           {review.suggestions && review.suggestions.length > 0 && (
             <div className="rounded-lg border border-blue-500/20 bg-blue-500/5 p-3">
-              <p className="mb-2 text-sm font-medium text-blue-400">
-                Sugestões de melhoria:
-              </p>
+              <p className="mb-2 text-sm font-medium text-blue-400">Sugestões de melhoria:</p>
               <ul className="space-y-1">
                 {review.suggestions.map((s, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-2 text-sm text-slate-300"
-                  >
+                  <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
                     <span className="mt-0.5 text-blue-400">→</span>
                     {s}
                   </li>

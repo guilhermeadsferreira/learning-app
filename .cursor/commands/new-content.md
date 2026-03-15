@@ -6,16 +6,17 @@ Execute o fluxo abaixo. Consulte **documents/product/content_generation.md** e *
 
 Pergunte ao usuário (ou infira do contexto):
 
-| Campo | Opções/Formato | Exemplo |
-|-------|----------------|---------|
-| **Área** | programação \| gestão \| ferramenta \| outro | programação |
-| **courseId** | ID do curso existente ou novo | react, gestao-agil |
-| **moduleId** | ID do módulo existente ou novo | state, scrum |
-| **Tópico/título** | Tema da lição | useState, Priorização do Backlog |
-| **Tipo** | explanation \| challenge \| quiz | challenge |
-| **Dificuldade** | beginner \| intermediate \| advanced | beginner |
+| Campo             | Opções/Formato                               | Exemplo                          |
+| ----------------- | -------------------------------------------- | -------------------------------- |
+| **Área**          | programação \| gestão \| ferramenta \| outro | programação                      |
+| **courseId**      | ID do curso existente ou novo                | react, gestao-agil               |
+| **moduleId**      | ID do módulo existente ou novo               | state, scrum                     |
+| **Tópico/título** | Tema da lição                                | useState, Priorização do Backlog |
+| **Tipo**          | explanation \| challenge \| quiz             | challenge                        |
+| **Dificuldade**   | beginner \| intermediate \| advanced         | beginner                         |
 
 **Regras de adaptação**:
+
 - **Programação**: pode usar `challenge` (com starterCode, solution)
 - **Gestão/ferramentas/outro**: usar `explanation` ou `quiz` — não usar `challenge`
 
@@ -44,6 +45,7 @@ Siga o schema em **documents/product/lesson_schema.md** e as diretrizes em **doc
 ## 5. Atualizar index.ts (apenas curso novo)
 
 Se for um **curso novo**, atualizar `src/courses/index.ts`:
+
 - Importar o course.json
 - Adicionar glob para `./{courseId}/lessons/*.json`
 - Registrar em `courses` e `lessons`

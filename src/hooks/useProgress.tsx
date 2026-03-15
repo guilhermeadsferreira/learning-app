@@ -53,9 +53,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     [progress, completeLesson, setCurrentLesson, isLessonCompleted]
   )
 
-  return (
-    <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>
-  )
+  return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>
 }
 
 export function useProgress() {

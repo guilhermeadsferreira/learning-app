@@ -1,27 +1,28 @@
 import type { Course, Lesson } from '@/engine/types'
 
-import reactCourse from './react/course.json'
+const courseModules = import.meta.glob<{ default: Course }>('./*/course.json', {
+  eager: true,
+})
 
-// Carrega todas as lições dinamicamente - não precisa importar cada uma manualmente
-const lessonModules = import.meta.glob<{ default: Lesson }>(
-  './react/lessons/*.json',
-  { eager: true }
-)
+const lessonModules = import.meta.glob<{ default: Lesson }>('./*/lessons/*.json', { eager: true })
 
-const lessons: Record<string, Record<string, Lesson>> = {
-  react: {},
-}
-
-for (const [path, mod] of Object.entries(lessonModules)) {
-  const match = path.match(/\/lessons\/(.+)\.json$/)
+const courses: Record<string, Course> = {}
+for (const [path, mod] of Object.entries(courseModules)) {
+  const match = path.match(/\.\/([^/]+)\/course\.json$/)
   if (match) {
-    const lessonId = match[1]
-    lessons.react[lessonId] = (mod as { default: Lesson }).default
+    const courseId = match[1]
+    courses[courseId] = (mod as { default: Course }).default
   }
 }
 
-const courses: Record<string, Course> = {
-  react: reactCourse as Course,
+const lessons: Record<string, Record<string, Lesson>> = {}
+for (const [path, mod] of Object.entries(lessonModules)) {
+  const match = path.match(/\.\/([^/]+)\/lessons\/(.+)\.json$/)
+  if (match) {
+    const [, courseId, lessonId] = match
+    if (!lessons[courseId]) lessons[courseId] = {}
+    lessons[courseId][lessonId] = (mod as { default: Lesson }).default
+  }
 }
 
 export function getCourse(courseId: string): Course | null {

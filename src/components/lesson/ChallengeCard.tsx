@@ -9,17 +9,10 @@ interface ChallengeCardProps {
   className?: string
 }
 
-export function ChallengeCard({
-  challenge,
-  onHintClick,
-  className,
-}: ChallengeCardProps) {
+export function ChallengeCard({ challenge, onHintClick, className }: ChallengeCardProps) {
   return (
     <Card
-      className={cn(
-        'border-slate-700/50 bg-slate-800/50 shadow-md shadow-slate-950/50',
-        className
-      )}
+      className={cn('border-slate-700/50 bg-slate-800/50 shadow-md shadow-slate-950/50', className)}
     >
       <CardHeader>
         <CardTitle className="text-slate-50">Desafio</CardTitle>

@@ -1,9 +1,9 @@
 /** Tipo de desafio — define como a IA avalia a resposta do aluno */
 export type ChallengeStyle =
-  | 'code'      // desafio de código (React, Python, FastAPI…)
-  | 'query'     // desafio de query (SQL, NoSQL…)
-  | 'scenario'  // desafio de cenário/decisão (Gestão, AWS…)
-  | 'written'   // desafio escrito/textual (documentação, análise…)
+  | 'code' // desafio de código (React, Python, FastAPI…)
+  | 'query' // desafio de query (SQL, NoSQL…)
+  | 'scenario' // desafio de cenário/decisão (Gestão, AWS…)
+  | 'written' // desafio escrito/textual (documentação, análise…)
 
 /** Contexto para prompts de IA por curso. Permite adaptar revisão e respostas ao domínio. */
 export interface AIReviewContext {

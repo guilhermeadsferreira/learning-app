@@ -4,8 +4,8 @@
 
 O **Professor IA** é uma feature integrada à plataforma Learning Engine que oferece:
 
-* **Revisão de código/resposta** — análise estruturada da solução do aluno com feedback, sugestões e próximo passo
-* **Chat** — sistema de Q&A para o aluno tirar dúvidas durante desafios sem receber a resposta pronta
+- **Revisão de código/resposta** — análise estruturada da solução do aluno com feedback, sugestões e próximo passo
+- **Chat** — sistema de Q&A para o aluno tirar dúvidas durante desafios sem receber a resposta pronta
 
 A IA é agnóstica ao domínio do curso. O comportamento se adapta automaticamente com base no `aiReviewContext` definido no `course.json`.
 
@@ -24,10 +24,10 @@ src/components/lesson/
 
 ## Providers suportados
 
-| Provider | Model | Prefixo da API Key |
-|----------|-------|--------------------|
-| Claude (Anthropic) | `claude-sonnet-4-20250514` | `sk-ant-` |
-| OpenAI | `gpt-4o-mini` | `sk-` |
+| Provider           | Model                      | Prefixo da API Key |
+| ------------------ | -------------------------- | ------------------ |
+| Claude (Anthropic) | `claude-sonnet-4-20250514` | `sk-ant-`          |
+| OpenAI             | `gpt-4o-mini`              | `sk-`              |
 
 O provider ativo é salvo em `localStorage` (`learning-engine-ai-provider`).
 
@@ -59,12 +59,12 @@ Definido no `course.json`, o `aiReviewContext` configura como a IA se comporta p
 }
 ```
 
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| subject | string | Assunto principal do curso |
-| expertise | string | Áreas de conhecimento para o prompt da IA |
-| codeLanguage | string | Linguagem dos blocos de código (`jsx`, `python`, `sql`, `bash`, `text`) |
-| challengeStyle | ChallengeStyle | Como a IA avalia a resposta do aluno |
+| Campo          | Tipo           | Descrição                                                               |
+| -------------- | -------------- | ----------------------------------------------------------------------- |
+| subject        | string         | Assunto principal do curso                                              |
+| expertise      | string         | Áreas de conhecimento para o prompt da IA                               |
+| codeLanguage   | string         | Linguagem dos blocos de código (`jsx`, `python`, `sql`, `bash`, `text`) |
+| challengeStyle | ChallengeStyle | Como a IA avalia a resposta do aluno                                    |
 
 Se o curso não definir `aiReviewContext`, o sistema usa um fallback por `courseId`. Se não houver fallback registrado, usa valores genéricos.
 
@@ -74,12 +74,12 @@ Se o curso não definir `aiReviewContext`, o sistema usa um fallback por `course
 
 O `challengeStyle` define o comportamento do sistema de revisão:
 
-| Valor | Quando usar | Critério de `isCorrect` |
-|-------|-------------|------------------------|
-| `code` | Desafios de código (React, Python, etc.) | Código resolve o desafio, mesmo que difira da solução modelo |
-| `query` | Desafios de query em banco de dados | Query retorna resultado correto |
-| `scenario` | Cenários de decisão sem código (gestão, soft skills) | Resposta demonstra raciocínio coerente com boas práticas |
-| `written` | Respostas textuais / análise | Resposta demonstra compreensão e atende ao pedido |
+| Valor      | Quando usar                                          | Critério de `isCorrect`                                      |
+| ---------- | ---------------------------------------------------- | ------------------------------------------------------------ |
+| `code`     | Desafios de código (React, Python, etc.)             | Código resolve o desafio, mesmo que difira da solução modelo |
+| `query`    | Desafios de query em banco de dados                  | Query retorna resultado correto                              |
+| `scenario` | Cenários de decisão sem código (gestão, soft skills) | Resposta demonstra raciocínio coerente com boas práticas     |
+| `written`  | Respostas textuais / análise                         | Resposta demonstra compreensão e atende ao pedido            |
 
 ---
 
@@ -99,8 +99,8 @@ O `challengeStyle` define o comportamento do sistema de revisão:
 interface AIReviewRequest {
   lessonTitle: string
   challengeInstructions: string
-  solution: string            // solução de referência do JSON da lição
-  studentCode: string         // código/resposta do aluno
+  solution: string // solução de referência do JSON da lição
+  studentCode: string // código/resposta do aluno
   hint?: string
   lessonContext?: string
   courseId: string
@@ -112,23 +112,23 @@ interface AIReviewRequest {
 
 ```typescript
 interface AIReviewResponse {
-  feedback: string        // análise em 2–4 parágrafos
-  isCorrect: boolean      // se a resposta é considerada correta
-  encouragement: string   // mensagem motivacional personalizada
-  suggestions: string[]   // sugestões práticas de melhoria
-  nextStepHint?: string   // dica sobre o que explorar a seguir
+  feedback: string // análise em 2–4 parágrafos
+  isCorrect: boolean // se a resposta é considerada correta
+  encouragement: string // mensagem motivacional personalizada
+  suggestions: string[] // sugestões práticas de melhoria
+  nextStepHint?: string // dica sobre o que explorar a seguir
 }
 ```
 
 ### Princípios do sistema prompt de revisão
 
-* Começa reconhecendo o que está correto
-* Explica o "porquê" dos erros, não só o "o quê"
-* Tom encorajador — nunca punitivo ou sarcástico
-* Usa analogias do dia a dia
-* Dá exemplos concretos nas sugestões
-* Responde sempre em português brasileiro
-* Retorna apenas JSON (sem markdown)
+- Começa reconhecendo o que está correto
+- Explica o "porquê" dos erros, não só o "o quê"
+- Tom encorajador — nunca punitivo ou sarcástico
+- Usa analogias do dia a dia
+- Dá exemplos concretos nas sugestões
+- Responde sempre em português brasileiro
+- Retorna apenas JSON (sem markdown)
 
 ---
 
@@ -143,11 +143,11 @@ interface AIReviewResponse {
 
 ### Princípios do sistema prompt de chat
 
-* Nunca entrega a resposta diretamente
-* Dá dicas progressivas quando o aluno pede a solução
-* Referencia o código do aluno quando relevante
-* Tom paciente e encorajador
-* Resposta concisa (2–4 parágrafos)
+- Nunca entrega a resposta diretamente
+- Dá dicas progressivas quando o aluno pede a solução
+- Referencia o código do aluno quando relevante
+- Tom paciente e encorajador
+- Resposta concisa (2–4 parágrafos)
 
 ---
 
@@ -168,10 +168,10 @@ Se a resposta da IA não for JSON válido (ex: falha de parsing), o sistema reto
 
 ## Limites de tokens
 
-| Operação | `max_tokens` |
-|----------|-------------|
-| Revisão de código | 1000 |
-| Chat (pergunta) | 600 |
+| Operação          | `max_tokens` |
+| ----------------- | ------------ |
+| Revisão de código | 1000         |
+| Chat (pergunta)   | 600          |
 
 ---
 
@@ -179,8 +179,8 @@ Se a resposta da IA não for JSON válido (ex: falha de parsing), o sistema reto
 
 O Professor IA complementa o conteúdo estático das lições:
 
-* **Revisão** — oferece feedback personalizado impossível de hardcodar
-* **Chat** — remove bloqueios sem revelar a solução, promovendo aprendizado ativo
-* **Tom** — alinhado com os princípios pedagógicos da plataforma: encorajador, didático, progressivo
+- **Revisão** — oferece feedback personalizado impossível de hardcodar
+- **Chat** — remove bloqueios sem revelar a solução, promovendo aprendizado ativo
+- **Tom** — alinhado com os princípios pedagógicos da plataforma: encorajador, didático, progressivo
 
 A IA não substitui o conteúdo — ela amplifica o aprendizado onde o conteúdo estático tem limitações.
