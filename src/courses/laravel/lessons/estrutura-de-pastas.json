@@ -1,0 +1,50 @@
+{
+  "id": "estrutura-de-pastas",
+  "courseId": "laravel",
+  "moduleId": "ambiente",
+  "title": "Estrutura de Pastas do Laravel",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "A estrutura de um projeto Laravel é como a planta de um prédio bem planejado: cada andar tem uma função clara. O subsolo é o banco de dados (migrations), o térreo é a lógica de negócio (app/), o primeiro andar são as views (resources/views/) e a fachada é o público (public/).",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Pastas principais" },
+      {
+        "type": "list",
+        "content": "app/ — núcleo da aplicação: Models, Controllers, Middleware, Policies\nroutes/ — definição de todas as rotas da aplicação\nresources/ — views Blade, CSS, JS e arquivos de linguagem\ndatabase/ — migrations, seeders e factories\nconfig/ — configurações de banco, cache, mail, etc.\nstorage/ — logs, uploads e cache de views compiladas\npublic/ — único diretório exposto ao servidor web (index.php, assets)\nbootstrap/ — inicialização do framework e cache de configurações"
+      },
+      { "type": "heading", "content": "Dentro de app/" },
+      {
+        "type": "code",
+        "content": "app/\n├── Http/\n│   ├── Controllers/     # Controllers da aplicação\n│   ├── Middleware/      # Middlewares customizados\n│   └── Requests/        # Form Requests de validação\n├── Models/              # Models Eloquent\n├── Providers/           # Service Providers\n└── Exceptions/          # Tratamento de exceções",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Rotas" },
+      {
+        "type": "code",
+        "content": "routes/\n├── web.php       # Rotas web (com sessão, CSRF)\n├── api.php       # Rotas de API (stateless, prefixo /api)\n└── console.php   # Comandos Artisan personalizados",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Você vai passar 90% do tempo em app/Http/Controllers, app/Models e resources/views. Comece por aí.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "O arquivo .env" },
+      {
+        "type": "paragraph",
+        "content": "O arquivo `.env` na raiz do projeto contém as configurações de ambiente: banco de dados, chaves de API, nome do app, driver de filas, etc. Nunca suba este arquivo para o repositório — ele contém segredos."
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "app/ contém a lógica da aplicação: Controllers, Models, Middleware",
+    "routes/web.php define as rotas da aplicação web; routes/api.php para APIs",
+    "resources/views/ contém os templates Blade",
+    "database/ contém migrations para versionar o banco de dados",
+    ".env armazena configurações sensíveis — nunca suba ao repositório"
+  ],
+  "realWorldExample": "Ao entrar num projeto Laravel existente, a primeira coisa que um dev experiente faz é abrir routes/web.php e app/Http/Controllers para entender como a aplicação está organizada.",
+  "encouragement": "Depois de alguns projetos, essa estrutura vai parecer natural. O Laravel é consistente — você sempre sabe onde encontrar cada coisa."
+}

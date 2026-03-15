@@ -1,0 +1,48 @@
+{
+  "id": "deploy-laravel",
+  "courseId": "laravel",
+  "moduleId": "deploy",
+  "title": "Deploy em Produção",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Deploy é como inaugurar um restaurante. Antes de abrir as portas, você faz um checklist: o gás está ligado? A cozinha está limpa? Os pratos estão no cardápio? Com Laravel, há um checklist padrão antes de colocar a aplicação no ar — e ignorar qualquer item pode causar problemas.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Opções de hospedagem" },
+      {
+        "type": "list",
+        "content": "Laravel Forge — painel para gerenciar servidores VPS (DigitalOcean, AWS, Linode)\nLaravel Vapor — deploy serverless na AWS, gerenciado pela equipe do Laravel\nFly.io / Railway — plataformas PaaS com suporte a Docker\nShared hosting com PHP — menos recomendado, mas funciona para projetos simples\nVPS manual — Ubuntu + Nginx + PHP-FPM + MySQL"
+      },
+      { "type": "heading", "content": "Checklist de deploy" },
+      {
+        "type": "code",
+        "content": "# 1. Configurar .env de produção (nunca copie o .env de dev!)\nAPP_ENV=production\nAPP_DEBUG=false  # CRÍTICO — nunca true em produção\nAPP_URL=https://meusite.com\n\n# 2. Instalar dependências sem dev\ncomposer install --no-dev --optimize-autoloader\n\n# 3. Gerar a chave da aplicação (apenas uma vez)\nphp artisan key:generate\n\n# 4. Rodar migrations\nphp artisan migrate --force\n\n# 5. Otimizações de performance\nphp artisan config:cache    # cacheia todas as configs\nphp artisan route:cache     # cacheia as rotas\nphp artisan view:cache      # pré-compila views Blade\nphp artisan event:cache     # cacheia eventos\n\n# 6. Compilar assets\nnpm ci && npm run build\n\n# 7. Definir permissões corretas\nchmod -R 775 storage bootstrap/cache",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Modo de manutenção" },
+      {
+        "type": "code",
+        "content": "# Ativar modo de manutenção (exibe página de manutenção)\nphp artisan down\n\n# Ativar com mensagem e permissão para seu IP\nphp artisan down --render=\"errors::503\" --secret=\"meu-token\"\n\n# Desativar modo de manutenção\nphp artisan up",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "NUNCA deixe APP_DEBUG=true em produção. Isso expõe variáveis de ambiente, estrutura do código e informações sensíveis do servidor para qualquer visitante.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "APP_DEBUG=false é obrigatório em produção — previne exposição de dados sensíveis",
+    "config:cache, route:cache e view:cache melhoram significativamente a performance",
+    "Use `php artisan down` antes de deploys para evitar erros durante migrações",
+    "Instale apenas dependências de produção com --no-dev"
+  ],
+  "commonMistakes": [
+    "APP_DEBUG=true em produção — expõe toda a stack trace e variáveis de ambiente",
+    "Esquecer php artisan migrate em produção — novo código acessa tabelas que não existem"
+  ],
+  "realWorldExample": "Times maduros automatizam o deploy com CI/CD (GitHub Actions): push para main → testes → deploy automático com artisan migrate, config:cache e restart do queue worker.",
+  "encouragement": "Deploy bem feito é invisível — a aplicação simplesmente funciona. Você tem o conhecimento para fazer isso direito agora."
+}

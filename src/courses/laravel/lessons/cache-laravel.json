@@ -1,0 +1,51 @@
+{
+  "id": "cache-laravel",
+  "courseId": "laravel",
+  "moduleId": "avancado",
+  "title": "Cache: Otimizando a Aplicação",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "advanced",
+  "analogy": "Cache é como o bloco de anotações de um garçom experiente. Em vez de ir à cozinha verificar o cardápio toda vez que alguém pergunta o prato do dia (query cara ao banco), ele anota a resposta. Na próxima pergunta, ele consulta o bloco — muito mais rápido. O bloco expira e ele atualiza quando necessário.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Cache Facade no Laravel" },
+      {
+        "type": "code",
+        "content": "use Illuminate\\Support\\Facades\\Cache;\n\n// Armazenar por 60 minutos\nCache::put('chave', 'valor', now()->addMinutes(60));\n\n// Buscar (retorna null se expirado)\n$valor = Cache::get('chave');\n\n// Buscar com padrão\n$valor = Cache::get('chave', 'padrão');\n\n// Remover\nCache::forget('chave');\n\n// Verificar se existe\nif (Cache::has('chave')) { ... }",
+        "language": "php"
+      },
+      { "type": "heading", "content": "remember() — cache com fallback" },
+      {
+        "type": "code",
+        "content": "// Se a chave existir, retorna do cache.\n// Se não existir, executa o callback, armazena e retorna.\n$produtos = Cache::remember('produtos-destaque', now()->addHours(1), function () {\n    return Produto::where('destaque', true)->with('categoria')->get();\n});\n\n// rememberForever() — sem expiração\n$configuracoes = Cache::rememberForever('config-sistema', function () {\n    return Configuracao::pluck('valor', 'chave')->toArray();\n});",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Para desenvolvimento, use CACHE_STORE=array no .env. Para produção, use Redis (mais performático) ou database. Configure em config/cache.php.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete o ProdutoController para usar cache corretamente:\n\n1. No método index(): use Cache::remember() com chave 'produtos-todos', duração de 30 minutos, e busque Produto::orderBy('nome')->get() no callback\n2. No método store(): após criar o produto, limpe o cache com a chave 'produtos-todos'\n3. No método destroy(): após deletar, limpe o mesmo cache",
+    "starterCode": "<?php\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Cache;\n\nclass ProdutoController extends Controller\n{\n    public function index()\n    {\n        // Buscar produtos com cache de 30 minutos\n    }\n\n    public function store(Request $request)\n    {\n        $dados = $request->validate([\n            'nome'  => 'required|string|max:100',\n            'preco' => 'required|numeric|min:0',\n        ]);\n\n        $produto = Produto::create($dados);\n\n        // Limpar o cache após criar\n\n        return response()->json($produto, 201);\n    }\n\n    public function destroy(string $id)\n    {\n        Produto::findOrFail($id)->delete();\n\n        // Limpar o cache após deletar\n\n        return response()->json(null, 204);\n    }\n}",
+    "solution": "<?php\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Cache;\n\nclass ProdutoController extends Controller\n{\n    public function index()\n    {\n        $produtos = Cache::remember('produtos-todos', now()->addMinutes(30), function () {\n            return Produto::orderBy('nome')->get();\n        });\n\n        return response()->json($produtos);\n    }\n\n    public function store(Request $request)\n    {\n        $dados = $request->validate([\n            'nome'  => 'required|string|max:100',\n            'preco' => 'required|numeric|min:0',\n        ]);\n\n        $produto = Produto::create($dados);\n\n        Cache::forget('produtos-todos');\n\n        return response()->json($produto, 201);\n    }\n\n    public function destroy(string $id)\n    {\n        Produto::findOrFail($id)->delete();\n\n        Cache::forget('produtos-todos');\n\n        return response()->json(null, 204);\n    }\n}",
+    "tests": [],
+    "hint": "Use Cache::remember('chave', now()->addMinutes(30), function() { ... }) para buscar do cache ou executar a query. Use Cache::forget('chave') para invalidar o cache após mutações.",
+    "solutionExplanation": "Cache::remember() verifica se 'produtos-todos' existe no cache. Se sim, retorna imediatamente sem tocar o banco. Se não, executa a closure (a query), armazena o resultado por 30 minutos e retorna. Quando criamos ou deletamos um produto, o cache fica stale (desatualizado) — Cache::forget() o invalida, forçando a próxima requisição a buscar os dados atualizados do banco. Este padrão (cache-aside) é o mais comum em aplicações web."
+  },
+  "keyTakeaways": [
+    "Cache::remember() é o padrão mais usado — busca do cache ou executa callback",
+    "Cache::forget() invalida o cache após mutações — fundamental para consistência",
+    "Escolha a duração de cache conforme a frequência de atualização dos dados",
+    "Redis é o driver de cache recomendado para produção (mais rápido que banco)"
+  ],
+  "commonMistakes": [
+    "Cachear dados sensíveis por muito tempo — dados desatualizados podem causar bugs",
+    "Esquecer de invalidar o cache após mutations — usuário vê dados stale"
+  ],
+  "realWorldExample": "Um portal de notícias cacheia a lista de artigos mais lidos por 5 minutos. Milhares de visitantes simultâneos não sobrecarregam o banco — servem do cache até a renovação.",
+  "encouragement": "Cache é o que transforma uma aplicação lenta em uma rápida. Você está aplicando otimizações de sistemas de alto tráfego!"
+}

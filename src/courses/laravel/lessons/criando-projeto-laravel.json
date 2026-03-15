@@ -1,0 +1,61 @@
+{
+  "id": "criando-projeto-laravel",
+  "courseId": "laravel",
+  "moduleId": "ambiente",
+  "title": "Criando seu Primeiro Projeto",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Criar um projeto Laravel é como receber um apartamento já mobiliado. Você não precisa construir a estrutura do zero — a cozinha, o banheiro e os quartos já estão lá. Você só personaliza de acordo com o que vai construir.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Criando um novo projeto" },
+      {
+        "type": "paragraph",
+        "content": "Há duas formas de criar um projeto Laravel. A forma recomendada usa o instalador Laravel, que oferece opções interativas. A segunda usa o Composer diretamente."
+      },
+      {
+        "type": "code",
+        "content": "# Usando o instalador Laravel (recomendado)\nlaravel new meu-projeto\n\n# Ou via Composer\ncomposer create-project laravel/laravel meu-projeto",
+        "language": "bash"
+      },
+      {
+        "type": "paragraph",
+        "content": "O instalador pergunta quais starter kits quer usar (Breeze, Jetstream), banco de dados preferido e se quer rodar o servidor de desenvolvimento automaticamente."
+      },
+      { "type": "heading", "content": "Rodando o servidor de desenvolvimento" },
+      {
+        "type": "code",
+        "content": "cd meu-projeto\n\n# Iniciar o servidor embutido\nphp artisan serve\n\n# Saída:\n# INFO  Server running on [http://127.0.0.1:8000]",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Artisan CLI" },
+      {
+        "type": "paragraph",
+        "content": "O Artisan é a interface de linha de comando do Laravel. Você vai usá-lo constantemente para gerar controllers, models, migrations, rodar testes e muito mais."
+      },
+      {
+        "type": "code",
+        "content": "# Listar todos os comandos disponíveis\nphp artisan list\n\n# Exemplos úteis:\nphp artisan make:controller ProdutoController\nphp artisan make:model Produto -m\nphp artisan migrate",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "O comando `php artisan serve` usa a porta 8000 por padrão. Se já estiver em uso, passe `--port=8001`.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Use `laravel new nome` ou `composer create-project` para criar projetos",
+    "Use `php artisan serve` para iniciar o servidor de desenvolvimento",
+    "O Artisan CLI é a ferramenta central para geração de código e tarefas",
+    "O projeto já vem com estrutura completa, pronto para começar a desenvolver"
+  ],
+  "commonMistakes": [
+    "Esquecer de entrar na pasta do projeto antes de rodar `php artisan serve`",
+    "Não configurar o arquivo `.env` — o banco de dados e outras configs vivem ali"
+  ],
+  "realWorldExample": "Em times de desenvolvimento, o comando `git clone + composer install + php artisan key:generate` é o onboarding padrão para novos devs em um projeto Laravel.",
+  "encouragement": "Com Laravel, seu primeiro projeto está rodando em menos de 2 minutos. Isso é o poder de um bom framework."
+}

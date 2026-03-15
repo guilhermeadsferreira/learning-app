@@ -3,7 +3,7 @@
   "title": "Arquitetura de Software: Do Dev ao Arquiteto",
   "description": "Curso completo de arquitetura de software: papéis (Tech Lead, Staff, Arquiteto), NFRs, padrões arquiteturais, DDD, sistemas distribuídos, integração, avaliação, segurança, documentação e liderança técnica. Do iniciante ao avançado.",
   "icon": "🏛️",
-  "tags": ["arquitetura", "sistema", "tech lead", "staff engineer", "avançado", "carreira"],
+  "tags": ["Arquitetura", "Programação"],
   "aiReviewContext": {
     "subject": "Arquitetura de Software",
     "expertise": "padrões arquiteturais, DDD, sistemas distribuídos, NFRs, trade-offs, ADRs, liderança técnica",

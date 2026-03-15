@@ -1,0 +1,114 @@
+{
+  "id": "quiz-eloquent",
+  "courseId": "laravel",
+  "moduleId": "eloquent",
+  "title": "Quiz — Eloquent ORM",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Eloquent é o coração do Laravel. Vamos consolidar o que aprendemos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a diferença entre Produto::find(1) e Produto::findOrFail(1)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "find() é mais rápido; findOrFail() faz validação extra",
+          "isCorrect": false,
+          "explanation": "Ambos executam a mesma query. A diferença é no comportamento quando o registro não existe."
+        },
+        {
+          "id": "b",
+          "text": "find() retorna null se não encontrar; findOrFail() lança ModelNotFoundException (404)",
+          "isCorrect": true,
+          "explanation": "Correto! Em Controllers, findOrFail() é preferível pois retorna automaticamente um 404 se o registro não existir."
+        },
+        {
+          "id": "c",
+          "text": "find() busca por qualquer coluna; findOrFail() apenas pela chave primária",
+          "isCorrect": false,
+          "explanation": "Ambos buscam pela chave primária (id por padrão)."
+        },
+        {
+          "id": "d",
+          "text": "Não há diferença prática entre eles",
+          "isCorrect": false,
+          "explanation": "Há diferença significativa: find() pode retornar null e causar erros, findOrFail() retorna 404 automaticamente."
+        }
+      ]
+    },
+    {
+      "question": "O que é o problema N+1 no Eloquent e como evitá-lo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "É um bug no Eloquent. Deve-se usar SQL puro para evitar",
+          "isCorrect": false,
+          "explanation": "Não é um bug — é uma consequência do lazy loading. Usa-se Eager Loading para resolver."
+        },
+        {
+          "id": "b",
+          "text": "Ocorre quando se faz 1 query para a coleção + N queries para os relacionamentos. Evita-se com with()",
+          "isCorrect": true,
+          "explanation": "Correto! Autor::with('livros')->get() faz 2 queries (autores + todos os livros) em vez de 1 + N."
+        },
+        {
+          "id": "c",
+          "text": "Ocorre quando se usa findOrFail() em loops. Evita-se com find()",
+          "isCorrect": false,
+          "explanation": "O problema N+1 é sobre relacionamentos em loops, não sobre find() vs findOrFail()."
+        },
+        {
+          "id": "d",
+          "text": "É causado por migrations sem índices. Evita-se adicionando índices",
+          "isCorrect": false,
+          "explanation": "Índices melhoram performance de queries, mas o problema N+1 é especificamente sobre múltiplas queries de relacionamento."
+        }
+      ]
+    },
+    {
+      "question": "Para que serve a propriedade $fillable em um Model Eloquent?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Define quais colunas são retornadas pelo all()",
+          "isCorrect": false,
+          "explanation": "Para filtrar colunas no SELECT use select(). $fillable é sobre mass assignment."
+        },
+        {
+          "id": "b",
+          "text": "Define quais colunas podem ser preenchidas via mass assignment (create, fill, update)",
+          "isCorrect": true,
+          "explanation": "Correto! $fillable protege contra mass assignment de colunas não autorizadas, como um campo 'is_admin' que o usuário não deveria poder definir."
+        },
+        {
+          "id": "c",
+          "text": "Define as colunas que são obrigatórias no banco de dados",
+          "isCorrect": false,
+          "explanation": "Obrigatoriedade de colunas é definida nas migrations (NOT NULL) e na validação do Controller."
+        },
+        {
+          "id": "d",
+          "text": "Define os tipos de dados de cada coluna",
+          "isCorrect": false,
+          "explanation": "Tipos de dados são definidos nas migrations. $casts faz conversão de tipos no Eloquent."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "findOrFail() é preferível em Controllers — retorna 404 automaticamente",
+    "Eager Loading com with() resolve o problema N+1",
+    "$fillable protege o Model de mass assignment não autorizado",
+    "::create() precisa de $fillable definido para funcionar"
+  ],
+  "encouragement": "Você dominou o Eloquent! Este conhecimento é a base de qualquer aplicação Laravel real."
+}

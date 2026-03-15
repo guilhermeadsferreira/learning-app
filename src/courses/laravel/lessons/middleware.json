@@ -1,0 +1,53 @@
+{
+  "id": "middleware",
+  "courseId": "laravel",
+  "moduleId": "autenticacao",
+  "title": "Middleware: Protegendo Rotas",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Middleware é como um check-in de aeroporto. Antes de embarcar no avião (acessar o Controller), sua bagagem passa pela esteira (middleware) de verificação. Se algo errado for detectado, você é barrado antes mesmo de chegar ao portão. Pode haver vários pontos de verificação em sequência.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é Middleware?" },
+      {
+        "type": "paragraph",
+        "content": "Middleware intercepta requisições HTTP antes de chegarem ao Controller (ou respostas antes de chegarem ao browser). É o lugar certo para: verificar autenticação, checar permissões, logar requisições, adicionar headers, limitar rate."
+      },
+      { "type": "heading", "content": "Criando um Middleware customizado" },
+      {
+        "type": "code",
+        "content": "# Gerar via Artisan\nphp artisan make:middleware VerificarAdmin",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Http\\Middleware;\n\nuse Closure;\nuse Illuminate\\Http\\Request;\n\nclass VerificarAdmin\n{\n    public function handle(Request $request, Closure $next): mixed\n    {\n        // Verificar antes da requisição chegar ao Controller\n        if (!auth()->check() || !auth()->user()->is_admin) {\n            abort(403, 'Acesso negado.');\n            // Ou: return redirect()->route('home');\n        }\n\n        // Passa para o próximo middleware/Controller\n        $response = $next($request);\n\n        // Pode também modificar a resposta aqui (após o Controller)\n        $response->headers->set('X-App-Name', 'MeuSistema');\n\n        return $response;\n    }\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Registrando e usando o Middleware" },
+      {
+        "type": "code",
+        "content": "// bootstrap/app.php (Laravel 11+)\nuse App\\Http\\Middleware\\VerificarAdmin;\n\n->withMiddleware(function (Middleware $middleware) {\n    $middleware->alias([\n        'admin' => VerificarAdmin::class,\n    ]);\n})\n\n// routes/web.php — usar pelo alias\nRoute::get('/admin', AdminController::class)\n    ->middleware('admin');\n\n// Ou aplicar no grupo de rotas admin\nRoute::middleware(['auth', 'admin'])->prefix('admin')->group(function () {\n    Route::get('/dashboard', [AdminController::class, 'dashboard']);\n    Route::resource('usuarios', AdminUsuarioController::class);\n});",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Middlewares built-in úteis: 'auth' (usuário autenticado), 'guest' (usuário não autenticado), 'throttle:60,1' (limite de 60 requisições por minuto).",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Middleware intercepta requisições antes do Controller ou respostas após",
+    "Crie com `php artisan make:middleware NomeMiddleware`",
+    "$next($request) passa a requisição para o próximo estágio do pipeline",
+    "Combine middlewares: ->middleware(['auth', 'admin'])"
+  ],
+  "commonMistakes": [
+    "Esquecer de chamar $next($request) — a requisição fica presa no middleware",
+    "Colocar lógica de negócio no middleware — use apenas para cross-cutting concerns (auth, log, headers)"
+  ],
+  "realWorldExample": "Um SaaS com planos free/premium usa middleware para verificar se o usuário tem acesso à feature antes de cada requisição, retornando 402 (Payment Required) se necessário.",
+  "encouragement": "Middleware é uma das arquiteturas mais elegantes do Laravel. Uma vez entendido, você vai querer usar em todo projeto."
+}

@@ -1,0 +1,53 @@
+{
+  "id": "form-request",
+  "courseId": "laravel",
+  "moduleId": "formularios-validacao",
+  "title": "Form Requests Personalizados",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Um Form Request é como um guarda de segurança dedicado para uma entrada específica. Em vez de o gerente (Controller) verificar os documentos de todo mundo, ele contrata um especialista para isso. O Controller fica limpo e focado no que importa.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Quando usar Form Requests?" },
+      {
+        "type": "paragraph",
+        "content": "Quando a validação fica complexa (muitas regras, mensagens customizadas) ou quando a mesma validação é reaproveitada em vários lugares, Form Requests são a solução. Eles extraem a lógica de validação do Controller para uma classe dedicada."
+      },
+      { "type": "heading", "content": "Criando um Form Request" },
+      {
+        "type": "code",
+        "content": "php artisan make:request StoreProdutoRequest",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\n\nclass StoreProdutoRequest extends FormRequest\n{\n    // Quem pode fazer esta requisição?\n    public function authorize(): bool\n    {\n        return true; // true = qualquer usuário autenticado pode\n        // return auth()->user()->isAdmin(); // apenas admins\n    }\n\n    // Regras de validação\n    public function rules(): array\n    {\n        return [\n            'nome'      => 'required|string|max:100',\n            'preco'     => 'required|numeric|min:0.01',\n            'estoque'   => 'required|integer|min:0',\n            'descricao' => 'nullable|string',\n        ];\n    }\n\n    // Mensagens de erro customizadas\n    public function messages(): array\n    {\n        return [\n            'nome.required'  => 'O nome do produto é obrigatório.',\n            'preco.min'      => 'O preço deve ser maior que zero.',\n        ];\n    }\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Usando no Controller" },
+      {
+        "type": "code",
+        "content": "// O type-hint substitui o Request padrão\npublic function store(StoreProdutoRequest $request)\n{\n    // Validação já aconteceu automaticamente!\n    // Se inválido, nem chega aqui\n\n    Produto::create($request->validated());\n\n    return redirect()->route('produtos.index')\n        ->with('sucesso', 'Produto criado!');\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Use $request->validated() (não $request->all()) para obter apenas os campos que passaram na validação. É mais seguro e explícito.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Form Requests encapsulam validação em classes dedicadas, limpando os Controllers",
+    "authorize() define quem pode fazer a requisição",
+    "rules() define as regras; messages() personaliza as mensagens de erro",
+    "Use $request->validated() para obter apenas campos validados"
+  ],
+  "commonMistakes": [
+    "Retornar false em authorize() sem motivo — bloqueia todas as requisições (403)",
+    "Usar $request->all() em vez de $request->validated() — pode incluir campos não validados"
+  ],
+  "realWorldExample": "Um sistema com diferentes formulários de cadastro (usuário, produto, pedido) usa Form Requests separados para cada um, mantendo Controllers simples e validações organizadas.",
+  "encouragement": "Form Requests são sinal de código Laravel maduro. Quando você começa a usá-los, seu código atinge um nível profissional."
+}

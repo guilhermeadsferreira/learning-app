@@ -1,0 +1,57 @@
+{
+  "id": "policies-gates",
+  "courseId": "laravel",
+  "moduleId": "autenticacao",
+  "title": "Policies e Gates: Controle de Acesso",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Gates são como seguranças de um clube: regras simples aplicadas globalmente ('só maiores de 18 anos entram'). Policies são gerentes de departamento: regras específicas por recurso ('apenas o autor pode editar o próprio post', 'apenas admins podem deletar').",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Gates — autorização simples" },
+      {
+        "type": "code",
+        "content": "// app/Providers/AppServiceProvider.php\nuse Illuminate\\Support\\Facades\\Gate;\n\npublic function boot(): void\n{\n    // Gate simples\n    Gate::define('editar-configuracoes', function (User $user) {\n        return $user->is_admin;\n    });\n\n    // Gate com recurso\n    Gate::define('editar-post', function (User $user, Post $post) {\n        return $user->id === $post->user_id || $user->is_admin;\n    });\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Usando Gates" },
+      {
+        "type": "code",
+        "content": "// No Controller\nif (Gate::denies('editar-post', $post)) {\n    abort(403);\n}\n\n// Atalho com authorize()\n$this->authorize('editar-post', $post); // lança 403 se negado\n\n// No Blade\n@can('editar-post', $post)\n    <a href=\"{{ route('posts.edit', $post) }}\">Editar</a>\n@endcan",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Policies — autorização por Model" },
+      {
+        "type": "code",
+        "content": "# Criar Policy para o Model Post\nphp artisan make:policy PostPolicy --model=Post",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Policies;\n\nuse App\\Models\\Post;\nuse App\\Models\\User;\n\nclass PostPolicy\n{\n    public function update(User $user, Post $post): bool\n    {\n        return $user->id === $post->user_id;\n    }\n\n    public function delete(User $user, Post $post): bool\n    {\n        return $user->id === $post->user_id || $user->is_admin;\n    }\n}",
+        "language": "php"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete a PostPolicy com as regras de autorização:\n\n1. view() — qualquer usuário autenticado pode ver qualquer post\n2. create() — qualquer usuário autenticado pode criar posts\n3. update() — apenas o autor do post pode editá-lo\n4. delete() — o autor OU um admin podem deletar o post\n\nConsidere que o Model User tem os campos: id, is_admin (boolean)\nConsidere que o Model Post tem os campos: id, user_id, titulo",
+    "starterCode": "<?php\nnamespace App\\Policies;\n\nuse App\\Models\\Post;\nuse App\\Models\\User;\n\nclass PostPolicy\n{\n    public function view(User $user, Post $post): bool\n    {\n        // Qualquer usuário autenticado pode ver\n    }\n\n    public function create(User $user): bool\n    {\n        // Qualquer usuário autenticado pode criar\n    }\n\n    public function update(User $user, Post $post): bool\n    {\n        // Apenas o autor pode editar\n    }\n\n    public function delete(User $user, Post $post): bool\n    {\n        // Autor OU admin podem deletar\n    }\n}",
+    "solution": "<?php\nnamespace App\\Policies;\n\nuse App\\Models\\Post;\nuse App\\Models\\User;\n\nclass PostPolicy\n{\n    public function view(User $user, Post $post): bool\n    {\n        return true;\n    }\n\n    public function create(User $user): bool\n    {\n        return true;\n    }\n\n    public function update(User $user, Post $post): bool\n    {\n        return $user->id === $post->user_id;\n    }\n\n    public function delete(User $user, Post $post): bool\n    {\n        return $user->id === $post->user_id || $user->is_admin;\n    }\n}",
+    "tests": [],
+    "hint": "Policies retornam true (permitido) ou false (negado). Para 'qualquer autenticado', return true. Para 'apenas o autor', compare $user->id === $post->user_id. Para 'autor ou admin', use || (ou).",
+    "solutionExplanation": "Policies retornam booleanos simples. view() e create() retornam true porque qualquer usuário autenticado tem permissão. update() verifica se o ID do usuário atual bate com o ID do autor do post. delete() usa o operador || para permitir tanto o autor quanto admins — é uma OR lógica simples e expressiva. O Laravel registra automaticamente Policies para Models com o mesmo nome (PostPolicy → Post)."
+  },
+  "keyTakeaways": [
+    "Gates são regras globais simples; Policies são regras organizadas por Model",
+    "Policies são autodetectadas quando o nome segue a convenção (PostPolicy → Post)",
+    "$this->authorize() no Controller lança 403 automaticamente se negado",
+    "@can/@cannot no Blade mostra/esconde elementos conforme a autorização"
+  ],
+  "commonMistakes": [
+    "Confundir autenticação (quem é) com autorização (o que pode fazer) — são conceitos distintos",
+    "Esquecer de usar @can no Blade — botões de editar/deletar ficam visíveis para todos"
+  ],
+  "realWorldExample": "Um blog usa PostPolicy: qualquer um lê, apenas autores editam seus próprios posts e apenas admins podem deletar posts de terceiros — exatamente o modelo do Medium ou Dev.to.",
+  "encouragement": "Policies são a forma mais elegante de controle de acesso em qualquer framework. Você está escrevendo código de nível profissional."
+}

@@ -1,0 +1,106 @@
+{
+  "id": "laravel",
+  "title": "Laravel: Do Básico ao Avançado",
+  "description": "Curso completo de Laravel: da configuração de ambiente com PHP e Composer até recursos avançados como APIs REST, autenticação, filas, eventos e deploy. Aprenda o framework PHP mais popular do mundo na prática.",
+  "icon": "🔴",
+  "tags": ["Backend", "PHP", "Laravel"],
+  "aiReviewContext": {
+    "subject": "Laravel",
+    "expertise": "PHP, MVC, Eloquent ORM, Blade, migrations, autenticação, APIs REST, filas, eventos, Artisan CLI",
+    "codeLanguage": "php",
+    "challengeStyle": "code"
+  },
+  "modules": [
+    {
+      "id": "ambiente",
+      "title": "Ambiente e Primeiros Passos",
+      "lessons": [
+        "o-que-e-laravel",
+        "instalacao-php-composer",
+        "criando-projeto-laravel",
+        "estrutura-de-pastas",
+        "quiz-ambiente"
+      ]
+    },
+    {
+      "id": "rotas-controllers",
+      "title": "Roteamento e Controllers",
+      "lessons": [
+        "rotas-basicas",
+        "controllers",
+        "rotas-com-parametros",
+        "quiz-rotas-controllers"
+      ]
+    },
+    {
+      "id": "blade",
+      "title": "Views com Blade",
+      "lessons": [
+        "blade-introducao",
+        "blade-diretivas",
+        "blade-layouts",
+        "quiz-blade"
+      ]
+    },
+    {
+      "id": "eloquent",
+      "title": "Banco de Dados e Eloquent",
+      "lessons": [
+        "migrations",
+        "eloquent-models",
+        "eloquent-crud",
+        "eloquent-relacionamentos",
+        "quiz-eloquent"
+      ]
+    },
+    {
+      "id": "formularios-validacao",
+      "title": "Formulários e Validação",
+      "lessons": [
+        "formularios-laravel",
+        "validacao-requests",
+        "form-request",
+        "quiz-validacao"
+      ]
+    },
+    {
+      "id": "autenticacao",
+      "title": "Autenticação e Autorização",
+      "lessons": [
+        "autenticacao-laravel",
+        "middleware",
+        "policies-gates",
+        "quiz-autenticacao"
+      ]
+    },
+    {
+      "id": "apis",
+      "title": "APIs REST",
+      "lessons": [
+        "api-rest-introducao",
+        "api-resources",
+        "api-sanctum",
+        "quiz-apis"
+      ]
+    },
+    {
+      "id": "avancado",
+      "title": "Filas, Eventos e Cache",
+      "lessons": [
+        "filas-jobs",
+        "eventos-listeners",
+        "cache-laravel",
+        "quiz-avancado"
+      ]
+    },
+    {
+      "id": "deploy",
+      "title": "Deploy e Boas Práticas",
+      "lessons": [
+        "deploy-laravel",
+        "boas-praticas-laravel",
+        "quiz-final"
+      ]
+    }
+  ]
+}

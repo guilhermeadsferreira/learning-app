@@ -1,0 +1,48 @@
+{
+  "id": "eloquent-relacionamentos",
+  "courseId": "laravel",
+  "moduleId": "eloquent",
+  "title": "Relacionamentos: hasMany e belongsTo",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Relacionamentos no Eloquent são como conexões em um grafo familiar. Um Autor tem muitos Livros (hasMany). Um Livro pertence a um Autor (belongsTo). Você declara essas relações uma vez e o Eloquent cuida do JOIN automaticamente.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "hasMany e belongsTo (1:N)" },
+      {
+        "type": "code",
+        "content": "// app/Models/Autor.php\nclass Autor extends Model\n{\n    // Um autor tem muitos livros\n    public function livros()\n    {\n        return $this->hasMany(Livro::class);\n    }\n}\n\n// app/Models/Livro.php\nclass Livro extends Model\n{\n    // Um livro pertence a um autor\n    public function autor()\n    {\n        return $this->belongsTo(Autor::class);\n    }\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Usando os relacionamentos" },
+      {
+        "type": "code",
+        "content": "// Buscar todos os livros de um autor\n$autor = Autor::find(1);\n$livros = $autor->livros; // Executa o SELECT automaticamente\n\n// Eager Loading — evita N+1 queries\n$autores = Autor::with('livros')->get();\n\nforeach ($autores as $autor) {\n    // Sem N+1! Os livros já foram carregados\n    echo $autor->livros->count();\n}\n\n// Criar livro já associado ao autor\n$autor->livros()->create([\n    'titulo' => 'Laravel na Prática',\n    'preco'  => 59.90,\n]);",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Outros tipos de relacionamento" },
+      {
+        "type": "list",
+        "content": "hasOne — um para um (Usuário hasOne Perfil)\nhasMany — um para muitos (Autor hasMany Livros)\nbelongsTo — inverso do hasMany (Livro belongsTo Autor)\nbelongsToMany — muitos para muitos (Produto belongsToMany Pedido via tabela pivot)\nhasManyThrough — através de relacionamento (País → Usuarios → Posts)"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre use Eager Loading (with()) quando for iterar uma coleção e acessar relacionamentos. Sem ele, você terá o problema N+1: 1 query para a coleção + N queries para cada item.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "hasMany() define relação 1:N no lado 'um'; belongsTo() no lado 'muitos'",
+    "Acesse relacionamentos como propriedades: $autor->livros",
+    "Use with('relacao') para Eager Loading e evitar o problema N+1",
+    "belongsToMany() para relacionamentos muitos-para-muitos com tabela pivot"
+  ],
+  "commonMistakes": [
+    "Não usar Eager Loading em loops — causa centenas de queries desnecessárias",
+    "A chave estrangeira deve existir na migration — o Eloquent não cria automaticamente"
+  ],
+  "realWorldExample": "Um e-commerce: Pedido hasMany ItensPedido; ItemPedido belongsTo Produto; Produto belongsToMany Categoria. Com with(), uma query carrega tudo necessário para renderizar a tela.",
+  "encouragement": "Relacionamentos Eloquent são onde a mágica realmente acontece. Uma linha de código substitui JOINs complexos em SQL."
+}

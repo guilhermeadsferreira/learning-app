@@ -1,0 +1,43 @@
+{
+  "id": "api-rest-introducao",
+  "courseId": "laravel",
+  "moduleId": "apis",
+  "title": "Construindo APIs com Laravel",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Uma API REST é como um garçom de restaurante. Você (cliente) faz pedidos (requisições HTTP) seguindo um cardápio de opções (endpoints). O garçom leva ao cozinheiro (servidor) e traz o resultado no formato combinado (JSON). Cada mesa (cliente) pode ser um app mobile, web ou outro servidor.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "APIs no Laravel: routes/api.php" },
+      {
+        "type": "paragraph",
+        "content": "Rotas de API ficam em routes/api.php. Todas têm o prefixo /api automaticamente e não usam sessões ou CSRF — são stateless. O Laravel retorna JSON automaticamente quando o Controller retorna arrays ou Models."
+      },
+      {
+        "type": "code",
+        "content": "// routes/api.php\nuse App\\Http\\Controllers\\Api\\ProdutoController;\n\n// Rotas de API\nRoute::get('/produtos', [ProdutoController::class, 'index']);\nRoute::post('/produtos', [ProdutoController::class, 'store']);\nRoute::get('/produtos/{id}', [ProdutoController::class, 'show']);\nRoute::put('/produtos/{id}', [ProdutoController::class, 'update']);\nRoute::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);\n\n// Ou com resource (gera as mesmas rotas)\nRoute::apiResource('produtos', ProdutoController::class);",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Controller de API" },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Http\\JsonResponse;\n\nclass ProdutoController extends Controller\n{\n    public function index(): JsonResponse\n    {\n        return response()->json(Produto::paginate(15));\n    }\n\n    public function show(string $id): JsonResponse\n    {\n        $produto = Produto::findOrFail($id);\n        return response()->json($produto);\n    }\n\n    public function store(Request $request): JsonResponse\n    {\n        $dados = $request->validate([\n            'nome'  => 'required|string|max:100',\n            'preco' => 'required|numeric|min:0',\n        ]);\n\n        $produto = Produto::create($dados);\n        return response()->json($produto, 201); // 201 Created\n    }\n\n    public function destroy(string $id): JsonResponse\n    {\n        Produto::findOrFail($id)->delete();\n        return response()->json(null, 204); // 204 No Content\n    }\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Use os status HTTP corretos: 200 (OK), 201 (Criado), 204 (Sem conteúdo), 422 (Erro de validação), 404 (Não encontrado), 401 (Não autenticado), 403 (Proibido).",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Rotas de API ficam em routes/api.php com prefixo /api automático",
+    "Route::apiResource() gera as rotas CRUD sem as rotas de formulário (create, edit)",
+    "Controllers de API retornam JsonResponse com response()->json()",
+    "Retorne status HTTP semânticos: 201 para criação, 204 para delete sem conteúdo"
+  ],
+  "realWorldExample": "Um app mobile consome a API do backend Laravel: GET /api/produtos lista os produtos, POST /api/pedidos cria um pedido, DELETE /api/carrinho/item/{id} remove um item.",
+  "encouragement": "APIs são a lingua franca do desenvolvimento moderno. Com Laravel, você constrói APIs robustas e bem estruturadas em horas."
+}

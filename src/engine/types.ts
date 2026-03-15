@@ -17,12 +17,58 @@ export interface AIReviewContext {
   challengeStyle?: ChallengeStyle
 }
 
+/**
+ * Vocabulário canônico de tags para cursos.
+ *
+ * Categorias amplas — usadas para filtrar e descobrir cursos na HomePage:
+ *   IA, Arquitetura, Frontend, Backend, Programação, Produtividade
+ *
+ * Linguagens — quando o curso ensina/usa uma linguagem específica:
+ *   JavaScript, TypeScript, PHP, Python, SQL, Go, Rust…
+ *
+ * Frameworks/ferramentas — quando o curso é especificamente sobre aquilo:
+ *   React, Vue, Angular, Laravel, Django, Next.js…
+ *
+ * Regras:
+ * - Máximo de 4 tags por curso
+ * - Sempre Title Case (ex: "JavaScript", não "javascript")
+ * - Pelo menos 1 tag de categoria ampla por curso
+ * - Tags de framework só se o curso for especificamente sobre ele
+ * - Nunca usar roles (Tech Lead, Staff Engineer) ou níveis (Avançado, Iniciante)
+ */
+export type CourseTag =
+  // Categorias amplas
+  | 'IA'
+  | 'Arquitetura'
+  | 'Frontend'
+  | 'Backend'
+  | 'Programação'
+  | 'Produtividade'
+  // Linguagens
+  | 'JavaScript'
+  | 'TypeScript'
+  | 'PHP'
+  | 'Python'
+  | 'SQL'
+  | 'Go'
+  | 'Rust'
+  | 'Java'
+  | 'C#'
+  // Frameworks e ferramentas
+  | 'React'
+  | 'Vue'
+  | 'Angular'
+  | 'Laravel'
+  | 'Django'
+  | 'Next.js'
+  | 'Node.js'
+
 export interface Course {
   id: string
   title: string
   description: string
   icon: string
-  tags: string[]
+  tags: CourseTag[]
   modules: Module[]
   /** Contexto opcional para prompts de revisão por IA. Se ausente, usa fallback por courseId. */
   aiReviewContext?: AIReviewContext

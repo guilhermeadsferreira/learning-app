@@ -1,0 +1,48 @@
+{
+  "id": "eloquent-models",
+  "courseId": "laravel",
+  "moduleId": "eloquent",
+  "title": "Models Eloquent",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Um Model Eloquent é como um tradutor entre o seu código PHP e o banco de dados. Você fala em objetos PHP — 'me dê todos os produtos ativos' — e ele traduz para SQL, executa a query e devolve objetos PHP prontos para usar.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Criando um Model" },
+      {
+        "type": "code",
+        "content": "# Criar Model (arquivo em app/Models/)\nphp artisan make:model Produto\n\n# Criar Model + Migration de uma vez (muito útil)\nphp artisan make:model Produto -m\n\n# Criar Model + Migration + Controller + Factory + Seeder\nphp artisan make:model Produto -mcsf",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Estrutura de um Model" },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Produto extends Model\n{\n    // Colunas que podem ser preenchidas via mass assignment\n    protected $fillable = ['nome', 'descricao', 'preco', 'estoque', 'ativo'];\n\n    // Ou: colunas que NÃO podem ser preenchidas\n    // protected $guarded = ['id'];\n\n    // Cast automático de tipos\n    protected $casts = [\n        'preco'  => 'decimal:2',\n        'ativo'  => 'boolean',\n        'tags'   => 'array',  // JSON -> array automaticamente\n    ];\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Convenções do Eloquent" },
+      {
+        "type": "list",
+        "content": "Nome do Model em singular (Produto) → tabela em plural (produtos)\nPrimary key padrão: id (inteiro auto-increment)\nTimestamps automáticos: created_at e updated_at\nConexão padrão: definida em config/database.php"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre defina $fillable nos Models. Sem ele, o mass assignment ($model->fill($request->all())) não funciona e protege contra injeção de campos não autorizados.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Models ficam em app/Models/ e mapeiam tabelas do banco",
+    "$fillable define quais campos podem ser preenchidos via mass assignment",
+    "$casts converte automaticamente tipos (decimal, boolean, array, datetime)",
+    "Por convenção: Model singular → tabela plural (Produto → produtos)"
+  ],
+  "commonMistakes": [
+    "Não definir $fillable — mass assignment vai falhar silenciosamente ou lançar exceção",
+    "Nomear o Model em plural (Produtos) — o Eloquent vai procurar a tabela 'produtoses'"
+  ],
+  "realWorldExample": "Em um sistema financeiro, o Model Transacao tem $casts = ['valor' => 'decimal:2', 'data' => 'date'] — o Laravel converte automaticamente os tipos ao ler do banco.",
+  "encouragement": "Eloquent torna o trabalho com banco de dados incrivelmente produtivo. Você vai esquecer que está escrevendo SQL."
+}

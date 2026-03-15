@@ -1,0 +1,49 @@
+{
+  "id": "eventos-listeners",
+  "courseId": "laravel",
+  "moduleId": "avancado",
+  "title": "Eventos e Listeners",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Eventos e Listeners são como um sistema de notificações de celular. Quando algo acontece (você recebeu um Pix — esse é o Evento), vários apps podem reagir independentemente: o banco notifica, o extrato atualiza, a carteira digital sincroniza — esses são os Listeners. Cada um faz sua parte sem saber dos outros.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O padrão Observer no Laravel" },
+      {
+        "type": "paragraph",
+        "content": "Eventos desacoplam ações do código que reage a elas. Quando um usuário se registra, você dispara um evento UserRegistered — e vários Listeners reagem: enviar email de boas-vindas, criar perfil, notificar admins. O Controller não conhece esses Listeners."
+      },
+      { "type": "heading", "content": "Criando Evento e Listener" },
+      {
+        "type": "code",
+        "content": "# Criar Evento\nphp artisan make:event UsuarioCadastrado\n\n# Criar Listener\nphp artisan make:listener EnviarEmailBoasVindas --event=UsuarioCadastrado\nphp artisan make:listener NotificarAdmins --event=UsuarioCadastrado",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "<?php\n// app/Events/UsuarioCadastrado.php\nclass UsuarioCadastrado\n{\n    public function __construct(\n        public readonly User $user\n    ) {}\n}\n\n// app/Listeners/EnviarEmailBoasVindas.php\nclass EnviarEmailBoasVindas implements ShouldQueue // pode rodar em fila!\n{\n    public function handle(UsuarioCadastrado $event): void\n    {\n        Mail::to($event->user->email)->send(new BoasVindasMail());\n    }\n}\n\n// Registrar em AppServiceProvider\nEvent::listen(UsuarioCadastrado::class, EnviarEmailBoasVindas::class);\nEvent::listen(UsuarioCadastrado::class, NotificarAdmins::class);",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Disparando o Evento" },
+      {
+        "type": "code",
+        "content": "// No Controller — dispara o evento\npublic function store(StoreCadastroRequest $request)\n{\n    $user = User::create($request->validated());\n\n    // Disparar evento — todos os Listeners são notificados\n    UsuarioCadastrado::dispatch($user);\n    // Ou: event(new UsuarioCadastrado($user));\n\n    return redirect()->route('dashboard');\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Listeners que implementam ShouldQueue são executados em background automaticamente — combine Eventos com Filas para o melhor dos dois mundos.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Eventos desacoplam a ação (cadastro) das reações (enviar email, notificar)",
+    "Listeners reagem a Eventos — múltiplos Listeners podem ouvir o mesmo Evento",
+    "Listeners com ShouldQueue executam em background via fila",
+    "O Controller dispara o Evento sem conhecer os Listeners — baixo acoplamento"
+  ],
+  "realWorldExample": "Um e-commerce dispara PedidoCriado ao finalizar uma compra. Listeners independentes reagem: enviar confirmação, atualizar estoque, notificar separação, registrar analytics.",
+  "encouragement": "Eventos e Listeners são arquitetura profissional. Você está pensando em sistemas escaláveis e fáceis de manter."
+}

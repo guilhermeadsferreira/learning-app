@@ -1,0 +1,45 @@
+{
+  "id": "eloquent-crud",
+  "courseId": "laravel",
+  "moduleId": "eloquent",
+  "title": "CRUD com Eloquent",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "CRUD com Eloquent é como interagir com uma agenda inteligente. Você não diz 'INSERT INTO contatos...', você diz 'Contato::create([...])'. A agenda entende o que você quer e faz o trabalho sujo de SQL.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "As 4 operações CRUD" },
+      {
+        "type": "code",
+        "content": "// CREATE — criar registro\n$produto = Produto::create([\n    'nome'   => 'Camiseta Laravel',\n    'preco'  => 89.90,\n    'estoque' => 100,\n]);\n\n// READ — buscar registros\n$todos     = Produto::all();               // todos\n$ativo     = Produto::find(1);             // por ID\n$primeiro  = Produto::where('ativo', true)->first(); // primeiro resultado\n$paginado  = Produto::paginate(15);        // paginado\n\n// UPDATE — atualizar\n$produto = Produto::find(1);\n$produto->update(['preco' => 79.90]);\n// Ou em massa:\nProduto::where('estoque', 0)->update(['ativo' => false]);\n\n// DELETE — deletar\n$produto = Produto::find(1);\n$produto->delete();\n// Ou diretamente:\nProduto::destroy(1);      // por ID\nProduto::destroy([1, 2]); // múltiplos IDs",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Use findOrFail() em vez de find() quando espera que o registro exista — ele lança ModelNotFoundException automaticamente (que o Laravel converte em 404).",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete o ProdutoController com as operações CRUD usando Eloquent:\n\n1. index() — retornar todos os produtos ordenados por nome\n2. show($id) — buscar produto por ID (lançar 404 se não encontrar)\n3. store(Request $request) — criar novo produto com nome e preco do request\n4. destroy($id) — deletar produto por ID e retornar ['mensagem' => 'Produto removido']",
+    "starterCode": "<?php\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\n\nclass ProdutoController extends Controller\n{\n    public function index()\n    {\n        // Retornar todos os produtos ordenados por nome\n    }\n\n    public function show(string $id)\n    {\n        // Buscar por ID, lançar 404 se não encontrar\n    }\n\n    public function store(Request $request)\n    {\n        // Criar produto com nome e preco do request\n    }\n\n    public function destroy(string $id)\n    {\n        // Deletar por ID e retornar mensagem\n    }\n}",
+    "solution": "<?php\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\n\nclass ProdutoController extends Controller\n{\n    public function index()\n    {\n        return Produto::orderBy('nome')->get();\n    }\n\n    public function show(string $id)\n    {\n        return Produto::findOrFail($id);\n    }\n\n    public function store(Request $request)\n    {\n        $produto = Produto::create([\n            'nome'  => $request->nome,\n            'preco' => $request->preco,\n        ]);\n        return $produto;\n    }\n\n    public function destroy(string $id)\n    {\n        Produto::findOrFail($id)->delete();\n        return ['mensagem' => 'Produto removido'];\n    }\n}",
+    "tests": [],
+    "hint": "Use Produto::orderBy('nome')->get() para buscar ordenado. Use findOrFail() para buscar com 404 automático. Use Produto::create([]) para criar e ->delete() para deletar.",
+    "solutionExplanation": "orderBy()->get() executa SELECT com ORDER BY. findOrFail() executa SELECT WHERE id = ? e lança ModelNotFoundException (HTTP 404) se não encontrar — muito mais seguro que find() que retorna null. create() executa INSERT com os campos do $fillable. findOrFail($id)->delete() busca e então executa DELETE — se não existir, já retorna 404 antes do delete."
+  },
+  "keyTakeaways": [
+    "::all() busca todos; ::find($id) busca por PK; ::findOrFail($id) busca ou lança 404",
+    "::create([]) insere um registro; ::update([]) atualiza em massa",
+    "->delete() deleta o objeto; ::destroy($id) deleta diretamente por ID",
+    "Encadeie métodos: ::where()->orderBy()->paginate()"
+  ],
+  "commonMistakes": [
+    "Usar ::find() e não checar se é null — use findOrFail() em Controllers",
+    "Esquecer $fillable no Model — create() vai lançar MassAssignmentException"
+  ],
+  "realWorldExample": "Todo painel administrativo usa CRUD Eloquent intensivamente: listar registros com paginate(), criar com create(), atualizar com update() e deletar com destroy().",
+  "encouragement": "Com Eloquent, uma linha de PHP substitui 10 linhas de SQL. Você está dominando a parte mais poderosa do Laravel!"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "quiz-blade",
+  "courseId": "laravel",
+  "moduleId": "blade",
+  "title": "Quiz — Blade Templates",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar os conceitos do Blade antes de mergulhar no banco de dados."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a diferença entre {{ $variavel }} e {!! $variavel !!} no Blade?",
+      "options": [
+        {
+          "id": "a",
+          "text": "{{ }} é para strings; {!! !!} é para números",
+          "isCorrect": false,
+          "explanation": "Ambos funcionam com qualquer tipo de dado. A diferença é sobre escape HTML."
+        },
+        {
+          "id": "b",
+          "text": "{{ }} escapa HTML automaticamente (seguro); {!! !!} exibe HTML sem escape (risco de XSS)",
+          "isCorrect": true,
+          "explanation": "Correto! {{ }} é seguro para dados do usuário. {!! !!} deve ser usado apenas com HTML gerado pelo sistema, nunca com input do usuário."
+        },
+        {
+          "id": "c",
+          "text": "{{ }} é mais lento; {!! !!} é mais rápido",
+          "isCorrect": false,
+          "explanation": "A diferença é de segurança (escape HTML), não de performance."
+        },
+        {
+          "id": "d",
+          "text": "{{ }} funciona apenas em layouts; {!! !!} em views normais",
+          "isCorrect": false,
+          "explanation": "Ambas as sintaxes funcionam em qualquer arquivo .blade.php."
+        }
+      ]
+    },
+    {
+      "question": "Qual diretiva Blade é ideal para iterar uma lista e mostrar uma mensagem quando ela está vazia?",
+      "options": [
+        {
+          "id": "a",
+          "text": "@foreach com @if vazio manualmente",
+          "isCorrect": false,
+          "explanation": "Funciona, mas @forelse é mais expressivo e feito exatamente para esse caso."
+        },
+        {
+          "id": "b",
+          "text": "@for",
+          "isCorrect": false,
+          "explanation": "@for é para loops numéricos. Não tem suporte nativo a 'lista vazia'."
+        },
+        {
+          "id": "c",
+          "text": "@forelse com @empty",
+          "isCorrect": true,
+          "explanation": "Correto! @forelse itera a coleção e executa o bloco @empty quando ela está vazia — perfeito para listas de banco de dados."
+        },
+        {
+          "id": "d",
+          "text": "@each",
+          "isCorrect": false,
+          "explanation": "@each existe mas é menos usado. @forelse é a forma recomendada para este caso."
+        }
+      ]
+    },
+    {
+      "question": "Em um sistema de layout Blade, o que @yield('conteudo') faz?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Define o conteúdo da página atual",
+          "isCorrect": false,
+          "explanation": "@yield não define conteúdo — ele reserva um espaço para que views filhas preencham."
+        },
+        {
+          "id": "b",
+          "text": "Inclui outro arquivo Blade",
+          "isCorrect": false,
+          "explanation": "@include inclui outros arquivos. @yield reserva regiões para herança de templates."
+        },
+        {
+          "id": "c",
+          "text": "Reserva uma região no layout que será preenchida pela view filha com @section",
+          "isCorrect": true,
+          "explanation": "Correto! @yield define onde o conteúdo das views filhas será inserido. Views filhas preenchem essa região usando @section('conteudo') ... @endsection."
+        },
+        {
+          "id": "d",
+          "text": "Renderiza o conteúdo de uma variável PHP",
+          "isCorrect": false,
+          "explanation": "Para renderizar variáveis use {{ $variavel }}. @yield é especificamente para herança de templates."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "{{ }} é seguro (escapa HTML); {!! !!} é para HTML confiável apenas",
+    "@forelse + @empty é o padrão para listas que podem ser vazias",
+    "@yield reserva regiões no layout; @section preenche essas regiões",
+    "@extends declara qual layout a view herda"
+  ],
+  "encouragement": "Blade é uma das partes mais elegantes do Laravel. Agora vamos para o banco de dados!"
+}

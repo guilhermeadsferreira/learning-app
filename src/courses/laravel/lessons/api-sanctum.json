@@ -1,0 +1,57 @@
+{
+  "id": "api-sanctum",
+  "courseId": "laravel",
+  "moduleId": "apis",
+  "title": "Autenticação de API com Sanctum",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "advanced",
+  "analogy": "Sanctum é como um sistema de crachás de segurança. Após fazer login, você recebe um crachá (token) com o seu nome e permissões. Para acessar áreas restritas, você apresenta o crachá. O token pode ser revogado a qualquer momento — como desativar um crachá perdido.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Instalando o Sanctum" },
+      {
+        "type": "code",
+        "content": "# Sanctum já vem com Laravel 11+\n# Publicar a migration e configuração\nphp artisan install:api\n\n# Isso cria:\n# - Migration para tabela personal_access_tokens\n# - routes/api.php com middleware sanctum\nphp artisan migrate",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Configurando o Model User" },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Models;\n\nuse Laravel\\Sanctum\\HasApiTokens; // Adicionar\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use HasApiTokens; // Adicionar esta trait\n    // ...\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Controller de autenticação da API" },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Models\\User;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Hash;\n\nclass AuthController extends Controller\n{\n    public function login(Request $request)\n    {\n        $request->validate([\n            'email'    => 'required|email',\n            'password' => 'required',\n        ]);\n\n        $user = User::where('email', $request->email)->first();\n\n        if (!$user || !Hash::check($request->password, $user->password)) {\n            return response()->json(['message' => 'Credenciais inválidas'], 401);\n        }\n\n        $token = $user->createToken('api-token')->plainTextToken;\n\n        return response()->json(['token' => $token]);\n    }\n\n    public function logout(Request $request)\n    {\n        $request->user()->currentAccessToken()->delete();\n        return response()->json(['message' => 'Logout realizado']);\n    }\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Para usar o token, o cliente envia o header: Authorization: Bearer {token}. O middleware 'auth:sanctum' valida o token automaticamente.",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete as rotas e o Controller de autenticação da API:\n\n1. Em routes/api.php:\n   - Rota POST /login apontando para AuthController@login\n   - Grupo de rotas protegidas por 'auth:sanctum' contendo:\n     - GET /me → AuthController@me\n     - POST /logout → AuthController@logout\n\n2. Em AuthController:\n   - Método me() que retorna os dados do usuário autenticado\n   - Método logout() que deleta o token atual e retorna mensagem de sucesso",
+    "starterCode": "<?php\n// routes/api.php\nuse App\\Http\\Controllers\\Api\\AuthController;\nuse Illuminate\\Support\\Facades\\Route;\n\n// Rota pública de login\n// Sua rota aqui\n\n// Rotas protegidas por Sanctum\n// Seu grupo de rotas aqui\n\n\n// ========================\n// AuthController.php\n// ========================\n<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse Illuminate\\Http\\Request;\n\nclass AuthController extends Controller\n{\n    public function login(Request $request)\n    {\n        // Implementação de login já existente\n    }\n\n    public function me(Request $request)\n    {\n        // Retornar usuário autenticado\n    }\n\n    public function logout(Request $request)\n    {\n        // Deletar token atual e retornar mensagem\n    }\n}",
+    "solution": "<?php\n// routes/api.php\nuse App\\Http\\Controllers\\Api\\AuthController;\nuse Illuminate\\Support\\Facades\\Route;\n\n// Rota pública de login\nRoute::post('/login', [AuthController::class, 'login']);\n\n// Rotas protegidas por Sanctum\nRoute::middleware('auth:sanctum')->group(function () {\n    Route::get('/me', [AuthController::class, 'me']);\n    Route::post('/logout', [AuthController::class, 'logout']);\n});\n\n\n// ========================\n// AuthController.php\n// ========================\n<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse Illuminate\\Http\\Request;\n\nclass AuthController extends Controller\n{\n    public function login(Request $request)\n    {\n        // Implementação de login já existente\n    }\n\n    public function me(Request $request)\n    {\n        return response()->json($request->user());\n    }\n\n    public function logout(Request $request)\n    {\n        $request->user()->currentAccessToken()->delete();\n        return response()->json(['message' => 'Logout realizado com sucesso']);\n    }\n}",
+    "tests": [],
+    "hint": "Use Route::middleware('auth:sanctum')->group() para proteger rotas. Dentro das rotas protegidas, $request->user() retorna o usuário autenticado via token. Para logout, acesse o token atual com ->currentAccessToken()->delete().",
+    "solutionExplanation": "Route::middleware('auth:sanctum') verifica o token Bearer no header Authorization. Rotas dentro do grupo só funcionam com token válido — sem token retorna 401 automaticamente. $request->user() retorna o Model User associado ao token. currentAccessToken()->delete() revoga apenas o token atual (útil para logout em um device específico). Para revogar todos os tokens: $request->user()->tokens()->delete()."
+  },
+  "keyTakeaways": [
+    "Sanctum usa tokens Bearer para autenticar APIs — simples e seguro",
+    "O middleware 'auth:sanctum' protege rotas e retorna 401 sem token válido",
+    "$request->user() retorna o usuário dono do token atual",
+    "createToken()->plainTextToken gera o token e currentAccessToken()->delete() revoga"
+  ],
+  "commonMistakes": [
+    "Esquecer a trait HasApiTokens no Model User — os métodos de token não existirão",
+    "Retornar o plainTextToken duas vezes — o Sanctum só mostra uma vez, depois é hash"
+  ],
+  "realWorldExample": "Um app mobile faz POST /api/login e guarda o token localmente. Cada requisição subsequente envia o token no header — o servidor sabe quem é o usuário sem sessões.",
+  "encouragement": "Autenticação stateless com tokens é o padrão para APIs modernas. Você acabou de dominar um dos recursos mais usados no mercado!"
+}

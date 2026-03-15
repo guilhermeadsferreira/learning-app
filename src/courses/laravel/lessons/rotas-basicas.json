@@ -1,0 +1,49 @@
+{
+  "id": "rotas-basicas",
+  "courseId": "laravel",
+  "moduleId": "rotas-controllers",
+  "title": "Rotas Básicas com GET e POST",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Rotas são como recepcionistas de um hotel. Quando um hóspede chega pedindo o quarto 301, o recepcionista sabe exatamente para onde direcioná-lo. No Laravel, quando chega uma requisição HTTP, as rotas sabem qual código executar.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O arquivo routes/web.php" },
+      {
+        "type": "paragraph",
+        "content": "Todas as rotas da sua aplicação web ficam em `routes/web.php`. Cada rota mapeia uma URL e um método HTTP para uma ação — que pode ser uma closure ou um método de Controller."
+      },
+      { "type": "heading", "content": "Rotas simples" },
+      {
+        "type": "code",
+        "content": "<?php\nuse Illuminate\\Support\\Facades\\Route;\n\n// Rota GET — retorna uma view\nRoute::get('/', function () {\n    return view('welcome');\n});\n\n// Rota GET com resposta em texto\nRoute::get('/ola', function () {\n    return 'Olá, Laravel!';\n});\n\n// Rota POST\nRoute::post('/contato', function () {\n    return 'Formulário recebido!';\n});",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Métodos HTTP disponíveis" },
+      {
+        "type": "list",
+        "content": "Route::get() — buscar dados\nRoute::post() — criar dados\nRoute::put() / Route::patch() — atualizar dados\nRoute::delete() — deletar dados\nRoute::any() — qualquer método HTTP"
+      },
+      { "type": "heading", "content": "Nomeando rotas" },
+      {
+        "type": "code",
+        "content": "// Nomear rotas facilita a geração de URLs\nRoute::get('/perfil', function () {\n    return view('perfil');\n})->name('perfil');\n\n// Gerar URL pelo nome (em Blade ou Controller)\n$url = route('perfil'); // http://app.test/perfil",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Sempre nomeie suas rotas. Isso desacopla as URLs da sua aplicação — se a URL mudar, você só atualiza a rota, não todos os lugares que a referenciam.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Rotas web ficam em routes/web.php, rotas de API em routes/api.php",
+    "Cada rota mapeia URL + método HTTP para uma ação (closure ou Controller)",
+    "Use ->name() para nomear rotas e gerar URLs com route()",
+    "Os métodos mais usados: get(), post(), put(), delete()"
+  ],
+  "realWorldExample": "Em um blog, Route::get('/posts') lista os artigos, Route::get('/posts/{id}') exibe um artigo e Route::post('/posts') cria um novo — cada URL tem um método HTTP específico.",
+  "encouragement": "Rotas são a porta de entrada de toda aplicação Laravel. Uma vez entendido o padrão, tudo se encaixa."
+}

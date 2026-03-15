@@ -1,0 +1,49 @@
+{
+  "id": "blade-diretivas",
+  "courseId": "laravel",
+  "moduleId": "blade",
+  "title": "Diretivas: @if, @foreach, @include",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Diretivas Blade são atalhos expresivos para estruturas PHP comuns. São como comandos de voz para o template: '@if isso, mostre aquilo', '@foreach item na lista, renderize esse bloco'. Muito mais legível do que abrir e fechar tags PHP.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Condicional @if" },
+      {
+        "type": "code",
+        "content": "@if ($usuario->isAdmin())\n    <span>Administrador</span>\n@elseif ($usuario->isModerador())\n    <span>Moderador</span>\n@else\n    <span>Usuário</span>\n@endif\n\n{{-- Atalhos úteis --}}\n@isset($variavel)\n    <p>A variável existe: {{ $variavel }}</p>\n@endisset\n\n@empty($colecao)\n    <p>Nenhum item encontrado.</p>\n@endempty",
+        "language": "html"
+      },
+      { "type": "heading", "content": "Loops @foreach e @for" },
+      {
+        "type": "code",
+        "content": "@foreach ($produtos as $produto)\n    <div>\n        <h3>{{ $produto->nome }}</h3>\n        <p>R$ {{ number_format($produto->preco, 2, ',', '.') }}</p>\n    </div>\n@endforeach\n\n{{-- $loop disponível dentro do foreach --}}\n@foreach ($itens as $item)\n    @if ($loop->first) <ul> @endif\n        <li>{{ $loop->iteration }}. {{ $item->nome }}</li>\n    @if ($loop->last) </ul> @endif\n@endforeach\n\n@forelse ($posts as $post)\n    <p>{{ $post->titulo }}</p>\n@empty\n    <p>Nenhum post encontrado.</p>\n@endforelse",
+        "language": "html"
+      },
+      { "type": "heading", "content": "@include e @component" },
+      {
+        "type": "code",
+        "content": "{{-- Incluir sub-template e passar dados --}}\n@include('partials.header', ['titulo' => 'Minha Página'])\n\n{{-- Incluir apenas se view existir --}}\n@includeIf('partials.banner')\n\n{{-- Usar um componente Blade --}}\n<x-alert type=\"success\" message=\"Salvo com sucesso!\" />",
+        "language": "html"
+      },
+      {
+        "type": "callout",
+        "content": "@forelse é um @foreach com @empty embutido — mais limpo quando você precisa tratar listas vazias.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "@if / @elseif / @else / @endif para condicionais",
+    "@foreach para iterar coleções; $loop dá acesso a $loop->first, $loop->last, $loop->iteration",
+    "@forelse combina @foreach com @empty — ideal para listas que podem estar vazias",
+    "@include insere sub-templates; @includeIf não lança erro se o arquivo não existir"
+  ],
+  "commonMistakes": [
+    "Esquecer @endif ou @endforeach — o template vai quebrar",
+    "Usar $loop fora de um @foreach — a variável não existe fora do loop"
+  ],
+  "realWorldExample": "Uma página de produtos usa @forelse para listar os produtos do banco, mostrando 'Nenhum produto cadastrado' quando a lista está vazia — sem nenhum if/else PHP explícito no HTML.",
+  "encouragement": "Diretivas Blade deixam o HTML muito mais legível. Seu código vai parecer documentação, não código bagunçado."
+}

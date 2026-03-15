@@ -3,7 +3,7 @@
   "title": "Claude Code: Do Iniciante ao Avançado",
   "description": "Domine o Claude Code de ponta a ponta: da instalação até Agent Teams, SDK, plugins, hooks, MCP, Skills, CI/CD e configuração enterprise. O curso mais completo sobre a ferramenta de codificação agêntica da Anthropic.",
   "icon": "🤖",
-  "tags": ["IA", "ferramentas", "produtividade", "claude"],
+  "tags": ["IA", "Produtividade"],
   "aiReviewContext": {
     "subject": "Claude Code",
     "expertise": "CLI, CLAUDE.md, hooks, MCP, skills, plugins, subagents, Agent Teams, GitHub Actions, SDK, permissions, enterprise",

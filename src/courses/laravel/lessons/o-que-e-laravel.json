@@ -1,0 +1,42 @@
+{
+  "id": "o-que-e-laravel",
+  "courseId": "laravel",
+  "moduleId": "ambiente",
+  "title": "O que é Laravel?",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Laravel é como uma caixa de ferramentas profissional para construir casas. Em vez de fabricar cada parafuso do zero, você já tem tudo organizado e pronto: as ferramentas certas no lugar certo, com um manual claro. Você foca na construção, não na fabricação das ferramentas.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é Laravel?" },
+      {
+        "type": "paragraph",
+        "content": "Laravel é o framework PHP mais popular do mundo. Criado em 2011 por Taylor Otwell, ele segue o padrão arquitetural MVC (Model-View-Controller) e fornece uma base sólida para construir desde pequenas aplicações até sistemas empresariais complexos."
+      },
+      { "type": "heading", "content": "Por que usar Laravel?" },
+      {
+        "type": "list",
+        "content": "Sintaxe expressiva e elegante — código limpo e legível\nEcossistema rico — autenticação, filas, cache, emails prontos para usar\nEloquent ORM — trabalhe com banco de dados como objetos PHP\nBlade — sistema de templates poderoso e simples\nArtisan CLI — geração de código e tarefas via terminal\nComunidade enorme — documentação, pacotes e suporte abundantes"
+      },
+      { "type": "heading", "content": "Laravel na prática" },
+      {
+        "type": "paragraph",
+        "content": "Com Laravel você constrói: APIs REST, sistemas web com autenticação, painéis administrativos, aplicações com filas e notificações, e muito mais. Empresas como Twitch, Disney, e 9GAG usam PHP com Laravel em partes de sua infraestrutura."
+      },
+      {
+        "type": "callout",
+        "content": "Laravel usa PHP 8.2+ e segue as melhores práticas modernas da linguagem: tipos, enums, fibers e muito mais.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Laravel é um framework PHP que segue o padrão MVC",
+    "Acelera o desenvolvimento fornecendo ferramentas prontas para tarefas comuns",
+    "Possui ecossistema maduro: Eloquent, Blade, Artisan, Sanctum, Horizon e mais",
+    "É o framework PHP mais usado no mundo, com documentação excelente"
+  ],
+  "realWorldExample": "Um sistema de e-commerce pode ser construído em Laravel com autenticação de usuários, catálogo de produtos (Eloquent), carrinho de compras (sessions), pagamentos (filas) e painel admin — tudo no mesmo framework.",
+  "encouragement": "Laravel é famoso por tornar o desenvolvimento divertido. Você vai entender por quê ao longo deste curso."
+}

@@ -1,0 +1,143 @@
+{
+  "id": "quiz-final",
+  "courseId": "laravel",
+  "moduleId": "deploy",
+  "title": "Quiz Final",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Quiz Final — Laravel Completo" },
+      {
+        "type": "paragraph",
+        "content": "Parabéns por chegar até aqui! Este quiz cobre os conceitos mais importantes do curso."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual configuração é absolutamente obrigatória desativar antes de ir para produção?",
+      "options": [
+        {
+          "id": "a",
+          "text": "APP_KEY",
+          "isCorrect": false,
+          "explanation": "APP_KEY deve estar sempre definido — é necessário para criptografia de cookies e sessões."
+        },
+        {
+          "id": "b",
+          "text": "APP_DEBUG=true",
+          "isCorrect": true,
+          "explanation": "Correto! APP_DEBUG=true em produção expõe stack traces, variáveis de ambiente, estrutura de banco e outras informações sensíveis para qualquer visitante."
+        },
+        {
+          "id": "c",
+          "text": "QUEUE_CONNECTION",
+          "isCorrect": false,
+          "explanation": "Configurar filas em produção é importante, mas não é um risco de segurança como APP_DEBUG=true."
+        },
+        {
+          "id": "d",
+          "text": "CACHE_STORE",
+          "isCorrect": false,
+          "explanation": "Configurar cache em produção é uma boa prática de performance, não uma questão de segurança crítica."
+        }
+      ]
+    },
+    {
+      "question": "Em qual situação Route::resource() é mais adequado que definir rotas individuais?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Quando o recurso tem apenas as operações de listar e exibir",
+          "isCorrect": false,
+          "explanation": "Para recursos parciais, use Route::resource()->only(['index', 'show']) para não gerar rotas desnecessárias."
+        },
+        {
+          "id": "b",
+          "text": "Quando você precisa de todas ou a maioria das 7 operações CRUD para um recurso",
+          "isCorrect": true,
+          "explanation": "Correto! Route::resource() gera index, create, store, show, edit, update e destroy. É ideal para CRUDs completos. Use ->only() ou ->except() para recursos parciais."
+        },
+        {
+          "id": "c",
+          "text": "Quando as rotas precisam de parâmetros customizados além do ID",
+          "isCorrect": false,
+          "explanation": "Rotas com parâmetros customizados exigem rotas individuais — Route::resource() usa {resource} como padrão."
+        },
+        {
+          "id": "d",
+          "text": "Route::resource() só deve ser usado em APIs",
+          "isCorrect": false,
+          "explanation": "Route::resource() funciona tanto para web quanto para API. Para APIs, use Route::apiResource() (sem create e edit)."
+        }
+      ]
+    },
+    {
+      "question": "Qual é o fluxo correto de uma requisição de formulário com validação no Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Request → Controller → Model → Resposta",
+          "isCorrect": false,
+          "explanation": "Esse fluxo está correto para requisições sem validação, mas ignora o middleware e a validação."
+        },
+        {
+          "id": "b",
+          "text": "Request → Middleware (CSRF, Auth) → Controller → validate() → Model → Redirect",
+          "isCorrect": true,
+          "explanation": "Correto! O middleware verifica CSRF e autenticação antes do Controller. validate() processa as regras e redireciona com erros se inválido. Somente após a validação, o Model é chamado."
+        },
+        {
+          "id": "c",
+          "text": "Request → Model → validate() → Controller → Resposta",
+          "isCorrect": false,
+          "explanation": "A validação ocorre no Controller (ou Form Request), antes de qualquer interação com o Model."
+        },
+        {
+          "id": "d",
+          "text": "Request → validate() → Middleware → Controller → Model",
+          "isCorrect": false,
+          "explanation": "O Middleware é executado antes do Controller, não depois. A validação ocorre dentro do Controller."
+        }
+      ]
+    },
+    {
+      "question": "O que o Eager Loading (with()) resolve que o Lazy Loading não resolve?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Permite acessar relacionamentos em Models sem $fillable",
+          "isCorrect": false,
+          "explanation": "$fillable é sobre mass assignment, não sobre relacionamentos ou loading."
+        },
+        {
+          "id": "b",
+          "text": "O problema N+1: 1 query para a coleção + N queries para os relacionamentos se torna 2 queries totais",
+          "isCorrect": true,
+          "explanation": "Correto! Com Lazy Loading, $autores->each(fn($a) => $a->livros) executa 1 + N queries. Com with('livros'), são apenas 2 queries — independente do tamanho da coleção."
+        },
+        {
+          "id": "c",
+          "text": "Cacheia os resultados automaticamente para requisições futuras",
+          "isCorrect": false,
+          "explanation": "Eager Loading não usa cache — apenas otimiza o número de queries por requisição."
+        },
+        {
+          "id": "d",
+          "text": "Permite buscar relacionamentos de múltiplos níveis (ex: autor → livros → capítulos)",
+          "isCorrect": false,
+          "explanation": "Múltiplos níveis são possíveis com with('livros.capitulos'), mas isso é uma feature de ambos os tipos de loading. O diferencial do Eager Loading é resolver o N+1."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "APP_DEBUG=false em produção é inegociável — é uma questão de segurança",
+    "O pipeline: Request → Middleware → Controller → validate() → Model → Response",
+    "Eager Loading (with()) resolve o problema N+1 — essencial para performance",
+    "Route::resource() gera as 7 rotas CRUD; apiResource() exclui create e edit"
+  ],
+  "encouragement": "Parabéns! Você concluiu o curso de Laravel do básico ao avançado. Você agora tem o conhecimento para construir aplicações web profissionais com o framework PHP mais popular do mundo. O próximo passo é praticar — construa um projeto real!"
+}

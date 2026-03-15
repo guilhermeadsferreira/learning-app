@@ -1,0 +1,114 @@
+{
+  "id": "quiz-avancado",
+  "courseId": "laravel",
+  "moduleId": "avancado",
+  "title": "Quiz — Recursos Avançados",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "advanced",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Filas, Eventos e Cache são recursos avançados que separam aplicações básicas de sistemas profissionais."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual o principal benefício de usar filas (Jobs) para envio de emails?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Emails enviados via fila chegam mais rápido ao destinatário",
+          "isCorrect": false,
+          "explanation": "A velocidade de entrega ao destinatário não muda. O benefício é para o usuário da aplicação."
+        },
+        {
+          "id": "b",
+          "text": "O usuário não precisa esperar o envio do email — a resposta é imediata",
+          "isCorrect": true,
+          "explanation": "Correto! O Job é enfileirado instantaneamente. O worker processa em background. O usuário vê a confirmação em milissegundos, não segundos."
+        },
+        {
+          "id": "c",
+          "text": "Emails enviados via fila nunca falham",
+          "isCorrect": false,
+          "explanation": "Falhas ainda ocorrem (servidor de email indisponível), mas o Job pode ser configurado com retries automáticos."
+        },
+        {
+          "id": "d",
+          "text": "Filas reduzem o tamanho do banco de dados",
+          "isCorrect": false,
+          "explanation": "Filas com driver database aumentam levemente o banco. O benefício é de performance e UX, não de armazenamento."
+        }
+      ]
+    },
+    {
+      "question": "Qual a diferença entre Eventos e Jobs no Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Não há diferença — são formas alternativas de executar código em background",
+          "isCorrect": false,
+          "explanation": "Há diferença conceitual importante entre os dois padrões."
+        },
+        {
+          "id": "b",
+          "text": "Eventos comunicam que algo aconteceu (1:N listeners); Jobs encapsulam tarefas específicas (1:1)",
+          "isCorrect": true,
+          "explanation": "Correto! UserRegistered (Evento) notifica múltiplos Listeners. SendWelcomeEmail (Job) é uma tarefa específica que pode ser disparada de qualquer lugar."
+        },
+        {
+          "id": "c",
+          "text": "Eventos rodam em background; Jobs rodam de forma síncrona",
+          "isCorrect": false,
+          "explanation": "Ambos podem rodar síncrona ou assincronamente. Listeners com ShouldQueue rodam em background."
+        },
+        {
+          "id": "d",
+          "text": "Jobs são para PHP; Eventos são para integração com JavaScript",
+          "isCorrect": false,
+          "explanation": "Ambos são conceitos puramente PHP/Laravel. Eventos de broadcast são para JavaScript, mas são um recurso diferente."
+        }
+      ]
+    },
+    {
+      "question": "Por que é fundamental chamar Cache::forget() após criar ou deletar registros?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Para liberar memória do servidor",
+          "isCorrect": false,
+          "explanation": "O principal motivo não é memória, mas consistência dos dados."
+        },
+        {
+          "id": "b",
+          "text": "Para que o cache não retorne dados desatualizados após a mutação",
+          "isCorrect": true,
+          "explanation": "Correto! Se você cria um produto mas não invalida o cache da lista, o usuário vai ver a lista antiga até o cache expirar naturalmente — podendo ser horas."
+        },
+        {
+          "id": "c",
+          "text": "O Laravel exige a chamada por questões de licença",
+          "isCorrect": false,
+          "explanation": "Não há exigência técnica. Mas sem invalidação, o cache retorna dados stale."
+        },
+        {
+          "id": "d",
+          "text": "Cache::forget() confirma a transação no banco",
+          "isCorrect": false,
+          "explanation": "Cache e banco de dados são sistemas separados. Cache::forget() apenas remove a entrada do cache."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Filas melhoram a experiência do usuário ao mover operações lentas para background",
+    "Eventos desacoplam ações; Jobs encapsulam tarefas — padrões complementares",
+    "Sempre invalide o cache após mutations para manter dados consistentes",
+    "Cache::remember() é o padrão cache-aside — o mais comum em aplicações web"
+  ],
+  "encouragement": "Você dominou os recursos avançados do Laravel! Agora falta apenas aprender sobre deploy e boas práticas para estar completo."
+}

@@ -1,0 +1,49 @@
+{
+  "id": "autenticacao-laravel",
+  "courseId": "laravel",
+  "moduleId": "autenticacao",
+  "title": "Autenticação com Laravel Breeze",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Laravel Breeze é como um kit de portaria completo já montado. Em vez de construir catracas, interfones e sistema de crachás do zero, você instala o kit e já tem login, registro, recuperação de senha e perfil — tudo funcional e seguro.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Starter Kits de Autenticação" },
+      {
+        "type": "paragraph",
+        "content": "O Laravel oferece starter kits prontos para autenticação. O mais simples é o Breeze (views Blade + Tailwind). Para projetos com Vue/React ou mais features, existe o Jetstream. Ambos instalam login, registro, reset de senha e verificação de email."
+      },
+      { "type": "heading", "content": "Instalando o Laravel Breeze" },
+      {
+        "type": "code",
+        "content": "# 1. Instalar Breeze via Composer\ncomposer require laravel/breeze --dev\n\n# 2. Publicar as views e rotas de autenticação\nphp artisan breeze:install\n# Escolha: blade (mais simples) ou livewire/vue/react\n\n# 3. Instalar dependências frontend e compilar\nnpm install\nnpm run dev\n\n# 4. Rodar as migrations (cria tabela users)\nphp artisan migrate",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "O que o Breeze instala" },
+      {
+        "type": "list",
+        "content": "Rotas: /login, /register, /logout, /forgot-password, /profile\nControllers em app/Http/Controllers/Auth/\nViews em resources/views/auth/\nMiddleware 'auth' para proteger rotas\nModel User com HasFactory e campos padrão"
+      },
+      { "type": "heading", "content": "Protegendo rotas com o middleware auth" },
+      {
+        "type": "code",
+        "content": "// Proteger uma rota — redireciona para login se não autenticado\nRoute::get('/dashboard', function () {\n    return view('dashboard');\n})->middleware('auth')->name('dashboard');\n\n// Proteger grupo de rotas\nRoute::middleware(['auth'])->group(function () {\n    Route::get('/perfil', [PerfilController::class, 'index']);\n    Route::get('/pedidos', [PedidoController::class, 'index']);\n});\n\n// No Controller, acessar usuário autenticado\npublic function index()\n{\n    $usuario = auth()->user(); // ou Auth::user()\n    return view('dashboard', compact('usuario'));\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "O Breeze também instala o middleware 'guest' para rotas como /login e /register — redireciona usuários já autenticados para o dashboard.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Laravel Breeze instala sistema completo de autenticação em minutos",
+    "O middleware 'auth' protege rotas de acesso não autenticado",
+    "auth()->user() retorna o usuário atualmente autenticado",
+    "Use Route::middleware(['auth'])->group() para proteger grupos de rotas"
+  ],
+  "realWorldExample": "Todo SaaS começa com autenticação. Com Breeze, você tem login, registro e recuperação de senha funcionando em menos de 10 minutos, com código que pode ser customizado.",
+  "encouragement": "Autenticação é um dos recursos mais complexos para construir do zero. Laravel torna isso trivial — e seguro."
+}

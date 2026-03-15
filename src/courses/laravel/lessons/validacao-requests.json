@@ -1,0 +1,51 @@
+{
+  "id": "validacao-requests",
+  "courseId": "laravel",
+  "moduleId": "formularios-validacao",
+  "title": "Validando Dados no Controller",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "intermediate",
+  "analogy": "Validação no Laravel é como uma triagem em um hospital. Antes de processar qualquer dado, você verifica se está no formato correto, se não está vazio, se tem o tamanho certo. Dados inválidos são rejeitados imediatamente, com mensagens claras sobre o que está errado.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Validação com $request->validate()" },
+      {
+        "type": "code",
+        "content": "public function store(Request $request)\n{\n    $dados = $request->validate([\n        'nome'  => 'required|string|max:255',\n        'email' => 'required|email|unique:users,email',\n        'preco' => 'required|numeric|min:0',\n        'foto'  => 'nullable|image|max:2048',  // opcional, imagem, max 2MB\n    ]);\n\n    // Se inválido: redireciona de volta com erros\n    // Se válido: $dados contém apenas os campos validados\n    Produto::create($dados);\n\n    return redirect()->route('produtos.index')->with('sucesso', 'Produto criado!');\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Exibindo erros no Blade" },
+      {
+        "type": "code",
+        "content": "{{-- Exibir todos os erros --}}\n@if ($errors->any())\n    <ul>\n        @foreach ($errors->all() as $erro)\n            <li>{{ $erro }}</li>\n        @endforeach\n    </ul>\n@endif\n\n{{-- Exibir erro de campo específico --}}\n<input type=\"text\" name=\"nome\" value=\"{{ old('nome') }}\">\n@error('nome')\n    <span class=\"erro\">{{ $message }}</span>\n@enderror",
+        "language": "html"
+      },
+      {
+        "type": "callout",
+        "content": "Se a validação falhar, o Laravel redireciona automaticamente de volta com os erros em session e os dados do formulário preservados via old().",
+        "variant": "info"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete o método store() para validar e salvar um produto:\n\n1. Valide os campos: nome (obrigatório, string, max 100), preco (obrigatório, numérico, mínimo 0.01), estoque (obrigatório, inteiro, mínimo 0), descricao (opcional, string)\n2. Crie o produto com os dados validados\n3. Redirecione para 'produtos.index' com a mensagem de sucesso 'Produto criado com sucesso!'",
+    "starterCode": "<?php\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\n\nclass ProdutoController extends Controller\n{\n    public function store(Request $request)\n    {\n        // 1. Validar os campos\n\n        // 2. Criar o produto\n\n        // 3. Redirecionar com mensagem de sucesso\n    }\n}",
+    "solution": "<?php\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Produto;\nuse Illuminate\\Http\\Request;\n\nclass ProdutoController extends Controller\n{\n    public function store(Request $request)\n    {\n        $dados = $request->validate([\n            'nome'      => 'required|string|max:100',\n            'preco'     => 'required|numeric|min:0.01',\n            'estoque'   => 'required|integer|min:0',\n            'descricao' => 'nullable|string',\n        ]);\n\n        Produto::create($dados);\n\n        return redirect()->route('produtos.index')\n            ->with('sucesso', 'Produto criado com sucesso!');\n    }\n}",
+    "tests": [],
+    "hint": "Use $request->validate(['campo' => 'regras|separadas|por|pipe']). As regras mais comuns: required, string, numeric, integer, min:N, max:N, nullable. O retorno de validate() é o array com apenas os campos validados.",
+    "solutionExplanation": "validate() testa as regras e, se houver erros, redireciona automaticamente de volta com os erros disponíveis em $errors no Blade. Se válido, retorna apenas os campos validados (nunca campos extras do request). Passamos $dados diretamente ao create() — isso é seguro porque validate() já filtrou apenas os campos declarados. O ->with('sucesso', ...) armazena a mensagem na session flash, disponível uma única vez na próxima requisição."
+  },
+  "keyTakeaways": [
+    "validate() redireciona automaticamente com erros se a validação falhar",
+    "O retorno de validate() contém apenas os campos validados — seguro para create()",
+    "@error('campo') exibe a mensagem de erro de campo específico no Blade",
+    "->with('chave', 'valor') armazena mensagem flash na session"
+  ],
+  "commonMistakes": [
+    "Usar $request->all() em create() sem validar — aceita qualquer campo malicioso",
+    "Esquecer 'nullable' em campos opcionais — vai falhar quando o campo não for enviado"
+  ],
+  "realWorldExample": "Um formulário de cadastro valida email único, senha mínima de 8 caracteres, nome obrigatório. Se inválido, o usuário vê erros por campo sem perder o que digitou.",
+  "encouragement": "Validação é um dos pilares da segurança web. Com Laravel, você a implementa com qualidade em minutos."
+}

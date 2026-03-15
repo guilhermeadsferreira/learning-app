@@ -1,0 +1,47 @@
+{
+  "id": "boas-praticas-laravel",
+  "courseId": "laravel",
+  "moduleId": "deploy",
+  "title": "Boas Práticas e Padrões Laravel",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Boas práticas Laravel são como as regras de trânsito. Você pode ignorá-las e chegar ao destino — mas vai criar acidentes no caminho (bugs, código impossível de manter, problemas de segurança). Seguir as convenções torna o código previsível e agradável para toda a equipe.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Thin Controllers, Fat Models" },
+      {
+        "type": "paragraph",
+        "content": "Controllers devem ser finos — apenas receber a requisição, chamar a lógica e retornar a resposta. A lógica de negócio vai nos Models, Services ou Actions. Controllers com mais de 100 linhas geralmente indicam responsabilidade demais."
+      },
+      {
+        "type": "code",
+        "content": "// ❌ Evitar — Controller com lógica de negócio\npublic function store(Request $request)\n{\n    $pedido = new Pedido();\n    $pedido->user_id = auth()->id();\n    $pedido->total = 0;\n    foreach ($request->itens as $item) {\n        $pedido->total += $item['preco'] * $item['quantidade'];\n    }\n    // ... 50 linhas de lógica ...\n}\n\n// ✅ Preferir — Controller delegando para Service/Action\npublic function store(StorePedidoRequest $request)\n{\n    $pedido = $this->pedidoService->criar($request->validated());\n    return new PedidoResource($pedido);\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Convenções de nomenclatura" },
+      {
+        "type": "list",
+        "content": "Models: singular, PascalCase (Produto, Pedido, UserProfile)\nControllers: plural + Controller (ProdutosController, PedidosController)\nMigrations: snake_case descritivo (create_produtos_table, add_preco_to_produtos_table)\nRotas: kebab-case (produtos, pedidos, itens-pedido)\nVariáveis: camelCase ($produtoAtivo, $totalPedido)\nMétodos: camelCase (calcularTotal, enviarEmail)"
+      },
+      { "type": "heading", "content": "Segurança essencial" },
+      {
+        "type": "list",
+        "content": "Sempre validar input com Form Requests ou validate()\nUsas $fillable nos Models — proteger contra mass assignment\nNunca concatenar input do usuário em queries — use Eloquent ou query builder\nAPP_DEBUG=false em produção\nChaves de API e secrets sempre no .env, nunca no código\nSanitizar output com {{ }} no Blade (não {!! !!} com input do usuário)"
+      },
+      {
+        "type": "callout",
+        "content": "Siga as convenções Laravel. O framework foi desenhado em torno delas. Código que segue as convenções é instantaneamente legível por qualquer dev Laravel.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Controllers finos delegam lógica para Models, Services ou Actions",
+    "Form Requests e $fillable são defesas obrigatórias contra input malicioso",
+    "Convenções de nomenclatura Laravel tornam o código legível para toda a equipe",
+    "Secrets no .env, APP_DEBUG=false em produção, {{ }} para output do usuário"
+  ],
+  "realWorldExample": "Um dev Laravel sênior pode entrar em qualquer projeto Laravel e entender a estrutura em minutos — porque as convenções são consistentes em todo o ecossistema.",
+  "encouragement": "Você aprendeu não apenas Laravel, mas como pensar como um desenvolvedor Laravel. Isso é o que o mercado valoriza."
+}

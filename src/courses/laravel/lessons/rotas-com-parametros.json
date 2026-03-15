@@ -1,0 +1,49 @@
+{
+  "id": "rotas-com-parametros",
+  "courseId": "laravel",
+  "moduleId": "rotas-controllers",
+  "title": "Rotas com Parâmetros Dinâmicos",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Parâmetros de rota são como campos em branco em um formulário. A rota /produtos/{id} é o formulário; quando o usuário acessa /produtos/42, o número 42 preenche o campo {id}.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Parâmetros obrigatórios e opcionais" },
+      {
+        "type": "paragraph",
+        "content": "Parâmetros entre chaves `{param}` capturam partes dinâmicas da URL. Use `{param?}` para torná-los opcionais. O Laravel injeta automaticamente o valor no método do Controller."
+      },
+      {
+        "type": "code",
+        "content": "// Parâmetro obrigatório\nRoute::get('/usuarios/{id}', function (string $id) {\n    return \"Usuário: {$id}\";\n});\n\n// Parâmetro opcional com valor padrão\nRoute::get('/posts/{slug?}', function (string $slug = 'todos') {\n    return \"Posts: {$slug}\";\n});\n\n// Múltiplos parâmetros\nRoute::get('/cursos/{curso}/licoes/{licao}', function (string $curso, string $licao) {\n    return \"Curso: {$curso}, Lição: {$licao}\";\n});",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Para restringir o formato do parâmetro, use ->where(). Ex: ->where('id', '[0-9]+') aceita apenas números.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete o arquivo de rotas abaixo:\n\n1. Crie uma rota GET `/produtos` que retorna a string 'Lista de produtos'\n2. Crie uma rota GET `/produtos/{id}` que retorna 'Produto: ' + o ID recebido\n3. Crie uma rota GET `/usuarios/{nome?}` que retorna 'Olá, ' + nome, ou 'Olá, visitante' se nenhum nome for passado\n4. Nomeie a rota de produtos individuais como 'produtos.show'",
+    "starterCode": "<?php\nuse Illuminate\\Support\\Facades\\Route;\n\n// 1. Rota para listar produtos\n// Sua rota aqui\n\n// 2. Rota para exibir produto por ID\n// Sua rota aqui\n\n// 3. Rota com parâmetro opcional de nome\n// Sua rota aqui\n",
+    "solution": "<?php\nuse Illuminate\\Support\\Facades\\Route;\n\n// 1. Rota para listar produtos\nRoute::get('/produtos', function () {\n    return 'Lista de produtos';\n});\n\n// 2. Rota para exibir produto por ID\nRoute::get('/produtos/{id}', function (string $id) {\n    return 'Produto: ' . $id;\n})->name('produtos.show');\n\n// 3. Rota com parâmetro opcional de nome\nRoute::get('/usuarios/{nome?}', function (string $nome = 'visitante') {\n    return 'Olá, ' . $nome;\n});\n",
+    "tests": [],
+    "hint": "Para parâmetros obrigatórios use {param}. Para opcionais use {param?} e defina um valor padrão no argumento da função. Para nomear a rota, encadeie ->name('nome') ao final.",
+    "solutionExplanation": "Parâmetros de rota são declarados entre chaves na URL e automaticamente injetados como argumentos na closure ou método do Controller. O `?` torna o parâmetro opcional — nesse caso, o argumento PHP deve ter um valor padrão. O método `->name()` encadeado define um nome para a rota, permitindo usar `route('produtos.show', ['id' => 1])` para gerar a URL."
+  },
+  "keyTakeaways": [
+    "Use {param} para parâmetros obrigatórios e {param?} para opcionais",
+    "O Laravel injeta os parâmetros automaticamente na closure ou método",
+    "Use ->name() para nomear rotas e facilitar a geração de URLs",
+    "Use ->where() para restringir o formato do parâmetro com regex"
+  ],
+  "commonMistakes": [
+    "Esquecer o valor padrão ao usar parâmetro opcional — PHP vai lançar erro",
+    "A ordem dos parâmetros na função deve corresponder à ordem na URL"
+  ],
+  "realWorldExample": "Um e-commerce usa /produtos/{slug} para exibir páginas de produto com URLs amigáveis como /produtos/tenis-nike-air-max, onde 'slug' é um identificador legível.",
+  "encouragement": "Rotas com parâmetros são usadas em absolutamente todo projeto Laravel. Você acabou de dominar um dos conceitos mais importantes!"
+}

@@ -1,0 +1,53 @@
+{
+  "id": "api-resources",
+  "courseId": "laravel",
+  "moduleId": "apis",
+  "title": "API Resources: Transformando Dados",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "API Resources são como filtros de câmera. O modelo bruto do banco pode ter muitos campos (alguns sensíveis, como senhas ou tokens internos), e o Resource decide exatamente o que aparece na foto final — o JSON enviado ao cliente. Você controla a transformação.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Por que usar API Resources?" },
+      {
+        "type": "paragraph",
+        "content": "Retornar um Model diretamente expõe todos os campos, incluindo os sensíveis. API Resources permitem definir exatamente quais campos aparecem na resposta JSON, adicionar campos calculados e formatar dados antes de enviar ao cliente."
+      },
+      { "type": "heading", "content": "Criando um Resource" },
+      {
+        "type": "code",
+        "content": "php artisan make:resource ProdutoResource\nphp artisan make:resource ProdutoCollection",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Http\\Resources;\n\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Http\\Resources\\Json\\JsonResource;\n\nclass ProdutoResource extends JsonResource\n{\n    public function toArray(Request $request): array\n    {\n        return [\n            'id'          => $this->id,\n            'nome'        => $this->nome,\n            'preco'       => number_format($this->preco, 2),\n            'preco_real'  => 'R$ ' . number_format($this->preco, 2, ',', '.'),\n            'em_estoque'  => $this->estoque > 0,\n            'criado_em'   => $this->created_at->format('d/m/Y'),\n            // Campo condicional — só aparece se o usuário for admin\n            'custo'       => $this->when(auth()->user()?->is_admin, $this->custo),\n        ];\n    }\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Usando o Resource no Controller" },
+      {
+        "type": "code",
+        "content": "use App\\Http\\Resources\\ProdutoResource;\n\n// Recurso único\npublic function show(string $id): ProdutoResource\n{\n    return new ProdutoResource(Produto::findOrFail($id));\n}\n\n// Coleção\npublic function index(): \\Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection\n{\n    return ProdutoResource::collection(Produto::paginate(15));\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Quando usado com paginate(), o Resource automaticamente inclui os metadados de paginação (current_page, last_page, total) no JSON.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "API Resources transformam Models em JSON de forma controlada e explícita",
+    "Use when() para campos condicionais (ex: campos visíveis apenas para admins)",
+    "ProdutoResource::collection() transforma coleções e preserva paginação",
+    "Resources evitam expor campos sensíveis acidentalmente"
+  ],
+  "commonMistakes": [
+    "Retornar $model diretamente em vez de usar Resource — expõe campos sensíveis",
+    "Fazer queries pesadas dentro do toArray() — os dados devem vir do Model já carregado"
+  ],
+  "realWorldExample": "Uma API de e-commerce retorna preços formatados, campos calculados (em_estoque, desconto_percentual) e oculta colunas internas (custo, margem) para usuários comuns.",
+  "encouragement": "API Resources são o que separa uma API amadora de uma profissional. Seus clientes de API vão adorar respostas bem estruturadas."
+}

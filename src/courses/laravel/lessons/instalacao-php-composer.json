@@ -1,0 +1,58 @@
+{
+  "id": "instalacao-php-composer",
+  "courseId": "laravel",
+  "moduleId": "ambiente",
+  "title": "Instalando PHP e Composer",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Composer é o gerenciador de pacotes do PHP, assim como o npm é para JavaScript ou o pip para Python. Ele baixa e organiza as dependências do seu projeto automaticamente.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Pré-requisitos" },
+      {
+        "type": "paragraph",
+        "content": "Para rodar Laravel localmente você precisa de PHP 8.2+, Composer e um banco de dados (SQLite para desenvolvimento é o mais simples). A forma mais fácil é usar o Laravel Herd (macOS/Windows) ou instalar manualmente."
+      },
+      { "type": "heading", "content": "Opção 1 — Laravel Herd (recomendado)" },
+      {
+        "type": "paragraph",
+        "content": "O Herd é um ambiente de desenvolvimento local para Laravel que instala PHP, Nginx e tudo que você precisa com um clique. Disponível em herd.laravel.com para macOS e Windows."
+      },
+      {
+        "type": "code",
+        "content": "# Após instalar o Herd, verifique:\nphp --version\n# PHP 8.3.x (cli)\n\ncomposer --version\n# Composer version 2.x.x",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Opção 2 — Instalação manual (Linux)" },
+      {
+        "type": "code",
+        "content": "# Instalar PHP 8.3 no Ubuntu\nsudo apt install php8.3 php8.3-cli php8.3-xml php8.3-mbstring php8.3-curl php8.3-zip php8.3-sqlite3\n\n# Instalar Composer\ncurl -sS https://getcomposer.org/installer | php\nsudo mv composer.phar /usr/local/bin/composer",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Para este curso, SQLite é suficiente para desenvolvimento. Não é necessário instalar MySQL ou PostgreSQL agora.",
+        "variant": "tip"
+      },
+      { "type": "heading", "content": "Verificando a instalação" },
+      {
+        "type": "code",
+        "content": "php --version\n# PHP 8.3.x\n\ncomposer --version\n# Composer version 2.x.x\n\n# Instalar o instalador global do Laravel (opcional mas prático)\ncomposer global require laravel/installer",
+        "language": "bash"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Laravel requer PHP 8.2+ e Composer instalados",
+    "Laravel Herd é a forma mais simples de configurar ambiente no macOS/Windows",
+    "Composer é o gerenciador de dependências do PHP — equivalente ao npm",
+    "SQLite é suficiente para desenvolvimento local"
+  ],
+  "commonMistakes": [
+    "Instalar PHP sem as extensões necessárias (xml, mbstring, curl) — Laravel não inicia",
+    "Usar PHP 7.x — Laravel 11+ exige PHP 8.2 no mínimo"
+  ],
+  "realWorldExample": "Assim como um projeto Node.js tem package.json, um projeto Laravel tem composer.json que lista todas as dependências PHP do projeto.",
+  "encouragement": "Configurar o ambiente é a parte mais chata — mas você só faz isso uma vez. Depois é só criar projetos!"
+}

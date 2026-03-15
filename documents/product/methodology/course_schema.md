@@ -58,15 +58,61 @@ Exemplo:
 
 ## Campos do curso
 
-| Campo           | Tipo            | Obrigatório | Descrição                                                                              |
-| --------------- | --------------- | ----------- | -------------------------------------------------------------------------------------- |
-| id              | string          | Sim         | Identificador único do curso                                                           |
-| title           | string          | Sim         | Título do curso                                                                        |
-| description     | string          | Sim         | Descrição do curso                                                                     |
-| icon            | string          | Sim         | Emoji representativo (ex: ⚛️)                                                          |
-| tags            | string[]        | Sim         | Tags para categorização e filtragem na home (ex: ["programação", "frontend", "react"]) |
-| modules         | Module[]        | Sim         | Array de módulos inline                                                                |
-| aiReviewContext | AIReviewContext | Não         | Contexto para prompts de IA (revisão e perguntas)                                      |
+| Campo           | Tipo         | Obrigatório | Descrição                                                                   |
+| --------------- | ------------ | ----------- | --------------------------------------------------------------------------- |
+| id              | string       | Sim         | Identificador único do curso                                                |
+| title           | string       | Sim         | Título do curso                                                             |
+| description     | string       | Sim         | Descrição do curso                                                          |
+| icon            | string       | Sim         | Emoji representativo (ex: ⚛️)                                               |
+| tags            | CourseTag[]  | Sim         | Tags para categorização e filtragem na home (ver vocabulário abaixo)        |
+| modules         | Module[]     | Sim         | Array de módulos inline                                                     |
+| aiReviewContext | AIReviewContext | Não       | Contexto para prompts de IA (revisão e perguntas)                           |
+
+### Tags — vocabulário canônico
+
+Tags são tipadas como `CourseTag` em `src/engine/types.ts`. Apenas valores da lista abaixo são válidos.
+
+**Regras:**
+- Máximo de **4 tags** por curso
+- Sempre **Title Case** (`JavaScript`, não `javascript`)
+- Pelo menos **1 tag de categoria ampla** por curso
+- Tags de framework só se o curso for **especificamente** sobre aquele framework
+- **Nunca** usar roles (`Tech Lead`, `Staff Engineer`) ou níveis (`Avançado`, `Iniciante`)
+
+**Categorias amplas** — para filtro de descoberta:
+
+| Tag | Quando usar |
+|---|---|
+| `IA` | Cursos sobre inteligência artificial, LLMs, ferramentas de IA |
+| `Arquitetura` | Design de sistemas, padrões arquiteturais, engenharia de software |
+| `Frontend` | UI, CSS, frameworks de interface, experiência do usuário |
+| `Backend` | Servidores, APIs, bancos de dados, frameworks server-side |
+| `Programação` | Lógica, algoritmos, fundamentos de desenvolvimento |
+| `Produtividade` | Ferramentas, fluxo de trabalho, automação |
+
+**Linguagens** — quando o curso ensina ou usa extensivamente:
+
+`JavaScript`, `TypeScript`, `PHP`, `Python`, `SQL`, `Go`, `Rust`, `Java`, `C#`
+
+**Frameworks e ferramentas** — só quando o curso é especificamente sobre aquilo:
+
+`React`, `Vue`, `Angular`, `Laravel`, `Django`, `Next.js`, `Node.js`
+
+**Exemplos por curso:**
+
+```json
+// Curso de ferramenta de IA
+"tags": ["IA", "Produtividade"]
+
+// Curso de framework frontend
+"tags": ["Frontend", "JavaScript", "React"]
+
+// Curso de arquitetura (sem linguagem específica)
+"tags": ["Arquitetura", "Programação"]
+
+// Curso de framework backend com linguagem específica
+"tags": ["Backend", "PHP", "Laravel"]
+```
 
 ### AIReviewContext (opcional)
 

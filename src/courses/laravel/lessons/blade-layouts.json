@@ -1,0 +1,51 @@
+{
+  "id": "blade-layouts",
+  "courseId": "laravel",
+  "moduleId": "blade",
+  "title": "Layouts e Herança de Templates",
+  "type": "challenge",
+  "xp": 25,
+  "difficulty": "beginner",
+  "analogy": "Layouts Blade funcionam como formulários com campos em branco. O layout define a estrutura comum (header, navbar, footer) e deixa 'buracos' (@yield) para as páginas filhas preencherem. Cada página preenche apenas o que é único dela.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Layout base com @yield" },
+      {
+        "type": "code",
+        "content": "{{-- resources/views/layouts/app.blade.php --}}\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <title>@yield('titulo', 'Minha App')</title>\n</head>\n<body>\n    <nav><!-- navbar --></nav>\n\n    <main>\n        @yield('conteudo')\n    </main>\n\n    <footer>© 2025</footer>\n\n    @stack('scripts')\n</body>\n</html>",
+        "language": "html"
+      },
+      { "type": "heading", "content": "Página filha com @extends e @section" },
+      {
+        "type": "code",
+        "content": "{{-- resources/views/home.blade.php --}}\n@extends('layouts.app')\n\n@section('titulo', 'Home — Minha App')\n\n@section('conteudo')\n    <h1>Bem-vindo!</h1>\n    <p>Esta é a página inicial.</p>\n@endsection\n\n@push('scripts')\n    <script>console.log('Script específico desta página');</script>\n@endpush",
+        "language": "html"
+      },
+      {
+        "type": "callout",
+        "content": "@stack / @push permitem que páginas filhas injetem scripts ou estilos em locais definidos pelo layout — sem bagunçar o HTML.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "challenge": {
+    "instructions": "Complete o layout e a view filha abaixo:\n\n1. No layout (layouts/app.blade.php):\n   - Adicione @yield('titulo') no <title> com padrão 'App Laravel'\n   - Adicione @yield('conteudo') dentro do <main>\n\n2. Na view filha (dashboard.blade.php):\n   - Estenda o layout 'layouts.app'\n   - Defina o título como 'Dashboard'\n   - Defina o conteúdo com um <h1>Dashboard</h1> e um parágrafo 'Bem-vindo ao painel.'",
+    "starterCode": "{{-- layouts/app.blade.php --}}\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title><!-- yield titulo aqui --></title>\n</head>\n<body>\n    <nav>Navbar</nav>\n    <main>\n        <!-- yield conteudo aqui -->\n    </main>\n    <footer>Footer</footer>\n</body>\n</html>\n\n{{-- ===================== --}}\n{{-- dashboard.blade.php  --}}\n{{-- ===================== --}}\n\n{{-- extends aqui --}}\n\n{{-- section titulo --}}\n\n{{-- section conteudo --}}",
+    "solution": "{{-- layouts/app.blade.php --}}\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>@yield('titulo', 'App Laravel')</title>\n</head>\n<body>\n    <nav>Navbar</nav>\n    <main>\n        @yield('conteudo')\n    </main>\n    <footer>Footer</footer>\n</body>\n</html>\n\n{{-- ===================== --}}\n{{-- dashboard.blade.php  --}}\n{{-- ===================== --}}\n\n@extends('layouts.app')\n\n@section('titulo', 'Dashboard')\n\n@section('conteudo')\n    <h1>Dashboard</h1>\n    <p>Bem-vindo ao painel.</p>\n@endsection",
+    "tests": [],
+    "hint": "Use @yield('nome', 'padrão') no layout para definir regiões substituíveis. Na view filha, use @extends('caminho.do.layout') e @section('nome') ... @endsection para preencher cada região.",
+    "solutionExplanation": "@yield define um espaço no layout que pode ser preenchido pelas views filhas. O segundo argumento de @yield é o conteúdo padrão caso a view filha não defina aquela seção. @extends declara qual layout a view usa, e @section preenchê as regiões definidas pelo @yield. Para seções de uma linha, pode-se usar @section('titulo', 'Texto') sem @endsection."
+  },
+  "keyTakeaways": [
+    "O layout define a estrutura comum com @yield para as regiões variáveis",
+    "Views filhas usam @extends para herdar o layout",
+    "@section / @endsection preenche as regiões definidas pelo @yield",
+    "@stack / @push permitem injetar scripts e estilos específicos de cada página"
+  ],
+  "commonMistakes": [
+    "Esquecer @endsection — o Blade não renderiza o conteúdo corretamente",
+    "Usar @yield fora do layout base — ele só funciona no arquivo que outros estendem"
+  ],
+  "realWorldExample": "Todo sistema web tem um layout base com header, sidebar e footer. Em Laravel, você define isso uma vez em layouts/app.blade.php e todas as páginas herdam essa estrutura com @extends.",
+  "encouragement": "Layouts são a feature que mais economiza tempo no Blade. Uma mudança no layout atualiza todas as páginas de uma vez!"
+}

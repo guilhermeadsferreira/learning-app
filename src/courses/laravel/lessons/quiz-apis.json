@@ -1,0 +1,114 @@
+{
+  "id": "quiz-apis",
+  "courseId": "laravel",
+  "moduleId": "apis",
+  "title": "Quiz — APIs REST",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "APIs REST são a base do desenvolvimento backend moderno. Vamos revisar os conceitos."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual status HTTP deve ser retornado ao criar um recurso com sucesso via API?",
+      "options": [
+        {
+          "id": "a",
+          "text": "200 OK",
+          "isCorrect": false,
+          "explanation": "200 é para requisições bem-sucedidas em geral (GET, PUT). Para criação, o correto é 201."
+        },
+        {
+          "id": "b",
+          "text": "201 Created",
+          "isCorrect": true,
+          "explanation": "Correto! 201 indica que um novo recurso foi criado. É o status semântico correto para respostas a POST bem-sucedidos."
+        },
+        {
+          "id": "c",
+          "text": "204 No Content",
+          "isCorrect": false,
+          "explanation": "204 é usado quando a operação foi bem-sucedida mas não há corpo de resposta — tipicamente em DELETE."
+        },
+        {
+          "id": "d",
+          "text": "202 Accepted",
+          "isCorrect": false,
+          "explanation": "202 indica que a requisição foi aceita para processamento assíncrono (filas). Não é para criação síncrona."
+        }
+      ]
+    },
+    {
+      "question": "Qual a principal vantagem de usar API Resources em vez de retornar Models diretamente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Performance melhor — API Resources usam cache",
+          "isCorrect": false,
+          "explanation": "A diferença é de controle e segurança, não de performance ou cache."
+        },
+        {
+          "id": "b",
+          "text": "Controle total sobre quais campos aparecem no JSON, evitando exposição de dados sensíveis",
+          "isCorrect": true,
+          "explanation": "Correto! Resources permitem definir exatamente o contrato da API, ocultar campos sensíveis, adicionar campos calculados e formatar dados."
+        },
+        {
+          "id": "c",
+          "text": "Permite serializar para XML além de JSON",
+          "isCorrect": false,
+          "explanation": "API Resources são focados em JSON. Para outros formatos seriam necessárias outras soluções."
+        },
+        {
+          "id": "d",
+          "text": "Valida os dados antes de retornar",
+          "isCorrect": false,
+          "explanation": "Resources transformam dados de saída. Validação de dados de entrada é feita com $request->validate()."
+        }
+      ]
+    },
+    {
+      "question": "Como o cliente de uma API deve enviar o token Sanctum em cada requisição?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Como parâmetro na URL: /api/produtos?token=xxx",
+          "isCorrect": false,
+          "explanation": "Tokens na URL ficam em logs do servidor e histórico do browser — é uma prática insegura."
+        },
+        {
+          "id": "b",
+          "text": "No corpo (body) da requisição como campo 'token'",
+          "isCorrect": false,
+          "explanation": "O token deve ser enviado no header, não no corpo da requisição."
+        },
+        {
+          "id": "c",
+          "text": "No header HTTP: Authorization: Bearer {token}",
+          "isCorrect": true,
+          "explanation": "Correto! O padrão Bearer Token envia o token no header Authorization. O middleware auth:sanctum do Laravel lê automaticamente esse header."
+        },
+        {
+          "id": "d",
+          "text": "Como cookie de sessão",
+          "isCorrect": false,
+          "explanation": "Cookies de sessão são para apps web com estado. APIs REST são stateless — usam tokens Bearer."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Status HTTP semânticos: 200 (OK), 201 (Criado), 204 (Sem conteúdo), 401 (Não autenticado), 422 (Inválido)",
+    "API Resources controlam exatamente o que é exposto no JSON",
+    "Sanctum: tokens Bearer enviados no header Authorization",
+    "Route::apiResource() gera rotas CRUD sem create/edit (rotas de formulário)"
+  ],
+  "encouragement": "APIs são o que conecta o backend ao mundo. Você agora tem as ferramentas para construir APIs profissionais com Laravel!"
+}

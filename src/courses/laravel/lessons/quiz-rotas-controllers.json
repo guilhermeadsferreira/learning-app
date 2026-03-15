@@ -1,0 +1,114 @@
+{
+  "id": "quiz-rotas-controllers",
+  "courseId": "laravel",
+  "moduleId": "rotas-controllers",
+  "title": "Quiz — Rotas e Controllers",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos consolidar o que aprendemos sobre roteamento e Controllers no Laravel."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual arquivo contém as rotas web de uma aplicação Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "app/Http/routes.php",
+          "isCorrect": false,
+          "explanation": "Esse era o local das rotas em versões antigas do Laravel (5.x). Hoje as rotas ficam em routes/."
+        },
+        {
+          "id": "b",
+          "text": "routes/web.php",
+          "isCorrect": true,
+          "explanation": "Correto! routes/web.php é o arquivo de rotas web. Rotas de API ficam em routes/api.php."
+        },
+        {
+          "id": "c",
+          "text": "config/routes.php",
+          "isCorrect": false,
+          "explanation": "Não existe config/routes.php. A pasta config/ contém configurações, não rotas."
+        },
+        {
+          "id": "d",
+          "text": "bootstrap/routes.php",
+          "isCorrect": false,
+          "explanation": "bootstrap/ contém arquivos de inicialização do framework, não rotas da aplicação."
+        }
+      ]
+    },
+    {
+      "question": "O que faz o comando `php artisan make:controller ProdutoController --resource`?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cria um Controller vazio chamado ProdutoController",
+          "isCorrect": false,
+          "explanation": "Um controller vazio seria criado sem a flag --resource. Com ela, o controller vem com todos os métodos CRUD."
+        },
+        {
+          "id": "b",
+          "text": "Cria um Controller com os 7 métodos CRUD (index, create, store, show, edit, update, destroy)",
+          "isCorrect": true,
+          "explanation": "Correto! A flag --resource gera um controller com todos os métodos padrão para operações CRUD."
+        },
+        {
+          "id": "c",
+          "text": "Cria um Controller e registra automaticamente as rotas em web.php",
+          "isCorrect": false,
+          "explanation": "O Artisan cria o arquivo do Controller, mas você ainda precisa registrar as rotas manualmente (ou usando Route::resource())."
+        },
+        {
+          "id": "d",
+          "text": "Cria o Controller e um Model associado",
+          "isCorrect": false,
+          "explanation": "Para criar Model junto, use a flag --model. A flag --resource apenas adiciona os métodos CRUD."
+        }
+      ]
+    },
+    {
+      "question": "Qual a diferença entre `Route::get('/produtos/{id}')` e `Route::get('/produtos/{id?}')`?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nenhuma diferença, são equivalentes",
+          "isCorrect": false,
+          "explanation": "Há diferença importante: o `?` torna o parâmetro opcional."
+        },
+        {
+          "id": "b",
+          "text": "{id} é obrigatório; {id?} é opcional e exige valor padrão no argumento",
+          "isCorrect": true,
+          "explanation": "Correto! Com {id}, a URL sem esse segmento retorna 404. Com {id?}, a rota funciona com ou sem o parâmetro, mas o argumento PHP precisa ter valor padrão."
+        },
+        {
+          "id": "c",
+          "text": "{id?} só aceita parâmetros numéricos",
+          "isCorrect": false,
+          "explanation": "O `?` torna o parâmetro opcional, não o restringe a números. Para restringir use ->where()."
+        },
+        {
+          "id": "d",
+          "text": "{id} aceita qualquer tipo, {id?} aceita apenas strings",
+          "isCorrect": false,
+          "explanation": "Ambos aceitam qualquer tipo de valor na URL. A diferença é apenas obrigatoriedade."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Rotas web ficam em routes/web.php; rotas de API em routes/api.php",
+    "--resource gera controller com os 7 métodos CRUD padrão",
+    "Route::resource() gera as 7 rotas CRUD em uma única linha",
+    "{param?} torna o parâmetro de rota opcional"
+  ],
+  "encouragement": "Rotas e Controllers são a espinha dorsal do Laravel. Você está construindo uma base sólida!"
+}

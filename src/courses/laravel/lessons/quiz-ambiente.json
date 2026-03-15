@@ -1,0 +1,143 @@
+{
+  "id": "quiz-ambiente",
+  "courseId": "laravel",
+  "moduleId": "ambiente",
+  "title": "Quiz — Ambiente e Setup",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "beginner",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Vamos revisar os conceitos fundamentais do ambiente Laravel antes de avançar."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual é a versão mínima de PHP necessária para o Laravel 11?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PHP 7.4",
+          "isCorrect": false,
+          "explanation": "PHP 7.4 não é suportado pelo Laravel 11. Versões antigas do Laravel (6.x, 7.x) eram compatíveis com PHP 7.4."
+        },
+        {
+          "id": "b",
+          "text": "PHP 8.0",
+          "isCorrect": false,
+          "explanation": "PHP 8.0 não é suficiente para o Laravel 11. A versão mínima é PHP 8.2."
+        },
+        {
+          "id": "c",
+          "text": "PHP 8.2",
+          "isCorrect": true,
+          "explanation": "Correto! Laravel 11 exige PHP 8.2 ou superior para usar recursos modernos da linguagem."
+        },
+        {
+          "id": "d",
+          "text": "PHP 9.0",
+          "isCorrect": false,
+          "explanation": "PHP 9.0 ainda não existe. A versão atual mais recente é PHP 8.3."
+        }
+      ]
+    },
+    {
+      "question": "Qual é a função do Composer em um projeto Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Compilar o código PHP para binário",
+          "isCorrect": false,
+          "explanation": "PHP é interpretado, não compilado. Composer não realiza compilação."
+        },
+        {
+          "id": "b",
+          "text": "Gerenciar as dependências do projeto PHP",
+          "isCorrect": true,
+          "explanation": "Correto! Composer é o gerenciador de pacotes do PHP, equivalente ao npm no JavaScript."
+        },
+        {
+          "id": "c",
+          "text": "Iniciar o servidor de desenvolvimento",
+          "isCorrect": false,
+          "explanation": "Quem inicia o servidor de desenvolvimento é o comando `php artisan serve`."
+        },
+        {
+          "id": "d",
+          "text": "Gerenciar o banco de dados",
+          "isCorrect": false,
+          "explanation": "O banco de dados é gerenciado pelas migrations e pelo Eloquent ORM."
+        }
+      ]
+    },
+    {
+      "question": "Em qual arquivo ficam as configurações de banco de dados, chaves e outras variáveis de ambiente?",
+      "options": [
+        {
+          "id": "a",
+          "text": "config/database.php",
+          "isCorrect": false,
+          "explanation": "config/database.php lê os valores do .env, mas não armazena as configurações diretamente."
+        },
+        {
+          "id": "b",
+          "text": "composer.json",
+          "isCorrect": false,
+          "explanation": "composer.json contém as dependências do projeto, não as variáveis de ambiente."
+        },
+        {
+          "id": "c",
+          "text": ".env",
+          "isCorrect": true,
+          "explanation": "Correto! O arquivo .env na raiz do projeto armazena todas as configurações sensíveis de ambiente."
+        },
+        {
+          "id": "d",
+          "text": "routes/web.php",
+          "isCorrect": false,
+          "explanation": "routes/web.php define as rotas da aplicação, não configurações de ambiente."
+        }
+      ]
+    },
+    {
+      "question": "Qual comando inicia o servidor de desenvolvimento do Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "composer start",
+          "isCorrect": false,
+          "explanation": "Esse comando não existe no Composer por padrão."
+        },
+        {
+          "id": "b",
+          "text": "npm run dev",
+          "isCorrect": false,
+          "explanation": "npm run dev é usado para compilar assets frontend (Vite), não para iniciar o servidor PHP."
+        },
+        {
+          "id": "c",
+          "text": "php artisan serve",
+          "isCorrect": true,
+          "explanation": "Correto! `php artisan serve` inicia o servidor embutido do PHP na porta 8000."
+        },
+        {
+          "id": "d",
+          "text": "laravel start",
+          "isCorrect": false,
+          "explanation": "Esse comando não existe. O Laravel usa o Artisan CLI para tarefas como essa."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Laravel 11 exige PHP 8.2+",
+    "Composer gerencia dependências, Artisan gerencia tarefas",
+    ".env armazena configurações sensíveis — nunca suba ao git",
+    "`php artisan serve` inicia o servidor de desenvolvimento"
+  ],
+  "encouragement": "Você dominou os fundamentos do ambiente! Agora vamos entender como o Laravel recebe e responde requisições."
+}

@@ -1,0 +1,114 @@
+{
+  "id": "quiz-autenticacao",
+  "courseId": "laravel",
+  "moduleId": "autenticacao",
+  "title": "Quiz — Auth e Autorização",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Autenticação e autorização são pilares da segurança de qualquer sistema. Vamos revisar."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "Qual a diferença entre autenticação e autorização?",
+      "options": [
+        {
+          "id": "a",
+          "text": "São sinônimos — ambas verificam se o usuário pode acessar o sistema",
+          "isCorrect": false,
+          "explanation": "São conceitos distintos e igualmente importantes."
+        },
+        {
+          "id": "b",
+          "text": "Autenticação verifica quem é o usuário (login); autorização verifica o que ele pode fazer (permissões)",
+          "isCorrect": true,
+          "explanation": "Correto! Autenticação = identidade (login/senha). Autorização = permissão (pode editar? pode deletar?)."
+        },
+        {
+          "id": "c",
+          "text": "Autenticação é para APIs; autorização é para aplicações web",
+          "isCorrect": false,
+          "explanation": "Ambos os conceitos se aplicam tanto a APIs quanto a aplicações web."
+        },
+        {
+          "id": "d",
+          "text": "Autorização vem antes da autenticação no pipeline",
+          "isCorrect": false,
+          "explanation": "A ordem correta é: primeiro autenticação (quem é você?), depois autorização (o que você pode fazer?)."
+        }
+      ]
+    },
+    {
+      "question": "Como o middleware 'auth' protege uma rota no Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Criptografa a resposta para usuários não autenticados",
+          "isCorrect": false,
+          "explanation": "O middleware auth não criptografa — ele redireciona."
+        },
+        {
+          "id": "b",
+          "text": "Redireciona para a rota de login se o usuário não estiver autenticado",
+          "isCorrect": true,
+          "explanation": "Correto! Se o usuário não estiver logado, é redirecionado para /login. Após o login, é enviado de volta para a rota original."
+        },
+        {
+          "id": "c",
+          "text": "Retorna HTTP 403 para qualquer usuário não autenticado",
+          "isCorrect": false,
+          "explanation": "O comportamento padrão é redirecionar para /login, não retornar 403. Para APIs, retorna 401."
+        },
+        {
+          "id": "d",
+          "text": "Bloqueia o IP do usuário após 3 tentativas falhas",
+          "isCorrect": false,
+          "explanation": "Limitação por IP é feita pelo middleware 'throttle', não pelo 'auth'."
+        }
+      ]
+    },
+    {
+      "question": "Quando usar Policies em vez de Gates no Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sempre use Policies — Gates são obsoletos",
+          "isCorrect": false,
+          "explanation": "Ambos são válidos e têm usos diferentes. Gates não são obsoletos."
+        },
+        {
+          "id": "b",
+          "text": "Policies são para autorização relacionada a Models específicos; Gates para regras globais simples",
+          "isCorrect": true,
+          "explanation": "Correto! PostPolicy organiza 'quem pode fazer o quê com Posts'. Gates são para regras globais como 'apenas admins podem acessar o painel'."
+        },
+        {
+          "id": "c",
+          "text": "Policies são para APIs; Gates para aplicações web",
+          "isCorrect": false,
+          "explanation": "Ambos funcionam tanto em APIs quanto em aplicações web."
+        },
+        {
+          "id": "d",
+          "text": "Use Policies quando há mais de 10 usuários; Gates para sistemas pequenos",
+          "isCorrect": false,
+          "explanation": "A escolha não depende do número de usuários, mas da complexidade e organização das regras de autorização."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "Autenticação = identidade; autorização = permissões — conceitos distintos",
+    "O middleware 'auth' redireciona para login quando não autenticado",
+    "Gates para regras globais; Policies para regras por Model",
+    "@can no Blade controla a visibilidade de elementos conforme permissões"
+  ],
+  "encouragement": "Segurança é uma responsabilidade. Você está construindo aplicações que protegem os dados dos seus usuários. Continue!"
+}

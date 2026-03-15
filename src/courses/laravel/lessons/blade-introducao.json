@@ -1,0 +1,44 @@
+{
+  "id": "blade-introducao",
+  "courseId": "laravel",
+  "moduleId": "blade",
+  "title": "Introdução ao Blade",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Blade é como um molde de bolo. Você define o formato uma vez (o template com espaços para o conteúdo), e pode usá-lo para criar bolos diferentes apenas mudando o recheio. Cada página do seu site usa o mesmo molde base, mas com conteúdo diferente.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que é Blade?" },
+      {
+        "type": "paragraph",
+        "content": "Blade é o sistema de templates do Laravel. Arquivos Blade têm extensão `.blade.php` e ficam em `resources/views/`. Eles misturam HTML com sintaxe Blade especial — mais limpa e expressiva do que PHP puro."
+      },
+      { "type": "heading", "content": "Exibindo variáveis" },
+      {
+        "type": "code",
+        "content": "{{-- resources/views/perfil.blade.php --}}\n\n<!DOCTYPE html>\n<html>\n<body>\n    {{-- Exibir variável (com escape HTML automático) --}}\n    <h1>Olá, {{ $nome }}!</h1>\n\n    {{-- Sem escape (cuidado com XSS!) --}}\n    <p>{!! $htmlConfiavel !!}</p>\n\n    {{-- Comentário Blade (não aparece no HTML final) --}}\n    {{-- Este comentário não é enviado ao navegador --}}\n</body>\n</html>",
+        "language": "html"
+      },
+      { "type": "heading", "content": "Passando dados para a view" },
+      {
+        "type": "code",
+        "content": "// No Controller\npublic function perfil()\n{\n    return view('perfil', [\n        'nome' => 'Ana Silva',\n        'email' => 'ana@exemplo.com',\n    ]);\n\n    // Ou usando with()\n    return view('perfil')->with('nome', 'Ana Silva');\n\n    // Ou compact() — quando variável tem mesmo nome que chave\n    $nome = 'Ana Silva';\n    return view('perfil', compact('nome'));\n}",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "{{ $variavel }} escapa automaticamente o HTML, protegendo contra XSS. Use {!! !!} apenas com dados que você controla — nunca com input do usuário.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Arquivos Blade têm extensão .blade.php e ficam em resources/views/",
+    "{{ $var }} exibe variável com escape HTML automático (seguro)",
+    "{!! $var !!} exibe HTML sem escape — use apenas com dados confiáveis",
+    "Passe dados para views via array, ->with() ou compact()"
+  ],
+  "realWorldExample": "Em um sistema de e-commerce, a view do produto recebe dados do Controller ($produto, $preco, $estoque) e os exibe com {{ }} — nunca concatenando strings PHP diretamente no HTML.",
+  "encouragement": "Blade torna o HTML muito mais limpo e seguro. Você vai adorar trabalhar com ele."
+}

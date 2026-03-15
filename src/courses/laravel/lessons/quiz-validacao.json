@@ -1,0 +1,114 @@
+{
+  "id": "quiz-validacao",
+  "courseId": "laravel",
+  "moduleId": "formularios-validacao",
+  "title": "Quiz — Validação de Dados",
+  "type": "quiz",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Teste seus conhecimentos" },
+      {
+        "type": "paragraph",
+        "content": "Validação é uma das partes mais importantes de qualquer aplicação. Vamos revisar."
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "O que acontece quando $request->validate() falha na validação?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lança uma exception que deve ser capturada manualmente",
+          "isCorrect": false,
+          "explanation": "O Laravel trata a exception automaticamente e redireciona o usuário."
+        },
+        {
+          "id": "b",
+          "text": "Retorna null e a execução do método continua normalmente",
+          "isCorrect": false,
+          "explanation": "Quando a validação falha, a execução não continua. O usuário é redirecionado."
+        },
+        {
+          "id": "c",
+          "text": "Redireciona automaticamente de volta com os erros em session e os dados do formulário preservados",
+          "isCorrect": true,
+          "explanation": "Correto! Laravel faz o redirect automaticamente, disponibiliza $errors no Blade e preserva os dados via old()."
+        },
+        {
+          "id": "d",
+          "text": "Retorna uma resposta JSON com os erros",
+          "isCorrect": false,
+          "explanation": "Para requisições web, o Laravel redireciona. Para requisições que esperam JSON (APIs), ele retorna JSON com status 422."
+        }
+      ]
+    },
+    {
+      "question": "Qual a vantagem de usar Form Requests em vez de validar direto no Controller?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Form Requests são mais rápidos em tempo de execução",
+          "isCorrect": false,
+          "explanation": "A performance é equivalente. A vantagem é de organização de código."
+        },
+        {
+          "id": "b",
+          "text": "Form Requests encapsulam validação e autorização em classes reutilizáveis, limpando os Controllers",
+          "isCorrect": true,
+          "explanation": "Correto! Form Requests separam responsabilidades: o Controller processa, o Form Request valida. Também são reutilizáveis em múltiplos Controllers."
+        },
+        {
+          "id": "c",
+          "text": "Form Requests permitem validar campos que validate() não consegue",
+          "isCorrect": false,
+          "explanation": "As regras de validação disponíveis são as mesmas. Form Requests apenas organizam o código."
+        },
+        {
+          "id": "d",
+          "text": "Form Requests não precisam de CSRF",
+          "isCorrect": false,
+          "explanation": "CSRF é verificado pelo middleware independentemente de como a validação é feita."
+        }
+      ]
+    },
+    {
+      "question": "Por que sempre usar @csrf em formulários POST no Laravel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "É necessário para que os dados do formulário sejam enviados",
+          "isCorrect": false,
+          "explanation": "Os dados são enviados independentemente do CSRF. O token é uma medida de segurança."
+        },
+        {
+          "id": "b",
+          "text": "Sem @csrf, formulários POST retornam erro 419 e protegem contra ataques CSRF",
+          "isCorrect": true,
+          "explanation": "Correto! O middleware VerifyCsrfToken bloqueia requisições POST sem token válido (HTTP 419). Isso protege contra ataques onde sites maliciosos enviam formulários em nome do usuário."
+        },
+        {
+          "id": "c",
+          "text": "É opcional — apenas recomendado para formulários com senha",
+          "isCorrect": false,
+          "explanation": "CSRF deve estar em todos os formulários POST, não apenas nos que têm senha."
+        },
+        {
+          "id": "d",
+          "text": "Apenas para formulários que usam PUT ou DELETE",
+          "isCorrect": false,
+          "explanation": "Todo formulário que muda estado (POST, PUT, PATCH, DELETE) precisa de @csrf."
+        }
+      ]
+    }
+  ],
+  "keyTakeaways": [
+    "validate() redireciona automaticamente com erros quando a validação falha",
+    "@csrf protege contra ataques cross-site — obrigatório em todo formulário POST",
+    "Form Requests limpam Controllers e encapsulam validação reutilizável",
+    "Use $request->validated() para obter apenas campos validados"
+  ],
+  "encouragement": "Formulários e validação são a interface entre o usuário e o banco de dados. Você está construindo aplicações seguras!"
+}

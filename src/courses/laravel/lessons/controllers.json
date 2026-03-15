@@ -1,0 +1,54 @@
+{
+  "id": "controllers",
+  "courseId": "laravel",
+  "moduleId": "rotas-controllers",
+  "title": "Controllers: Organizando a Lógica",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "beginner",
+  "analogy": "Se as rotas são o recepcionista, os Controllers são os especialistas chamados para atender cada solicitação. O recepcionista não resolve o problema sozinho — ele encaminha para o especialista certo. Controllers mantêm o código organizado e reutilizável.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Por que usar Controllers?" },
+      {
+        "type": "paragraph",
+        "content": "Colocar toda a lógica diretamente nas rotas funciona para casos simples, mas rapidamente fica desorganizado. Controllers são classes que agrupam a lógica relacionada a um recurso (ex: produtos, usuários) em métodos separados."
+      },
+      { "type": "heading", "content": "Criando um Controller" },
+      {
+        "type": "code",
+        "content": "# Gerar via Artisan\nphp artisan make:controller ProdutoController\n\n# Controller resource completo (com todos os métodos CRUD)\nphp artisan make:controller ProdutoController --resource",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Estrutura de um Controller" },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Http\\Controllers;\n\nuse Illuminate\\Http\\Request;\n\nclass ProdutoController extends Controller\n{\n    public function index()\n    {\n        // Lista todos os produtos\n        return view('produtos.index');\n    }\n\n    public function show(string $id)\n    {\n        // Exibe um produto específico\n        return view('produtos.show', ['id' => $id]);\n    }\n\n    public function store(Request $request)\n    {\n        // Salva um novo produto\n        return redirect()->route('produtos.index');\n    }\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Conectando rotas ao Controller" },
+      {
+        "type": "code",
+        "content": "// routes/web.php\nuse App\\Http\\Controllers\\ProdutoController;\n\n// Rota apontando para método do Controller\nRoute::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.index');\nRoute::get('/produtos/{id}', [ProdutoController::class, 'show'])->name('produtos.show');\n\n// Ou usando Resource Routes (gera todas as 7 rotas CRUD de uma vez)\nRoute::resource('produtos', ProdutoController::class);",
+        "language": "php"
+      },
+      {
+        "type": "callout",
+        "content": "Route::resource() gera automaticamente 7 rotas: index, create, store, show, edit, update e destroy. Muito conveniente para CRUDs completos.",
+        "variant": "info"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Controllers ficam em app/Http/Controllers/ e organizam a lógica por recurso",
+    "Gere controllers com `php artisan make:controller NomeController`",
+    "Use `--resource` para gerar um controller com todos os métodos CRUD",
+    "Route::resource() gera as 7 rotas CRUD automaticamente"
+  ],
+  "commonMistakes": [
+    "Colocar lógica de banco de dados diretamente no Controller — use Models",
+    "Criar um controller gigante para tudo — separe por recurso (Produto, Usuário, etc.)"
+  ],
+  "realWorldExample": "Um sistema de blog terá PostController com index() para listar posts, show() para exibir um post, store() para criar e destroy() para deletar.",
+  "encouragement": "Controllers são o coração de qualquer aplicação MVC. Dominar esse padrão é dar um salto enorme na organização do código."
+}

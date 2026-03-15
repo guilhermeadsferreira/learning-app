@@ -1,0 +1,54 @@
+{
+  "id": "migrations",
+  "courseId": "laravel",
+  "moduleId": "eloquent",
+  "title": "Migrations: Versionando o Banco",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "Migrations são como o histórico de commits do Git, mas para o banco de dados. Cada migration é uma mudança documentada na estrutura do banco — criar uma tabela, adicionar uma coluna, criar um índice. Você pode voltar no tempo ou avançar a qualquer momento.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "O que são Migrations?" },
+      {
+        "type": "paragraph",
+        "content": "Migrations permitem versionar a estrutura do banco de dados junto com o código. Em vez de rodar SQL manualmente, você escreve classes PHP que descrevem as mudanças. Toda a equipe roda `php artisan migrate` e tem o mesmo banco."
+      },
+      { "type": "heading", "content": "Criando uma migration" },
+      {
+        "type": "code",
+        "content": "# Criar migration para nova tabela\nphp artisan make:migration create_produtos_table\n\n# Criar migration para alterar tabela existente\nphp artisan make:migration add_preco_to_produtos_table",
+        "language": "bash"
+      },
+      { "type": "heading", "content": "Estrutura de uma migration" },
+      {
+        "type": "code",
+        "content": "<?php\nuse Illuminate\\Database\\Migrations\\Migration;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Support\\Facades\\Schema;\n\nreturn new class extends Migration {\n    public function up(): void\n    {\n        Schema::create('produtos', function (Blueprint $table) {\n            $table->id();                          // INT AUTO_INCREMENT PK\n            $table->string('nome');                 // VARCHAR(255)\n            $table->text('descricao')->nullable();  // TEXT nullable\n            $table->decimal('preco', 10, 2);        // DECIMAL(10,2)\n            $table->integer('estoque')->default(0); // INT DEFAULT 0\n            $table->boolean('ativo')->default(true);\n            $table->timestamps();                   // created_at e updated_at\n        });\n    }\n\n    public function down(): void\n    {\n        Schema::dropIfExists('produtos');\n    }\n};",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Comandos essenciais" },
+      {
+        "type": "code",
+        "content": "# Executar todas as migrations pendentes\nphp artisan migrate\n\n# Desfazer o último lote de migrations\nphp artisan migrate:rollback\n\n# Recriar o banco do zero (cuidado em produção!)\nphp artisan migrate:fresh\n\n# Ver status de todas as migrations\nphp artisan migrate:status",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Nunca edite uma migration que já foi executada em produção. Crie sempre uma nova migration para alterar estruturas existentes.",
+        "variant": "warning"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Migrations versionam a estrutura do banco junto com o código",
+    "up() define a mudança; down() a desfaz (para rollback)",
+    "`php artisan migrate` executa migrations pendentes",
+    "Nunca edite migrations já executadas em produção — crie uma nova"
+  ],
+  "commonMistakes": [
+    "Editar migrations existentes em vez de criar novas — quebra rollback",
+    "Esquecer ->nullable() em colunas opcionais — causa erros ao inserir dados sem esse campo"
+  ],
+  "realWorldExample": "Em um time de 5 devs, cada um pode criar migrations para suas features. Ao fazer merge, todos rodam `migrate` e o banco fica sincronizado automaticamente.",
+  "encouragement": "Migrations são uma das features que mais facilitam o trabalho em equipe. Sem elas, sincronizar bancos de dados é um pesadelo."
+}

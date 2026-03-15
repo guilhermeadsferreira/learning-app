@@ -1,0 +1,53 @@
+{
+  "id": "filas-jobs",
+  "courseId": "laravel",
+  "moduleId": "avancado",
+  "title": "Filas e Jobs: Processamento Assíncrono",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "advanced",
+  "analogy": "Filas são como o balcão de uma padaria com senhas. Quando você faz um pedido complicado (enviar um email, processar uma imagem), a padaria não te faz esperar na fila — ela te dá uma senha (Job) e você vai sentar. Os funcionários processam os pedidos em paralelo, e você é avisado quando o seu estiver pronto.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Por que usar filas?" },
+      {
+        "type": "paragraph",
+        "content": "Algumas operações são lentas: enviar emails, processar imagens, chamar APIs externas, gerar PDFs. Fazer isso na requisição web deixa o usuário esperando. Filas permitem executar essas tarefas em background, respondendo ao usuário imediatamente."
+      },
+      { "type": "heading", "content": "Criando um Job" },
+      {
+        "type": "code",
+        "content": "# Gerar Job via Artisan\nphp artisan make:job EnviarEmailBoasVindas",
+        "language": "bash"
+      },
+      {
+        "type": "code",
+        "content": "<?php\nnamespace App\\Jobs;\n\nuse App\\Models\\User;\nuse App\\Mail\\BoasVindasMail;\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Foundation\\Bus\\Dispatchable;\nuse Illuminate\\Mail\\Mailables\\Address;\nuse Illuminate\\Support\\Facades\\Mail;\n\nclass EnviarEmailBoasVindas implements ShouldQueue\n{\n    use Dispatchable, Queueable;\n\n    public int $tries = 3;      // Tentativas em caso de falha\n    public int $timeout = 60;   // Timeout em segundos\n\n    public function __construct(\n        public readonly User $user\n    ) {}\n\n    public function handle(): void\n    {\n        Mail::to($this->user->email)\n            ->send(new BoasVindasMail($this->user));\n    }\n}",
+        "language": "php"
+      },
+      { "type": "heading", "content": "Disparando e processando Jobs" },
+      {
+        "type": "code",
+        "content": "// Disparar o Job para a fila (no Controller)\nEnviarEmailBoasVindas::dispatch($user);\n\n// Disparar com delay de 5 minutos\nEnviarEmailBoasVindas::dispatch($user)->delay(now()->addMinutes(5));\n\n// Processar a fila (em produção, use Supervisor)\nphp artisan queue:work\n\n// Em desenvolvimento, processar um job de cada vez\nphp artisan queue:listen",
+        "language": "bash"
+      },
+      {
+        "type": "callout",
+        "content": "Configure QUEUE_CONNECTION=database no .env e rode `php artisan queue:table && migrate` para usar o banco como driver de fila — sem precisar de Redis em desenvolvimento.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "Jobs implementam ShouldQueue e a lógica vai no método handle()",
+    "::dispatch() envia o Job para a fila sem bloquear a requisição",
+    "->delay() adia a execução do Job por um período",
+    "Em produção, use Supervisor para manter queue:work sempre rodando"
+  ],
+  "commonMistakes": [
+    "Injetar objetos Eloquent sem cuidado — o Model é serializado, dados podem estar desatualizados ao processar",
+    "Não definir $tries — em caso de erro, o Job tenta infinitamente e trava a fila"
+  ],
+  "realWorldExample": "Ao criar conta em qualquer SaaS, o email de boas-vindas é enviado via Job em background. O usuário não espera o email ser enviado para ver a tela de confirmação.",
+  "encouragement": "Filas são o que diferencia uma aplicação profissional de uma amadora. Você está chegando no nível sênior do Laravel!"
+}

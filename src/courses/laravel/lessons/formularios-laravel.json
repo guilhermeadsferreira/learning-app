@@ -1,0 +1,56 @@
+{
+  "id": "formularios-laravel",
+  "courseId": "laravel",
+  "moduleId": "formularios-validacao",
+  "title": "Formulários com Blade e CSRF",
+  "type": "explanation",
+  "xp": 10,
+  "difficulty": "intermediate",
+  "analogy": "O token CSRF é como um carimbo de segurança num cheque. Sem ele, qualquer site malicioso poderia enviar formulários em nome do seu usuário. Com o @csrf do Blade, cada formulário tem um carimbo único que o servidor verifica antes de processar.",
+  "content": {
+    "sections": [
+      { "type": "heading", "content": "Formulários no Blade" },
+      {
+        "type": "paragraph",
+        "content": "Todo formulário POST no Laravel precisa do token CSRF para proteção contra ataques cross-site. O Blade oferece a diretiva @csrf que insere um campo hidden com o token automaticamente."
+      },
+      {
+        "type": "code",
+        "content": "{{-- resources/views/produtos/create.blade.php --}}\n<form action=\"{{ route('produtos.store') }}\" method=\"POST\">\n    @csrf\n    {{-- Gera: <input type=\"hidden\" name=\"_token\" value=\"...\"> --}}\n\n    <label for=\"nome\">Nome do Produto</label>\n    <input type=\"text\" id=\"nome\" name=\"nome\" value=\"{{ old('nome') }}\">\n\n    <label for=\"preco\">Preço</label>\n    <input type=\"number\" id=\"preco\" name=\"preco\" step=\"0.01\" value=\"{{ old('preco') }}\">\n\n    <button type=\"submit\">Salvar</button>\n</form>",
+        "language": "html"
+      },
+      { "type": "heading", "content": "Métodos PUT, PATCH e DELETE" },
+      {
+        "type": "paragraph",
+        "content": "Browsers só suportam GET e POST em formulários HTML. Para usar PUT, PATCH ou DELETE, adicione a diretiva @method com o método desejado."
+      },
+      {
+        "type": "code",
+        "content": "{{-- Formulário de edição (PUT) --}}\n<form action=\"{{ route('produtos.update', $produto->id) }}\" method=\"POST\">\n    @csrf\n    @method('PUT')\n    {{-- Gera: <input type=\"hidden\" name=\"_method\" value=\"PUT\"> --}}\n\n    <input type=\"text\" name=\"nome\" value=\"{{ old('nome', $produto->nome) }}\">\n    <button type=\"submit\">Atualizar</button>\n</form>",
+        "language": "html"
+      },
+      { "type": "heading", "content": "A função old()" },
+      {
+        "type": "paragraph",
+        "content": "old('campo') recupera o valor anterior digitado pelo usuário após um erro de validação. Isso evita que o usuário precise redigitar tudo quando um campo é inválido."
+      },
+      {
+        "type": "callout",
+        "content": "Sempre use old('campo', $modelo->campo) em formulários de edição: o primeiro argumento restaura após erro de validação, o segundo é o valor atual do registro.",
+        "variant": "tip"
+      }
+    ]
+  },
+  "keyTakeaways": [
+    "@csrf deve estar em todo formulário POST — o Laravel rejeita sem ele (419 error)",
+    "@method('PUT') simula métodos HTTP não suportados por browsers",
+    "old('campo') restaura o valor digitado após falha de validação",
+    "Use old('campo', $model->campo) em formulários de edição"
+  ],
+  "commonMistakes": [
+    "Esquecer @csrf — a requisição retorna erro 419 (Page Expired)",
+    "Esquecer @method em formulários de update/delete — a rota não é encontrada"
+  ],
+  "realWorldExample": "Um formulário de cadastro usa @csrf para segurança, old() para preservar os dados em caso de erro, e @method('PUT') nos formulários de edição.",
+  "encouragement": "Formulários seguros são fundamentais em qualquer aplicação web. Laravel torna isso simples e automático."
+}
