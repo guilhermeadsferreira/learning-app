@@ -45,14 +45,10 @@ Exemplos:
 - `fix(editor): corrige preview que não atualizava`
 - `docs(content-generation): generaliza para gestão e ferramentas`
 
-## 4. Confirmar com o usuário
+## 4. Executar commit
 
-Apresente a mensagem proposta e pergunte: "Posso commitar com essa mensagem?"
+Com a mensagem gerada, execute diretamente (sem perguntar): `git add . && git commit -m "mensagem"`
 
-## 5. Executar commit
-
-Após confirmação: `git add . && git commit -m "mensagem"`
-
-## 6. Push
+## 5. Push
 
 Após o commit, execute `git push` para enviar as alterações ao remoto.
