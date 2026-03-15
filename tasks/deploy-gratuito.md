@@ -1,6 +1,8 @@
 # Deploy gratuito da aplicação
 
-**Status:** pendente
+**Status:** concluído
+
+**URL:** https://learning-app-delta-kohl.vercel.app/
 
 ---
 
@@ -8,26 +10,27 @@
 
 Investigar e implementar o deploy gratuito do projeto (SPA React + Vite).
 
-## Contexto
+## Decisão
 
-A aplicação é um SPA estático (sem backend próprio). Precisa de uma solução de hospedagem gratuita que suporte roteamento client-side (React Router).
+**Plataforma escolhida: Vercel**
 
-## Opções a comparar
+Justificativa:
 
-- Vercel
-- Render
-- Netlify
-- GitHub Pages
-- Outras alternativas relevantes
+- Zero configuração para Vite — conecta o repo e funciona
+- SPA routing automático (sem hacks de 404.html)
+- Tier gratuito generoso: 100 GB bandwidth, 6000 min de build/mês
+- Preview deploys automáticos por branch/PR
+- Edge network global, sem cold start
 
-## Critérios de decisão
+Alternativas consideradas:
 
-- Facilidade de configuração (ideal: conectar repo e funcionar)
-- Suporte a SPA com client-side routing
-- Custo zero no tier gratuito
-- Tempo de cold start / performance
-- Limites do plano gratuito (bandwidth, builds, etc.)
+- **Netlify**: bom, mas limite de build menor (300 min/mês) e precisa de `_redirects` manual
+- **Cloudflare Pages**: bandwidth ilimitado, mas setup inicial menos intuitivo
+- **GitHub Pages**: SPA routing problemático (hack via 404.html)
+- **Render**: builds mais lentos, menos automatizado
 
-## Entregável
+## Configuração
 
-Escolher a melhor opção, justificar, e configurar o deploy.
+- `vercel.json` na raiz com rewrite rules para SPA routing
+- Deploy automático a cada push na branch `main`
+- Env vars de API (IA) não configuradas na Vercel — chaves são gerenciadas pelo usuário via UI

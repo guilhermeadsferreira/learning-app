@@ -2,6 +2,8 @@
 
 Plataforma web gamificada de aprendizado técnico. O primeiro curso disponível é **React Fundamentals**.
 
+**Acesse:** https://learning-app-delta-kohl.vercel.app/
+
 ## Stack
 
 - React 18 + TypeScript
