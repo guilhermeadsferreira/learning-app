@@ -207,7 +207,11 @@ export function LessonPage() {
 
         {isQuiz && lesson.quiz && (
           <>
-            <QuizCard questions={lesson.quiz} onAllAnswered={handleComplete} />
+            <QuizCard
+              questions={lesson.quiz}
+              onAllAnswered={handleComplete}
+              isCompleted={isLessonCompleted(lessonId)}
+            />
             {feedback && (
               <FeedbackCard
                 type={feedback.type}

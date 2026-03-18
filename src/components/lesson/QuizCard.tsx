@@ -6,10 +6,19 @@ import { CheckCircle2, XCircle } from 'lucide-react'
 interface QuizCardProps {
   questions: QuizQuestion[]
   onAllAnswered?: () => void
+  isCompleted?: boolean
 }
 
-export function QuizCard({ questions, onAllAnswered }: QuizCardProps) {
-  const [answers, setAnswers] = useState<Record<number, string>>({})
+export function QuizCard({ questions, onAllAnswered, isCompleted = false }: QuizCardProps) {
+  const [answers, setAnswers] = useState<Record<number, string>>(() => {
+    if (!isCompleted) return {}
+    return Object.fromEntries(
+      questions.map((q, i) => {
+        const correct = q.options.find((o) => o.isCorrect)
+        return [i, correct?.id ?? '']
+      })
+    )
+  })
 
   const handleSelect = (questionIndex: number, optionId: string) => {
     if (answers[questionIndex] !== undefined) return // já respondeu
