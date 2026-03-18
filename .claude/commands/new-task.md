@@ -10,15 +10,15 @@ Crie uma nova task de projeto com base no contexto abaixo.
 
 A partir de `$ARGUMENTS`, determine a **categoria** da task:
 
-| Categoria         | Quando usar                                                | Artefato esperado                                      |
-| ----------------- | ---------------------------------------------------------- | ------------------------------------------------------ |
-| `feature`         | Nova funcionalidade de produto                             | Código implementado                                    |
-| `refactor`        | Melhoria interna sem mudança de comportamento              | Código refatorado                                      |
-| `conteúdo`        | Criação de curso ou lição                                  | JSON em `src/courses/`                                 |
-| `decisão-técnica` | Pesquisa + decisão arquitetural sem implementação imediata | ADR em `documents/tech/adrs/`                          |
-| `auditoria`       | Revisão de qualidade (código, conteúdo, arquitetura)       | Relatório + correções                                  |
-| `produto`         | Estratégia, identidade, PRD, backlog                       | Documento em `pm-agent/projects/study-app/docs/`       |
-| `infra`           | Deploy, build, CI/CD, configuração de ambiente             | Config + documentação                                  |
+| Categoria         | Quando usar                                                | Artefato esperado                                |
+| ----------------- | ---------------------------------------------------------- | ------------------------------------------------ |
+| `feature`         | Nova funcionalidade de produto                             | Código implementado                              |
+| `refactor`        | Melhoria interna sem mudança de comportamento              | Código refatorado                                |
+| `conteúdo`        | Criação de curso ou lição                                  | JSON em `src/courses/`                           |
+| `decisão-técnica` | Pesquisa + decisão arquitetural sem implementação imediata | ADR em `documents/tech/adrs/`                    |
+| `auditoria`       | Revisão de qualidade (código, conteúdo, arquitetura)       | Relatório + correções                            |
+| `produto`         | Estratégia, identidade, PRD, backlog                       | Documento em `pm-agent/projects/study-app/docs/` |
+| `infra`           | Deploy, build, CI/CD, configuração de ambiente             | Config + documentação                            |
 
 Se o contexto for vago, infira a categoria e confirme com o usuário antes de prosseguir.
 
@@ -29,6 +29,7 @@ Se o contexto for vago, infira a categoria e confirme com o usuário antes de pr
 Aplique o mesmo fluxo do `/write-task` do pm-agent:
 
 Se a task não estiver clara, pergunte:
+
 - Para quem é essa task? (papel do usuário ou stakeholder)
 - Qual o objetivo? (o que a pessoa quer fazer ou conseguir)
 - Como saberemos que está pronto? (critério de aceite principal)
@@ -62,6 +63,7 @@ Onde `{nome-da-task}` é o título em kebab-case (ex: `daily-streak`, `curso-pos
 **User story:** Como {papel}, quero {ação}, para {benefício}.
 
 **Critérios de aceite:**
+
 - [ ] {critério 1}
 - [ ] {critério 2}
 - [ ] {critério 3}
@@ -70,6 +72,7 @@ Onde `{nome-da-task}` é o título em kebab-case (ex: `daily-streak`, `curso-pos
 ```
 
 Após criar o arquivo, adicione uma entrada em:
+
 ```
 /Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/backlog.md
 ```

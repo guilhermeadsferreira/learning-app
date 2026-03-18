@@ -1,7 +1,7 @@
 # PRD Técnico — Kaizen.dev (study-app)
 
 > Documento vivo — atualizar a cada mudança de stack, arquitetura, schema ou convenção técnica relevante.
-> **Última atualização:** 2026-03-18 (auth + Supabase)
+> **Última atualização:** 2026-03-18 (redesign visual home + course page)
 
 ---
 
@@ -43,7 +43,8 @@ src/
 │                     abstração para Claude, OpenAI, OpenRouter
 ├── services/supabase/ → client.ts, auth.ts, progress.ts
 │                     única camada que importa @supabase/supabase-js
-└── components/     → editor/, gamification/, layout/, lesson/, ui/
+└── components/     → editor/, gamification/, home/, layout/, lesson/, ui/
+│                     home/ inclui courseAccent.ts — utilitário de accent por tag
 ```
 
 **Princípio:** `engine/` é domínio puro — zero dependências de React, Vite ou APIs externas. `services/` é a única camada que faz I/O externo (APIs de IA + Supabase). `hooks/` conecta engine + services à UI.
