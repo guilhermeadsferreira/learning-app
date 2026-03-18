@@ -10,15 +10,15 @@ Crie uma nova task de projeto com base no contexto abaixo.
 
 A partir de `$ARGUMENTS`, determine a **categoria** da task. Use a tabela abaixo como guia:
 
-| Categoria | Quando usar | Artefato de saída esperado |
-|-----------|-------------|---------------------------|
-| `feature` | Nova funcionalidade de produto | Código implementado |
-| `refactor` | Melhoria interna sem mudança de comportamento | Código refatorado |
-| `conteúdo` | Criação de curso ou lição | JSON em `src/courses/` |
-| `decisão-técnica` | Pesquisa + decisão arquitetural sem implementação imediata | ADR em `documents/tech/adrs/` |
-| `auditoria` | Revisão de qualidade (código, conteúdo, arquitetura) | Relatório + correções |
-| `produto` | Estratégia, identidade, PRD, backlog | Documento em `documents/product/` |
-| `infra` | Deploy, build, CI/CD, configuração de ambiente | Config + documentação |
+| Categoria         | Quando usar                                                | Artefato de saída esperado                                                                            |
+| ----------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `feature`         | Nova funcionalidade de produto                             | Código implementado                                                                                   |
+| `refactor`        | Melhoria interna sem mudança de comportamento              | Código refatorado                                                                                     |
+| `conteúdo`        | Criação de curso ou lição                                  | JSON em `src/courses/`                                                                                |
+| `decisão-técnica` | Pesquisa + decisão arquitetural sem implementação imediata | ADR em `documents/tech/adrs/`                                                                         |
+| `auditoria`       | Revisão de qualidade (código, conteúdo, arquitetura)       | Relatório + correções                                                                                 |
+| `produto`         | Estratégia, identidade, PRD, backlog                       | Documento em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/` |
+| `infra`           | Deploy, build, CI/CD, configuração de ambiente             | Config + documentação                                                                                 |
 
 Se o contexto for vago, infira a categoria e confirme com o usuário antes de prosseguir.
 
@@ -36,7 +36,7 @@ Uma frase clara sobre o que deve ser alcançado.
 
 Explique o cenário atual, por que essa task é necessária e como ela se encaixa no projeto. Consulte a arquitetura e documentação do projeto quando relevante:
 
-- `documents/product/strategy/prd.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/PRD.md`
 - `documents/tech/`
 - Estrutura atual em `src/`
 
@@ -60,7 +60,7 @@ Descreva o resultado concreto esperado com base na categoria:
 - `conteúdo` → diretório do curso em `src/courses/`
 - `decisão-técnica` → `documents/tech/adrs/ADR-NNN-titulo.md`
 - `auditoria` → relatório inline ou arquivo em `documents/`
-- `produto` → arquivo em `documents/product/`
+- `produto` → arquivo em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/`
 
 ---
 
@@ -69,10 +69,12 @@ Descreva o resultado concreto esperado com base na categoria:
 Crie o arquivo em:
 
 ```
-tasks/{nome-da-task}.md
+/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/backlog/{nome-da-task}.md
 ```
 
 Onde `{nome-da-task}` é o título em kebab-case (ex: `deploy-gratuito`, `sistema-de-achievements`).
+
+Após criar o arquivo, adicione uma entrada em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/backlog.md`.
 
 ### Formato do arquivo
 
@@ -125,7 +127,7 @@ Apresente um resumo da task criada:
 Task criada: {título}
 Categoria: {categoria}
 Artefato: {entregável}
-Arquivo: tasks/{nome-da-task}.md
+Arquivo: pm-agent/projects/study-app/tasks/backlog/{nome-da-task}.md
 Escopo: {n} etapas
 ```
 

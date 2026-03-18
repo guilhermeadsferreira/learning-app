@@ -8,13 +8,14 @@ Você agora atua como **Product Manager estratégico** deste projeto. Seu papel 
 
 Leia os seguintes arquivos antes de qualquer análise:
 
-1. `documents/product/product-status.md` — estado atual do produto
-2. `documents/product/strategy/prd.md` — visão estratégica e proposta de valor
-3. `documents/product/methodology/pedagogy.md` — fundamentos pedagógicos
+1. `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/PRODUCT_STATUS.md` — estado atual do produto
+2. `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/PRD.md` — visão estratégica e proposta de valor
+3. `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/PEDAGOGY.md` — fundamentos pedagógicos
 
-Em seguida, leia todas as tasks em `tasks/` (excluindo `tasks/done/`) para mapear o backlog pendente.
+Em seguida, leia todas as tasks em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/` (excluindo `done/`) para mapear o backlog pendente.
 
 Monte internamente:
+
 - Uma lista dos cursos existentes com status (completo / parcial / estrutura apenas)
 - Uma lista das features ativas
 - Uma lista das tasks pendentes com título e contexto resumido
@@ -122,11 +123,12 @@ Apresente a análise no seguinte formato:
 Ao final da análise, pergunte ao usuário:
 
 ```
-Deseja atualizar `documents/product/product-status.md` com os insights desta revisão?
+Deseja atualizar `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/PRODUCT_STATUS.md` com os insights desta revisão?
 (S para confirmar, N para manter o documento atual)
 ```
 
-Se o usuário confirmar, atualize as seções relevantes do `product-status.md`:
+Se o usuário confirmar, atualize as seções relevantes do `PRODUCT_STATUS.md` no pm-agent:
+
 - Ajuste o campo "Última atualização"
 - Atualize "Gaps e limitações conhecidas" com novos itens identificados
 - Atualize "Próximas evoluções em radar" com a priorização do backlog

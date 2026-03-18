@@ -6,9 +6,9 @@ Adicione uma nova lição ao curso com base nas informações abaixo.
 
 Consulte como fonte de verdade:
 
-- `documents/product/methodology/lesson_schema.md`
-- `documents/product/methodology/content_generation.md`
-- `documents/product/methodology/pedagogy.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/lesson_schema.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/content_generation.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/PEDAGOGY.md`
 
 ---
 
@@ -46,7 +46,7 @@ Se o tema for **conceitual** (gestão, soft skills), pule esta etapa.
 
 ## 3. Gerar JSON da lição
 
-Siga o schema em `documents/product/methodology/lesson_schema.md` e as diretrizes em `documents/product/methodology/content_generation.md`:
+Siga o schema em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/lesson_schema.md` e as diretrizes em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/content_generation.md`:
 
 ### Campos obrigatórios
 

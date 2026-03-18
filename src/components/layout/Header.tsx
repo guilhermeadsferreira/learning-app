@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router'
-import { Menu, Settings } from 'lucide-react'
+import { Menu, Settings, Github } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { XPBadge } from '@/components/gamification/XPBadge'
 import { ProgressBar } from '@/components/gamification/ProgressBar'
@@ -8,6 +8,7 @@ import { useProgress } from '@/hooks/useProgress'
 import { useCourse } from '@/hooks/useCourse'
 import { getCourse } from '@/courses'
 import { useSettingsDrawer } from '@/hooks/useSettingsDrawer'
+import { useAuth } from '@/hooks/useAuth'
 import { getAllProviders, getApiKey } from '@/services/ai'
 import { cn } from '@/lib/utils'
 
@@ -20,6 +21,7 @@ export function Header({ className, onMobileMenuClick }: HeaderProps) {
   const { progress } = useProgress()
   const { courseId } = useCourse()
   const { openSettings } = useSettingsDrawer()
+  const { user, isLoading: isAuthLoading, signInWithGitHub } = useAuth()
   const needsApiKeyConfig = !getAllProviders().some((p) => getApiKey(p.id))
   const course = courseId ? getCourse(courseId) : null
 
@@ -61,7 +63,28 @@ export function Header({ className, onMobileMenuClick }: HeaderProps) {
         </Link>
         {course && <span className="text-slate-400">/ {course.title}</span>}
       </div>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-3">
+        {!isAuthLoading && !user && (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => signInWithGitHub()}
+            className="gap-1.5 border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800 hover:text-slate-100"
+          >
+            <Github className="size-4" />
+            <span className="hidden sm:inline">Entrar</span>
+          </Button>
+        )}
+        {user && (
+          <button
+            onClick={openSettings}
+            className="flex size-7 items-center justify-center rounded-full bg-violet-500/20 text-xs font-semibold text-violet-300 ring-1 ring-violet-500/30 transition-colors hover:bg-violet-500/30"
+            aria-label="Conta"
+            title={user.user_metadata?.full_name ?? user.email}
+          >
+            {(user.user_metadata?.full_name ?? user.email ?? '?')[0].toUpperCase()}
+          </button>
+        )}
         <Button
           variant="ghost"
           size="icon"

@@ -25,22 +25,12 @@
     {
       "id": "rotas-controllers",
       "title": "Roteamento e Controllers",
-      "lessons": [
-        "rotas-basicas",
-        "controllers",
-        "rotas-com-parametros",
-        "quiz-rotas-controllers"
-      ]
+      "lessons": ["rotas-basicas", "controllers", "rotas-com-parametros", "quiz-rotas-controllers"]
     },
     {
       "id": "blade",
       "title": "Views com Blade",
-      "lessons": [
-        "blade-introducao",
-        "blade-diretivas",
-        "blade-layouts",
-        "quiz-blade"
-      ]
+      "lessons": ["blade-introducao", "blade-diretivas", "blade-layouts", "quiz-blade"]
     },
     {
       "id": "eloquent",
@@ -56,51 +46,27 @@
     {
       "id": "formularios-validacao",
       "title": "Formulários e Validação",
-      "lessons": [
-        "formularios-laravel",
-        "validacao-requests",
-        "form-request",
-        "quiz-validacao"
-      ]
+      "lessons": ["formularios-laravel", "validacao-requests", "form-request", "quiz-validacao"]
     },
     {
       "id": "autenticacao",
       "title": "Autenticação e Autorização",
-      "lessons": [
-        "autenticacao-laravel",
-        "middleware",
-        "policies-gates",
-        "quiz-autenticacao"
-      ]
+      "lessons": ["autenticacao-laravel", "middleware", "policies-gates", "quiz-autenticacao"]
     },
     {
       "id": "apis",
       "title": "APIs REST",
-      "lessons": [
-        "api-rest-introducao",
-        "api-resources",
-        "api-sanctum",
-        "quiz-apis"
-      ]
+      "lessons": ["api-rest-introducao", "api-resources", "api-sanctum", "quiz-apis"]
     },
     {
       "id": "avancado",
       "title": "Filas, Eventos e Cache",
-      "lessons": [
-        "filas-jobs",
-        "eventos-listeners",
-        "cache-laravel",
-        "quiz-avancado"
-      ]
+      "lessons": ["filas-jobs", "eventos-listeners", "cache-laravel", "quiz-avancado"]
     },
     {
       "id": "deploy",
       "title": "Deploy e Boas Práticas",
-      "lessons": [
-        "deploy-laravel",
-        "boas-praticas-laravel",
-        "quiz-final"
-      ]
+      "lessons": ["deploy-laravel", "boas-praticas-laravel", "quiz-final"]
     }
   ]
 }

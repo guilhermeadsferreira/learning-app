@@ -48,7 +48,7 @@ Exemplos:
 
 ## 4. Mover tasks concluídas
 
-Antes de commitar, verifique se há tasks em `tasks/` com **Status: done** ou **Status: concluído** que ainda não foram movidas para `tasks/done/`. Se houver, mova com `git mv`.
+Antes de commitar, verifique se há tasks em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/` com **Status: done** ou **Status: concluído** que ainda não foram movidas para `tasks/done/`. Tasks no pm-agent são movidas diretamente (não via `git mv` do study-app).
 
 ## 5. Executar commit
 

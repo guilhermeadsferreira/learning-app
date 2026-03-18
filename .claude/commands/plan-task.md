@@ -10,12 +10,12 @@ Planeje a execução da task indicada abaixo.
 
 ## 1. Localizar a task
 
-Procure o arquivo correspondente em `tasks/`. O argumento pode ser:
+Procure o arquivo correspondente em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/`. O argumento pode ser:
 
 - O nome exato do arquivo (ex: `deploy-gratuito`)
 - Um trecho do título (ex: `deploy`, `persistência`)
 
-Se não encontrar correspondência, liste as tasks disponíveis em `tasks/` e pergunte qual o usuário quis dizer.
+Se não encontrar correspondência, liste as tasks disponíveis em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/` e pergunte qual o usuário quis dizer.
 
 ---
 
@@ -50,13 +50,14 @@ O conteúdo e a profundidade do plano dependem da **categoria da task**:
 O entregável é um ADR — não há implementação de código nesta task.
 
 O plano deve incluir:
+
 - Mapeamento do estado atual relevante
 - Opções a avaliar (mínimo 2, máximo 4)
 - Critérios de decisão
 - Próximo número de ADR disponível em `documents/tech/adrs/` (verificar ADRs existentes)
 - Etapa final: criar `documents/tech/adrs/ADR-NNN-titulo-descritivo.md` usando o template em `_template.md`
-- Atualizar `product-status.md` se a decisão impactar o roadmap
-- Marcar task como `Status: concluído` e mover para `tasks/done/`
+- Atualizar `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/PRODUCT_STATUS.md` se a decisão impactar o roadmap
+- Marcar task como `Status: concluído` e mover para `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/done/`
 
 **Após apresentar o plano:** perguntar se o usuário quer que a pesquisa e a escrita do ADR sejam feitas imediatamente.
 
@@ -71,11 +72,12 @@ O plano deve incluir:
 **Decisões técnicas** — opções com prós/contras e recomendação.
 
 **Etapas de execução** — ordenadas, com:
+
 - O que será feito
 - Quais arquivos serão criados ou modificados
 - Dependências com outras etapas
 
-**Última etapa obrigatória:** marcar a task como `Status: concluído` e mover para `tasks/done/`.
+**Última etapa obrigatória:** marcar a task como `Status: concluído` e mover para `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/tasks/done/`.
 
 **Riscos e pontos de atenção.**
 
@@ -86,6 +88,7 @@ O plano deve incluir:
 ### Se `conteúdo`
 
 Redirecionar para `/new-course` ou `/new-content` conforme o escopo. O plano deve:
+
 - Identificar se é um curso novo ou lição em curso existente
 - Listar os módulos/lições a criar
 - Confirmar o courseId e a estrutura de arquivos
@@ -97,6 +100,7 @@ Redirecionar para `/new-course` ou `/new-content` conforme o escopo. O plano dev
 ### Se `auditoria`
 
 O plano deve incluir:
+
 - Escopo da auditoria (quais arquivos, quais critérios)
 - Metodologia (o que será verificado e como)
 - Entregável: relatório inline ou arquivo em `documents/`

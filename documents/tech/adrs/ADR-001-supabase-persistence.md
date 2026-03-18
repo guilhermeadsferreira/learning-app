@@ -13,14 +13,15 @@ A evolução para persistência real por usuário exige decisões acopladas de b
 
 **Estado atual do localStorage:**
 
-| Chave | Conteúdo | Destino futuro |
-|-------|----------|----------------|
-| `learning-engine-progress` | `{ completedLessonIds[], currentLessonId, xp }` | Migrar para Supabase no primeiro login |
-| `learning-engine-ai-provider` | string (claude/openai/openrouter) | Migrar para `user_settings` (opcional) |
-| `learning-engine-api-key-{provider}` | string (chave secreta) | **Manter em localStorage — nunca sincronizar** |
-| `learning-engine-model-{provider}` | string | Migrar para `user_settings` (opcional) |
+| Chave                                | Conteúdo                                        | Destino futuro                                 |
+| ------------------------------------ | ----------------------------------------------- | ---------------------------------------------- |
+| `learning-engine-progress`           | `{ completedLessonIds[], currentLessonId, xp }` | Migrar para Supabase no primeiro login         |
+| `learning-engine-ai-provider`        | string (claude/openai/openrouter)               | Migrar para `user_settings` (opcional)         |
+| `learning-engine-api-key-{provider}` | string (chave secreta)                          | **Manter em localStorage — nunca sincronizar** |
+| `learning-engine-model-{provider}`   | string                                          | Migrar para `user_settings` (opcional)         |
 
 **Restrições confirmadas:**
+
 - Stack frontend: Vite + Vercel Functions (sem migração para Next.js)
 - Auth: OAuth apenas (GitHub e/ou Google — sem email/senha)
 - Guest mode mantido: localStorage continua para usuários sem conta

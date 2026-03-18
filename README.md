@@ -183,14 +183,24 @@ Para usar o Professor IA, configure uma API key (Claude ou OpenAI) via interface
 
 ## Documentação interna
 
-| Arquivo                                   | Conteúdo                               |
-| ----------------------------------------- | -------------------------------------- |
-| `documents/product/strategy/prd.md`                | Visão, escopo e próximos passos        |
-| `documents/product/methodology/pedagogy.md`           | Metodologia pedagógica detalhada       |
-| `documents/product/methodology/lesson_schema.md`      | Schema completo de lições              |
-| `documents/product/methodology/course_schema.md`      | Schema de cursos e módulos             |
-| `documents/product/systems/AI_SYSTEM.md`          | Arquitetura do Professor IA            |
-| `documents/product/methodology/content_generation.md` | Prompt e guia para geração de conteúdo |
+### Produto (pm-agent)
+
+| Arquivo                                                         | Conteúdo                               |
+| --------------------------------------------------------------- | -------------------------------------- |
+| `pm-agent/projects/study-app/PRD.md`                            | Visão, escopo e próximos passos        |
+| `pm-agent/projects/study-app/docs/PEDAGOGY.md`                  | Metodologia pedagógica detalhada       |
+| `pm-agent/projects/study-app/methodology/lesson_schema.md`      | Schema completo de lições              |
+| `pm-agent/projects/study-app/methodology/course_schema.md`      | Schema de cursos e módulos             |
+| `pm-agent/projects/study-app/docs/AI_SYSTEM.md`                 | Arquitetura do Professor IA            |
+| `pm-agent/projects/study-app/methodology/content_generation.md` | Prompt e guia para geração de conteúdo |
+
+### Técnico (este repo)
+
+| Arquivo                | Conteúdo                            |
+| ---------------------- | ----------------------------------- |
+| `PRD_TECH.md`          | Stack, arquitetura, schema, rotas   |
+| `documents/tech/`      | React e React Router best practices |
+| `documents/tech/adrs/` | Architecture Decision Records       |
 
 ---
 

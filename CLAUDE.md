@@ -2,6 +2,54 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## PM Agent
+
+Este projeto é gerenciado pelo PM Agent. Todo o contexto de produto vive lá:
+
+**Caminho:** `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/`
+
+```
+pm-agent/projects/study-app/
+├── README.md          → visão geral, status, decisões-chave
+├── PRD.md             → requisitos e escopo
+├── decisions/         → PDRs (decisões arquiteturais e de produto)
+├── tasks/
+│   ├── backlog.md     → tasks priorizadas
+│   ├── active.md      → em andamento
+│   └── done/          → tasks concluídas com contexto completo
+├── docs/              → pitch, product status, pedagogy, AI system
+└── cycles/            → ciclos Shape Up planejados
+```
+
+Antes de implementar qualquer feature, consulte `tasks/backlog.md` ou `tasks/active.md` para entender o escopo e critérios de aceite.
+
+## Living Documentation
+
+A documentação de produto vive no PM Agent. A documentação técnica vive neste repo. Ao fazer qualquer alteração relevante, atualize os arquivos correspondentes:
+
+| Documento                | Onde            | Quando atualizar                                                  |
+| ------------------------ | --------------- | ----------------------------------------------------------------- |
+| `docs/PRODUCT_STATUS.md` | pm-agent        | Ao adicionar, concluir ou remover uma feature                     |
+| `docs/PITCH.md`          | pm-agent        | Ao mudar escopo ou público-alvo                                   |
+| `PRD_TECH.md`            | raiz deste repo | Ao mudar stack, arquitetura, schema, rotas ou convenções técnicas |
+
+**Regra crítica: documentação é parte da implementação, não etapa separada.**
+
+Atualizar os docs na mesma tacada que o código — nunca depois, nunca só se cobrado. Se o código mudou e o doc não, a implementação está incompleta.
+
+**Checklist pré-commit obrigatório:**
+
+- [ ] Adicionei, conclui ou removi uma feature? → atualizar `docs/PRODUCT_STATUS.md` no pm-agent
+- [ ] Mudei stack, arquitetura, schema, rotas ou convenções técnicas? → atualizar `PRD_TECH.md` neste repo
+- [ ] Mudei escopo ou público-alvo? → atualizar `docs/PITCH.md` no pm-agent
+- [ ] Conclui uma task? → mover de `tasks/active.md` para `tasks/done/` no pm-agent
+- [ ] Atualizei algum doc? → bumpar "Última atualização" nesse doc
+
+## PRD
+
+- Produto: `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/PRD.md`
+- Técnico: `PRD_TECH.md` (raiz deste repo)
+
 ## Commands
 
 ```bash
@@ -40,7 +88,7 @@ This is a client-side-only gamified learning SPA (React 18 + TypeScript + Vite).
 
 ### Content Layer
 
-Courses and lessons are **declarative JSON files** loaded via Vite's `import.meta.glob` in `src/courses/index.ts`. Adding a new course means creating a directory under `src/courses/` with a `course.json` and lesson files — no code changes needed. Schemas are documented in `documents/product/methodology/course_schema.md` and `documents/product/methodology/lesson_schema.md`.
+Courses and lessons are **declarative JSON files** loaded via Vite's `import.meta.glob` in `src/courses/index.ts`. Adding a new course means creating a directory under `src/courses/` with a `course.json` and lesson files — no code changes needed. Schemas are documented in `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/course_schema.md` and `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/lesson_schema.md`.
 
 ### State Management
 
@@ -61,19 +109,20 @@ Business logic lives in hooks, not components:
 
 ### Key Directories
 
-| Path                        | Purpose                                            |
-| --------------------------- | -------------------------------------------------- |
-| `src/engine/types.ts`       | All shared TypeScript interfaces — start here      |
-| `src/engine/`               | Domain logic: types, XP rules, progress mutations, localStorage persistence |
-| `src/services/`             | External API integrations (Anthropic, OpenAI, OpenRouter)                   |
-| `src/hooks/`                | Custom hooks + context providers (useProgress, useSettingsDrawer, etc.) |
-| `src/courses/`              | JSON content (courses + lessons)                   |
-| `src/components/lesson/`    | Lesson rendering, challenges, quizzes, AI feedback |
-| `src/components/ui/`        | shadcn/ui components                               |
-| `documents/product/`        | PRD, pedagogy, schemas, AI system design           |
-| `documents/tech/`           | React and React Router best practices              |
-| `documents/tech/adrs/`      | Architecture Decision Records (ADR-NNN-titulo.md)  |
-| `tasks/`                    | Project task files (pendente/done)                 |
+| Path                                       | Purpose                                                                     |
+| ------------------------------------------ | --------------------------------------------------------------------------- |
+| `src/engine/types.ts`                      | All shared TypeScript interfaces — start here                               |
+| `src/engine/`                              | Domain logic: types, XP rules, progress mutations, localStorage persistence |
+| `src/services/`                            | External API integrations (Anthropic, OpenAI, OpenRouter)                   |
+| `src/hooks/`                               | Custom hooks + context providers (useProgress, useSettingsDrawer, etc.)     |
+| `src/courses/`                             | JSON content (courses + lessons)                                            |
+| `src/components/lesson/`                   | Lesson rendering, challenges, quizzes, AI feedback                          |
+| `src/components/ui/`                       | shadcn/ui components                                                        |
+| `documents/tech/`                          | React and React Router best practices                                       |
+| `documents/tech/adrs/`                     | Architecture Decision Records (ADR-NNN-titulo.md)                           |
+| `pm-agent/projects/study-app/methodology/` | Schemas de curso e lição, guia de geração de conteúdo                       |
+| `pm-agent/projects/study-app/docs/`        | PRD, pedagogy, AI system, product status, pitch                             |
+| `pm-agent/projects/study-app/tasks/`       | Tasks do projeto (backlog/active/done)                                      |
 
 > **Fronteira `engine/` vs `services/`:** `engine/` cobre lógica de domínio e persistência local (`localStorage`). Isso é uma exceção intencional à regra "sem I/O" — localStorage é storage interno, não integração externa. I/O externo (chamadas a APIs de terceiros) pertence exclusivamente a `services/`.
 
@@ -112,15 +161,15 @@ Anti-patterns a evitar:
 
 Após qualquer alteração, verifique se a documentação precisa ser atualizada:
 
-| Gatilho                                  | Documentos a verificar                                           |
-| ---------------------------------------- | ---------------------------------------------------------------- |
-| Alteração em `src/engine/types.ts`       | `lesson_schema.md`, `course_schema.md`, `content_generation.md`  |
-| Nova lição JSON                          | Campos obrigatórios presentes + ID referenciado no `course.json` |
-| Novo componente/página/serviço           | `prd.md` §12 (Arquitetura)                                       |
-| Alteração no fluxo pedagógico            | `pedagogy.md`                                                    |
-| Alteração em `src/services/ai/`          | `AI_SYSTEM.md`                                                   |
-| Nova feature entregue ou curso publicado | `product-status.md`                                              |
-| Decisão arquitetural tomada              | Criar `documents/tech/adrs/ADR-NNN-titulo.md` (usar `_template.md`) |
+| Gatilho                                  | Documentos a verificar                                                                                      |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Alteração em `src/engine/types.ts`       | `lesson_schema.md`, `course_schema.md`, `content_generation.md` em pm-agent/projects/study-app/methodology/ |
+| Nova lição JSON                          | Campos obrigatórios presentes + ID referenciado no `course.json`                                            |
+| Novo componente/página/serviço           | `PRD.md` em pm-agent/projects/study-app/                                                                    |
+| Alteração no fluxo pedagógico            | `PEDAGOGY.md` em pm-agent/projects/study-app/docs/                                                          |
+| Alteração em `src/services/ai/`          | `AI_SYSTEM.md` em pm-agent/projects/study-app/docs/                                                         |
+| Nova feature entregue ou curso publicado | `PRODUCT_STATUS.md` em pm-agent/projects/study-app/docs/                                                    |
+| Decisão arquitetural tomada              | Criar `documents/tech/adrs/ADR-NNN-titulo.md` (usar `_template.md`)                                         |
 
 **Regra central:** quando há divergência entre código e doc, corrija o documento (não o código), salvo decisão arquitetural explícita. Funcionalidades planejadas mas não implementadas devem ser marcadas como `*(aspiracional — não implementado ainda)*`.
 

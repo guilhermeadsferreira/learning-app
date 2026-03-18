@@ -30,7 +30,7 @@ Uma frase clara sobre o que deve ser alcançado.
 
 Explique o cenário atual, por que essa task é necessária e como ela se encaixa no projeto. Consulte a arquitetura e documentação do projeto quando relevante:
 
-- `documents/product/strategy/prd.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/PRD.md`
 - `documents/tech/`
 - Estrutura atual em `src/`
 

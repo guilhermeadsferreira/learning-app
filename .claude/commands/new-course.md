@@ -6,10 +6,10 @@ Crie um curso completo de ponta a ponta para o tema abaixo.
 
 Consulte como fonte de verdade:
 
-- `documents/product/methodology/course_schema.md`
-- `documents/product/methodology/lesson_schema.md`
-- `documents/product/methodology/content_generation.md`
-- `documents/product/methodology/pedagogy.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/course_schema.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/lesson_schema.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/content_generation.md`
+- `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/docs/PEDAGOGY.md`
 
 ---
 
@@ -18,23 +18,28 @@ Consulte como fonte de verdade:
 Antes de planejar, avalie se o tema tem um roadmap público no roadmap.sh.
 
 **Quando consultar:**
+
 - Linguagens de programação (JavaScript, Python, PHP, Go…)
 - Frameworks e bibliotecas (React, Vue, Laravel, Django…)
 - Ferramentas e plataformas técnicas (Docker, Kubernetes, Git…)
 - Áreas de engenharia (Frontend, Backend, DevOps, Fullstack…)
 
 **Quando NÃO consultar:**
+
 - Cursos conceituais ou de gestão (Arquitetura de Software, Gestão de Pessoas…)
 - Ferramentas de IA / LLMs (Claude Code, Prompt Engineering…)
 - Temas sem correspondência direta no roadmap.sh
 
 **Se viável**, tente buscar em:
+
 ```
 https://roadmap.sh/{slug-do-tema}
 ```
+
 Exemplos: `https://roadmap.sh/react`, `https://roadmap.sh/php`, `https://roadmap.sh/javascript`
 
 Use `WebFetch` para buscar a página. Extraia:
+
 - Tópicos principais listados no roadmap
 - Sequência lógica de aprendizado sugerida
 - Áreas de conhecimento relevantes
@@ -88,7 +93,7 @@ Após aprovação, crie o arquivo:
 src/courses/{courseId}/course.json
 ```
 
-Seguindo o schema em `documents/product/methodology/course_schema.md`.
+Seguindo o schema em `/Users/guilhermeaugusto/Documents/workspace-projects/pm-agent/projects/study-app/methodology/course_schema.md`.
 
 ---
 

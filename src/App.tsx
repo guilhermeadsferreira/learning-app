@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
+import { AuthProvider } from '@/hooks/useAuth'
 import { ProgressProvider } from '@/hooks/useProgress'
 import { AppShell } from '@/components/layout/AppShell'
 import { HomePage } from '@/pages/HomePage'
@@ -9,9 +10,11 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <ProgressProvider>
-        <AppShell />
-      </ProgressProvider>
+      <AuthProvider>
+        <ProgressProvider>
+          <AppShell />
+        </ProgressProvider>
+      </AuthProvider>
     ),
     errorElement: <ErrorPage />,
     children: [
