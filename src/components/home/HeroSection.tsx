@@ -10,11 +10,12 @@ interface HeroSectionProps {
 export function HeroSection({ searchQuery, onSearchChange, className }: HeroSectionProps) {
   return (
     <div className={cn('text-center', className)}>
-      <h1 className="text-3xl font-bold text-slate-50">Learning Engine</h1>
-      <p className="mt-2 text-slate-400">
-        Chega de consumir e só ter a teoria. Lições curtas, prática ativa e feedback de IA.
-      </p>
-      <div className="relative mx-auto mt-6 max-w-md">
+      <h1 className="flex items-center justify-center gap-3 text-3xl font-bold">
+        <span className="text-slate-50">Kaizen.dev</span>
+        <span className="font-normal text-slate-600">—</span>
+        <span className="text-base font-normal text-slate-400">Você, 1% melhor todo dia.</span>
+      </h1>
+      <div className="relative mx-auto mt-6 max-w-lg">
         <Search
           className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500"
           aria-hidden

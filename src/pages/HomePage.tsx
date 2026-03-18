@@ -20,7 +20,7 @@ export function HomePage() {
   const needsApiKeyConfig = !getAllProviders().some((p) => getApiKey(p.id))
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12">
+    <div className="mx-auto max-w-6xl px-6 py-12">
       <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} className="mb-6" />
       <TagFilterBar
         tags={tags}
