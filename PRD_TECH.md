@@ -1,4 +1,4 @@
-# PRD Técnico — Learning Engine (study-app)
+# PRD Técnico — Kaizen.dev (study-app)
 
 > Documento vivo — atualizar a cada mudança de stack, arquitetura, schema ou convenção técnica relevante.
 > **Última atualização:** 2026-03-18 (auth + Supabase)

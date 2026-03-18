@@ -66,7 +66,7 @@ Apresente como tabela ordenada por impacto × esforço.
 Apresente a análise no seguinte formato:
 
 ```
-## Product Review — Learning Engine
+## Product Review — Kaizen.dev
 **Data:** {data atual}
 
 ### Estado do produto em uma frase

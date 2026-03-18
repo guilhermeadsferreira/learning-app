@@ -59,7 +59,7 @@ export function Header({ className, onMobileMenuClick }: HeaderProps) {
           to="/"
           className="text-lg font-semibold text-slate-50 transition-colors hover:text-violet-400"
         >
-          Learning Engine
+          Kaizen.dev
         </Link>
         {course && <span className="text-slate-400">/ {course.title}</span>}
       </div>

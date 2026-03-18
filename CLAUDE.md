@@ -42,7 +42,7 @@ Atualizar os docs na mesma tacada que o código — nunca depois, nunca só se c
 - [ ] Adicionei, conclui ou removi uma feature? → atualizar `docs/PRODUCT_STATUS.md` no pm-agent
 - [ ] Mudei stack, arquitetura, schema, rotas ou convenções técnicas? → atualizar `PRD_TECH.md` neste repo
 - [ ] Mudei escopo ou público-alvo? → atualizar `docs/PITCH.md` no pm-agent
-- [ ] Conclui uma task? → mover de `tasks/active.md` para `tasks/done/` no pm-agent
+- [ ] Conclui uma task? → (1) mover arquivo para `tasks/done/` no pm-agent, (2) remover entrada de `tasks/backlog.md` **e** `tasks/active.md`
 - [ ] Atualizei algum doc? → bumpar "Última atualização" nesse doc
 
 ## PRD

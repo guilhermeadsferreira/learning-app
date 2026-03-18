@@ -7,7 +7,7 @@
 
 ## Contexto
 
-O Learning Engine é um SPA 100% client-side com persistência via `localStorage`. Isso cobre o MVP mas apresenta limites claros: progresso não persiste entre dispositivos, sem perfis, sem analytics real, e fragilidade (apagar o browser zera tudo).
+O Kaizen.dev é um SPA 100% client-side com persistência via `localStorage`. Isso cobre o MVP mas apresenta limites claros: progresso não persiste entre dispositivos, sem perfis, sem analytics real, e fragilidade (apagar o browser zera tudo).
 
 A evolução para persistência real por usuário exige decisões acopladas de banco de dados e autenticação — não dá para escolher um sem considerar o outro.
 
