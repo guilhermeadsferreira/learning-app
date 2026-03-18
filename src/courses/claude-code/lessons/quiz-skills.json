@@ -84,12 +84,36 @@
           "explanation": "Explicações técnicas sem frases de gatilho fazem a skill nunca ser ativada automaticamente."
         }
       ]
+    },
+    {
+      "question": "Qual arquivo é o ponto de entrada obrigatório de uma Skill?",
+      "options": [
+        {
+          "id": "a",
+          "text": "README.md",
+          "isCorrect": false,
+          "explanation": "README.md é documentação, não o ponto de entrada de uma Skill. O arquivo obrigatório é SKILL.md."
+        },
+        {
+          "id": "b",
+          "text": "SKILL.md",
+          "isCorrect": true,
+          "explanation": "Correto! SKILL.md é o arquivo principal da skill — contém o frontmatter com name, description e o conteúdo carregado pelo Claude."
+        },
+        {
+          "id": "c",
+          "text": "index.md",
+          "isCorrect": false,
+          "explanation": "index.md não é reconhecido pelo sistema de Skills. O arquivo correto é SKILL.md."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "Skills carregam automaticamente; commands precisam de /invocação manual",
     "Progressive disclosure: 3 níveis de carregamento para economizar tokens",
-    "Description deve ter O QUE faz + QUANDO usar com frases de gatilho"
+    "Description deve ter O QUE faz + QUANDO usar com frases de gatilho",
+    "SKILL.md é o ponto de entrada obrigatório — contém frontmatter com name e description"
   ],
   "encouragement": "Skills dominadas! Agora vamos para Hooks — o sistema que conecta ações do Claude a automações reais."
 }

@@ -84,12 +84,36 @@
           "explanation": "Esse flag não existe. Use 'claude -c' para continuar a última sessão."
         }
       ]
+    },
+    {
+      "question": "Qual é a forma mais rápida de ver todos os comandos disponíveis dentro do Claude Code?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Digitar 'help' no terminal",
+          "isCorrect": false,
+          "explanation": "O comando 'help' não existe no Claude Code. Para ver os comandos, pressione '/'."
+        },
+        {
+          "id": "b",
+          "text": "Pressionar '/' para abrir o menu de slash commands",
+          "isCorrect": true,
+          "explanation": "Correto! Pressionar '/' exibe todos os slash commands disponíveis, incluindo /help, /clear, /compact e outros."
+        },
+        {
+          "id": "c",
+          "text": "Consultar a documentação online a cada vez",
+          "isCorrect": false,
+          "explanation": "A documentação é útil, mas o acesso mais rápido dentro da sessão é pressionar '/' no input."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "Claude Code é agêntico — age autonomamente para resolver tarefas",
     "A arquitetura tem 3 camadas: Core, Delegation e Extension",
-    "Use 'claude -c' para retomar a última conversa"
+    "Use 'claude -c' para retomar a última conversa",
+    "Pressione '/' para ver todos os slash commands disponíveis"
   ],
   "encouragement": "Fundamentos dominados! Agora vamos explorar todos os recursos da interface."
 }

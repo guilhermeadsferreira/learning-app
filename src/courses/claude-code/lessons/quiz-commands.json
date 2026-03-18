@@ -84,12 +84,36 @@
           "explanation": "description é apenas a descrição exibida na listagem. Para restringir ferramentas, use allowed-tools."
         }
       ]
+    },
+    {
+      "question": "Como você passa argumentos para um custom command ao invocá-lo?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Com flags --arg após o nome do comando",
+          "isCorrect": false,
+          "explanation": "Custom commands não usam flags. O argumento é passado diretamente após o nome: /meu-comando texto aqui."
+        },
+        {
+          "id": "b",
+          "text": "Escrevendo o argumento após o nome: /meu-comando texto aqui — disponível no arquivo como $ARGUMENTS",
+          "isCorrect": true,
+          "explanation": "Correto! Tudo que vem após o nome do comando é capturado na variável $ARGUMENTS dentro do arquivo .md."
+        },
+        {
+          "id": "c",
+          "text": "Editando o arquivo .md do comando antes de usá-lo",
+          "isCorrect": false,
+          "explanation": "Editar o arquivo a cada uso seria impraticável. Use $ARGUMENTS para receber o argumento dinâmico na invocação."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "Comandos do projeto ficam em .claude/commands/ e são compartilhados via git",
     "!`comando` executa bash inline e injeta o output no prompt",
-    "allowed-tools no frontmatter restringe as ferramentas disponíveis para o comando"
+    "allowed-tools no frontmatter restringe as ferramentas disponíveis para o comando",
+    "Argumentos são passados após o nome do comando e acessados via $ARGUMENTS"
   ],
   "encouragement": "Commands dominados! Agora vamos para Skills — o sistema de knowledge que funciona em todas as plataformas Claude."
 }

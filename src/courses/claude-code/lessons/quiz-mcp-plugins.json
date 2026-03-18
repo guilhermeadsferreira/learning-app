@@ -84,12 +84,36 @@
           "explanation": "A analogia especificamente descreve MCP (cozinha/ferramentas) e Skills (receitas/workflows)."
         }
       ]
+    },
+    {
+      "question": "Quais tipos de capacidades um servidor MCP pode expor ao Claude?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Apenas ferramentas (tools)",
+          "isCorrect": false,
+          "explanation": "MCP vai além de ferramentas. Servidores MCP podem expor tools, resources e prompts."
+        },
+        {
+          "id": "b",
+          "text": "Ferramentas (tools), recursos (resources) e prompts",
+          "isCorrect": true,
+          "explanation": "Correto! Tools são ações, Resources são dados acessíveis, Prompts são templates reutilizáveis — os três pilares do MCP."
+        },
+        {
+          "id": "c",
+          "text": "Apenas prompts e templates de código",
+          "isCorrect": false,
+          "explanation": "Prompts são apenas um dos três tipos. MCP também expõe tools (ações) e resources (dados)."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "Escopo project compartilha config MCP via .mcp.json no git",
     "Plugins são bundles que combinam MCP + commands + skills + LSP",
-    "MCP = ferramentas (cozinha), Skills = knowledge de como usar (receitas)"
+    "MCP = ferramentas (cozinha), Skills = knowledge de como usar (receitas)",
+    "Servidores MCP expõem três tipos: tools (ações), resources (dados) e prompts (templates)"
   ],
   "encouragement": "MCP e Plugins dominados! Agora vamos para o próximo nível: delegar tarefas para múltiplos agentes."
 }

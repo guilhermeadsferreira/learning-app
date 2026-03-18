@@ -84,12 +84,36 @@
           "explanation": "Ambos funcionam em qualquer contexto. A diferença é quem escreve: você (CLAUDE.md) ou o Claude (Auto Memory)."
         }
       ]
+    },
+    {
+      "question": "Em qual nível da hierarquia de memória fica o arquivo ~/.claude/CLAUDE.md?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Projeto — válido apenas para o repositório atual",
+          "isCorrect": false,
+          "explanation": "O nível projeto é o CLAUDE.md na raiz do repositório. ~/.claude/CLAUDE.md está no nível do usuário."
+        },
+        {
+          "id": "b",
+          "text": "Usuário — válido para todos os seus projetos",
+          "isCorrect": true,
+          "explanation": "Correto! ~/.claude/CLAUDE.md é o nível de usuário — suas preferências pessoais que se aplicam a qualquer projeto."
+        },
+        {
+          "id": "c",
+          "text": "Sistema — compartilhado com todos os usuários da máquina",
+          "isCorrect": false,
+          "explanation": "Não existe nível de sistema no Claude Code. O mais amplo após o usuário é o nível enterprise (managed settings)."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "CLAUDE.md deve ter menos de 300 linhas para máxima eficácia",
     "CLAUDE.local.md é pessoal e auto-gitignored",
-    "CLAUDE.md = regras intencionais; Auto Memory = aprendizados automáticos"
+    "CLAUDE.md = regras intencionais; Auto Memory = aprendizados automáticos",
+    "~/.claude/CLAUDE.md é o nível de usuário — se aplica a todos os seus projetos"
   ],
   "encouragement": "Memória dominada! Agora você vai aprender a criar comandos personalizados — o poder real de automação."
 }

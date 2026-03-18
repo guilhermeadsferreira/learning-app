@@ -84,12 +84,36 @@
           "explanation": "Debugging com hipóteses concorrentes é um excelente caso de uso para Agent Teams."
         }
       ]
+    },
+    {
+      "question": "O que é o Task Tool no contexto de subagents?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Uma ferramenta para criar e gerenciar listas de tarefas do projeto",
+          "isCorrect": false,
+          "explanation": "O Task Tool não é para gerenciamento de projetos. Ele é o mecanismo que o agente principal usa para delegar trabalho."
+        },
+        {
+          "id": "b",
+          "text": "A ferramenta que o agente principal usa para criar e delegar trabalho a subagents",
+          "isCorrect": true,
+          "explanation": "Correto! O agente principal chama o Task Tool para lançar subagents, que executam em paralelo e retornam resultados."
+        },
+        {
+          "id": "c",
+          "text": "Um plugin externo que precisa ser instalado separadamente",
+          "isCorrect": false,
+          "explanation": "O Task Tool é nativo do Claude Code, não um plugin externo. Está disponível automaticamente para uso em Agent Teams."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "Subagents: isolados, reportam ao principal. Agent Teams: comunicação direta",
     "Ctrl+B para background, /tasks para monitorar",
-    "Agent Teams: bom para cross-layer, evitar para tarefas simples ou mesmo arquivo"
+    "Agent Teams: bom para cross-layer, evitar para tarefas simples ou mesmo arquivo",
+    "Task Tool é nativo — o agente principal o usa para lançar subagents em paralelo"
   ],
   "encouragement": "Agentes dominados! Agora vamos automatizar com Git, CI/CD e GitHub Actions."
 }

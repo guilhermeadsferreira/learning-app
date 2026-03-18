@@ -84,12 +84,36 @@
           "explanation": "Hooks PreToolUse podem sim bloquear ações usando a decisão 'block'."
         }
       ]
+    },
+    {
+      "question": "Qual evento de hook você usaria para validar ou transformar a mensagem do usuário antes do Claude processá-la?",
+      "options": [
+        {
+          "id": "a",
+          "text": "PreToolUse",
+          "isCorrect": false,
+          "explanation": "PreToolUse intercepta chamadas de ferramentas, não mensagens do usuário. Para mensagens, use UserPromptSubmit."
+        },
+        {
+          "id": "b",
+          "text": "UserPromptSubmit",
+          "isCorrect": true,
+          "explanation": "Correto! UserPromptSubmit dispara quando o usuário envia uma mensagem — ideal para validar contexto, injetar informações ou bloquear prompts indesejados."
+        },
+        {
+          "id": "c",
+          "text": "SessionStart",
+          "isCorrect": false,
+          "explanation": "SessionStart dispara uma vez ao iniciar a sessão, não a cada mensagem do usuário."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "Hooks são determinísticos (código), CLAUDE.md é probabilístico (linguagem natural)",
     "PostToolUse + Edit = auto-formatação após edição",
-    "PreToolUse pode bloquear ações com decision: 'block'"
+    "PreToolUse pode bloquear ações com decision: 'block'",
+    "UserPromptSubmit intercepta mensagens do usuário antes do Claude processá-las"
   ],
   "encouragement": "Hooks dominados! Agora vamos expandir o ecossistema: MCP e Plugins."
 }

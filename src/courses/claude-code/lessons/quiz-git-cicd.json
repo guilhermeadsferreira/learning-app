@@ -84,12 +84,36 @@
           "explanation": "Essa action não existe. A oficial é anthropics/claude-code-action@v1."
         }
       ]
+    },
+    {
+      "question": "Como o Claude Code deve ser configurado para não commitar em branches protegidas como main?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Usando o flag --protected-branches main",
+          "isCorrect": false,
+          "explanation": "Esse flag não existe. A forma correta é usar hooks PreToolUse para interceptar e bloquear comandos git push em branches protegidas."
+        },
+        {
+          "id": "b",
+          "text": "Adicionando uma instrução no CLAUDE.md: 'nunca commitar em main'",
+          "isCorrect": false,
+          "explanation": "Instruções em CLAUDE.md são probabilísticas — o Claude pode não seguir. Para proteção confiável, use hooks determinísticos."
+        },
+        {
+          "id": "c",
+          "text": "Usando um hook PreToolUse que detecta o comando git e bloqueia se a branch for main",
+          "isCorrect": true,
+          "explanation": "Correto! Hooks são determinísticos — a única forma de garantir que o Claude nunca commita em branches protegidas."
+        }
+      ]
     }
   ],
   "keyTakeaways": [
     "claude -p para modo headless não-interativo",
     "--max-turns é essencial em CI/CD para evitar loops e custos",
-    "anthropics/claude-code-action@v1 é a Action oficial"
+    "anthropics/claude-code-action@v1 é a Action oficial",
+    "Use hooks PreToolUse (não CLAUDE.md) para proteção determinística de branches"
   ],
   "encouragement": "Git e CI/CD dominados! Último módulo: boas práticas e configuração enterprise."
 }

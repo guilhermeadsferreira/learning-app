@@ -8,6 +8,7 @@ import { getCourse } from '@/courses'
 import { LessonLayout } from '@/components/lesson/LessonLayout'
 import { LessonContent } from '@/components/lesson/LessonContent'
 import { ChallengeCard } from '@/components/lesson/ChallengeCard'
+import { QuizCard } from '@/components/lesson/QuizCard'
 import { FeedbackCard } from '@/components/lesson/FeedbackCard'
 import { AIReviewCard } from '@/components/lesson/AIReviewCard'
 import { APIKeyDialog } from '@/components/lesson/APIKeyDialog'
@@ -72,6 +73,7 @@ export function LessonPage() {
   }
 
   const isChallenge = lesson.type === 'challenge' && lesson.challenge
+  const isQuiz = lesson.type === 'quiz' && lesson.quiz && lesson.quiz.length > 0
 
   return (
     <LessonLayout
@@ -203,7 +205,20 @@ export function LessonPage() {
           </>
         )}
 
-        {!isChallenge && (
+        {isQuiz && lesson.quiz && (
+          <>
+            <QuizCard questions={lesson.quiz} onAllAnswered={handleComplete} />
+            {feedback && (
+              <FeedbackCard
+                type={feedback.type}
+                message={feedback.message}
+                xpGained={feedback.xpGained}
+              />
+            )}
+          </>
+        )}
+
+        {!isChallenge && !isQuiz && (
           <div className={cn('space-y-3', feedback && 'mt-4')}>
             {feedback && (
               <FeedbackCard
